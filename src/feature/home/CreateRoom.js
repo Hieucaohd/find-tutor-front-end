@@ -3,11 +3,9 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { useCookies } from "react-cookie";
-
 import { addRoom } from "./homeSlice";
 
-import { selectToken, selectId_of_user, selectType_tutor, selectType_parent } from "../auth/authSlice";
+import { selectToken } from "../auth/authSlice";
 
 function CreateRoom(props) {
   const dispatch = useDispatch();

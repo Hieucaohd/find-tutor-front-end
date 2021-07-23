@@ -1,7 +1,6 @@
 import {
   createSlice,
   createAsyncThunk,
-  createSelector,
   createEntityAdapter,
 } from "@reduxjs/toolkit";
 
@@ -41,7 +40,7 @@ export const deleteRoom = createAsyncThunk(
   "roomList/deleteRoom",
   async (args) => {
     const { roomId, token } = args;
-    const response = fetch(
+    fetch(
       `http://localhost:8000/findTutor/roomDetail/${roomId}`,
       {
         method: "DELETE",

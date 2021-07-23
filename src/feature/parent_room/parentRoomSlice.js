@@ -1,8 +1,3 @@
-import {
-  createSlice,
-  createEntityAdapter,
-  createAsyncThunk,
-} from "@reduxjs/toolkit";
 
 import waitingListForRoomReducer from "./waitingListForRoomSlice";
 import invitedListForRoomReducer from "./invitedListForRoomSlice";

@@ -1,12 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useCookies } from "react-cookie";
 import { useHistory } from "react-router-dom";
 
 import { login } from "./authSlice";
-
-import { fetchRoomList } from "../home/homeSlice";
 
 const selectToken = (state) => state.auth.token;
 

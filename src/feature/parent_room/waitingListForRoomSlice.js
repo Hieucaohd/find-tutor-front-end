@@ -56,15 +56,23 @@ export const deleteWaitingListForRoom = createAsyncThunk(
   "waitingListForRoom/deleteWaitingListForRoom",
   async (args, thunkAPI) => {
     const { waitingId, roomId, token } = args;
-    fetch(`http://localhost:8000/findTutor/waitingTutorDetail/${waitingId}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
-      },
+    return await fetch(
+      `http://localhost:8000/findTutor/waitingTutorDetail/${waitingId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${token}`,
+        },
+      }
+    ).then((response) => {
+      if (response.ok) {
+        thunkAPI.dispatch(deleteWaitingListForTutor(roomId));
+        return response.json();
+      } else {
+        alert("Ban ko the thuc hien hanh dong nay.");
+      }
     });
-    thunkAPI.dispatch(deleteWaitingListForTutor(roomId));
-    return waitingId;
   }
 );
 
@@ -100,7 +108,12 @@ const waitingListForRoomSlice = createSlice({
       })
       .addCase(deleteWaitingListForRoom.fulfilled, (state, action) => {
         state.status = "idle";
-        waitingListForRoomAdapter.removeOne(state, action.payload);
+        waitingListForRoomAdapter.removeOne(state, action.payload.id);
+      })
+      .addCase(deleteWaitingListForRoom.rejected, (state, action) => {
+        state.status = "error";
+        state.takeError = action.error;
+        state.takeMeta = action.meta;
       });
   },
 });
@@ -114,8 +127,7 @@ export const {
   (state) => state.parentRoom.waitingList
 );
 
-export const { deleteForInivted } =
-  waitingListForRoomSlice.actions;
+export const { deleteForInivted } = waitingListForRoomSlice.actions;
 
 export const selectWaitingListForRoomStatus = (state) =>
   state.parentRoom.waitingList.status;

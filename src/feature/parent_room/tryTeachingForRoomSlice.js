@@ -48,7 +48,7 @@ export const addTryTeachingForRoom = createAsyncThunk(
         return response.json();
       } else {
         alert("Lop hoc da co nguoi day thu, xin hay cho luot sau.");
-        return response.json();
+        // return response.json();
       }
     });
   }
@@ -88,6 +88,9 @@ const tryTeachingForRoomSlice = createSlice({
     deleteForTeaching(state, action) {
       tryTeachingForRoomAdapter.removeOne(state, action.payload);
     },
+    upsertForTeaching(state, action) {
+      tryTeachingForRoomAdapter.upsertOne(state, action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -103,11 +106,14 @@ const tryTeachingForRoomSlice = createSlice({
       })
       .addCase(addTryTeachingForRoom.fulfilled, (state, action) => {
         state.status = "idle";
-        tryTeachingForRoomAdapter.addOne(state, action.payload);
+        if (action.payload) {
+          tryTeachingForRoomAdapter.addOne(state, action.payload);
+        }
       })
       .addCase(addTryTeachingForRoom.rejected, (state, action) => {
-        state.status = action.error;
-        state.takeMeta = action.meta;
+        state.status = "error";
+        // state.takeError = action.error;
+        // state.takeMeta = action.meta;
       })
       .addCase(deleteTryTeachingForRoom.pending, (state, action) => {
         state.status = "loading";
@@ -117,8 +123,8 @@ const tryTeachingForRoomSlice = createSlice({
         tryTeachingForRoomAdapter.removeOne(state, action.payload.id);
       })
       .addCase(deleteTryTeachingForRoom.rejected, (state, action) => {
-        state.status = action.error;
-        state.takeMeta = action.meta;
+        state.status = "error";
+        // state.takeMeta = action.meta;
       });
   },
 });
@@ -132,7 +138,8 @@ export const {
   (state) => state.parentRoom.tryTeaching
 );
 
-export const { deleteForTeaching } = tryTeachingForRoomSlice.actions;
+export const { deleteForTeaching, upsertForTeaching } =
+  tryTeachingForRoomSlice.actions;
 
 // export const addToTryTeachingForRoom = async (args) => {
 //   const { invitedId, token, dispatch } = args;

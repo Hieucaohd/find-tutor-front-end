@@ -4,32 +4,14 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { useHistory } from "react-router-dom";
 
-import { useCookies } from "react-cookie";
-
 import CreateRoom from "./CreateRoom";
-import ParentRoom from "../parent_room/ParentRoom";
-
-// import { renderThem } from "./conditionFunctionToRender";
-
-import {
-  addWaitingListForRoom,
-  deleteWaitingListForRoom,
-} from "../parent_room/waitingListForRoomSlice";
 
 import {
   fetchRoomRelateTutor,
   // selectWaitingListForTutor,
 } from "../auth/roomRelateTutorSlice";
 
-import { login } from "../auth/authSlice";
-
-import {
-  fetchRoomList,
-  selectRoomList,
-  selectRoomByIds,
-  deleteRoom,
-} from "./homeSlice";
-import { selectTryTeachingForRoom } from "../parent_room/tryTeachingForRoomSlice";
+import { fetchRoomList, selectRoomList } from "./homeSlice";
 
 import { logout } from "../auth/authSlice";
 
@@ -61,6 +43,7 @@ function Home() {
   const dispatch = useDispatch();
 
   const [isRenderCreateRoom, setIsRenderCreateRoom] = useState(false);
+  const [isRefreshListRoom, setIsRefreshListRoom] = useState(false);
 
   const roomListStatus = useSelector(selectRoomListStatus);
   const roomList = useSelector(selectRoomList);
@@ -108,12 +91,16 @@ function Home() {
     if (token) {
       dispatch(fetchRoomList({ token: token }));
       dispatch(fetchRoomRelateTutor({ token: token }));
+      // setInterval(() => {
+      //   dispatch(fetchRoomList({ token: token }));
+      //   dispatch(fetchRoomRelateTutor({ token: token }));
+      // }, 1000 * 20);
     }
 
     if (!token) {
       history.push("/login");
     }
-  }, [token]);
+  }, [token, isRefreshListRoom]);
 
   if (roomListStatus === "loading") {
     return <div>Loading Room List</div>;
@@ -226,6 +213,10 @@ function Home() {
     setIsRenderCreateRoom(false);
   };
 
+  const refreshListRoom = () => {
+    setIsRefreshListRoom(!isRefreshListRoom);
+  }
+
   return (
     <div>
       <button onClick={logoutPage}>Logout</button>
@@ -243,6 +234,9 @@ function Home() {
       )}
 
       {/* <div>{roomDetail}</div> */}
+      <div>
+        <button onClick={refreshListRoom}>More Room</button>
+      </div>
     </div>
   );
 }

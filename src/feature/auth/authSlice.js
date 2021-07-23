@@ -1,7 +1,6 @@
 import {
   createAsyncThunk,
   createSlice,
-  createSelector,
 } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -20,7 +19,7 @@ export const login = createAsyncThunk("auth/authLogin", async (args) => {
     },
     body: JSON.stringify(args),
   }).then((response) => {
-    console.log(response);
+    // console.log(response);
     if (response.ok) {
       return response.json();
     } else {
