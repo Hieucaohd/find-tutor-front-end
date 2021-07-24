@@ -1,6 +1,27 @@
 import React from "react";
 
-function TryTeaching({tryTeach, addToTeaching, deleteFromTryTeaching, userId}) {
+import { addToTeachingForRoom } from "../teachingForRoomSlice";
+import { deleteTryTeachingForRoom } from "../tryTeachingForRoomSlice";
+
+import { useDispatch, useSelector } from "react-redux";
+import { selectToken } from "../../auth/authSlice";
+
+function TryTeaching({tryTeach, userId}) {
+  const dispatch = useDispatch();
+  const token = useSelector(selectToken);
+  const addToTeaching = (try_teachingId) => {
+    addToTeachingForRoom({
+      try_teachingId: try_teachingId,
+      token: token,
+      dispatch: dispatch,
+    });
+  };
+
+  const deleteFromTryTeaching = (try_teachingId) => {
+    dispatch(
+      deleteTryTeachingForRoom({ try_teachingId: try_teachingId, token: token })
+    );
+  };
   return (
     <div>
       <li key={tryTeach.id}>

@@ -1,11 +1,29 @@
 import React from "react";
 
-function InvitedList({
-  invited,
-  addToTryTeaching,
-  deleteFromInvitedList,
-  userId,
-}) {
+import { deleteInvitedListForRoom } from "../invitedListForRoomSlice";
+import { addTryTeachingForRoom } from "../tryTeachingForRoomSlice";
+
+import { selectToken } from "../../auth/authSlice";
+import { useSelector, useDispatch } from "react-redux";
+
+function InvitedList({ invited, userId }) {
+  const dispatch = useDispatch();
+
+  const token = useSelector(selectToken);
+
+  const deleteFromInvitedList = (invitedId) => {
+    dispatch(deleteInvitedListForRoom({ invitedId: invitedId, token: token }));
+  };
+
+  const addToTryTeaching = (invitedId) => {
+    dispatch(
+      addTryTeachingForRoom({
+        invitedId: invitedId,
+        token: token,
+      })
+    );
+  };
+
   return (
     <div>
       <li key={invited.id}>

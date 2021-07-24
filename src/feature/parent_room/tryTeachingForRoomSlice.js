@@ -25,7 +25,11 @@ export const fetchTryTeachingForRoom = createAsyncThunk(
           Authorization: `Token ${token}`,
         },
       }
-    ).then((response) => response.json());
+    ).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+    });
   }
 );
 
@@ -48,7 +52,6 @@ export const addTryTeachingForRoom = createAsyncThunk(
         return response.json();
       } else {
         alert("Lop hoc da co nguoi day thu, xin hay cho luot sau.");
-        // return response.json();
       }
     });
   }
@@ -72,7 +75,6 @@ export const deleteTryTeachingForRoom = createAsyncThunk(
         return response.json();
       } else {
         alert("Ban khong the thuc hien hanh dong nay.");
-        return response.json();
       }
     });
   }
@@ -82,9 +84,6 @@ const tryTeachingForRoomSlice = createSlice({
   name: "tryTeachingForRoom",
   initialState,
   reducers: {
-    // addTryTeachingForRoom(state, action) {
-    //   tryTeachingForRoomAdapter.addOne(state, action.payload);
-    // },
     deleteForTeaching(state, action) {
       tryTeachingForRoomAdapter.removeOne(state, action.payload);
     },
@@ -99,7 +98,12 @@ const tryTeachingForRoomSlice = createSlice({
       })
       .addCase(fetchTryTeachingForRoom.fulfilled, (state, action) => {
         state.status = "idle";
-        tryTeachingForRoomAdapter.setAll(state, action.payload);
+        if (action.payload) {
+          tryTeachingForRoomAdapter.setAll(state, action.payload);
+        }
+      })
+      .addCase(fetchTryTeachingForRoom.rejected, (state, action) => {
+        state.status = "error";
       })
       .addCase(addTryTeachingForRoom.pending, (state, action) => {
         state.status = "loading";
@@ -112,19 +116,18 @@ const tryTeachingForRoomSlice = createSlice({
       })
       .addCase(addTryTeachingForRoom.rejected, (state, action) => {
         state.status = "error";
-        // state.takeError = action.error;
-        // state.takeMeta = action.meta;
       })
       .addCase(deleteTryTeachingForRoom.pending, (state, action) => {
         state.status = "loading";
       })
       .addCase(deleteTryTeachingForRoom.fulfilled, (state, action) => {
         state.status = "idle";
-        tryTeachingForRoomAdapter.removeOne(state, action.payload.id);
+        if (action.payload) {
+          tryTeachingForRoomAdapter.removeOne(state, action.payload.id);
+        }
       })
       .addCase(deleteTryTeachingForRoom.rejected, (state, action) => {
         state.status = "error";
-        // state.takeMeta = action.meta;
       });
   },
 });
@@ -141,26 +144,3 @@ export const {
 export const { deleteForTeaching, upsertForTeaching } =
   tryTeachingForRoomSlice.actions;
 
-// export const addToTryTeachingForRoom = async (args) => {
-//   const { invitedId, token, dispatch } = args;
-//   return await fetch(
-//     `http://localhost:8000/findTutor/listInvitedDetail/${invitedId}`,
-//     {
-//       method: "PUT",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Token ${token}`,
-//       },
-//     }
-//   ).then(response => {
-//     if (response.ok) {
-//       const data_from_response = response.json();
-//       data_from_response.then((data) => {
-//         dispatch(deleteForTryTeaching(invitedId));
-//         dispatch(tryTeachingForRoomSlice.actions.addTryTeachingForRoom(data));
-//       })
-//     } else {
-//       alert("Ban ko the thuc hien hanh dong nay.")
-//     }
-//   });
-// }

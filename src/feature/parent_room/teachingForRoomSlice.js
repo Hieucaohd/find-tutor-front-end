@@ -28,7 +28,11 @@ export const fetchTeachingForRoom = createAsyncThunk(
           Authorization: `Token ${token}`,
         },
       }
-    ).then((response) => response.json());
+    ).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+    });
   }
 );
 
@@ -82,19 +86,10 @@ const teachingForRoomSlice = createSlice({
       })
       .addCase(fetchTeachingForRoom.fulfilled, (state, action) => {
         state.status = "idle";
-        teachingForRoomAdapter.setAll(state, action.payload);
+        if (action.payload) {
+          teachingForRoomAdapter.setAll(state, action.payload);
+        }
       });
-    // .addCase(addTeachingForRoom.pending, (state, action) => {
-    //   state.status = "loading";
-    // })
-    // .addCase(addTeachingForRoom.fulfilled, (state, action) => {
-    //   state.status = "idle";
-    //   teachingForRoomAdapter.addOne(state, action.payload);
-    // })
-    // .addCase(addTeachingForRoom.rejected, (state, action) => {
-    //   state.status = action.error;
-    //   state.takeMeta = action.meta;
-    // });
   },
 });
 
@@ -132,8 +127,6 @@ export const addToTeachingForRoom = async (args) => {
           dispatch(teachingForRoomSlice.actions.addTeachingForRoom(data));
         }
       });
-
-      
     } else {
       alert("Ban khong duoc phep thuc hien hanh dong nay.");
       return response.json();

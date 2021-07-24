@@ -11,15 +11,12 @@ import ParentRoom from "../../parent_room/ParentRoom";
 function Room({
   room,
   token,
-  // handleDeleteRoom,
-  // showRoomDetail,
-  // addToWaitingList,
+
   list_room_waiting,
   list_room_invited,
   list_room_try_teaching,
   id_of_user,
   type_tutor,
-  // renderThem,
 }) {
   const dispatch = useDispatch();
   const [roomDetail, setRoomDetail] = useState(<div></div>);
@@ -35,7 +32,7 @@ function Room({
 
   const closeRoomDetail = () => {
     setIsRenderRoomDetail(false);
-  }
+  };
 
   const showRoomDetail = (room) => {
     setIsRenderRoomDetail(true);

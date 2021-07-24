@@ -32,7 +32,7 @@ export const fetchWaitingListForRoom = createAsyncThunk(
       if (response.ok) {
         return response.json();
       } else {
-        alert("Co loi xay ra");
+        alert("Co loi xay ra, co the lop hoc da bi xoa.");
       }
     });
   }
@@ -95,9 +95,7 @@ const waitingListForRoomSlice = createSlice({
     deleteForInivted(state, action) {
       waitingListForRoomAdapter.removeOne(state, action.payload);
     },
-    // deleteWaitingListForRoom(state, action) {
-    //   waitingListForRoomAdapter.removeOne(state, action.payload);
-    // },
+    
   },
   extraReducers: (builder) => {
     builder
@@ -154,30 +152,4 @@ export const { deleteForInivted } = waitingListForRoomSlice.actions;
 export const selectWaitingListForRoomStatus = (state) =>
   state.parentRoom.waitingList.status;
 
-// export const deleteFromWaitingListForRoom = async (args) => {
-//   const { waitingId, roomId, token, dispatch } = args;
-//   return await fetch(
-//     `http://localhost:8000/findTutor/waitingTutorDetail/${waitingId}`,
-//     {
-//       method: "DELETE",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Token ${token}`,
-//       },
-//     }
-//   ).then((response) => {
-//     if (response.ok) {
-//       const data_from_response = response.json();
-//       data_from_response.then((data) => {
-//         dispatch(
-//           waitingListForRoomSlice.actions.deleteWaitingListForRoom(waitingId)
-//         );
-//         dispatch(deleteWaitingListForTutor(roomId));
-//       });
-//     } else {
-//       alert("Ban ko the thuc hien hanh dong nay.");
-//     }
-//   });
-//   // dispatch(deleteWaitingListForTutor(roomId));
-//   // return waitingId;
-// };
+

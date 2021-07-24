@@ -25,7 +25,11 @@ export const fetchInvitedListForRoom = createAsyncThunk(
           Authorization: `Token ${token}`,
         },
       }
-    ).then((response) => response.json());
+    ).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+    });
   }
 );
 
@@ -43,8 +47,12 @@ export const addInvitedListForRoom = createAsyncThunk(
         },
       }
     ).then((response) => {
-      thunkAPI.dispatch(deleteForInivted(waitingId));
-      return response.json();
+      if (response.ok) {
+        thunkAPI.dispatch(deleteForInivted(waitingId));
+        return response.json();
+      } else {
+        alert("Co loi xay ra.");
+      }
     });
   }
 );
@@ -53,12 +61,21 @@ export const deleteInvitedListForRoom = createAsyncThunk(
   "invitedListForRoom/deleteInvitedListForRoom",
   async (args, thunkAPI) => {
     const { invitedId, token } = args;
-    fetch(`http://localhost:8000/findTutor/listInvitedDetail/${invitedId}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
-      },
+    return await fetch(
+      `http://localhost:8000/findTutor/listInvitedDetail/${invitedId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${token}`,
+        },
+      }
+    ).then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        alert("Ban khong the thuc hien hanh dong nay.");
+      }
     });
 
     return invitedId;
@@ -80,21 +97,35 @@ const invitedListForRoomSlice = createSlice({
       })
       .addCase(fetchInvitedListForRoom.fulfilled, (state, action) => {
         state.status = "idle";
-        invitedListForRoomAdapter.setAll(state, action.payload);
+        if (action.payload) {
+          invitedListForRoomAdapter.setAll(state, action.payload);
+        }
+      })
+      .addCase(fetchInvitedListForRoom.rejected, (state, action) => {
+        state.status = "error";
       })
       .addCase(addInvitedListForRoom.pending, (state, action) => {
         state.status = "loading";
       })
       .addCase(addInvitedListForRoom.fulfilled, (state, action) => {
         state.status = "idle";
-        invitedListForRoomAdapter.addOne(state, action.payload);
+        if (action.payload) {
+          invitedListForRoomAdapter.addOne(state, action.payload);
+        }
+      })
+      .addCase(addInvitedListForRoom.rejected, (state, action) => {
+        state.status = "error";
       })
       .addCase(deleteInvitedListForRoom.pending, (state, action) => {
         state.status = "loading";
       })
       .addCase(deleteInvitedListForRoom.fulfilled, (state, action) => {
         state.status = "idle";
-        invitedListForRoomAdapter.removeOne(state, action.payload);
+        if (action.payload) {
+          invitedListForRoomAdapter.removeOne(state, action.payload.id);
+        }
+      }).addCase(deleteInvitedListForRoom.rejected, (state, action) => {
+        state.status = "error";
       });
   },
 });
