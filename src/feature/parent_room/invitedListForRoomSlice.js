@@ -33,7 +33,7 @@ export const addInvitedListForRoom = createAsyncThunk(
   "invitedListForRoom/addInvitedListForRoom",
   async (args, thunkAPI) => {
     const { waitingId, token } = args;
-    return await fetch(
+    return fetch(
       `http://localhost:8000/findTutor/waitingTutorDetail/${waitingId}`,
       {
         method: "PUT",

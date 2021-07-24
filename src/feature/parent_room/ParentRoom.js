@@ -44,11 +44,13 @@ import {
 
 import WaitingList from "./component/WaitingList";
 import InvitedList from "./component/InvitedList";
+import TryTeaching from "./component/TryTeaching";
+import Teaching from "./component/Teaching";
 
 function ParentRoom(props) {
   const dispatch = useDispatch();
 
-  const [roomId, setRoomId] = useState();
+  // const [roomId, setRoomId] = useState();
   const [userId, setUserId] = useState();
   // console.log(userId);
 
@@ -74,8 +76,9 @@ function ParentRoom(props) {
     dispatch(fetchTryTeachingForRoom(args));
     dispatch(fetchTeachingForRoom(args));
 
-    setRoomId(props.roomId);
-    setRoomDetail(roomList.find((room) => room.id === props.roomId));
+    // setRoomId(props.roomId);
+    // setRoomDetail(roomList.find((room) => room.id === props.roomId));
+    setRoomDetail(props.room)
     setUserId(props.userId);
     setType_tutor(props.type_tutor);
     setToken(props.token);
@@ -86,7 +89,7 @@ function ParentRoom(props) {
     dispatch(
       deleteWaitingListForRoom({
         waitingId: waitingId,
-        roomId: roomId,
+        roomId: props.room.id,
         token: token,
       })
     );
@@ -208,46 +211,54 @@ function ParentRoom(props) {
   const renderTryTeaching = tryTeaching.map((tryTeach) => {
     // console.log(tryTeach.parent_agree);
     // console.log(tryTeach.tutor_agree);
-    return (
-      <li key={tryTeach.id}>
-        id: {tryTeach.id}, tutor: {tryTeach.tutor}, parent_try_teach:{" "}
-        {tryTeach.parent_room}
-        {tryTeach.parent_room === userId && !tryTeach.parent_agree ? (
-          <button onClick={() => addToTeaching(tryTeach.id)}>
-            Dong y thue
-          </button>
-        ) : null}
-        {tryTeach.parent_agree && tryTeach.parent_room === userId ? (
-          <button>Cho gia su dong y</button>
-        ) : null}
-        {tryTeach.tutor === userId && !tryTeach.tutor_agree ? (
-          <button onClick={() => addToTeaching(tryTeach.id)}>
-            Dong y day chinh thuc
-          </button>
-        ) : null}
-        {tryTeach.tutor_agree && tryTeach.tutor === userId ? (
-          <button>Cho phu huynh dong y</button>
-        ) : null}
-        {tryTeach.tutor === userId ? (
-          <button onClick={() => deleteFromTryTeaching(tryTeach.id)}>
-            Khong day tiep
-          </button>
-        ) : null}
-        {tryTeach.parent_room === userId ? (
-          <button onClick={() => deleteFromTryTeaching(tryTeach.id)}>
-            Khong muon tiep tuc thue
-          </button>
-        ) : null}
-      </li>
-    );
+    // return (
+    //   <li key={tryTeach.id}>
+    //     id: {tryTeach.id}, tutor: {tryTeach.tutor}, parent_try_teach:{" "}
+    //     {tryTeach.parent_room}
+    //     {tryTeach.parent_room === userId && !tryTeach.parent_agree ? (
+    //       <button onClick={() => addToTeaching(tryTeach.id)}>
+    //         Dong y thue
+    //       </button>
+    //     ) : null}
+    //     {tryTeach.parent_agree && tryTeach.parent_room === userId ? (
+    //       <button>Cho gia su dong y</button>
+    //     ) : null}
+    //     {tryTeach.tutor === userId && !tryTeach.tutor_agree ? (
+    //       <button onClick={() => addToTeaching(tryTeach.id)}>
+    //         Dong y day chinh thuc
+    //       </button>
+    //     ) : null}
+    //     {tryTeach.tutor_agree && tryTeach.tutor === userId ? (
+    //       <button>Cho phu huynh dong y</button>
+    //     ) : null}
+    //     {tryTeach.tutor === userId ? (
+    //       <button onClick={() => deleteFromTryTeaching(tryTeach.id)}>
+    //         Khong day tiep
+    //       </button>
+    //     ) : null}
+    //     {tryTeach.parent_room === userId ? (
+    //       <button onClick={() => deleteFromTryTeaching(tryTeach.id)}>
+    //         Khong muon tiep tuc thue
+    //       </button>
+    //     ) : null}
+    //   </li>
+    // );
+    return (<div>
+      <TryTeaching 
+        tryTeach={tryTeach}
+        addToTeaching={addToTeaching}
+        deleteFromTryTeaching={deleteFromTryTeaching}
+        userId={userId}
+      />
+    </div>);
   });
 
   const teaching = useSelector(selectTeachingForRoom);
   const renderTeaching = teaching.map((teach) => {
     return (
-      <li key={teach.id}>
-        id: {teach.id}, tutor: {teach.tutor}, parent_teach: {teach.parent_room}
-      </li>
+      <Teaching 
+        teach={teach}
+      />
     );
   });
 

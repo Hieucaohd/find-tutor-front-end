@@ -37,11 +37,11 @@ function Room({
     setIsRenderRoomDetail(false);
   }
 
-  const showRoomDetail = (roomId) => {
+  const showRoomDetail = (room) => {
     setIsRenderRoomDetail(true);
     setRoomDetail(
       <ParentRoom
-        roomId={roomId}
+        room={room}
         token={token}
         userId={id_of_user}
         type_tutor={String(type_tutor)}
@@ -73,7 +73,7 @@ function Room({
           ) : null}
         </div>
         <div>
-          <button onClick={() => showRoomDetail(room.id)}>show detail</button>
+          <button onClick={() => showRoomDetail(room)}>show detail</button>
         </div>
       </li>
       {isRenderRoomDetail && <div>{roomDetail}</div>}

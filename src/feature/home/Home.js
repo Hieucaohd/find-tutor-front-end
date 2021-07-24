@@ -87,14 +87,16 @@ function Home() {
   //   // dispatch(login({"username": "hieucao1", "password": "Caotrunghieu@192"}));
   // }, [cookies["token"]]);
 
+  const dispatchSomething = () => {
+    dispatch(fetchRoomList({ token: token }));
+    dispatch(fetchRoomRelateTutor({ token: token }));
+  };
+
   useEffect(() => {
     if (token) {
-      dispatch(fetchRoomList({ token: token }));
-      dispatch(fetchRoomRelateTutor({ token: token }));
-      // setInterval(() => {
-      //   dispatch(fetchRoomList({ token: token }));
-      //   dispatch(fetchRoomRelateTutor({ token: token }));
-      // }, 1000 * 20);
+      dispatchSomething();
+      // setInterval(dispatchSomething, 1000 * 1);
+      setInterval(dispatchSomething, 1000 * 60 * 3);
     }
 
     if (!token) {
@@ -102,9 +104,9 @@ function Home() {
     }
   }, [token, isRefreshListRoom]);
 
-  if (roomListStatus === "loading") {
-    return <div>Loading Room List</div>;
-  }
+  // if (roomListStatus === "loading") {
+  //   return <div>Loading Room List</div>;
+  // }
 
   // const handleDeleteRoom = (roomId) => {
   //   dispatch(deleteRoom({ roomId: roomId, token: token }));
@@ -215,7 +217,7 @@ function Home() {
 
   const refreshListRoom = () => {
     setIsRefreshListRoom(!isRefreshListRoom);
-  }
+  };
 
   return (
     <div>
@@ -224,7 +226,7 @@ function Home() {
       <ul>{renderRoomList}</ul>
 
       <div>
-        {String(type_parent) === "true" ? (
+        {type_parent ? (
           <button onClick={showFormCreateRoom}>Create Room</button>
         ) : null}
       </div>
@@ -233,7 +235,6 @@ function Home() {
         <CreateRoom closeCreateRoom={closeFormCreateRoom} />
       )}
 
-      {/* <div>{roomDetail}</div> */}
       <div>
         <button onClick={refreshListRoom}>More Room</button>
       </div>

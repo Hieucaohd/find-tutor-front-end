@@ -9,7 +9,7 @@ function InvitedList({
   return (
     <div>
       <li key={invited.id}>
-        id: {invited.id}, tutor: {invited.tutor}, parent_invited:{" "}
+        id: {invited.id}, tutor: {invited.tutor}, parent_invited:
         {invited.parent_room}
         {invited.tutor === userId ? (
           <button onClick={() => addToTryTeaching(invited.id)}>accept</button>

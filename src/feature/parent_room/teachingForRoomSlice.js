@@ -19,7 +19,7 @@ export const fetchTeachingForRoom = createAsyncThunk(
   "teachingForRoom/fetchTeachingForRoom",
   async (args) => {
     const { roomId, token } = args;
-    return await fetch(
+    return fetch(
       `http://localhost:8000/findTutor/teachingList/?pk_room=${roomId}`,
       {
         method: "GET",

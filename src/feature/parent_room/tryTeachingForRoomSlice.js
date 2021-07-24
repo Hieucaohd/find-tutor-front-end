@@ -58,7 +58,7 @@ export const deleteTryTeachingForRoom = createAsyncThunk(
   "tryTeachingForRoom/deleteTryTeachingForRoom",
   async (args, thunkAPI) => {
     const { try_teachingId, token } = args;
-    return await fetch(
+    return fetch(
       `http://localhost:8000/findTutor/tryTeachingDetail/${try_teachingId}`,
       {
         method: "DELETE",

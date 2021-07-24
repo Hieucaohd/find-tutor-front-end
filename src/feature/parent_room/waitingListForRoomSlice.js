@@ -19,7 +19,7 @@ export const fetchWaitingListForRoom = createAsyncThunk(
   "waitingListForRoom/fetchWaitingListForRoom",
   async (args, dispatch) => {
     const { roomId, token } = args;
-    return await fetch(
+    return fetch(
       `http://localhost:8000/findTutor/waitingTutorList/?pk_room=${roomId}`,
       {
         method: "GET",
@@ -28,7 +28,13 @@ export const fetchWaitingListForRoom = createAsyncThunk(
           Authorization: `Token ${token}`,
         },
       }
-    ).then((response) => response.json());
+    ).then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        alert("Co loi xay ra");
+      }
+    });
   }
 );
 
@@ -46,8 +52,14 @@ export const addWaitingListForRoom = createAsyncThunk(
         },
       }
     ).then((response) => {
-      thunkAPI.dispatch(addWaitingListForTutor(roomId));
-      return response.json();
+      if (response.ok) {
+        thunkAPI.dispatch(addWaitingListForTutor(roomId));
+        return response.json();
+      } else {
+        alert(
+          "Ban khong the thuc hien hanh dong nay, co the lop hoc da bi xoa."
+        );
+      }
     });
   }
 );
@@ -94,26 +106,36 @@ const waitingListForRoomSlice = createSlice({
       })
       .addCase(fetchWaitingListForRoom.fulfilled, (state, action) => {
         state.status = "idle";
-        waitingListForRoomAdapter.setAll(state, action.payload);
+
+        if (action.payload) {
+          waitingListForRoomAdapter.setAll(state, action.payload);
+        }
+      }).addCase(fetchWaitingListForRoom.rejected, (state, action) => {
+        state.status = "error";
       })
       .addCase(addWaitingListForRoom.pending, (state, action) => {
         state.status = "loading";
       })
       .addCase(addWaitingListForRoom.fulfilled, (state, action) => {
         state.status = "idle";
-        waitingListForRoomAdapter.addOne(state, action.payload);
+        if (action.payload) {
+          waitingListForRoomAdapter.addOne(state, action.payload);
+        }
+      })
+      .addCase(addWaitingListForRoom.rejected, (state, action) => {
+        state.status = "error";
       })
       .addCase(deleteWaitingListForRoom.pending, (state, action) => {
         state.status = "loading";
       })
       .addCase(deleteWaitingListForRoom.fulfilled, (state, action) => {
         state.status = "idle";
-        waitingListForRoomAdapter.removeOne(state, action.payload.id);
+        if (action.payload) {
+          waitingListForRoomAdapter.removeOne(state, action.payload.id);
+        }
       })
       .addCase(deleteWaitingListForRoom.rejected, (state, action) => {
         state.status = "error";
-        state.takeError = action.error;
-        state.takeMeta = action.meta;
       });
   },
 });
