@@ -77,8 +77,6 @@ export const deleteInvitedListForRoom = createAsyncThunk(
         alert("Ban khong the thuc hien hanh dong nay.");
       }
     });
-
-    return invitedId;
   }
 );
 

@@ -1,7 +1,4 @@
-import {
-  createAsyncThunk,
-  createSlice,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   status: "idle",
@@ -19,7 +16,6 @@ export const login = createAsyncThunk("auth/authLogin", async (args) => {
     },
     body: JSON.stringify(args),
   }).then((response) => {
-    // console.log(response);
     if (response.ok) {
       return response.json();
     } else {
@@ -27,8 +23,6 @@ export const login = createAsyncThunk("auth/authLogin", async (args) => {
       return response.json();
     }
   });
-
-  // return (await response).json();
 });
 
 const authSlice = createSlice({

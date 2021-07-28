@@ -77,20 +77,6 @@ function ParentRoom(props) {
     setToken(props.token);
   }, [props.room]);
 
-  // const deleteFromWaitingList = (waitingId) => {
-  //   dispatch(
-  //     deleteWaitingListForRoom({
-  //       waitingId: waitingId,
-  //       roomId: props.room.id,
-  //       token: token,
-  //     })
-  //   );
-  // };
-
-  // const addToInvitedList = (waitingId) => {
-  //   dispatch(addInvitedListForRoom({ waitingId: waitingId, token: token }));
-  // };
-
   const waitingList = useSelector(selectWaitingListForRoom);
   const renderWaitingList = waitingList.map((waiting) => {
     return (
@@ -100,19 +86,6 @@ function ParentRoom(props) {
     );
   });
 
-  // const deleteFromInvitedList = (invitedId) => {
-  //   dispatch(deleteInvitedListForRoom({ invitedId: invitedId, token: token }));
-  // };
-
-  // const addToTryTeaching = (invitedId) => {
-  //   dispatch(
-  //     addTryTeachingForRoom({
-  //       invitedId: invitedId,
-  //       token: token,
-  //     })
-  //   );
-  // };
-
   const invitedList = useSelector(selectInvitedListForRoom);
   const renderInvitedList = invitedList.map((invited) => {
     return (
@@ -121,20 +94,6 @@ function ParentRoom(props) {
       </div>
     );
   });
-
-  // const addToTeaching = (try_teachingId) => {
-  //   addToTeachingForRoom({
-  //     try_teachingId: try_teachingId,
-  //     token: token,
-  //     dispatch: dispatch,
-  //   });
-  // };
-
-  // const deleteFromTryTeaching = (try_teachingId) => {
-  //   dispatch(
-  //     deleteTryTeachingForRoom({ try_teachingId: try_teachingId, token: token })
-  //   );
-  // };
 
   const tryTeaching = useSelector(selectTryTeachingForRoom);
   const renderTryTeaching = tryTeaching.map((tryTeach) => {

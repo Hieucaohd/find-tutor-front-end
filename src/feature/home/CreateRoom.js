@@ -10,8 +10,6 @@ import { selectToken } from "../auth/authSlice";
 function CreateRoom(props) {
   const dispatch = useDispatch();
 
-  // const [cookies] = useCookies(['token']);
-
   const [day_can_teach, setDay_can_teach] = useState([]);
   const [checkedArray, SetCheckedArray] = useState(new Array(7).fill(false)); // to save state check before.
   const days = [2, 3, 4, 5, 6, 7, 8];
@@ -23,15 +21,12 @@ function CreateRoom(props) {
 
     SetCheckedArray(updateCheckedState);
 
-    //console.log(updateCheckedState);
-
     const empty_array = [];
     updateCheckedState.map((item, index) => {
       if (item) {
         empty_array.push(days[index]);
       }
     });
-    //console.log(empty_array);
     setDay_can_teach(empty_array);
   };
 
@@ -40,8 +35,6 @@ function CreateRoom(props) {
   const [lop, setLop] = useState("");
   const [other_require, setOther_require] = useState("");
 
-  
-  // const token = cookies['token'];
   const token = useSelector(selectToken);
 
   const createRoom = () => {
