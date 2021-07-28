@@ -25,13 +25,13 @@
 
 ### Cơ chế hoạt động của trang web
 
-Bước 1: phụ huynh tạo lớp học trên trang web.
-Bước 2: các gia sư sau khi nhìn thấy lớp học sẽ tham giư ứng tuyển (thêm vào waitingList của lớp học).
-Bước 3: phụ huynh sau khi tìm hiểu về thông tin của gia sư trong danh sách ứng tuyển sẽ mời một số gia sư mà mình thấy thích hợp (thêm vào invitedList của lớp học).
-Bước 4: gia sư sẽ thấy thông báo được mời của phụ huynh và có 2 lựa chọn: đồng ý hoặc không đồng ý.
-Bước 5: nếu gia sư đồng ý thì sẽ được thêm vào danh sách dạy thử của lớp học đó và sẽ đến lớp học để dạy thử (thêm vào tryTeachingList của lớp học)
-Bước 6: sau một khoảng thời gian dạy thử, phụ huynh và gia sư sẽ quyết định có tiếp tục dạy nữa hay không.
-Bước 7: nếu 2 bên thống nhất tiếp tục dạy thì sẽ kí hợp đồng điện tử trên trang web và trang web sẽ giúp gia sư và phụ huynh quản lí BUỔI DẠY và HỌC PHÍ của lớp học (thêm vào teachingList của lớp học)
+* Bước 1: phụ huynh tạo lớp học trên trang web.
+* Bước 2: các gia sư sau khi nhìn thấy lớp học sẽ tham giư ứng tuyển (thêm vào waitingList của lớp học).
+* Bước 3: phụ huynh sau khi tìm hiểu về thông tin của gia sư trong danh sách ứng tuyển sẽ mời một số gia sư mà mình thấy thích hợp (thêm vào invitedList của lớp học).
+* Bước 4: gia sư sẽ thấy thông báo được mời của phụ huynh và có 2 lựa chọn: đồng ý hoặc không đồng ý.
+* Bước 5: nếu gia sư đồng ý thì sẽ được thêm vào danh sách dạy thử của lớp học đó và sẽ đến lớp học để dạy thử (thêm vào tryTeachingList của lớp học)
+* Bước 6: sau một khoảng thời gian dạy thử, phụ huynh và gia sư sẽ quyết định có tiếp tục dạy nữa hay không.
+* Bước 7: nếu 2 bên thống nhất tiếp tục dạy thì sẽ kí hợp đồng điện tử trên trang web và trang web sẽ giúp gia sư và phụ huynh quản lí BUỔI DẠY và HỌC PHÍ của lớp học (thêm vào teachingList của lớp học)
 
 ### Công nghệ
 
