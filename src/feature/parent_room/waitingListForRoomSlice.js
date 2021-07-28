@@ -15,6 +15,7 @@ const initialState = waitingListForRoomAdapter.getInitialState({
   status: "idle",
 });
 
+// lấy danh sách waitingList của lớp học từ server.
 export const fetchWaitingListForRoom = createAsyncThunk(
   "waitingListForRoom/fetchWaitingListForRoom",
   async (args, dispatch) => {
@@ -38,6 +39,7 @@ export const fetchWaitingListForRoom = createAsyncThunk(
   }
 );
 
+// Gia sư ứng tuyển và thêm gia sư vào danh sách ứng tuyển (waitingList) của lớp học.
 export const addWaitingListForRoom = createAsyncThunk(
   "waitingListForRoom/addWaitingListForRoom",
   async (args, thunkAPI) => {
@@ -64,6 +66,7 @@ export const addWaitingListForRoom = createAsyncThunk(
   }
 );
 
+// Xóa gia sư khỏi danh sách ứng tuyển (waitingList) của lớp học.
 export const deleteWaitingListForRoom = createAsyncThunk(
   "waitingListForRoom/deleteWaitingListForRoom",
   async (args, thunkAPI) => {
@@ -92,6 +95,7 @@ const waitingListForRoomSlice = createSlice({
   name: "waitingListForRoom",
   initialState,
   reducers: {
+    // Sau khi gia sư được phụ huynh mời vào invitedList thì xóa gia sư khỏi waitingList.
     deleteForInivted(state, action) {
       waitingListForRoomAdapter.removeOne(state, action.payload);
     },
@@ -140,6 +144,7 @@ const waitingListForRoomSlice = createSlice({
 
 export default waitingListForRoomSlice.reducer;
 
+// Lấy danh sách waitingList cho component.
 export const {
   selectAll: selectWaitingListForRoom,
   selectById: selectWaitingListForRoomByIds,
@@ -149,7 +154,7 @@ export const {
 
 export const { deleteForInivted } = waitingListForRoomSlice.actions;
 
-export const selectWaitingListForRoomStatus = (state) =>
-  state.parentRoom.waitingList.status;
+// export const selectWaitingListForRoomStatus = (state) =>
+//   state.parentRoom.waitingList.status;
 
 

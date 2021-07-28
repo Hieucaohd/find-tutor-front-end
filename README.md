@@ -1,70 +1,125 @@
-# Getting Started with Create React App
+## MỤC LỤC
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- [Tổng quan về trang web] (#tổng-quan-về-trang-web)
+  - [Mục đích để tạo ra trang web] (#mục-đích-để-tạo-ra-trang-web)
+  - [Cơ chế hoạt động của trang web] (#cơ-chế-hoạt-động-của-trang-web)
+  - [Công nghệ] (#công-nghệ)
+- [Bố cục của Code] (#bố-cục-của-code)
+  - [auth] (#auth)
+  - [header] (#header)
+  - [home] (#home)
+  - [parent_room] (#parent_room)
+  - [parent] (#parent)
+  - [tutor] (#tutor)
 
-## Available Scripts
+## Tổng quan về trang web
 
-In the project directory, you can run:
+### Mục đích để tạo ra trang web
 
-### `npm start`
+- để kết nối phụ huynh và gia sư, đồng thời xác thực danh tính của phụ huynh và gia sư giúp tăng độ tin cậy của 2 bên.
+- giúp phụ huynh tìm được người dạy phù hợp.
+- giúp phụ huynh quản lí chất lượng của các buổi dạy.
+- giúp gia sư tìm được lớp học một cách dễ dàng và quản lí lớp học.
+- giúp gia sư bảo vệ quyền lợi của mình về lương.
+- không mất phí.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Cơ chế hoạt động của trang web
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Bước 1: phụ huynh tạo lớp học trên trang web.
+Bước 2: các gia sư sau khi nhìn thấy lớp học sẽ tham giư ứng tuyển (thêm vào waitingList của lớp học).
+Bước 3: phụ huynh sau khi tìm hiểu về thông tin của gia sư trong danh sách ứng tuyển sẽ mời một số gia sư mà mình thấy thích hợp (thêm vào invitedList của lớp học).
+Bước 4: gia sư sẽ thấy thông báo được mời của phụ huynh và có 2 lựa chọn: đồng ý hoặc không đồng ý.
+Bước 5: nếu gia sư đồng ý thì sẽ được thêm vào danh sách dạy thử của lớp học đó và sẽ đến lớp học để dạy thử (thêm vào tryTeachingList của lớp học)
+Bước 6: sau một khoảng thời gian dạy thử, phụ huynh và gia sư sẽ quyết định có tiếp tục dạy nữa hay không.
+Bước 7: nếu 2 bên thống nhất tiếp tục dạy thì sẽ kí hợp đồng điện tử trên trang web và trang web sẽ giúp gia sư và phụ huynh quản lí BUỔI DẠY và HỌC PHÍ của lớp học (thêm vào teachingList của lớp học)
 
-### `npm test`
+### Công nghệ
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Back-end: dùng django (framework được viết hoàn toàn bằng python):
+  - Ưu điểm: giúp viết code nhanh, dễ dùng, có nhiều thư viện được viết sẵn, có thể áp dụng các công nghệ về bigdata, machine learning, AI, ...
+  - Nhược điểm: tốc độ chậm (tốc độ của Python), đi sâu cần tốn thời gian nghiên cứu (khó dùng nếu muốn can thiệp sâu), thường chỉ dùng cho các dự án lớn, ...
+- Front-end: dùng reactjs, redux, css (chưa áp dụng):
+  - Ưu điểm: code dễ tái sử dụng, logic rõ ràng, thời gian phát triển nhanh, có nhiều thư viện hỗ trợ, có thể dễ dàng để chuyển đổi sang app mobie (react-native), ...
+  - Nhược điểm: bố cục không được thống nhất, ...
+- Giao tiếp giữa back-end và front-end: thông qua rest API.
 
-### `npm run build`
+## Bố cục của Code
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+(front-end):
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Chia ra làm 6 feature chính:
+  - auth: dùng để lưu thông tin đăng nhập, các thông tin về user
+  - header: dùng để chuyển hướng qua lại giữa các trang.
+    Các trang gồm:
+  - home: hiển thị danh sách các lớp học, nơi phụ huynh tạo lớp học, ...
+  - parent_room: hiển thị chi tiết thông tin của từng lớp học.
+  - parent: nếu user là phụ huynh thì đây là trang các nhân giúp phụ huynh quản lí các lớp học đã tạo, ...
+  - tutor: nếu user là gia sư thì đây là trang cá nhân giúp gia sư quản lí các lớp học đã ứng tuyển, các lớp mà gia sư được mời dạy, ...
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### auth
 
-### `npm run eject`
+- Có 2 slice:
+  - authSlice.js:
+    - Lưu thông tin đăng nhập của user bao gồm:
+      - id của user trong database.
+      - token: mã được gửi về sau khi user đăng nhập và mình sẽ dùng mã này để giúp back-end xác thực user.
+      - type_tutor: true nếu user là gia sư.
+      - type_parent: true nếu user là phụ huynh.
+  - roomRelateTutorSlice.js:
+    - Lưu danh sách các lớp học mà gia sư đã ứng tuyển, lớp học mà gia sư được phụ huynh mời, danh sách các lớp học mà gia sư đang dạy, danh sách các lớp học mà gia sư dang dạy chính thức.
+- Có 1 component Login.js: để đăng nhập
+- Có 1 component Register.js: để đăng kí
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### header
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Có 1 thanh nav bar trong file MainNavigation.js
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### home
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Có 1 slice:
+  - homeSlice.js:
+    - Nạp danh sách lớp học từ server, thêm lớp học, xóa lớp học, ...
 
-## Learn More
+- Có 3 component:
+  - Home.js:
+    - Hiển thị danh sách lớp học.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+  - component/Room.js:
+    - Hiện thị thông tin chi tiết của lớp học.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  - CreateRoom.js:
+    - Hiện thị form để tạo lớp học.
 
-### Code Splitting
+### parent_room:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Có 5 slice:
+  - waitingListForRoomSlice.js:
+    - Nạp waitingList của lớp học từ server, thêm vào waitingList, xóa khỏi waitingList.
 
-### Analyzing the Bundle Size
+  - invitedListForRoomSlice.js:
+    - Nạp invitedList của lớp học từ server, thêm vào invitedList, xóa khỏa invitedList.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+  - tryTeachingForRoomSlice.js:
+    - Nạp tryTeachingList của lớp học từ server, thêm vào tryTeachingList, xóa khỏa tryTeachingList.
 
-### Making a Progressive Web App
+  - teachingForRoomSlice.js:
+    - Nạp teachingList của lớp học từ server.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+  - parentRoomSlice.js:
+    - Tổng hợp các danh sách waitingList, invitedList, tryTeachingList, teachingList.
 
-### Advanced Configuration
+- Có 5 component:
+  - ParentRoom.js:
+    - Hiện thị danh sách waitingList, invitedList, tryTeachingList, teachingList cho lớp học.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+  - WaitingList.js:
+    - Hiện thị danh sách waitingList.
 
-### Deployment
+  - InvitedList.js:
+    - Hiện thị danh sách invitedList.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  - TryTeaching.js:
+    - Hiện thị danh sách tryTeachingList.
+    
+  - Teaching.js:
+    - Hiện thị danh sách teachingList.

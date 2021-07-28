@@ -12,6 +12,7 @@ const initialState = invitedListForRoomAdapter.getInitialState({
   status: "idle",
 });
 
+// Lấy invitedList từ server cho lớp học.
 export const fetchInvitedListForRoom = createAsyncThunk(
   "invitedListForRoom/fetchInvitedListForRoom",
   async (args) => {
@@ -33,6 +34,7 @@ export const fetchInvitedListForRoom = createAsyncThunk(
   }
 );
 
+// Sau khi mời gia sư và gia sư được thêm vào invitedList của lớp học.
 export const addInvitedListForRoom = createAsyncThunk(
   "invitedListForRoom/addInvitedListForRoom",
   async (args, thunkAPI) => {
@@ -57,6 +59,7 @@ export const addInvitedListForRoom = createAsyncThunk(
   }
 );
 
+// Xóa gia sư khỏi invitedList của lớp học.
 export const deleteInvitedListForRoom = createAsyncThunk(
   "invitedListForRoom/deleteInvitedListForRoom",
   async (args, thunkAPI) => {
@@ -84,6 +87,7 @@ const invitedListForRoomSlice = createSlice({
   name: "invitedListForRoom",
   initialState,
   reducers: {
+    // Xóa khỏi invitedList sau khi gia sư được thêm vào tryTeachingList của lớp học.
     deleteForTryTeaching(state, action) {
       invitedListForRoomAdapter.removeOne(state, action.payload);
     },

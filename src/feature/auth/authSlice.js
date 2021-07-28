@@ -8,6 +8,7 @@ const initialState = {
   type_parent: "",
 };
 
+// Lấy: id, token, type_tutor, type_parent từ server.
 export const login = createAsyncThunk("auth/authLogin", async (args) => {
   return await fetch("http://localhost:8000/findTutor/getToken/", {
     method: "POST",
@@ -56,6 +57,7 @@ export default authSlice.reducer;
 
 export const { logout } = authSlice.actions;
 
+// Lấy: id, token, type_tutor, type_parent cho component 
 export const selectToken = (state) => state.auth.token;
 export const selectId_of_user = (state) => state.auth.id;
 export const selectType_tutor = (state) => state.auth.type_tutor;
