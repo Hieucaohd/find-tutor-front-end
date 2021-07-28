@@ -19,8 +19,8 @@ function Room({
   type_tutor,
 }) {
   const dispatch = useDispatch();
-  const [roomDetail, setRoomDetail] = useState(<div></div>);
-  const [isRenderRoomDetail, setIsRenderRoomDetail] = useState(false);
+  const [roomDetail, setRoomDetail] = useState(<div></div>);  // hiển thị thông tin của lớp học.
+  const [isRenderRoomDetail, setIsRenderRoomDetail] = useState(false);  // roomDetail: hiển thị danh sách waitingList, invitedList, try_teachingList, teachingList của lớp học.
 
   const handleDeleteRoom = (roomId) => {
     dispatch(deleteRoom({ roomId: roomId, token: token }));

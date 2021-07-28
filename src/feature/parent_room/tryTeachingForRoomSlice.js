@@ -12,6 +12,7 @@ const initialState = tryTeachingForRoomAdapter.getInitialState({
   status: "idle",
 });
 
+// Lấy danh sách tryTeachingList cho lớp học từ server.
 export const fetchTryTeachingForRoom = createAsyncThunk(
   "tryTeachingForRoom/fetchTryTeachingForRoom",
   async (args) => {
@@ -33,6 +34,7 @@ export const fetchTryTeachingForRoom = createAsyncThunk(
   }
 );
 
+// sau khi gia sư và phụ huynh đồng ý để dạy thử thì thêm gia sư vào danh sách dạy thử của lớp học.
 export const addTryTeachingForRoom = createAsyncThunk(
   "tryTeachingForRoom/addTryTeachingForRoom",
   async (args, thunkAPI) => {
@@ -57,6 +59,7 @@ export const addTryTeachingForRoom = createAsyncThunk(
   }
 );
 
+// Xóa gia sư khỏi danh sách dạy thử của lớp học.
 export const deleteTryTeachingForRoom = createAsyncThunk(
   "tryTeachingForRoom/deleteTryTeachingForRoom",
   async (args, thunkAPI) => {

@@ -10,6 +10,7 @@ const initialState = roomListAdapter.getInitialState({
   status: "idle",
 });
 
+// Lấy danh sách các lớp từ server.
 export const fetchRoomList = createAsyncThunk(
   "roomList/fetchRoomList",
   async (args) => {
@@ -28,6 +29,7 @@ export const fetchRoomList = createAsyncThunk(
   }
 );
 
+// Tạo lớp học.
 export const addRoom = createAsyncThunk("roomList/addRoom", async (args) => {
   const { roomInfor, token } = args;
   return fetch("http://localhost:8000/findTutor/roomList/", {
@@ -46,6 +48,7 @@ export const addRoom = createAsyncThunk("roomList/addRoom", async (args) => {
   });
 });
 
+// xóa lớp học.
 export const deleteRoom = createAsyncThunk(
   "roomList/deleteRoom",
   async (args) => {
@@ -113,5 +116,7 @@ const roomListSlice = createSlice({
 
 export default roomListSlice.reducer;
 
+
+// lấy danh sách lớp học cho component.
 export const { selectAll: selectRoomList, selectById: selectRoomByIds } =
   roomListAdapter.getSelectors((state) => state.roomList);
