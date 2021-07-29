@@ -11,8 +11,6 @@
   - [parent_room](#parent_room)
   - [parent](#parent)
   - [tutor](#tutor)
-- [API document](#API-document)
-  - [login và register](#login-và-register)
 
 ## Tổng quan về trang web
 
@@ -79,18 +77,14 @@ Bước 7: nếu 2 bên thống nhất tiếp tục dạy thì sẽ kí hợp đ
 ### home
 
 - Có 1 slice:
-
   - homeSlice.js:
     - Nạp danh sách lớp học từ server, thêm lớp học, xóa lớp học, ...
 
 - Có 3 component:
-
   - Home.js:
-
     - Hiển thị danh sách lớp học.
 
   - component/Room.js:
-
     - Hiện thị thông tin chi tiết của lớp học.
 
   - CreateRoom.js:
@@ -99,180 +93,35 @@ Bước 7: nếu 2 bên thống nhất tiếp tục dạy thì sẽ kí hợp đ
 ### parent_room:
 
 - Có 5 slice:
-
   - waitingListForRoomSlice.js:
-
     - Nạp waitingList của lớp học từ server, thêm vào waitingList, xóa khỏi waitingList.
 
   - invitedListForRoomSlice.js:
-
     - Nạp invitedList của lớp học từ server, thêm vào invitedList, xóa khỏa invitedList.
 
   - tryTeachingForRoomSlice.js:
-
     - Nạp tryTeachingList của lớp học từ server, thêm vào tryTeachingList, xóa khỏa tryTeachingList.
 
   - teachingForRoomSlice.js:
-
     - Nạp teachingList của lớp học từ server.
 
   - parentRoomSlice.js:
     - Tổng hợp các danh sách waitingList, invitedList, tryTeachingList, teachingList.
 
 - Có 5 component:
-
   - ParentRoom.js:
-
     - Hiện thị danh sách waitingList, invitedList, tryTeachingList, teachingList cho lớp học.
 
   - WaitingList.js:
-
     - Hiện thị danh sách waitingList.
 
   - InvitedList.js:
-
     - Hiện thị danh sách invitedList.
 
   - TryTeaching.js:
     - Hiện thị danh sách tryTeachingList.
+    
   - Teaching.js:
     - Hiện thị danh sách teachingList.
 
-## API ducument
 
-### login và register
-
-- args = {
-  - username
-  - pasword
-    }
-    "http://localhost:8000/findTutor/getToken/", {
-    method: "POST",
-    headers: {
-    "Content-Type": "application/json",
-    },
-    body: JSON.stringify(args),
-    }
-    => Mục đích: để đăng nhập và lấy mã token, id, type_tutor, type_parent
-
-args = {
-username
-pasword
-}
-"http://localhost:8000/findTutor/userList/", {
-method: "POST",
-headers: {
-"Content-Type": "application/json",
-},
-body: JSON.stringify(args),
-}
-=> Mục đích: để đăng kí, tạo mã token của user trong database.
-
-"http://localhost:8000/findTutor/informationAboutRoomOfTutorList/",
-{
-method: "GET",
-headers: {
-"Content-Type": "application/json",
-Authorization: `Token ${token}`,
-},
-}
-=> Mục đích: để lấy danh sách các waitingList, invitedList, tryTeachingList, teachingList của gia sư.
-
-### home:
-
-"http://localhost:8000/findTutor/roomList/",
-{
-method: "GET",
-headers: {
-"Content-Type": "application/json",
-Authorization: `Token ${token}`,
-},
-}
-=> Mục đích: để lấy danh sách tất cả các lớp học.
-
-"http://localhost:8000/findTutor/roomList/",
-{
-method: "POST",
-headers: {
-"Content-Type": "application/json",
-Authorization: `Token ${token}`,
-},
-body: JSON.stringify(roomInfor),
-}
-=> Mục đích: để tạo lớp học.
-
-`http://localhost:8000/findTutor/roomDetail/${roomId}`,
-{
-method: "DELETE",
-headers: {
-"Content-Type": "application/json",
-Authorization: `Token ${token}`,
-},
-}
-=> Mục đích: để xóa lớp học.
-
-### parent_room
-
-- waitingListForRoom
-
-`http://localhost:8000/findTutor/waitingTutorList/?pk_room=${roomId}`,
-{
-method: "GET",
-headers: {
-"Content-Type": "application/json",
-Authorization: `Token ${token}`,
-},
-}
-=> Mục đích: dùng để lấy danh sách gia sư ứng tuyển vào lớp học.
-
-`http://localhost:8000/findTutor/waitingTutorList/?pk_room=${roomId}`,
-{
-method: "POST",
-headers: {
-"Content-Type": "application/json",
-Authorization: `Token ${token}`,
-},
-}
-=> Mục đích: dùng để cho gia sư ứng tuyển vào lớp học.
-
-`http://localhost:8000/findTutor/waitingTutorDetail/${waitingId}`,
-{
-method: "DELETE",
-headers: {
-"Content-Type": "application/json",
-Authorization: `Token ${token}`,
-},
-}
-=> Mục đích: dùng để xóa gia sư khỏi danh sách ứng tuyển.
-
-- invitedListForRoom
-
-`http://localhost:8000/findTutor/listInvitedList/?pk_room=${roomId}`,
-{
-method: "GET",
-headers: {
-"Content-Type": "application/json",
-Authorization: `Token ${token}`,
-},
-}
-=> Mục đích: dùng để lấy danh sách các gia sư đã được mời để dạy thử.
-
-`http://localhost:8000/findTutor/waitingTutorDetail/${waitingId}`,
-{
-method: "PUT",
-headers: {
-"Content-Type": "application/json",
-Authorization: `Token ${token}`,
-},
-}
-=> Mục đích: dùng để gia sư chấp nhận dạy thử.
-
-`http://localhost:8000/findTutor/listInvitedDetail/${invitedId}`,
-{
-method: "DELETE",
-headers: {
-"Content-Type": "application/json",
-Authorization: `Token ${token}`,
-},
-}
-=> Mục đích: dùng để xóa gia sư khỏi danh sách mời dạy thử.
