@@ -17,7 +17,8 @@ function MainNavigation() {
 
   return (
     <div>
-      <ul>
+      {token && 
+        <ul>
         <li>
           <Link to="/">Home</Link>
         </li>
@@ -48,6 +49,7 @@ function MainNavigation() {
           </li>
         )}
       </ul>
+      }
     </div>
   );
 }

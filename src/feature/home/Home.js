@@ -41,7 +41,6 @@ function Home() {
   const list_room_waiting = useSelector(selectWaitingListForTutor); // lấy danh sách các lớp học đã ứng tuyển của gia sư từ roomRelateTutorSlice.js
   const list_room_invited = useSelector(selectInvitedListForTutor); // lấy danh sách các lớp học đã được mời của gia sư từ roomRelateTutorSlice.js
   const list_room_try_teaching = useSelector(selectTryTeachingForTutor); // lấy danh sách các lớp học đang dạy thử của gia sư từ roomRelateTutorSlice.js
-  
 
   const token = useSelector(selectToken); // lấy mã token từ authSlice.js
   const id_of_user = Number(useSelector(selectId_of_user)); // lấy id từ authSlice.js

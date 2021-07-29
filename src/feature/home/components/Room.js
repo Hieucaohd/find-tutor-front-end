@@ -7,6 +7,7 @@ import { addWaitingListForRoom } from "../../parent_room/waitingListForRoomSlice
 import { renderThem } from "../conditionFunctionToRender";
 
 import ParentRoom from "../../parent_room/ParentRoom";
+import { useHistory } from "react-router-dom";
 
 function Room({
   room,
@@ -21,6 +22,7 @@ function Room({
   const dispatch = useDispatch();
   const [roomDetail, setRoomDetail] = useState(<div></div>);  // hiển thị thông tin của lớp học.
   const [isRenderRoomDetail, setIsRenderRoomDetail] = useState(false);  // roomDetail: hiển thị danh sách waitingList, invitedList, try_teachingList, teachingList của lớp học.
+  const history = useHistory();
 
   const handleDeleteRoom = (roomId) => {
     dispatch(deleteRoom({ roomId: roomId, token: token }));
@@ -34,18 +36,24 @@ function Room({
     setIsRenderRoomDetail(false);
   };
 
-  const showRoomDetail = (room) => {
-    setIsRenderRoomDetail(true);
-    setRoomDetail(
-      <ParentRoom
-        room={room}
-        token={token}
-        userId={id_of_user}
-        type_tutor={String(type_tutor)}
-        closeRoomDetail={closeRoomDetail}
-      />
-    );
-  };
+  // const showRoomDetail = (room) => {
+  //   setIsRenderRoomDetail(true);
+  //   setRoomDetail(
+  //     // <ParentRoom
+  //     //   room={room}
+  //     //   token={token}
+  //     //   userId={id_of_user}
+  //     //   type_tutor={String(type_tutor)}
+  //     //   closeRoomDetail={closeRoomDetail}
+  //     // />
+
+  //   );
+  // };
+
+  const handleShowDetailRoom = (room) => {
+      //navigate to detail room
+      history.push(`/${room.id}`);
+  }
 
   return (
     <div>
@@ -70,7 +78,7 @@ function Room({
           ) : null}
         </div>
         <div>
-          <button onClick={() => showRoomDetail(room)}>show detail</button>
+          <button onClick={ () => handleShowDetailRoom(room)}>show detail</button>
         </div>
       </li>
       {isRenderRoomDetail && <div>{roomDetail}</div>}
