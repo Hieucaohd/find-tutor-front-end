@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -10,9 +11,7 @@ const selectToken = (state) => state.auth.token;
 function Login() {
   const dispatch = useDispatch();
   let history = useHistory();
-
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const {register, handleSubmit} = useForm();
 
   const token = useSelector(selectToken);
 
@@ -22,10 +21,10 @@ function Login() {
     }
   }, [token]);
 
-  const handleSubmit = () => {
+  const onSubmit = (data) => {
     const args = {
-      username: username,
-      password: password,
+      username: data.username,
+      password: data.password,
     };
 
     dispatch(login(args));
@@ -33,20 +32,19 @@ function Login() {
 
   return (
     <div>
-      <input
-        type="text"
-        onChange={(e) => setUsername(e.target.value)}
-        value={username}
-      />
-      <br></br>
-      <input
-        type="password"
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-      />
-      <br></br>
-      <button onClick={handleSubmit}>Login</button>
-    </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="form-control">
+            <label>Username</label>
+            <input name="username" type="text" {...register("username", { required: true })}/>
+          </div>
+          <div className="form-control">
+            <label>Password</label>
+            <input name="password" type="password" {...register("password", { required: true })}/>
+          </div>
+          <button type="submit">Sign in</button>
+        </form>   
+        <button>Sign up</button>          
+    </div>              
   );
 }
 

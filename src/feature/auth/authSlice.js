@@ -10,7 +10,6 @@ const initialState = {
 
 // Lấy: id, token, type_tutor, type_parent từ server.
 export const login = createAsyncThunk("auth/authLogin", async (args) => {
-  // args gồm username và password.
   return await fetch("http://localhost:8000/findTutor/getToken/", {
     method: "POST",
     headers: {
@@ -22,6 +21,7 @@ export const login = createAsyncThunk("auth/authLogin", async (args) => {
       return response.json();
     } else {
       alert("Ten dang nhat hoac mat khau khong dung.");
+      return response.json();
     }
   });
 });
@@ -44,13 +44,11 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.status = "idle";
-        if (action.payload) {
-          const { token, id, type_tutor, type_parent } = action.payload;
-          state.token = token;
-          state.id = id;
-          state.type_tutor = type_tutor;
-          state.type_parent = type_parent;
-        }
+        const { token, id, type_tutor, type_parent } = action.payload;
+        state.token = token;
+        state.id = id;
+        state.type_tutor = type_tutor;
+        state.type_parent = type_parent;
       });
   },
 });
@@ -59,7 +57,7 @@ export default authSlice.reducer;
 
 export const { logout } = authSlice.actions;
 
-// Lấy: id, token, type_tutor, type_parent cho component
+// Lấy: id, token, type_tutor, type_parent cho component 
 export const selectToken = (state) => state.auth.token;
 export const selectId_of_user = (state) => state.auth.id;
 export const selectType_tutor = (state) => state.auth.type_tutor;
