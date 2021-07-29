@@ -1,16 +1,17 @@
 ## MỤC LỤC
 
-- [Tổng quan về trang web] (#tổng-quan-về-trang-web)
-  - [Mục đích để tạo ra trang web] (#mục-đích-để-tạo-ra-trang-web)
-  - [Cơ chế hoạt động của trang web] (#cơ-chế-hoạt-động-của-trang-web)
-  - [Công nghệ] (#công-nghệ)
-- [Bố cục của Code] (#bố-cục-của-code)
-  - [auth] (#auth)
-  - [header] (#header)
-  - [home] (#home)
-  - [parent_room] (#parent_room)
-  - [parent] (#parent)
-  - [tutor] (#tutor)
+- [Tổng quan về trang web](#tổng-quan-về-trang-web)
+  - [Mục đích để tạo ra trang web](#mục-đích-để-tạo-ra-trang-web)
+  - [Cơ chế hoạt động của trang web](#cơ-chế-hoạt-động-của-trang-web)
+  - [Công nghệ](#công-nghệ)
+- [Bố cục của Code](#bố-cục-của-code)
+  - [auth](#auth)
+  - [header](#header)
+  - [home](#home)
+  - [parent_room](#parent_room)
+  - [parent](#parent)
+  - [tutor](#tutor)
+- [API document](#API-document)
 
 ## Tổng quan về trang web
 
@@ -123,3 +124,5 @@ Bước 7: nếu 2 bên thống nhất tiếp tục dạy thì sẽ kí hợp đ
     
   - Teaching.js:
     - Hiện thị danh sách teachingList.
+
+## API ducument
