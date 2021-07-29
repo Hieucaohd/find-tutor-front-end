@@ -121,7 +121,7 @@ function ParentRoom(props) {
   return (
     <div>
       <div>
-        room detail: {roomDetail.id}, {roomDetail.location}
+        room detail: {roomDetail?.id}, {roomDetail?.location}
         {type_tutor === "true" &&
         renderThem(
           roomDetail.id,

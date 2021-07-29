@@ -52,7 +52,7 @@ function Room({
 
   const handleShowDetailRoom = (room) => {
       //navigate to detail room
-      history.push(`/${room.id}`);
+      history.push(`/room/${room.id}`);
   }
 
   return (
