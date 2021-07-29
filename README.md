@@ -131,7 +131,7 @@
 ### login và register
 
 
-args = {
+args = {\n
   username
   pasword
 }
