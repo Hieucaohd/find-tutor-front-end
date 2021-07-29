@@ -12,8 +12,6 @@ import {
 
 import { fetchRoomList, selectRoomList } from "./homeSlice";
 
-import { logout } from "../auth/authSlice";
-
 import Room from "./components/Room";
 
 import {
@@ -98,7 +96,7 @@ function Home() {
 
   return (
     <div>
-      <button onClick={() => dispatch(logout())}>Logout</button>
+      {/* <button onClick={() => dispatch(logout())}>Logout</button> */}
 
       <ul>{renderRoomList}</ul>
 
