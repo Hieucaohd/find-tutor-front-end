@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import {
   selectToken,
@@ -8,9 +8,12 @@ import {
   selectType_parent,
 } from "../auth/authSlice";
 
+import { logout } from "../auth/authSlice";
+
 import React from "react";
 
 function MainNavigation() {
+  const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const type_tutor = useSelector(selectType_tutor);
   const type_parent = useSelector(selectType_parent);
@@ -22,7 +25,17 @@ function MainNavigation() {
           <Link to="/">Home</Link>
         </li>
 
-        {token ? null : (
+        {token ? (
+          <li>
+            <button
+              onClick={() => {
+                dispatch(logout());
+              }}
+            >
+              logout
+            </button>
+          </li>
+        ) : (
           <li>
             <Link to="/login">Login</Link>
           </li>
