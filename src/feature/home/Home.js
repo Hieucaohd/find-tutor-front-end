@@ -95,7 +95,6 @@ function Home() {
 
   return (
     <div>
-      {/* <button onClick={() => dispatch(logout())}>Logout</button> */}
 
       <ul>{renderRoomList}</ul>
 

@@ -1,9 +1,7 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-
 import { login } from "./authSlice";
 
 const selectToken = (state) => state.auth.token;
@@ -31,7 +29,7 @@ function Login() {
   };
 
   return (
-    <div>
+    <div class="login">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control">
             <label>Username</label>

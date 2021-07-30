@@ -9,15 +9,15 @@ import ParentRoom from "./feature/parent_room/ParentRoom";
 
 function App() {
   return (
-    <div>
+    <div className="App">
       <BrowserRouter>
         <MainNavigation />
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route exact path="/" component={Home} />
-          <Route exact path="/:roomId" component={ParentRoom}/>
           <Route exact path="/tutorInfor" component={TutorInfor} />
           <Route exact path="/parentInfor" component={ParentInfor} />
+          <Route exact path="/room/:roomId" component={ParentRoom}/>
         </Switch>
       </BrowserRouter>
     </div>
