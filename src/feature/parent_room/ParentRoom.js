@@ -27,10 +27,6 @@ import {
 
 
 
-
-
-
-
 ParentRoom.propTypes = {
   
 };

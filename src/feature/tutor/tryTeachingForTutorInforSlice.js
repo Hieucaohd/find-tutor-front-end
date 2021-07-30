@@ -77,7 +77,14 @@ export const deleteTryTeachingForTutorInfor = createAsyncThunk(
 const tryTeachingForTutorInforSlice = createSlice({
   name: "tryTeachingForTutorInfor",
   initialState,
-  reducers: {},
+  reducers: {
+    deleteForTeachingTutorInfor(state, action) {
+      tryTeachingForTutorInforAdapter.removeOne(state, action.payload);
+    },
+    upsertForTeachingTutorInfor(state, action) {
+      tryTeachingForTutorInforAdapter.upsertOne(state, action.payload);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTryTeachingForTutorInfor.pending, (state, action) => {
@@ -124,6 +131,10 @@ export default tryTeachingForTutorInforSlice.reducer;
 export const {
   selectAll: selectTryTeachingForTutorInfor,
   selectById: selectTryTeachingForTutorInforByIds,
+
 } = tryTeachingForTutorInforAdapter.getSelectors(
   (state) => state.tutorInfor.tryTeaching
 );
+
+export const { deleteForTeachingTutorInfor, upsertForTeachingTutorInfor } =
+  tryTeachingForTutorInforSlice.actions;

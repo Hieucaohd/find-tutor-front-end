@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { selectId_of_user, selectToken } from "../auth/authSlice";
 import {
   deleteInvitedListForTutorInfor,
@@ -7,6 +8,7 @@ import {
 } from "./invitedListForTutorInforSlice";
 import {
   addTeachingForTutorInfor,
+  addToTeachingTutorInfor,
   fetchTeachingForTutorInfor, selectTeachingForTutorInfor
 } from "./teachingForTutorInforSlice";
 import {
@@ -19,17 +21,17 @@ import {
   fetchWaitingListForTutorInfor, selectWaitingListForTutorInfor
 } from "./waitingListForTutorInforSlice";
 
-
-
-
 function TutorInfor() {
   const dispatch = useDispatch();
-
+  const history = useHistory();
   const token = useSelector(selectToken);
 
   //thông tin người dùng
   const id_of_user = useSelector(selectId_of_user);
 
+  if(!token) {
+    history.push("/login");
+  }
 
   useEffect(() => {
     if (token) {
@@ -58,14 +60,13 @@ function TutorInfor() {
 
   //đồng ý dạy chính thức
   const handleTeach = (tryTeachId) => {
-    dispatch(addTeachingForTutorInfor({try_teachingId: tryTeachId, token: token}));
+    addToTeachingTutorInfor({try_teachingId: tryTeachId, token: token, dispatch: dispatch});
   }
 
   //không đồng ý dạy chính thức, xóa khỏi danh sách dạy thử
   const handleDontTeach = (tryTeachId) => {
     dispatch(deleteTryTeachingForTutorInfor({try_teachingId: tryTeachId, token: token}))
   }
-
 
   const waitingList = useSelector(selectWaitingListForTutorInfor);
   const renderWaitingList = waitingList.map((waiting) => {
@@ -98,7 +99,13 @@ function TutorInfor() {
       <div>
         <li key={try_teaching.id}>
           id: {try_teaching.id}, parent_room: {try_teaching.parent_room}
-          <button onCLick = { () => handleTeach(try_teaching.id) }>Dong y day chinh thuc</button>
+          
+            {try_teaching.tutor_agree ? (
+            <button onClick={() => handleTeach(try_teaching.id)}>
+              Dong y day chinh thuc
+            </button>
+          ) : <button>Cho phu huynh dong y</button>}
+          
           <button onClick = { () => handleDontTeach(try_teaching.id) }>Khong muon day tiep</button>
         </li>
       </div>

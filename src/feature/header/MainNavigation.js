@@ -2,15 +2,12 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import './styles.scss'
 
-
 import {
   selectToken,
   selectType_tutor,
   selectType_parent,
   logout,
 } from "../auth/authSlice";
-
-import { logout } from "../auth/authSlice";
 
 import React from "react";
 
@@ -19,7 +16,6 @@ function MainNavigation() {
   const token = useSelector(selectToken);
   const type_tutor = useSelector(selectType_tutor);
   const type_parent = useSelector(selectType_parent);
-  const dispatch = useDispatch();
   const history = useHistory();
   const handleLogOut = () => {
     dispatch(logout());
