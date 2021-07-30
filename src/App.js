@@ -9,7 +9,7 @@ import ParentRoom from "./feature/parent_room/ParentRoom";
 
 function App() {
   return (
-    <div>
+    <div className="App">
       <BrowserRouter>
         <MainNavigation />
         <Switch>

@@ -1,11 +1,12 @@
-import { Link } from "react-router-dom";
-
-import { useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import './styles.scss'
 
 import {
   selectToken,
   selectType_tutor,
   selectType_parent,
+  logout,
 } from "../auth/authSlice";
 
 import React from "react";
@@ -14,20 +15,19 @@ function MainNavigation() {
   const token = useSelector(selectToken);
   const type_tutor = useSelector(selectType_tutor);
   const type_parent = useSelector(selectType_parent);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const handleLogOut = () => {
+    dispatch(logout());
+    history.push('/login');
+  }
 
   return (
-    <div>
-      {token && 
-        <ul>
+    <div className="navbar">
+      {token && <ul>
         <li>
           <Link to="/">Home</Link>
         </li>
-
-        {token ? null : (
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-        )}
 
         {type_parent ? (
           <li>
@@ -48,8 +48,10 @@ function MainNavigation() {
             <button>Toi muon dang ki lam gia su</button>
           </li>
         )}
-      </ul>
-      }
+        <li>
+          <button onClick={() =>handleLogOut()}>Logout</button>
+        </li>
+      </ul>}
     </div>
   );
 }

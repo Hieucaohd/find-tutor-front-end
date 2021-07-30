@@ -1,53 +1,35 @@
-import React from "react";
-
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
-import { selectRoomList } from "../home/homeSlice";
-
+import { useRouteMatch } from "react-router-dom";
+import { selectId_of_user, selectToken, selectType_tutor } from "../auth/authSlice";
+import {
+  selectInvitedListForTutor,
+  selectTryTeachingForTutor, selectWaitingListForTutor
+} from "../auth/roomRelateTutorSlice";
 import { renderThem } from "../home/conditionFunctionToRender";
-
+import { selectRoomList } from "../home/homeSlice";
+import InvitedList from "./component/InvitedList";
+import Teaching from "./component/Teaching";
+import TryTeaching from "./component/TryTeaching";
+import WaitingList from "./component/WaitingList";
 import {
-  selectWaitingListForRoom,
-  fetchWaitingListForRoom,
-  addWaitingListForRoom,
-  deleteWaitingListForRoom,
-} from "./waitingListForRoomSlice";
-import {
-  selectInvitedListForRoom,
-  fetchInvitedListForRoom,
-  addInvitedListForRoom,
-  deleteInvitedListForRoom,
-  deleteForTryTeaching,
+  fetchInvitedListForRoom, selectInvitedListForRoom
 } from "./invitedListForRoomSlice";
 import {
-  selectTryTeachingForRoom,
-  fetchTryTeachingForRoom,
-  addTryTeachingForRoom,
-  deleteForTeaching,
-  deleteTryTeachingForRoom,
+  fetchTeachingForRoom, selectTeachingForRoom
+} from "./teachingForRoomSlice";
+import {
+  fetchTryTeachingForRoom, selectTryTeachingForRoom
 } from "./tryTeachingForRoomSlice";
 import {
-  selectTeachingForRoom,
-  fetchTeachingForRoom,
-  addTeachingForRoom,
-  addToTeachingForRoom,
-} from "./teachingForRoomSlice";
-
-import {
-  fetchRoomRelateTutor,
-  selectWaitingListForTutor,
-  selectInvitedListForTutor,
-  selectTryTeachingForTutor,
-  selectTeachingForTutor,
-} from "../auth/roomRelateTutorSlice";
+  addWaitingListForRoom, fetchWaitingListForRoom, selectWaitingListForRoom
+} from "./waitingListForRoomSlice";
 
 
-import WaitingList from "./component/WaitingList";
-import InvitedList from "./component/InvitedList";
-import TryTeaching from "./component/TryTeaching";
-import Teaching from "./component/Teaching";
-import { useRouteMatch } from "react-router-dom";
-import { selectToken, selectId_of_user, selectType_tutor, } from "../auth/authSlice";
+
+
+
+
 
 ParentRoom.propTypes = {
   

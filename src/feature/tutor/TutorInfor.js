@@ -1,31 +1,35 @@
-import React from "react";
-
-import { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import { selectToken } from "../auth/authSlice";
-
+import { selectId_of_user, selectToken } from "../auth/authSlice";
 import {
-  selectWaitingListForTutorInfor,
-  fetchWaitingListForTutorInfor,
-} from "./waitingListForTutorInforSlice";
-import {
-  selectInvitedListForTutorInfor,
-  fetchInvitedListForTutorInfor,
+  deleteInvitedListForTutorInfor,
+  fetchInvitedListForTutorInfor, selectInvitedListForTutorInfor
 } from "./invitedListForTutorInforSlice";
 import {
-  selectTryTeachingForTutorInfor,
-  fetchTryTeachingForTutorInfor,
+  addTeachingForTutorInfor,
+  fetchTeachingForTutorInfor, selectTeachingForTutorInfor
+} from "./teachingForTutorInforSlice";
+import {
+  addTryTeachingForTutorInfor,
+  deleteTryTeachingForTutorInfor,
+  fetchTryTeachingForTutorInfor, selectTryTeachingForTutorInfor
 } from "./tryTeachingForTutorInforSlice";
 import {
-  selectTeachingForTutorInfor,
-  fetchTeachingForTutorInfor,
-} from "./teachingForTutorInforSlice";
+  deleteWaitingListForTutorInfor,
+  fetchWaitingListForTutorInfor, selectWaitingListForTutorInfor
+} from "./waitingListForTutorInforSlice";
+
+
+
 
 function TutorInfor() {
   const dispatch = useDispatch();
 
   const token = useSelector(selectToken);
+
+  //thông tin người dùng
+  const id_of_user = useSelector(selectId_of_user);
+
 
   useEffect(() => {
     if (token) {
@@ -37,13 +41,39 @@ function TutorInfor() {
     }
   }, [token]);
 
+  //xóa khỏi danh sách đợi
+  const handleDeleteWaiting = (waitingId) => {
+    dispatch(deleteWaitingListForTutorInfor({waitingId: waitingId, token: token}));
+  }
+
+  //đồng ý dạy thử, thêm vào danh sách dạy thử
+  const handleTryTeach = (invitedId) => {
+    dispatch(addTryTeachingForTutorInfor({ invitedId: invitedId, token: token }));
+  }
+
+  //không đồng ý dạy thử, xóa khỏi danh sách mời
+  const handleDontTryTeach = (invitedId) => {
+    dispatch(deleteInvitedListForTutorInfor({ invitedId: invitedId, token: token}));
+  }
+
+  //đồng ý dạy chính thức
+  const handleTeach = (tryTeachId) => {
+    dispatch(addTeachingForTutorInfor({try_teachingId: tryTeachId, token: token}));
+  }
+
+  //không đồng ý dạy chính thức, xóa khỏi danh sách dạy thử
+  const handleDontTeach = (tryTeachId) => {
+    dispatch(deleteTryTeachingForTutorInfor({try_teachingId: tryTeachId, token: token}))
+  }
+
+
   const waitingList = useSelector(selectWaitingListForTutorInfor);
   const renderWaitingList = waitingList.map((waiting) => {
     return (
       <div>
         <li key={waiting.id}>
           id: {waiting.id}, parent_room: {waiting.parent_room}
-          <button>delete</button>
+          <button onClick={() => handleDeleteWaiting(waiting.id)}>delete</button>
         </li>
       </div>
     );
@@ -55,8 +85,8 @@ function TutorInfor() {
       <div>
         <li key={invited.id}>
           id: {invited.id}, parent_room: {invited.parent_room}
-          <button>Dong y day thu</button>
-          <button>Khong dong y day thu</button>
+          <button onClick={() => handleTryTeach(invited.id)}>Dong y day thu</button>
+          <button onClick={() => handleDontTryTeach(invited.id)}>Khong dong y day thu</button>
         </li>
       </div>
     );
@@ -68,8 +98,8 @@ function TutorInfor() {
       <div>
         <li key={try_teaching.id}>
           id: {try_teaching.id}, parent_room: {try_teaching.parent_room}
-          <button>Dong y day chinh thuc</button>
-          <button>Khong muon day tiep</button>
+          <button onCLick = { () => handleTeach(try_teaching.id) }>Dong y day chinh thuc</button>
+          <button onClick = { () => handleDontTeach(try_teaching.id) }>Khong muon day tiep</button>
         </li>
       </div>
     );
@@ -88,9 +118,14 @@ function TutorInfor() {
 
   return (
     <div>
+      <h3>Id user: {id_of_user}</h3>
+      <h4>Danh sach cho</h4>
       <ul>{renderWaitingList}</ul>
+      <h4>Danh sach moi</h4>
       <ul>{renderInvitedList}</ul>
+      <h4>Danh sach day thu</h4>
       <ul>{renderTryTeaching}</ul>
+      <h4>Danh sach dang day</h4>
       <ul>{renderTeaching}</ul>
     </div>
   );
