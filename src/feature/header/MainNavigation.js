@@ -2,6 +2,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import './styles.scss'
 
+
 import {
   selectToken,
   selectType_tutor,
@@ -9,9 +10,12 @@ import {
   logout,
 } from "../auth/authSlice";
 
+import { logout } from "../auth/authSlice";
+
 import React from "react";
 
 function MainNavigation() {
+  const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const type_tutor = useSelector(selectType_tutor);
   const type_parent = useSelector(selectType_parent);
@@ -28,7 +32,6 @@ function MainNavigation() {
         <li>
           <Link to="/">Home</Link>
         </li>
-
         {type_parent ? (
           <li>
             <Link to="/parentInfor">Parent Infor</Link>
