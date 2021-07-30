@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { login } from "./authSlice";
-
 const selectToken = (state) => state.auth.token;
 
 function Login() {
@@ -29,19 +28,19 @@ function Login() {
   };
 
   return (
-    <div class="login">
+    <div className = "login">
+        <div className = "login__form"> 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control">
-            <label>Username</label>
-            <input name="username" type="text" {...register("username", { required: true })}/>
+            <input name="username" type="text" placeholder="Username" {...register("username", { required: true })}/>
           </div>
           <div className="form-control">
-            <label>Password</label>
-            <input name="password" type="password" {...register("password", { required: true })}/>
+            <input name="password" type="password" placeholder="pasword" {...register("password", { required: true })}/>
           </div>
           <button type="submit">Sign in</button>
         </form>   
-        <button>Sign up</button>          
+        <button>Sign up</button>
+        </div>
     </div>              
   );
 }
