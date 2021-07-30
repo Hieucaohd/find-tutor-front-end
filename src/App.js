@@ -15,8 +15,8 @@ function App() {
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route exact path="/" component={Home} />
-          <Route exact path="/tutorInfor" component={TutorInfor} />
-          <Route exact path="/parentInfor" component={ParentInfor} />
+          <Route exact path="/tutorInfo/:tutorId" component={TutorInfor} />
+          <Route exact path="/parentInfo/:parentId" component={ParentInfor} />
           <Route exact path="/room/:roomId" component={ParentRoom}/>
         </Switch>
       </BrowserRouter>

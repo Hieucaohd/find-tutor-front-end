@@ -7,6 +7,7 @@ import {
   selectType_tutor,
   selectType_parent,
   logout,
+  selectId_of_user,
 } from "../auth/authSlice";
 
 import React from "react";
@@ -17,6 +18,7 @@ function MainNavigation() {
   const type_tutor = useSelector(selectType_tutor);
   const type_parent = useSelector(selectType_parent);
   const history = useHistory();
+  const userId = useSelector(selectId_of_user);
   const handleLogOut = () => {
     dispatch(logout());
     history.push('/login');
@@ -30,7 +32,7 @@ function MainNavigation() {
         </li>
         {type_parent ? (
           <li>
-            <Link to="/parentInfor">Parent Infor</Link>
+            <Link to={`/parentInfo/${userId}`}>Parent Infor</Link>
           </li>
         ) : (
           <li>
@@ -40,7 +42,7 @@ function MainNavigation() {
 
         {type_tutor ? (
           <li>
-            <Link to="/tutorInfor">Tutor Infor</Link>
+            <Link to={`/tutorInfo/${userId}`}>Tutor Infor</Link>
           </li>
         ) : (
           <li>

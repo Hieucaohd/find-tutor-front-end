@@ -2,28 +2,33 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { selectId_of_user, selectToken } from "../auth/authSlice";
+import InvitedListForTutor from "./components/InvitedListForTutor";
+import TeachingListForTutor from "./components/TeachingListForTutor";
+import TryTeachingListForTutor from "./components/TryTeachingListForTutor";
+import WaitingListForTutor from "./components/WaitingListForTutor";
 import {
   deleteInvitedListForTutorInfor,
   fetchInvitedListForTutorInfor,
-  selectInvitedListForTutorInfor,
+  selectInvitedListForTutorInfor
 } from "./invitedListForTutorInforSlice";
 import {
-  addTeachingForTutorInfor,
   addToTeachingTutorInfor,
   fetchTeachingForTutorInfor,
-  selectTeachingForTutorInfor,
+  selectTeachingForTutorInfor
 } from "./teachingForTutorInforSlice";
 import {
   addTryTeachingForTutorInfor,
   deleteTryTeachingForTutorInfor,
   fetchTryTeachingForTutorInfor,
-  selectTryTeachingForTutorInfor,
+  selectTryTeachingForTutorInfor
 } from "./tryTeachingForTutorInforSlice";
 import {
   deleteWaitingListForTutorInfor,
   fetchWaitingListForTutorInfor,
-  selectWaitingListForTutorInfor,
+  selectWaitingListForTutorInfor
 } from "./waitingListForTutorInforSlice";
+
+
 
 function TutorInfor() {
   const dispatch = useDispatch();
@@ -33,6 +38,7 @@ function TutorInfor() {
   //thông tin người dùng
   const id_of_user = useSelector(selectId_of_user);
 
+  //chưa có tài khoản, đẩy về trang login
   if (!token) {
     history.push("/login");
   }
@@ -47,12 +53,12 @@ function TutorInfor() {
     }
   }, [token]);
 
-  //xóa khỏi danh sách đợi
+  //xóa khỏi danh sách chờ
   const handleDeleteWaiting = (waitingId) => {
     dispatch(
-      deleteWaitingListForTutorInfor({ waitingId: waitingId, token: token })
+    deleteWaitingListForTutorInfor({ waitingId: waitingId, token: token })
     );
-  };
+  };  
 
   //đồng ý dạy thử, thêm vào danh sách dạy thử
   const handleTryTeach = (invitedId) => {
@@ -87,85 +93,23 @@ function TutorInfor() {
     );
   };
 
+  //get lists
   const waitingList = useSelector(selectWaitingListForTutorInfor);
-  const renderWaitingList = waitingList.map((waiting) => {
-    return (
-      <div>
-        <li key={waiting.id}>
-          id: {waiting.id}, parent_room: {waiting.parent_room}
-          <button onClick={() => handleDeleteWaiting(waiting.id)}>
-            delete
-          </button>
-        </li>
-      </div>
-    );
-  });
-
   const invitedList = useSelector(selectInvitedListForTutorInfor);
-  const renderInvitedList = invitedList.map((invited) => {
-    return (
-      <div>
-        <li key={invited.id}>
-          id: {invited.id}, parent_room: {invited.parent_room}
-          <button onClick={() => handleTryTeach(invited.id)}>
-            Dong y day thu
-          </button>
-          <button onClick={() => handleDontTryTeach(invited.id)}>
-            Khong dong y day thu
-          </button>
-        </li>
-      </div>
-    );
-  });
-
   const tryTeaching = useSelector(selectTryTeachingForTutorInfor);
-  const renderTryTeaching = tryTeaching.map((try_teaching) => {
-    return (
-      <div>
-        <li key={try_teaching.id}>
-          id: {try_teaching.id}, parent_room: {try_teaching.parent_room}
-          {/* {try_teaching.tutor_agree ? (
-            <button onClick={() => handleTeach(try_teaching.id)}>
-              Dong y day chinh thuc
-            </button>
-          ) : <button>Cho phu huynh dong y</button>} */}
-          {!try_teaching.tutor_agree ? (
-            <button onClick={() => handleTeach(try_teaching.id)}>
-              Đồng ý dạy chính thức
-            </button>
-          ) : (
-            <button>Chờ phụ huynh đồng ý</button>
-          )}
-          <button onClick={() => handleDontTeach(try_teaching.id)}>
-            Khong muon day tiep
-          </button>
-        </li>
-      </div>
-    );
-  });
-
   const teaching = useSelector(selectTeachingForTutorInfor);
-  const renderTeaching = teaching.map((teach) => {
-    return (
-      <div>
-        <li key={teach.id}>
-          id: {teach.id}, parent_room: {teach.parent_room}
-        </li>
-      </div>
-    );
-  });
 
   return (
     <div>
       <h3>Id user: {id_of_user}</h3>
       <h4>Danh sach cho</h4>
-      <ul>{renderWaitingList}</ul>
-      <h4>Danh sach moi</h4>
-      <ul>{renderInvitedList}</ul>
+      <WaitingListForTutor waitingList = {waitingList} onDelete = {handleDeleteWaiting}/>
+      <h4>Danh sach moi</h4> 
+      <InvitedListForTutor invitedList = {invitedList} onTryTeach = {handleTryTeach} onDelete = {handleDontTryTeach}/>
       <h4>Danh sach day thu</h4>
-      <ul>{renderTryTeaching}</ul>
+      <TryTeachingListForTutor tryTeachingList = {tryTeaching} onTeach = {handleTeach} onDelete = {handleDontTeach}/>
       <h4>Danh sach dang day</h4>
-      <ul>{renderTeaching}</ul>
+      <TeachingListForTutor teachingList = {teaching}/>
     </div>
   );
 }
