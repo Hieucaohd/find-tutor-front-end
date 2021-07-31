@@ -1,8 +1,6 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectId_of_user, selectToken } from '../auth/authSlice';
-import CreateRoom from '../home/CreateRoom';
 import { selectRoomList } from '../home/homeSlice';
 import RoomCreated from './components/RoomCreated';
 
@@ -28,12 +26,6 @@ function ParentInfor() {
                 <RoomCreated room = {room} token = {token}  parentid = {parentId} />
             ))}
             </ul>
-            <div> 
-                <button onClick={showFormCreateRoom}>Create Room</button>
-                {isRenderCreateRoom && (
-                    <CreateRoom closeCreateRoom={closeFormCreateRoom} />
-                )}
-            </div>
         </div>
     )
 }

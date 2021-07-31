@@ -1,25 +1,20 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
 import { useHistory } from "react-router-dom";
-
-import CreateRoom from "./CreateRoom";
-
 import {
   fetchRoomRelateTutor,
 } from "../auth/roomRelateTutorSlice";
-
 import { fetchRoomList, selectRoomList } from "./homeSlice";
-
 import Room from "./components/Room";
-
 import {
   selectToken,
   selectId_of_user,
   selectType_tutor,
   selectType_parent,
 } from "../auth/authSlice";
+import { Button, Grid } from "@material-ui/core";
+import "./styles.scss"
 
 const selectWaitingListForTutor = (state) =>
   state.roomRelateTutor.list_room_waiting;
@@ -94,22 +89,12 @@ function Home() {
   };
 
   return (
-    <div>
+    <div className = "home">
 
-      <ul>{renderRoomList}</ul>
-
-      <div>
-        {type_parent ? (
-          <button onClick={showFormCreateRoom}>Create Room</button>
-        ) : null}
-      </div>
-
-      {isRenderCreateRoom && (
-        <CreateRoom closeCreateRoom={closeFormCreateRoom} />
-      )}
+      <Grid container spacing={2}>{renderRoomList}</Grid>
 
       <div>
-        <button onClick={refreshListRoom}>More Room</button>
+        <Button onClick={refreshListRoom} color="primary">More Room</Button>
       </div>
     </div>
   );

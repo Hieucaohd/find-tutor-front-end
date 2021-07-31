@@ -24,7 +24,7 @@ import {
 import {
   addWaitingListForRoom, fetchWaitingListForRoom, selectWaitingListForRoom
 } from "./waitingListForRoomSlice";
-
+import "./styles.scss"
 
 
 ParentRoom.propTypes = {
@@ -97,7 +97,7 @@ function ParentRoom(props) {
   };
 
   return (
-    <div>
+    <div className="parentroom">
       <div>
         room detail: {roomDetail?.id}, {roomDetail?.location}
         {type_tutor === "true" &&

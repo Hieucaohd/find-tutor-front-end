@@ -1,7 +1,7 @@
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import './styles.scss'
-
+import { FaHome, FaSignOutAlt } from "react-icons/fa";
 import {
   selectToken,
   selectType_tutor,
@@ -24,14 +24,16 @@ function MainNavigation() {
     history.push('/login');
   }
 
+  
+
   return (
     <div className="navbar">
       {token && <ul>
-        <li>
-          <Link to="/">Home</Link>
+        <li className = "navbar__home">
+        <Link to="/"> <FaHome /> </Link>
         </li>
         {type_parent ? (
-          <li>
+          <li className = "navbar__info">
             <Link to={`/parentInfo/${userId}`}>Parent Infor</Link>
           </li>
         ) : (
@@ -40,8 +42,16 @@ function MainNavigation() {
           </li>
         )}
 
+        {type_parent ? 
+          <li className = "navbar_createroom">  
+          <Link to="/createroom"> Create Room </Link>
+          </li>
+          : null
+        }
+        
+
         {type_tutor ? (
-          <li>
+          <li className = "navbar__info">
             <Link to={`/tutorInfo/${userId}`}>Tutor Infor</Link>
           </li>
         ) : (
@@ -49,8 +59,9 @@ function MainNavigation() {
             <button>Toi muon dang ki lam gia su</button>
           </li>
         )}
-        <li>
-          <button onClick={() =>handleLogOut()}>Logout</button>
+
+        <li className="navbar__signout">
+          <button onClick={() =>handleLogOut()}><FaSignOutAlt /></button>
         </li>
       </ul>}
     </div>
