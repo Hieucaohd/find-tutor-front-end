@@ -1,10 +1,44 @@
 .navbar {
-
+    background-color: #262d61;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 1000;
     ul {
+        margin: 0px;
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        height: 32px;
         li {
             list-style-type: none;
+        }
+        color: white;
+        padding: 0px 20px;
+    }
+
+    &_createroom,
+    &__info,
+    &__home {
+        a {
+            color: white;
+            text-decoration: none;
+            &:hover {
+                opacity: 0.6;
+                cursor: pointer;
+            }
+        }
+    }
+
+    &__signout button {
+        background-color: transparent;
+        border: none;
+        color: white;
+
+        &:hover {
+            opacity: 0.6;
+            cursor: pointer;
         }
     }
 

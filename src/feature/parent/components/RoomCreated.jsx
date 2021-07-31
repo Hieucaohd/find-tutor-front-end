@@ -28,7 +28,7 @@ function RoomCreated({ room ,token , parentid }){
           ) : null}
         </div>
         <div>
-          <button onClick={ () => handleShowDetailRoom(room)}>show detail</button>
+        <button onClick={ () => handleShowDetailRoom(room)}>show detail</button>
         </div>
       </li>
   );

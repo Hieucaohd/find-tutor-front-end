@@ -1,4 +1,4 @@
-export const renderThem = (roomId, list_room_waiting, list_room_invited, list_room_try_teaching) => {
+export const renderThem  = (roomId, list_room_waiting, list_room_invited, list_room_try_teaching) => {
     let isRender_1 = false;
     if (
       list_room_waiting &&
