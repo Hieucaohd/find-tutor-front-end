@@ -22,17 +22,20 @@ function Room({
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const handleDeleteRoom = (roomId) => {
+  const handleDeleteRoom = (e, roomId) => {
+    e.stopPropagation();
     dispatch(deleteRoom({ roomId: roomId, token: token }));
   };
 
-  const addToWaitingList = (roomId) => {
+  const addToWaitingList = (e, roomId) => {
+    e.stopPropagation()
     dispatch(addWaitingListForRoom({ roomId: roomId, token: token }));
   };
 
   const handleShowDetailRoom = (room) => {
       //navigate to detail room
       history.push(`/room/${room.id}`);
+
   }
 
   return (
@@ -59,7 +62,7 @@ function Room({
               list_room_invited,
               list_room_try_teaching
             ) ? (
-            <button onClick={() => addToWaitingList(room.id)}><IoIosAddCircle /></button>
+            <button onClick={(e) => addToWaitingList(e, room.id)}><IoIosAddCircle /></button>
           ) : null}
           {String(type_tutor) === "true" &&
               !renderThem(
@@ -71,7 +74,7 @@ function Room({
               <h5>Đã thêm</h5>
           ) : null}
           {room.parent === id_of_user ? (
-            <button onClick={() => handleDeleteRoom(room.id)}><TiDelete /></button>
+            <button onClick={(e) => handleDeleteRoom(e, room.id)}><TiDelete /></button>
           ) : null}
           </div>
         </Box>
