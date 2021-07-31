@@ -7,6 +7,7 @@ import { deleteRoom } from "../homeSlice";
 import './styles.scss';
 import { IoIosAddCircle } from "react-icons/io";
 import { renderThem } from "../conditionFunctionToRender";
+import { TiDelete } from "react-icons/ti";
 
 function Room({
   room,
@@ -47,7 +48,7 @@ function Room({
               <br/>
               Ngày dạy: {room.day_can_teach}
               <br/>
-              Parent Id{room.parent}
+              Parent Id: {room.parent}
               <br/>
               Yêu cầu khác: {room.other_require}
             </p>
@@ -59,7 +60,19 @@ function Room({
               list_room_try_teaching
             ) ? (
             <button onClick={() => addToWaitingList(room.id)}><IoIosAddCircle /></button>
-          ) : <h5>Đã thêm</h5>}
+          ) : null}
+          {String(type_tutor) === "true" &&
+              !renderThem(
+              room.id,
+              list_room_waiting,
+              list_room_invited,
+              list_room_try_teaching
+            ) ? (
+              <h5>Đã thêm</h5>
+          ) : null}
+          {room.parent === id_of_user ? (
+            <button onClick={() => handleDeleteRoom(room.id)}><TiDelete /></button>
+          ) : null}
           </div>
         </Box>
       </Grid>
