@@ -7,6 +7,9 @@ import TutorInfor from "./feature/tutor/TutorInfor";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ParentRoom from "./feature/parent_room/ParentRoom";
 import CreateRoom from "./feature/CreateRoom/CreateRoom";
+import Register from "./feature/register/Register";
+// import RegisterTutor from "./feature/register/RegisterTutor/RegisterTutor";
+// import RegisterParent from "./feature/register/RegisterParent/RegisterParent";
 
 function App() {
   return (
@@ -20,6 +23,7 @@ function App() {
           <Route exact path="/parentInfo/:parentId" component={ParentInfor} />
           <Route exact path="/room/:roomId" component={ParentRoom}/>
           <Route exact path="/createroom" component={CreateRoom}/>
+          <Route path="/signup" component={Register} />
         </Switch>
       </BrowserRouter>
     </div>

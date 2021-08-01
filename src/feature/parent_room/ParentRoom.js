@@ -44,7 +44,7 @@ function ParentRoom(props) {
   const list_room_invited = useSelector(selectInvitedListForTutor);
   const list_room_try_teaching = useSelector(selectTryTeachingForTutor);
   const roomDetail = roomList.find((room) => room.id === Number(roomId) );
-
+  console.log(roomDetail);
   const userId = Number(useSelector(selectId_of_user));
   useEffect(() => {
     const args = {
