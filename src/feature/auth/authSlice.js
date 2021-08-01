@@ -18,14 +18,15 @@ export const login = createAsyncThunk("auth/authLogin", async (args) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(args),
-  }).then((response) => {
-    if (response.ok) {
-      return response.json();
-    } else {
-      alert("Ten dang nhat hoac mat khau khong dung.");
-      return response.json();
-    }
-  });
+  })
+  // .then((response) => {
+  //   if (response.ok) {
+  //     return response.json();
+  //   } else {
+  //     alert("Ten dang nhat hoac mat khau khong dung.");
+  //     return response.json();
+  //   }
+  // });
 });
 
 const authSlice = createSlice({
@@ -38,11 +39,20 @@ const authSlice = createSlice({
       state.type_tutor = "";
       state.type_parent = "";
     },
-    setTutor(state, action) {
+    setTutorTrue(state, action) {
       state.type_tutor = true;
     },
-    setParent(state, action) {
+    setParentTrue(state, action) {
       state.type_parent = true;
+    },
+    setDataFromRegister(state, action) {
+      state.status = "idle";
+      const { token, refresh_token, id, type_tutor, type_parent } = action.payload;
+      state.token = token;
+      state.refresh_token = refresh_token;
+      state.id = id;
+      state.type_tutor = type_tutor;
+      state.type_parent = type_parent;
     }
   },
   extraReducers: (builder) => {
@@ -56,15 +66,15 @@ const authSlice = createSlice({
         state.token = token;
         state.refresh_token = refresh_token;
         state.id = id;
-        state.type_tutor = type_tutor;
-        state.type_parent = type_parent;
+        // state.type_tutor = type_tutor;
+        // state.type_parent = type_parent;
       });
   },
 });
 
 export default authSlice.reducer;
 
-export const { logout, setTutor, setParent } = authSlice.actions;
+export const { logout, setTutorTrue, setParentTrue, setDataFromRegister } = authSlice.actions;
 
 // Lấy: id, token, type_tutor, type_parent cho component 
 export const selectToken = (state) => state.auth.token;

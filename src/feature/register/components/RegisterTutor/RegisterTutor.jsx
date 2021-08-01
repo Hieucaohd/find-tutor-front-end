@@ -2,8 +2,9 @@ import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { selectToken } from '../../../auth/authSlice';
-import { registerAccount, registerInfo } from '../../registerAccount';
+import { selectToken, setDataFromRegister } from '../../../auth/authSlice';
+import { registerAccount, registerTutorInfor } from '../../registerAccount';
+import { useEffect } from 'react';
 
 import "./styles.scss";
 
@@ -20,9 +21,12 @@ function RegisterTutor(props) {
     const dispatch = useDispatch();
 
     //nếu đã đăng nhập trả về trang home
-    if(token) {
-        history.push("/");
-    }
+    useEffect(() => {
+        if(token) {
+            history.push("/");
+        }
+    }, [token])
+    
 
     //cắt lấy firsename và lastname 
     const getName = (name) => {
@@ -34,33 +38,77 @@ function RegisterTutor(props) {
 
 
     const onSubmit = async (data) => {
-        const responseAccount = await registerAccount({
+        // const tutorInfor = {
+        //     // profession: data.profession,
+        //     // universe: 'HNUE',
+        //     // experience: data.experience,
+        //     // achievement: data.achievement,
+        //     // // cap_day: null,
+        //     // // lop_day: null,
+        //     // khu_vuc_day: 'Ha Noi',
+        //     // // avatar: null,
+        //     // // identitycard: null,
+        //     // number_phone: data.telephone,
+        //     // number_of_identity_card: data.indentitycard,
+        //     // first_name: getName(data.name).first_name,
+        //     // last_name: getName(data.name).last_name,
+        //     // // birthday: data.birthday,
+        //     // location: 'Ha NOI',
+        //     profession: "sv",
+        //     university: "HNUE",
+        //     experience: "no",
+        //     achievement: "data.achievement",
+        //     cap_day: [2],
+        //     lop_day: [2],
+        //     khu_vuc_day: "Ha Noi",
+        //     // avatar: null,
+        //     // identitycard: null,
+        //     number_phone: "7891432471",
+        //     number_of_identity_card: "4781893471029",
+        //     first_name: "getName(data.name).first_name",
+        //     last_name: "getName(data.name).last_name",
+        //     // birthday: data.birthday,
+        //     birthday: "2002-02-19",
+        //     location: "Ha NOI",
+        // };
+
+        const tutorInfor = {
+            "profession": "sv",
+            "university": "Dai hoc quoc gia Ha Noi",
+            "experience": "di day 2 nam",
+            "achievement": "thu khoa dau ra cua dai hoc cong nghe",
+            "khu_vuc_day": "quan Hai Ba Trung, Ha Noi",
+            "number_phone": "0977157490",
+            "number_of_identity_card": "03030303030",
+            "first_name": "Cao",
+            "last_name": "Hieu",
+            "location": "Cau Giay, Ha Noi",
+            "lop_day": [1],
+            "cap_day": [2],
+            "birthday": "2002-02-19"
+        }
+
+        registerAccount({
             email: data.email,
             password: data.password,
             username: data.username,  
+        }).then(response => {
+            if(response.ok) {
+                alert("Đăng kí tài khoản thành công.")
+                const data_from_response = response.json();
+                data_from_response.then((data) => {
+                    console.log(data);
+                    const {email, username, token, refresh_token, id, type_tutor, type_parent} = data;
+                    const successfull = registerTutorInfor({token: token, tutorInfor: tutorInfor, dispatch: dispatch});
+                    if (successfull) {
+                        dispatch(setDataFromRegister({email, username, token, refresh_token, id, type_tutor, type_parent}))
+                    }
+                })
+            } else {
+                alert("Đăng kí tài khoản không thành công");
+            }
         })
-        const responseTutor = await registerInfo({
-            token: responseAccount.token,
-            tutorInfo: {
-                profession: data.profession,
-                universe: null,
-                experience: data.experience,
-                achievement: data.achievement,
-                cap_day: null,
-                lop_day: null,
-                khu_vuc_day: null,
-                avatar: null,
-                identitycard: null,
-                number_phone: data.telephone,
-                number_of_identity_card: data.indentitycard,
-                first_name: getName(data.name).first_name,
-                last_name: getName(data.name).last_name,
-                birthday: data.birthday,
-                location: null,
-            },
-            dispatch: dispatch
-        });
-        console.log(responseTutor);
+       
     }
     return (
         <div className="register__tutor">
@@ -111,7 +159,7 @@ function RegisterTutor(props) {
                     />
                     {errors.repassword && <span>Mật khẩu không trùng khớp</span>}
                 </div>
-                {/* <div className="register__tutor__form__control"> 
+                <div className="register__tutor__form__control"> 
                     <label>Tên của bạn</label>
                     <input 
                         name="text" 
@@ -173,7 +221,7 @@ function RegisterTutor(props) {
                         type="text"
                         {...register("achievement")}
                     />
-                </div> */}
+                </div>
                 <div className="register__tutor__form__control" type="submit"> 
                     <button>Đăng kí</button>
                 </div>
