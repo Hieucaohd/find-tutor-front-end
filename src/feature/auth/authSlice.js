@@ -1,8 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { server_name, token_prefix } from "../../namespace";
 
 const initialState = {
   status: "idle",
   token: "",
+  refresh_token: "",
   id: "",
   type_tutor: "",
   type_parent: "",
@@ -10,7 +12,7 @@ const initialState = {
 
 // Lấy: id, token, type_tutor, type_parent từ server.
 export const login = createAsyncThunk("auth/authLogin", async (args) => {
-  return await fetch("http://localhost:8000/findTutor/getToken/", {
+  return await fetch(`${server_name}/auth/login/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -44,8 +46,9 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.status = "idle";
-        const { token, id, type_tutor, type_parent } = action.payload;
+        const { token, refresh_token, id, type_tutor, type_parent } = action.payload;
         state.token = token;
+        state.refresh_token = refresh_token;
         state.id = id;
         state.type_tutor = type_tutor;
         state.type_parent = type_parent;

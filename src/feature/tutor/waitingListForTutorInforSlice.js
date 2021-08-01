@@ -4,6 +4,8 @@ import {
   createAsyncThunk,
 } from "@reduxjs/toolkit";
 
+import { server_name, token_prefix } from "../../namespace";
+
 import { deleteWaitingListForTutor } from "../auth/roomRelateTutorSlice";
 
 const waitingListForTutorInforAdapter = createEntityAdapter();
@@ -16,11 +18,11 @@ export const fetchWaitingListForTutorInfor = createAsyncThunk(
   "waitingListForTutorInfor/fetchWaitingListForTutorInfor",
   async (args, thunkAPI) => {
     const { token } = args;
-    return await fetch(`http://localhost:8000/findTutor/waitingTutorList/`, {
+    return await fetch(`${server_name}/findTutor/waitingTutorList/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
+        Authorization: `${token_prefix} ${token}`,
       },
     }).then((response) => response.json());
   }
@@ -31,12 +33,12 @@ export const deleteWaitingListForTutorInfor = createAsyncThunk(
   async (args, thunkAPI) => {
     const { waitingId, roomId, token } = args;
     return await fetch(
-      `http://localhost:8000/findTutor/waitingTutorDetail/${waitingId}`,
+      `${server_name}/findTutor/waitingTutorDetail/${waitingId}`,
       {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `${token_prefix} ${token}`,
         },
       }
     ).then((response) => {

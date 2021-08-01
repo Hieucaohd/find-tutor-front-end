@@ -9,6 +9,8 @@ import {
   upsertForTeaching,
 } from "./tryTeachingForRoomSlice";
 
+import { server_name, token_prefix } from "../../namespace";
+
 const teachingForRoomAdapter = createEntityAdapter();
 
 const initialState = teachingForRoomAdapter.getInitialState({
@@ -20,12 +22,12 @@ export const fetchTeachingForRoom = createAsyncThunk(
   async (args) => {
     const { roomId, token } = args;
     return fetch(
-      `http://localhost:8000/findTutor/teachingList/?pk_room=${roomId}`,
+      `${server_name}/findTutor/teachingList/?pk_room=${roomId}`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `${token_prefix} ${token}`,
         },
       }
     ).then((response) => {
@@ -41,12 +43,12 @@ export const fetchTeachingForRoom = createAsyncThunk(
 //   async (args, thunkAPI) => {
 //     const { try_teachingId, token } = args;
 //     return await fetch(
-//       `http://localhost:8000/findTutor/tryTeachingDetail/${try_teachingId}`,
+//       `${server_name}/findTutor/tryTeachingDetail/${try_teachingId}`,
 //       {
 //         method: "PUT",
 //         headers: {
 //           "Content-Type": "application/json",
-//           Authorization: `Token ${token}`,
+//           Authorization: `${token_prefix} ${token}`,
 //         },
 //       }
 //     ).then((response) => {
@@ -105,12 +107,12 @@ export const {
 export const addToTeachingForRoom = async (args) => {
   const { try_teachingId, token, dispatch } = args;
   return await fetch(
-    `http://localhost:8000/findTutor/tryTeachingDetail/${try_teachingId}`,
+    `${server_name}/findTutor/tryTeachingDetail/${try_teachingId}`,
     {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
+        Authorization: `${token_prefix} ${token}`,
       },
     }
   ).then((response) => {

@@ -26,9 +26,9 @@ function RegisterTutor(props) {
     const onSubmit = (data) => {
         console.log(data);
         const response = registerAccount({
-            username: data.username,
-            password: data.password,
             email: data.email,
+            password: data.password,
+            username: data.username,         
         })
         console.log(response);
     }

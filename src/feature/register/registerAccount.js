@@ -1,21 +1,22 @@
+import { server_name } from "..//..//namespace";
+
 export const registerAccount = async ( args ) => {
       return await fetch(
-        "http://localhost:8000/auth/register/",
+          `${server_name}/auth/register/`,
         {
           method: "POST",
-          body: {
-            username: args.username,
-            password: args.password,
-            email: args.email,      
-          }
+          header: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(args)
         }
       ).then((response) => {
-        if (response.ok) {
-            return response;
+        if (response.ok){
+            return response.JSON();
         } else {
           alert("không đăng kí tài khoản thành công");
         }
-      });
+    });
 }
 
 export const registerInfo = async ( args ) => {

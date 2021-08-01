@@ -22,7 +22,7 @@ function Login() {
 
   const onSubmit = (data) => {
     const args = {
-      username: data.username,
+      email: data.username,
       password: data.password,
     };
 

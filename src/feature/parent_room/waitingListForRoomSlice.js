@@ -4,6 +4,8 @@ import {
   createSlice,
 } from "@reduxjs/toolkit";
 
+import { server_name, token_prefix } from "../../namespace";
+
 import {
   addWaitingListForTutor,
   deleteWaitingListForTutor,
@@ -21,12 +23,12 @@ export const fetchWaitingListForRoom = createAsyncThunk(
   async (args, dispatch) => {
     const { roomId, token } = args;
     return fetch(
-      `http://localhost:8000/findTutor/waitingTutorList/?pk_room=${roomId}`,
+      `${server_name}/findTutor/waitingTutorList/?pk_room=${roomId}`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `${token_prefix} ${token}`,
         },
       }
     ).then((response) => {
@@ -45,12 +47,12 @@ export const addWaitingListForRoom = createAsyncThunk(
   async (args, thunkAPI) => {
     const { roomId, token } = args;
     return await fetch(
-      `http://localhost:8000/findTutor/waitingTutorList/?pk_room=${roomId}`,
+      `${server_name}/findTutor/waitingTutorList/?pk_room=${roomId}`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `${token_prefix} ${token}`,
         },
       }
     ).then((response) => {
@@ -72,12 +74,12 @@ export const deleteWaitingListForRoom = createAsyncThunk(
   async (args, thunkAPI) => {
     const { waitingId, roomId, token } = args;
     return await fetch(
-      `http://localhost:8000/findTutor/waitingTutorDetail/${waitingId}`,
+      `${server_name}/findTutor/waitingTutorDetail/${waitingId}`,
       {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `${token_prefix} ${token}`,
         },
       }
     ).then((response) => {
