@@ -4,6 +4,8 @@ import {
   createEntityAdapter,
 } from "@reduxjs/toolkit";
 
+import { server_name, token_prefix } from "../../namespace";
+
 const roomListAdapter = createEntityAdapter();
 
 const initialState = roomListAdapter.getInitialState({
@@ -15,11 +17,11 @@ export const fetchRoomList = createAsyncThunk(
   "roomList/fetchRoomList",
   async (args) => {
     const { token } = args;
-    return fetch("http://localhost:8000/findTutor/roomList/", {
+    return fetch(`${server_name}/findTutor/roomList/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
+        Authorization: `${token_prefix} ${token}`,
       },
     }).then((response) => {
       if (response.ok) {
@@ -32,11 +34,11 @@ export const fetchRoomList = createAsyncThunk(
 // Tạo lớp học.
 export const addRoom = createAsyncThunk("roomList/addRoom", async (args) => {
   const { roomInfor, token } = args;
-  return fetch("http://localhost:8000/findTutor/roomList/", {
+  return fetch(`${server_name}/findTutor/roomList/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Token ${token}`,
+      Authorization: `${token_prefix} ${token}`,
     },
     body: JSON.stringify(roomInfor),
   }).then((response) => {
@@ -53,11 +55,11 @@ export const deleteRoom = createAsyncThunk(
   "roomList/deleteRoom",
   async (args) => {
     const { roomId, token } = args;
-    return await fetch(`http://localhost:8000/findTutor/roomDetail/${roomId}`, {
+    return await fetch(`${server_name}/findTutor/roomDetail/${roomId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
+        Authorization: `${token_prefix} ${token}`,
       },
     }).then((response) => {
       if (response.ok) {

@@ -5,6 +5,8 @@ import {
 } from "@reduxjs/toolkit";
 import { upsertForTeachingTutorInfor, deleteForTeachingTutorInfor } from "./tryTeachingForTutorInforSlice";
 
+import { server_name, token_prefix } from "../../namespace";
+
 const teachingForTutorInforAdapter = createEntityAdapter();
 
 const initialState = teachingForTutorInforAdapter.getInitialState({
@@ -16,12 +18,12 @@ export const fetchTeachingForTutorInfor = createAsyncThunk(
   async (args) => {
     const { roomId, token } = args;
     return await fetch(
-      `http://localhost:8000/findTutor/teachingList/?pk_room=${roomId}`,
+      `${server_name}/findTutor/teachingList/?pk_room=${roomId}`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `${token_prefix} ${token}`,
         },
       }
     ).then((response) => response.json());
@@ -33,12 +35,12 @@ export const fetchTeachingForTutorInfor = createAsyncThunk(
 //   async (args, thunkAPI) => {
 //     const { try_teachingId, token } = args;
 //     return await fetch(
-//       `http://localhost:8000/findTutor/tryTeachingDetail/${try_teachingId}`,
+//       `${server_name}/findTutor/tryTeachingDetail/${try_teachingId}`,
 //       {
 //         method: "PUT",
 //         headers: {
 //           "Content-Type": "application/json",
-//           Authorization: `Token ${token}`,
+//           Authorization: `${token_prefix} ${token}`,
 //         },
 //       }
 //     ).then((response) => {
@@ -104,12 +106,12 @@ export const {
 export const addToTeachingTutorInfor = async (args) => {
   const { try_teachingId, token, dispatch } = args;
   return await fetch(
-    `http://localhost:8000/findTutor/tryTeachingDetail/${try_teachingId}`,
+    `${server_name}/findTutor/tryTeachingDetail/${try_teachingId}`,
     {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
+        Authorization: `${token_prefix} ${token}`,
       },
     }
   ).then((response) => {

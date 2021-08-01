@@ -4,6 +4,8 @@ import {
   createAsyncThunk,
 } from "@reduxjs/toolkit";
 
+import { server_name, token_prefix } from "../../namespace";
+
 import { deleteForTryTeaching } from "./invitedListForRoomSlice";
 
 const tryTeachingForRoomAdapter = createEntityAdapter();
@@ -18,12 +20,12 @@ export const fetchTryTeachingForRoom = createAsyncThunk(
   async (args) => {
     const { roomId, token } = args;
     return await fetch(
-      `http://localhost:8000/findTutor/tryTeachingList/?pk_room=${roomId}`,
+      `${server_name}/findTutor/tryTeachingList/?pk_room=${roomId}`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `${token_prefix} ${token}`,
         },
       }
     ).then((response) => {
@@ -40,12 +42,12 @@ export const addTryTeachingForRoom = createAsyncThunk(
   async (args, thunkAPI) => {
     const { invitedId, token } = args;
     return await fetch(
-      `http://localhost:8000/findTutor/listInvitedDetail/${invitedId}`,
+      `${server_name}/findTutor/listInvitedDetail/${invitedId}`,
       {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `${token_prefix} ${token}`,
         },
       }
     ).then((response) => {
@@ -65,12 +67,12 @@ export const deleteTryTeachingForRoom = createAsyncThunk(
   async (args, thunkAPI) => {
     const { try_teachingId, token } = args;
     return fetch(
-      `http://localhost:8000/findTutor/tryTeachingDetail/${try_teachingId}`,
+      `${server_name}/findTutor/tryTeachingDetail/${try_teachingId}`,
       {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `${token_prefix} ${token}`,
         },
       }
     ).then((response) => {

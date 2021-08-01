@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { server_name, token_prefix } from "../../namespace";
 
 const initialState = {
   status: "idle",
@@ -13,12 +14,12 @@ export const fetchRoomRelateTutor = createAsyncThunk(
   async (args) => {
     const { token } = args;
     return await fetch(
-      "http://localhost:8000/findTutor/informationAboutRoomOfTutorList/",
+      `${server_name}/findTutor/informationAboutRoomOfTutorList/`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `${token_prefix} ${token}`,
         },
       }
     ).then((response) => response.json());

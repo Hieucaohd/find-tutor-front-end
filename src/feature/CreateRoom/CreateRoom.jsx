@@ -1,20 +1,22 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { selectToken } from "../auth/authSlice";
+import { selectId_of_user, selectToken } from "../auth/authSlice";
 import { addRoom } from "../home/homeSlice";
 import "./styles.scss";
 import { Button } from "@material-ui/core";
 import { useForm } from "react-hook-form";
+import { Alert, AlertTitle } from "@material-ui/lab";
 
 function CreateRoom(props) {
   const dispatch = useDispatch();
   const history = useHistory();
   const days = [2, 3, 4, 5, 6, 7, 8];
   const token = useSelector(selectToken);
+  const parentId = useSelector(selectId_of_user);
   const { register, formState: { errors }, handleSubmit } = useForm();
-
+  let successRef = useRef(null);
   //if not logged in, will be redirected to the login page
   if(!token) {
     history.push("/login")
@@ -43,12 +45,19 @@ function CreateRoom(props) {
       roomInfor: roomInfor,
       token: token,
     };
-    dispatch(addRoom(args));
-    
+    const action = addRoom(args);
+    dispatch(action);
+    successRef.current.style.display = "block";
   }
 
   return (
     <div className="createroom">
+      <div className = "createroom__success" ref={successRef}>
+        <Alert severity="success" onClose={() => {history.push(`/parentinfo/${parentId}`)}}>
+          <AlertTitle>Success</AlertTitle>
+          Tạo phòng thành công
+        </Alert>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}> 
         
         <div className = "createroom__day"> 

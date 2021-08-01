@@ -4,6 +4,8 @@ import {
   createAsyncThunk,
 } from "@reduxjs/toolkit";
 
+import { server_name, token_prefix } from "../../namespace";
+
 const invitedListForTutorInforAdapter = createEntityAdapter();
 
 const initialState = invitedListForTutorInforAdapter.getInitialState({
@@ -14,11 +16,11 @@ export const fetchInvitedListForTutorInfor = createAsyncThunk(
   "invitedListForTutorInfor/fetchInvitedListForTutorInfor",
   async (args) => {
     const { token } = args;
-    return await fetch(`http://localhost:8000/findTutor/listInvitedList/`, {
+    return await fetch(`${server_name}/findTutor/listInvitedList/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
+        Authorization: `${token_prefix} ${token}`,
       },
     }).then((response) => response.json());
   }
@@ -29,12 +31,12 @@ export const deleteInvitedListForTutorInfor = createAsyncThunk(
   async (args, thunkAPI) => {
     const { invitedId, token } = args;
     return await fetch(
-      `http://localhost:8000/findTutor/listInvitedDetail/${invitedId}`,
+      `${server_name}/findTutor/listInvitedDetail/${invitedId}`,
       {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `${token_prefix} ${token}`,
         },
       }
     ).then((response) => {
