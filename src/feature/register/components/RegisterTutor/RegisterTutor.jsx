@@ -81,7 +81,7 @@ function RegisterTutor(props) {
                     />
                     {errors.repassword && <span>Mật khẩu không trùng khớp</span>}
                 </div>
-                <div className="register__tutor__form__control"> 
+                {/* <div className="register__tutor__form__control"> 
                     <label>Tên của bạn</label>
                     <input 
                         name="text" 
@@ -143,7 +143,7 @@ function RegisterTutor(props) {
                         type="text"
                         {...register("achievement")}
                     />
-                </div>
+                </div> */}
                 <div className="register__tutor__form__control" type="submit"> 
                     <button>Đăng kí</button>
                 </div>
