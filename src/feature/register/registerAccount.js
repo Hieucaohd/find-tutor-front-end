@@ -1,39 +1,46 @@
-import { server_name } from "..//..//namespace";
+import { server_name, token_prefix } from "../../namespace";
+import { setTutor } from "../auth/authSlice";
 
 export const registerAccount = async ( args ) => {
-      return await fetch(
-          `${server_name}/auth/register/`,
+      return await fetch(`${server_name}/auth/register/`,
         {
           method: "POST",
-          header: {
+          headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(args)
         }
       ).then((response) => {
         if (response.ok){
-            return response.JSON();
+            alert('dang ki tai khoan thanh cong');
+            
+            return response.json();
         } else {
           alert("không đăng kí tài khoản thành công");
+          return response.json();
         }
     });
 }
 
-export const registerInfo = async ( args ) => {
-    return await fetch(
-        "http://localhost:8000/findTutor/tutorList/",
+export const registerInfo = async( {token, tutorInfo, dispatch} ) => {
+    return await fetch(`${server_name}/findTutor/tutorList/`,
         {
           method: "POST",
-          header: args.token,
-          body: {
-            
-          }
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token_prefix} ${token}`,
+          },
+          body: JSON.stringify(tutorInfo)
         }
       ).then((response) => {
         if (response.ok) {
-            return response;
+            alert('dang ki thong tin thanh cong');
+            
+            dispatch(setTutor());
+            return true;
         } else {
           alert("không đăng kí tài khoản thành công");
+          return false;
         }
       });
 }

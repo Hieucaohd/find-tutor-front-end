@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { selectToken } from '../../../auth/authSlice';
-import { registerAccount } from '../../registerAccount';
+import { registerAccount, registerInfo } from '../../registerAccount';
 
 import "./styles.scss";
 
@@ -17,20 +17,50 @@ function RegisterTutor(props) {
     const {register, formState: { errors }, handleSubmit, watch} = useForm();
     const password = useRef({});
     password.current = watch("password", "");
+    const dispatch = useDispatch();
 
     //nếu đã đăng nhập trả về trang home
     if(token) {
         history.push("/");
     }
 
-    const onSubmit = (data) => {
-        console.log(data);
-        const response = registerAccount({
+    //cắt lấy firsename và lastname 
+    const getName = (name) => {
+        return {
+          first_name: name.slice(0, name.indexOf(' ') + 1),
+          last_name: name.slice(name.indexOf(' ') + 1)
+        }
+      }
+
+
+    const onSubmit = async (data) => {
+        const responseAccount = await registerAccount({
             email: data.email,
             password: data.password,
-            username: data.username,         
+            username: data.username,  
         })
-        console.log(response);
+        const responseTutor = await registerInfo({
+            token: responseAccount.token,
+            tutorInfo: {
+                profession: data.profession,
+                universe: null,
+                experience: data.experience,
+                achievement: data.achievement,
+                cap_day: null,
+                lop_day: null,
+                khu_vuc_day: null,
+                avatar: null,
+                identitycard: null,
+                number_phone: data.telephone,
+                number_of_identity_card: data.indentitycard,
+                first_name: getName(data.name).first_name,
+                last_name: getName(data.name).last_name,
+                birthday: data.birthday,
+                location: null,
+            },
+            dispatch: dispatch
+        });
+        console.log(responseTutor);
     }
     return (
         <div className="register__tutor">
