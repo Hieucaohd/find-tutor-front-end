@@ -38,6 +38,12 @@ const authSlice = createSlice({
       state.type_tutor = "";
       state.type_parent = "";
     },
+    setTutor(state, action) {
+      state.type_tutor = true;
+    },
+    setParent(state, action) {
+      state.type_parent = true;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -58,7 +64,7 @@ const authSlice = createSlice({
 
 export default authSlice.reducer;
 
-export const { logout } = authSlice.actions;
+export const { logout, setTutor, setParent } = authSlice.actions;
 
 // Lấy: id, token, type_tutor, type_parent cho component 
 export const selectToken = (state) => state.auth.token;

@@ -36,11 +36,7 @@ function MainNavigation() {
           <li className = "navbar__info">
             <Link to={`/parentInfo/${userId}`}>Parent Infor</Link>
           </li>
-        ) : (
-          <li>
-            <button>Toi muon dang ki lam phu huynh</button>
-          </li>
-        )}
+        ) : null}
 
         {type_parent ? 
           <li className = "navbar_createroom">  
@@ -54,11 +50,7 @@ function MainNavigation() {
           <li className = "navbar__info">
             <Link to={`/tutorInfo/${userId}`}>Tutor Infor</Link>
           </li>
-        ) : (
-          <li>
-            <button>Toi muon dang ki lam gia su</button>
-          </li>
-        )}
+        ) : null}
 
         <li className="navbar__signout">
           <button onClick={() =>handleLogOut()}><FaSignOutAlt /></button>
