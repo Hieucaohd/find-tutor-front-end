@@ -7,6 +7,7 @@ import { registerAccount, registerTutorInfor } from '../../registerAccount';
 import { useEffect } from 'react';
 
 import "./styles.scss";
+import { Button } from '@material-ui/core';
 
 RegisterTutor.propTypes = {
     
@@ -57,23 +58,21 @@ function RegisterTutor(props) {
     const onSubmit = async (data) => {
         console.log(data);
         const tutorInfor = {
-            "profession": data.profession,
-            "university": data.university,
-            "experience": data.experience,
-            "achievement": data.achievement,
-            "khu_vuc_day": data.teachLocation,
-            "number_phone": data.telephone,
-            "number_of_identity_card": data.identitycard,
-            "first_name": getName(data.name).first_name,
-            "last_name": getName(data.name).last_name,
-            "location" : "cau giay ha noi",
-            "lop_day": [1],
-            "cap_day": getTeachingLevel(data),
-            "birthday": data.birthday,
+            "profession": data.profession || null,
+            "university": data.university || null,
+            "experience": data.experience || null,
+            "achievement": data.achievement || null,
+            "khu_vuc_day": data.teachLocation || null,
+            "number_phone": data.telephone || null,
+            "number_of_identity_card": data.identirycard || null,
+            "first_name": getName(data.name).first_name || null,
+            "last_name": getName(data.name).last_name || null,
+            "location" : "cau giay ha noi" || null,
+            "lop_day": null,
+            "cap_day": getTeachingLevel(data) || null,
+            "birthday": data.birthday || null,
             "avatar": null,
         }
-
-        console.log(tutorInfor);
         registerAccount({
             email: data.email,
             password: data.password,
@@ -94,7 +93,6 @@ function RegisterTutor(props) {
                 alert("Đăng kí tài khoản không thành công");
             }
         })
-       
     }
     return (
         <div className="register__tutor">
@@ -121,7 +119,8 @@ function RegisterTutor(props) {
                             value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                         }})}
                     />
-                    {errors.email && <span>Nhập đúng email của bạn</span>}
+                    {errors.email && 
+                        <span className="register__tutor__form__error">Nhập đúng email của bạn</span>}
                 </div>
                 <div className="register__tutor__form__control"> 
                     <label>Mật khẩu</label>
@@ -130,8 +129,10 @@ function RegisterTutor(props) {
                         type="password"
                         {...register("password", { required: true, minLength: 6})}
                     />
-                    {errors.password && errors.password.type === "required" && <span>Nhập mật khẩu</span>}
-                    {errors.password && errors.password.type === "minLength" && <span>Mật khẩu cần ít nhất 6 kí tự</span>}
+                    {errors.password && errors.password.type === "required" && 
+                        <span className="register__tutor__form__error">Nhập mật khẩu</span>}
+                    {errors.password && errors.password.type === "minLength" && 
+                        <span className="register__tutor__form__error">Mật khẩu cần ít nhất 6 kí tự</span>}
                 </div>
                 <div className="register__tutor__form__control"> 
                     <label>Nhập lại mật khẩu</label>
@@ -143,16 +144,18 @@ function RegisterTutor(props) {
                             value === password.current || "The passwords do not match"
                         })}
                     />
-                    {errors.repassword && <span>Mật khẩu không trùng khớp</span>}
+                    {errors.repassword && 
+                        <span className="register__tutor__form__error">Mật khẩu không trùng khớp</span>}
                 </div>
                 <div className="register__tutor__form__control"> 
-                    <label>Tên của bạn</label>
+                    <label>Họ và Tên</label>
                     <input 
                         name="text" 
                         type="name"
                         {...register("name", { required: true})}
                     />             
-                    {errors.name && <span>Nhập đúng tên của bạn</span>}
+                    {errors.name && 
+                        <span className="register__tutor__form__error">Nhập đúng tên của bạn</span>}
                 </div>
                 <div className="register__tutor__form__control">
                     <label>Ngày sinh</label>
@@ -161,7 +164,8 @@ function RegisterTutor(props) {
                         type="date"
                         {...register("birthday", { required: true})}
                     />
-                    {errors.birthday && <span>Cần nhập ngày sinh</span>}
+                    {errors.birthday && 
+                        <span className="register__tutor__form__error">Cần nhập ngày sinh</span>}
                 </div>
                 <div className="register__tutor__form__control">
                     <label>Số điện thoại</label>
@@ -170,10 +174,11 @@ function RegisterTutor(props) {
                         type="number"
                         {...register("telephone", { required: true, minLength: 8})}
                     />
-                    {errors.telephone && <span>Cần nhập đúng số điện thoại</span>}
+                    {errors.telephone && 
+                        <span className="register__tutor__form__error">Cần nhập đúng số điện thoại</span>}
                 </div>
                 <div className="register__tutor__form__control">
-                    <label>Số CMND/CCCD</label>
+                    <label>Số CMND/CCCD (không bắt buộc)</label>
                     <input 
                         name="identitycard" 
                         type="number"
@@ -186,9 +191,9 @@ function RegisterTutor(props) {
                 </div>
                 <div className="register__tutor__form__control">
                     <label>Nghề nghiệp hiện tại</label>
-                    <select name="profession" {...register("profession")}>
-                        <option value="Sinh Viên">Sinh Viên</option>
-                        <option value="Giáo Viên">Giáo Viên</option>
+                    <select className="register__tutor__form__profession" name="profession" {...register("profession")}>
+                        <option value="sv">Sinh Viên</option>
+                        <option value="gv">Giáo Viên</option>
                     </select>
                 </div>
                 <div className="register__tutor__form__control" >
@@ -233,9 +238,9 @@ function RegisterTutor(props) {
                     </div>
                 </div>
                 <div className="register__tutor__form__control">
-                    <label>Khu vực dạy</label>
+                    <label>Khu vực dạy (không bắt buộc)</label>
                     <input 
-                        name="achievement" 
+                        name="teachlocation" 
                         type="text"
                         {...register("teachLocation")}
                     />
@@ -264,8 +269,8 @@ function RegisterTutor(props) {
                         {...register("achievement")}
                     />
                 </div>
-                <div className="register__tutor__form__control" type="submit"> 
-                    <button>Đăng kí</button>
+                <div className="register__tutor__form__control"> 
+                    <Button variant="contained" color="primary" type="submit">Đăng kí</Button>
                 </div>
             </form>
         </div>

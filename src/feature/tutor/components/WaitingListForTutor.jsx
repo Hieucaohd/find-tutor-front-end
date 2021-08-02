@@ -12,7 +12,6 @@ WaitingListForTutor.defaultProps = {
 }
 
 function WaitingListForTutor( {waitingList, onDelete} ) {
-    console.log('waiting list ', waitingList)
     const handleDeleteWaiting = (waitingId) => {
         if(!onDelete) return;
         onDelete(waitingId)

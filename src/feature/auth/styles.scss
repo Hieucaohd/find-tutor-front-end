@@ -35,6 +35,16 @@
             button {
                 width: 100%;
             }
+
+            &__register {
+                font-size: 14px;
+                color: black;
+                text-decoration: none;
+                
+                &:hover {
+                    color: #303F9F;
+                }
+            }
         }
     }
     &__error {

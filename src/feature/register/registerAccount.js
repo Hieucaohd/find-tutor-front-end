@@ -1,5 +1,5 @@
 import { server_name, token_prefix } from "../../namespace";
-import { setTutorTrue } from "../auth/authSlice";
+import { setParentTrue, setTutorTrue } from "../auth/authSlice";
 
 export const registerAccount = async (args) => {
   return await fetch(`${server_name}/auth/register/`, {
@@ -34,6 +34,28 @@ export const registerTutorInfor = async ({ token, tutorInfor, dispatch }) => {
   });
 };
 
+export const registerParentInfor = async ({ token, parentInfor, dispatch }) => {
+  return await fetch(`${server_name}/findTutor/parentList/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${token_prefix} ${token}`,
+    },
+    body: JSON.stringify(parentInfor),
+  }).then((response) => {
+    if (response.ok) {
+      console.log(response);
+      alert(`Bạn đã đăng kí làm phụ huynh thành công.`);
+      dispatch(setParentTrue());
+      return true;
+    } else {
+      alert(
+        "Có lỗi xảy ra, bạn hiện tại chưa thể đăng kí làm phụ huynh, vui lòng thử lại sau."
+      );
+      return false;
+    }
+  });
+};
 // export const registerForTutorInfor = async ({argForAccount, argForTutorInfor}) => {
 
 // }

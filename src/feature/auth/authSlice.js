@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { server_name, token_prefix } from "../../namespace";
+import { server_name } from "../../namespace";
 
 const initialState = {
   status: "idle",

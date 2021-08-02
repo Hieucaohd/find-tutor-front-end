@@ -2,7 +2,7 @@ import { Button } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { login } from "./authSlice";
 import "./styles.scss"
 
@@ -21,7 +21,6 @@ function Login() {
   }, [token]);
 
   const onSubmit = (data) => {
-    console.log(data)
     const args = {
       email: data.email,
       password: data.password,
@@ -52,7 +51,9 @@ function Login() {
               <Button variant="contained" color="primary" type="submit">Sign in</Button>
             </div>
             <div className="login__form__control">
-              <a>Sign up</a>
+              <Link to="/signup/parent" className="login__form__control__register">Đăng kí phụ huynh</Link>
+              <Link to="/signup/tutor" className="login__form__control__register">Đăng kí gia sư</Link> 
+              
             </div>
           </form>   
     </div>              
