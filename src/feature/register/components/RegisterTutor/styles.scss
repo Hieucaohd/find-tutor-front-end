@@ -37,6 +37,15 @@
             button {
                 width: 100%;
             }
+
+            &__check {
+                display: flex;
+            }
+        }
+
+        &__choose {
+            display: flex;
+            justify-content: space-between;
         }
     }
 }

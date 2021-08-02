@@ -31,63 +31,49 @@ function RegisterTutor(props) {
     //cắt lấy firsename và lastname 
     const getName = (name) => {
         return {
-          first_name: name.slice(0, name.indexOf(' ') + 1),
+          first_name: name.slice(0, name.indexOf(' ')),
           last_name: name.slice(name.indexOf(' ') + 1)
         }
-      }
+    }
+
+    const getTeachingLevel = (data) => {
+        const arr = [];
+        if(data["cap1"]) {
+            arr.push(1);
+        }
+        if(data["cap2"]) {
+            arr.push(2);
+        }
+        if(data["cap3"]) {
+            arr.push(3);
+        }
+        if(data["cap4"]) {
+            arr.push(4);
+        }
+        return arr;
+    }
 
 
     const onSubmit = async (data) => {
-        // const tutorInfor = {
-        //     // profession: data.profession,
-        //     // universe: 'HNUE',
-        //     // experience: data.experience,
-        //     // achievement: data.achievement,
-        //     // // cap_day: null,
-        //     // // lop_day: null,
-        //     // khu_vuc_day: 'Ha Noi',
-        //     // // avatar: null,
-        //     // // identitycard: null,
-        //     // number_phone: data.telephone,
-        //     // number_of_identity_card: data.indentitycard,
-        //     // first_name: getName(data.name).first_name,
-        //     // last_name: getName(data.name).last_name,
-        //     // // birthday: data.birthday,
-        //     // location: 'Ha NOI',
-        //     profession: "sv",
-        //     university: "HNUE",
-        //     experience: "no",
-        //     achievement: "data.achievement",
-        //     cap_day: [2],
-        //     lop_day: [2],
-        //     khu_vuc_day: "Ha Noi",
-        //     // avatar: null,
-        //     // identitycard: null,
-        //     number_phone: "7891432471",
-        //     number_of_identity_card: "4781893471029",
-        //     first_name: "getName(data.name).first_name",
-        //     last_name: "getName(data.name).last_name",
-        //     // birthday: data.birthday,
-        //     birthday: "2002-02-19",
-        //     location: "Ha NOI",
-        // };
-
+        console.log(data);
         const tutorInfor = {
-            "profession": "sv",
-            "university": "Dai hoc quoc gia Ha Noi",
-            "experience": "di day 2 nam",
-            "achievement": "thu khoa dau ra cua dai hoc cong nghe",
-            "khu_vuc_day": "quan Hai Ba Trung, Ha Noi",
-            "number_phone": "0977157490",
-            "number_of_identity_card": "03030303030",
-            "first_name": "Cao",
-            "last_name": "Hieu",
-            "location": "Cau Giay, Ha Noi",
+            "profession": data.profession,
+            "university": data.university,
+            "experience": data.experience,
+            "achievement": data.achievement,
+            "khu_vuc_day": data.teachLocation,
+            "number_phone": data.telephone,
+            "number_of_identity_card": data.identitycard,
+            "first_name": getName(data.name).first_name,
+            "last_name": getName(data.name).last_name,
+            "location" : "cau giay ha noi",
             "lop_day": [1],
-            "cap_day": [2],
-            "birthday": "2002-02-19"
+            "cap_day": getTeachingLevel(data),
+            "birthday": data.birthday,
+            "avatar": null,
         }
 
+        console.log(tutorInfor);
         registerAccount({
             email: data.email,
             password: data.password,
@@ -182,9 +168,9 @@ function RegisterTutor(props) {
                     <input 
                         name="telephone" 
                         type="number"
-                        {...register("telephone", { required: true})}
+                        {...register("telephone", { required: true, minLength: 8})}
                     />
-                    {errors.telephone && <span>Cần nhập số điện thoại</span>}
+                    {errors.telephone && <span>Cần nhập đúng số điện thoại</span>}
                 </div>
                 <div className="register__tutor__form__control">
                     <label>Số CMND/CCCD</label>
@@ -200,14 +186,70 @@ function RegisterTutor(props) {
                 </div>
                 <div className="register__tutor__form__control">
                     <label>Nghề nghiệp hiện tại</label>
+                    <select name="profession" {...register("profession")}>
+                        <option value="Sinh Viên">Sinh Viên</option>
+                        <option value="Giáo Viên">Giáo Viên</option>
+                    </select>
+                </div>
+                <div className="register__tutor__form__control" >
+                    <label>Cấp dạy</label>
+                    <div className="register__tutor__form__choose">
+                    <div>
+                            <label>Cấp một</label>
+                            <input 
+                                type="checkbox" 
+                                name="capba"
+                                value="checked"
+                                {...register("cap1")}
+                            />
+                        </div>
+                        <div>
+                            <label>Cấp hai</label>
+                            <input 
+                                type="checkbox" 
+                                name="caphai"
+                                value="checked"
+                                {...register("cap2")}
+                                />
+                        </div>
+                        <div>
+                            <label>Cấp ba</label>
+                            <input 
+                                type="checkbox" 
+                                name="capba"
+                                value="checked"
+                                {...register("cap3")}
+                            />
+                        </div>
+                        <div>
+                            <label>Đại học</label>
+                            <input 
+                                type="checkbox" 
+                                name="daihoc"
+                                value="checked"
+                                {...register("cap4")}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="register__tutor__form__control">
+                    <label>Khu vực dạy</label>
                     <input 
-                        name="professtion" 
+                        name="achievement" 
                         type="text"
-                        {...register("professtion")}
+                        {...register("teachLocation")}
                     />
                 </div>
                 <div className="register__tutor__form__control">
-                    <label>Kinh nghiệm</label>
+                    <label>Trường Đại Học (không bắt buộc)</label>
+                    <input  
+                        type="text" 
+                        name="university"
+                        {...register("university")}
+                    />
+                </div>
+                <div className="register__tutor__form__control">
+                    <label>Kinh nghiệm (không bắt buộc)</label>
                     <input 
                         name="experience" 
                         type="text"

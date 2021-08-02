@@ -21,8 +21,9 @@ function Login() {
   }, [token]);
 
   const onSubmit = (data) => {
+    console.log(data)
     const args = {
-      email: data.username,
+      email: data.email,
       password: data.password,
     };
 
@@ -34,11 +35,11 @@ function Login() {
           <form className = "login__form" onSubmit={handleSubmit(onSubmit)}>
             <div className="login__form__control">
               <input 
-                name="username" 
-                type="text" placeholder="Username" 
-                {...register("username", { required: true }
+                name="email" 
+                type="email" placeholder="Email" 
+                {...register("email", { required: true }
                 )}/>
-                <span className="login__error">{errors.username && "Username is required"}</span>
+                <span className="login__error">{errors.email && "Email is required"}</span>
             </div>
             <div className="login__form__control">
               <input name="password" 
