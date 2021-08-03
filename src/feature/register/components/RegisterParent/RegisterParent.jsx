@@ -1,9 +1,10 @@
 import { Button } from '@material-ui/core';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { selectToken, setDataFromRegister } from '../../../auth/authSlice';
+import Location from '../../../location/Location';
 import { registerAccount, registerParentInfor } from '../../registerAccount';
 import "./styles.scss"
 RegisterParent.propTypes = {
@@ -17,6 +18,11 @@ function RegisterParent(props) {
     const dispatch = useDispatch();
     const token = useSelector(selectToken);
     const history = useHistory();
+    const [location, setLocation] = useState({
+        province: 0,
+        district: 0,
+        ward: 0
+    })
 
     //nếu đã đăng nhập trả về trang home
     useEffect(() => {
@@ -25,12 +31,16 @@ function RegisterParent(props) {
         }
     }, [token])
 
-    //cắt lấy firsename và lastname 
+    //cắt lấy firstname và lastname 
     const getName = (name) => {
         return {
           first_name: name.slice(0, name.indexOf(' ')),
           last_name: name.slice(name.indexOf(' ') + 1)
         }
+    }
+
+    const handleGetLocation = (data) => {
+        setLocation(data);
     }
 
     const onSubmit = (data) => {
@@ -43,7 +53,11 @@ function RegisterParent(props) {
             "first_name": getName(data.name).first_name || null,
             "last_name": getName(data.name).last_name || null,
             "birthday": data.birthday || null,
-            "location": data.location || null,
+            "location": null,
+            "province_code": Number(location.province),
+            "district_code": Number(location.district),
+            "ward_code": Number(location.ward),
+            "detail_location": data.detailLocation || null,
         }
         registerAccount({
             email: data.email,
@@ -142,7 +156,7 @@ function RegisterParent(props) {
                     {errors.telephone && 
                         <span className="register__parent__form__error">Cần nhập đúng số điện thoại</span>}
                 </div>
-                <div className="register__tutor__form__control">
+                <div className="register__parent__form__control">
                     <label>Ngày sinh</label>
                     <input 
                         name="birthday" 
@@ -153,19 +167,23 @@ function RegisterParent(props) {
                         <span className="register__parent__form__error">Cần nhập ngày sinh</span>}
                 </div>
                 <div className="register__parent__form__control">
+                    <label>Địa chỉ</label>
+                    <Location onChange={handleGetLocation} />
+                </div>
+                <div className="register__parent__form__control">
+                    <label>Chi tiết địa chỉ</label>
+                    <input 
+                        name="detailLocation" 
+                        type="text"
+                        {...register("detailLocation")}
+                    />
+                </div>
+                <div className="register__parent__form__control">
                     <label>Số CMND/CCCD (không bắt buộc)</label>
                     <input 
                         name="identitycard" 
                         type="number"
                         {...register("identitycard")}
-                    />
-                </div>
-                <div className="register__parent__form__control">
-                    <label>Địa chỉ</label>
-                    <input 
-                        name="location" 
-                        type="text"
-                        {...register("location")}
                     />
                 </div>
                 <div className="register__tutor__form__control"> 

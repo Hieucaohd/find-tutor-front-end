@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -8,6 +8,8 @@ import { useEffect } from 'react';
 
 import "./styles.scss";
 import { Button } from '@material-ui/core';
+import Location from '../../../location/Location';
+
 
 RegisterTutor.propTypes = {
     
@@ -20,6 +22,11 @@ function RegisterTutor(props) {
     const password = useRef({});
     password.current = watch("password", "");
     const dispatch = useDispatch();
+    const [location, setLocation] = useState({
+        province: 0,
+        district: 0,
+        ward: 0
+    })
 
     //nếu đã đăng nhập trả về trang home
     useEffect(() => {
@@ -29,7 +36,7 @@ function RegisterTutor(props) {
     }, [token])
     
 
-    //cắt lấy firsename và lastname 
+    //cắt lấy firstname và lastname 
     const getName = (name) => {
         return {
           first_name: name.slice(0, name.indexOf(' ')),
@@ -54,9 +61,12 @@ function RegisterTutor(props) {
         return arr;
     }
 
+    const handleGetLocation = (data) => {
+        setLocation(data);
+    }
 
     const onSubmit = async (data) => {
-        console.log(data);
+        
         const tutorInfor = {
             "profession": data.profession || null,
             "university": data.university || null,
@@ -64,15 +74,19 @@ function RegisterTutor(props) {
             "achievement": data.achievement || null,
             "khu_vuc_day": data.teachLocation || null,
             "number_phone": data.telephone || null,
-            "number_of_identity_card": data.identirycard || null,
+            "number_of_identity_card": data.identitycard || null,
             "first_name": getName(data.name).first_name || null,
             "last_name": getName(data.name).last_name || null,
-            "location" : "cau giay ha noi" || null,
-            "lop_day": null,
+            "lop_day": [1],
             "cap_day": getTeachingLevel(data) || null,
             "birthday": data.birthday || null,
             "avatar": null,
+            "province_code": Number(location.province),
+            "district_code": Number(location.district),
+            "ward_code": Number(location.ward),
+            "detail_location": data.detailLocation || null,
         }
+
         registerAccount({
             email: data.email,
             password: data.password,
@@ -183,6 +197,18 @@ function RegisterTutor(props) {
                         name="identitycard" 
                         type="number"
                         {...register("identitycard")}
+                    />
+                </div>
+                <div className="register__tutor__form__control">
+                    <label>Địa chỉ</label>
+                    <Location onChange={handleGetLocation} />
+                </div>
+                <div className="register__tutor__form__control">
+                    <label>Chi tiết địa chỉ</label>
+                    <input 
+                        name="detailLocation" 
+                        type="text"
+                        {...register("detailLocation")}
                     />
                 </div>
                 <div className="register__tutor__form__control">

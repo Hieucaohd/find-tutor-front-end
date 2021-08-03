@@ -6,8 +6,9 @@ import { selectId_of_user, selectToken } from "../auth/authSlice";
 import { addRoom } from "../home/homeSlice";
 import "./styles.scss";
 import { Button } from "@material-ui/core";
-import { useForm } from "react-hook-form";
+import { useForm, useFormState } from "react-hook-form";
 import { Alert, AlertTitle } from "@material-ui/lab";
+import Location from "../location/Location";
 
 function CreateRoom(props) {
   const dispatch = useDispatch();
@@ -17,9 +18,18 @@ function CreateRoom(props) {
   const parentId = useSelector(selectId_of_user);
   const { register, formState: { errors }, handleSubmit } = useForm();
   let successRef = useRef(null);
+  const [location, setLocation] = useState({
+    province: 0,
+    district: 0,
+    ward: 0
+  })
   //if not logged in, will be redirected to the login page
   if(!token) {
     history.push("/login")
+  }
+
+  const handleGetLocation = (data) => {
+    setLocation(data);
   }
 
   //handle submit
@@ -34,11 +44,14 @@ function CreateRoom(props) {
     }
 
     const roomInfor = {
-      day_can_teach: dayCanTeach, 
-      location: data.location,
-      subject: data.subject,
-      lop: data.class,
-      other_require: data.other_require,
+      "day_can_teach": dayCanTeach || null, 
+      "subject": data.subject || null,
+      "lop": data.class || null,
+      "other_require": data.other_require || null,
+      "province_code": Number(location.province),
+      "district_code": Number(location.district),
+      "ward_code": Number(location.ward),
+      "detail_location": data.detailLocation || null,
     };
   
     const args = {
@@ -78,16 +91,6 @@ function CreateRoom(props) {
         </div>
 
         <div className = "createroom__field">
-          <label for="location">Vị trí </label>
-          <input
-            type="text"
-            id="location"
-            {...register("location", { required: true })}
-          />
-          <span className="createroom__error">{errors.location && "Cần nhập vị trí"}</span>
-        </div>
-
-        <div className = "createroom__field">
           <label for="subject">Môn học </label>
           <input
             type="text"
@@ -96,7 +99,6 @@ function CreateRoom(props) {
           />
           <span className="createroom__error">{errors.subject && "Cần nhập môn học"}</span>
         </div>
-
         <div className = "createroom__field">
           <label for="lop">Lớp </label>
           <input
@@ -106,6 +108,19 @@ function CreateRoom(props) {
             {...register("class", { required: true })}
           />
           <span className="createroom__error">{errors.class && "Cần nhập lớp"}</span>
+        </div>
+
+        <div className="createroom__field">
+            <label>Địa chỉ</label>
+            <Location onChange={handleGetLocation} />
+        </div>
+        <div className="register__tutor__form__control">
+            <label>Chi tiết địa chỉ</label>
+            <input 
+              name="detailLocation" 
+              type="text"
+              {...register("detailLocation")}
+           />
         </div>
 
         <div className = "createroom__field">
