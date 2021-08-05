@@ -51,9 +51,7 @@ function Login() {
               <Button variant="contained" color="primary" type="submit">Sign in</Button>
             </div>
             <div className="login__form__control">
-              <Link to="/signup/parent" className="login__form__control__register">Đăng kí phụ huynh</Link>
-              <Link to="/signup/tutor" className="login__form__control__register">Đăng kí gia sư</Link> 
-              
+              <Link to="/signup" className="login__form__control__register">Đăng kí tài khoản</Link>
             </div>
           </form>   
     </div>              

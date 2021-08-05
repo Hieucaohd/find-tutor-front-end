@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { selectToken, setDataFromRegister } from '../../../auth/authSlice';
-import { registerAccount, registerTutorInfor } from '../../registerAccount';
+import { registerAccount, registerTutorInfor, selectRegisterInfo } from '../../registerAccount';
 import { useEffect } from 'react';
 
 import "./styles.scss";
@@ -27,6 +27,8 @@ function RegisterTutor(props) {
         district: 0,
         ward: 0
     })
+    const registerInfo = useSelector(selectRegisterInfo);
+    console.log(registerInfo)
 
     //nếu đã đăng nhập trả về trang home
     useEffect(() => {
@@ -34,7 +36,6 @@ function RegisterTutor(props) {
             history.push("/");
         }
     }, [token])
-    
 
     //cắt lấy firstname và lastname 
     const getName = (name) => {
@@ -87,80 +88,17 @@ function RegisterTutor(props) {
             "detail_location": data.detailLocation || null,
         }
 
-        registerAccount({
-            email: data.email,
-            password: data.password,
-            username: data.username,  
-        }).then(response => {
-            if(response.ok) {
-                alert("Đăng kí tài khoản thành công.")
-                const data_from_response = response.json();
-                data_from_response.then((data) => {
-                    console.log(data);
-                    const {email, username, token, refresh_token, id, type_tutor, type_parent} = data;
-                    const successfull = registerTutorInfor({token: token, tutorInfor: tutorInfor, dispatch: dispatch});
-                    if (successfull) {
-                        dispatch(setDataFromRegister({email, username, token, refresh_token, id, type_tutor, type_parent}))
-                    }
-                })
-            } else {
-                alert("Đăng kí tài khoản không thành công");
-            }
-        })
-    }
+        const {email, username, token, refresh_token, id, type_tutor, type_parent} = registerInfo;
+        const successfull = registerTutorInfor({token: token, tutorInfor: tutorInfor, dispatch: dispatch});
+        if (successfull) {
+            dispatch(setDataFromRegister({email, username, token, refresh_token, id, type_tutor, type_parent}))
+            alert("Đăng kí tài khoản thành công.");
+        }
+    }    
     return (
         <div className="register__tutor">
             <form className="register__tutor__form" onSubmit={handleSubmit(onSubmit)}> 
                 <p className="resgister__tutor__form__title">Đăng kí làm gia sư</p>
-                <div className="register__tutor__form__control">
-                    <label>Tên tài khoản</label>
-                    <input
-                        name="username" 
-                        type="text"
-                        {...register("username", { required: true, minLength: 6})}
-                     />
-                    {errors.username && errors.username.type === "required" && <span>Cần nhập tên tài khoản</span>}
-                    {errors.username && errors.username.type === "minLength" && <span>Tên tài khoản cần ít nhất 6 kí tự</span>}
-                </div>
-                <div className="register__tutor__form__control"> 
-                    <label>Email</label>
-                    <input 
-                        name="email" 
-                        type="email"
-                        {...register('email', {
-                            required: true,
-                            pattern: {
-                            value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                        }})}
-                    />
-                    {errors.email && 
-                        <span className="register__tutor__form__error">Nhập đúng email của bạn</span>}
-                </div>
-                <div className="register__tutor__form__control"> 
-                    <label>Mật khẩu</label>
-                    <input 
-                        name="password" 
-                        type="password"
-                        {...register("password", { required: true, minLength: 6})}
-                    />
-                    {errors.password && errors.password.type === "required" && 
-                        <span className="register__tutor__form__error">Nhập mật khẩu</span>}
-                    {errors.password && errors.password.type === "minLength" && 
-                        <span className="register__tutor__form__error">Mật khẩu cần ít nhất 6 kí tự</span>}
-                </div>
-                <div className="register__tutor__form__control"> 
-                    <label>Nhập lại mật khẩu</label>
-                    <input 
-                        name="repassword" 
-                        type="password"
-                        {...register("repassword", {
-                            validate: value =>
-                            value === password.current || "The passwords do not match"
-                        })}
-                    />
-                    {errors.repassword && 
-                        <span className="register__tutor__form__error">Mật khẩu không trùng khớp</span>}
-                </div>
                 <div className="register__tutor__form__control"> 
                     <label>Họ và Tên</label>
                     <input 

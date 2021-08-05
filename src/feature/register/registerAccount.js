@@ -1,3 +1,4 @@
+import { createSlice } from "@reduxjs/toolkit";
 import { server_name, token_prefix } from "../../namespace";
 import { setParentTrue, setTutorTrue } from "../auth/authSlice";
 
@@ -56,6 +57,39 @@ export const registerParentInfor = async ({ token, parentInfor, dispatch }) => {
     }
   });
 };
+
+const initialState = {
+  username: null,
+  email: null,
+  token: null, 
+  refresh_token: null,
+  id: null,
+  type_tutor: null,
+  type_parent: null,
+}
+
+const registerSlice = createSlice({
+  name: "register",
+  initialState,
+  reducers: {
+    setInfo(state, action) {
+      state.username = action.payload.username;
+      state.email = action.payload.email;
+      state.token = action.payload.token;
+      state.refresh_token = action.payload.refresh_token;
+      state.id = action.payload.id;
+      state.type_tutor = action.payload.type_tutor;
+      state.type_parent = action.payload.type_parent;
+    }
+  }
+});
+
+export default registerSlice.reducer;
+
+export const { setInfo } = registerSlice.actions;
+
+export const selectRegisterInfo = (state) => state.register;
+
 // export const registerForTutorInfor = async ({argForAccount, argForTutorInfor}) => {
 
 // }

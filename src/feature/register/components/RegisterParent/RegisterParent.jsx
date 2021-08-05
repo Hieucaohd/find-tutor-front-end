@@ -85,57 +85,6 @@ function RegisterParent(props) {
         <div className="register__parent">
             <form className="register__parent__form" onSubmit={handleSubmit(onSubmit)}> 
                 <p className="resgister__parent__form__title">Đăng kí làm phụ huynh</p>
-                <div className="register__parent__form__control">
-                    <label>Tên tài khoản</label>
-                    <input
-                        name="username" 
-                        type="text"
-                        {...register("username", { required: true, minLength: 6})}
-                     />
-                    {errors.username && errors.username.type === "required" && 
-                        <span className="register__parent__form__error">Cần nhập tên tài khoản</span>}
-                    {errors.username && errors.username.type === "minLength" && 
-                        <span className="register__parent__form__error">Tên tài khoản cần ít nhất 6 kí tự</span>}
-                </div>
-                <div className="register__parent__form__control"> 
-                    <label>Email</label>
-                    <input 
-                        name="email" 
-                        type="email"
-                        {...register('email', {
-                            required: true,
-                            pattern: {
-                            value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                        }})}
-                    />
-                    {errors.email && 
-                        <span className="register__parent__form__error">Nhập đúng email của bạn</span>}
-                </div>
-                <div className="register__parent__form__control"> 
-                    <label>Mật khẩu</label>
-                    <input 
-                        name="password" 
-                        type="password"
-                        {...register("password", { required: true, minLength: 6})}
-                    />
-                    {errors.password && errors.password.type === "required" && 
-                        <span className="register__parent__form__error">Nhập mật khẩu</span>}
-                    {errors.password && errors.password.type === "minLength" && 
-                        <span className="register__parent__form__error">Mật khẩu cần ít nhất 6 kí tự</span>}
-                </div>
-                <div className="register__parent__form__control"> 
-                    <label>Nhập lại mật khẩu</label>
-                    <input 
-                        name="repassword" 
-                        type="password"
-                        {...register("repassword", {
-                            validate: value =>
-                            value === password.current || "The passwords do not match"
-                        })}
-                    />
-                    {errors.repassword && 
-                        <span className="register__parent__form__error">Mật khẩu không trùng khớp</span>}
-                </div>
                 <div className="register__parent__form__control"> 
                     <label>Họ và Tên</label>
                     <input 
