@@ -10,6 +10,7 @@ import CreateRoom from "./feature/CreateRoom/CreateRoom";
 import Register from "./feature/register/Register";
 import RegisterTutor from "./feature/register/components/RegisterTutor/RegisterTutor";
 import RegisterParent from "./feature/register/components/RegisterParent/RegisterParent";
+import RegisterRole from "./feature/register/components/RegisterRole/RegisterRole";
 
 // import RegisterTutor from "./feature/register/RegisterTutor/RegisterTutor";
 // import RegisterParent from "./feature/register/RegisterParent/RegisterParent";
@@ -27,8 +28,9 @@ function App() {
           <Route exact path="/room/:roomId" component={ParentRoom}/>
           <Route exact path="/createroom" component={CreateRoom}/>
           <Route exact path="/signup" component={Register} />
-          <Route exact path="/signup/tutor" component={RegisterTutor} />
+          <Route exact path="/signup/chooserole" component={RegisterRole} />
           <Route exact path="/signup/parent" component={RegisterParent} />
+          <Route exact path="/signup/tutor" component={RegisterTutor} />
         </Switch>
       </BrowserRouter>
     </div>

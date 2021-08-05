@@ -3,10 +3,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { selectToken, setDataFromRegister } from '../../../auth/authSlice';
+import { selectToken, setParentTrue } from '../../../auth/authSlice';
 import Location from '../../../location/Location';
-import { registerAccount, registerParentInfor } from '../../registerAccount';
-import "./styles.scss"
+import { registerParentInfor } from '../../registerAccount';
+import "./styles.scss";
 RegisterParent.propTypes = {
     
 };
@@ -43,7 +43,7 @@ function RegisterParent(props) {
         setLocation(data);
     }
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
 
         const parentInfor = {
             "avatar": null,
@@ -59,26 +59,15 @@ function RegisterParent(props) {
             "ward_code": Number(location.ward),
             "detail_location": data.detailLocation || null,
         }
-        registerAccount({
-            email: data.email,
-            password: data.password,
-            username: data.username,  
-        }).then(response => {
-            if(response.ok) {
-                alert("Đăng kí tài khoản thành công.")
-                const data_from_response = response.json();
-                data_from_response.then((data) => {
-                    console.log(data);
-                    const {email, username, token, refresh_token, id, type_tutor, type_parent} = data;
-                    const successfull = registerParentInfor({token: token, parentInfor: parentInfor, dispatch: dispatch});
-                    if (successfull) {
-                        dispatch(setDataFromRegister({email, username, token, refresh_token, id, type_tutor, type_parent}))
-                    }
-                })
-            } else {
-                alert("Đăng kí tài khoản không thành công");
-            }
-        })
+        
+        dispatch(setParentTrue());
+        const successfully = await registerParentInfor({
+            token: token,
+            parentInfor: parentInfor,
+        });
+        if (successfully) {
+            history.push("/");
+        }
     }
 
     return (

@@ -44,7 +44,6 @@ function MainNavigation() {
           </li>
           : null
         }
-        
 
         {type_tutor ? (
           <li className = "navbar__info">

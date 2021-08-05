@@ -39,8 +39,12 @@ function Home() {
   const id_of_user = Number(useSelector(selectId_of_user)); // lấy id từ authSlice.js
   const type_tutor = useSelector(selectType_tutor); // lấy type_tutor từ authSlice.js
   const type_parent = useSelector(selectType_parent); // lấy type_parent từ authSlice.js
-
-
+  console.log('type', type_tutor, type_parent)
+  //chưa đăng kí là gia sư hay phụ huynh trả đến trang đăng kí
+  
+  if(type_tutor === false && type_parent === false) {
+    history.push("/signup/chooserole")
+  }
   // dispatch để nạp danh sách lớp học + thông tin về các lớp học của gia sư từ homeSlice.js và rooomRelateTutorSlice.js
   const dispatchSomething = () => {
     dispatch(fetchRoomList({ token: token }));

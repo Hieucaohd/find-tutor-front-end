@@ -12,7 +12,7 @@ export const registerAccount = async (args) => {
   })
 };
 
-export const registerTutorInfor = async ({ token, tutorInfor, dispatch }) => {
+export const registerTutorInfor = async ({ token, tutorInfor }) => {
   return await fetch(`${server_name}/findTutor/tutorList/`, {
     method: "POST",
     headers: {
@@ -24,7 +24,6 @@ export const registerTutorInfor = async ({ token, tutorInfor, dispatch }) => {
     if (response.ok) {
       console.log(response);
       alert(`Bạn đã đăng kí làm gia sư thành công.`);
-      dispatch(setTutorTrue());
       return true;
     } else {
       alert(
@@ -35,7 +34,7 @@ export const registerTutorInfor = async ({ token, tutorInfor, dispatch }) => {
   });
 };
 
-export const registerParentInfor = async ({ token, parentInfor, dispatch }) => {
+export const registerParentInfor = async ({ token, parentInfor }) => {
   return await fetch(`${server_name}/findTutor/parentList/`, {
     method: "POST",
     headers: {
@@ -47,7 +46,6 @@ export const registerParentInfor = async ({ token, parentInfor, dispatch }) => {
     if (response.ok) {
       console.log(response);
       alert(`Bạn đã đăng kí làm phụ huynh thành công.`);
-      dispatch(setParentTrue());
       return true;
     } else {
       alert(

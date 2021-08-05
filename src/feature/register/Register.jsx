@@ -25,26 +25,16 @@ function Register(props) {
             email: data.email,
             username: data.username,
             password: data.password,
-        }).then(response => {
+        }).then((response) => {
             if(response.ok) {
-                successAlert.current.style.display = "flex";
-                const userInfo = response.json();
-                console.log(userInfo);
-                userInfo.then( (registerData) => {
-                    console.log(registerData);
-                    dispatch(setInfo({
-                        email: registerData.email,
-                        username: registerData.username,
-                        token: registerData.token,
-                        refresh_token: registerData.refresh_token,
-                        id: registerData.id,
-                        type_tutor: registerData.type_tutor,
-                        type_parent: registerData.type_parent,
-                    }))
-                })
-                
+                alert("dang ki tai khoan thanh cong");
+                dispatch(login({
+                    email: data.email,
+                    password: data.password,
+                }));
+                history.push("/");
             } else {
-                alert('Dang ki tai khoan khong thanh cong');
+                alert('dang ki tai khoan that bai');
             }
         })
     }

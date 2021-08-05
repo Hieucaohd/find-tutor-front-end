@@ -1,14 +1,13 @@
-import React, { useRef, useState } from 'react';
+import { Button } from '@material-ui/core';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { selectToken, setDataFromRegister } from '../../../auth/authSlice';
-import { registerAccount, registerTutorInfor, selectRegisterInfo } from '../../registerAccount';
-import { useEffect } from 'react';
-
-import "./styles.scss";
-import { Button } from '@material-ui/core';
+import { selectToken, setTutorTrue } from '../../../auth/authSlice';
 import Location from '../../../location/Location';
+import { registerTutorInfor, selectRegisterInfo } from '../../registerAccount';
+import "./styles.scss";
+
 
 
 RegisterTutor.propTypes = {
@@ -27,15 +26,6 @@ function RegisterTutor(props) {
         district: 0,
         ward: 0
     })
-    const registerInfo = useSelector(selectRegisterInfo);
-    console.log(registerInfo)
-
-    //nếu đã đăng nhập trả về trang home
-    useEffect(() => {
-        if(token) {
-            history.push("/");
-        }
-    }, [token])
 
     //cắt lấy firstname và lastname 
     const getName = (name) => {
@@ -88,11 +78,13 @@ function RegisterTutor(props) {
             "detail_location": data.detailLocation || null,
         }
 
-        const {email, username, token, refresh_token, id, type_tutor, type_parent} = registerInfo;
-        const successfull = registerTutorInfor({token: token, tutorInfor: tutorInfor, dispatch: dispatch});
-        if (successfull) {
-            dispatch(setDataFromRegister({email, username, token, refresh_token, id, type_tutor, type_parent}))
-            alert("Đăng kí tài khoản thành công.");
+        dispatch(setTutorTrue());
+        const successfully = await registerTutorInfor({
+            token: token,
+            tutorInfor: tutorInfor,
+        });
+        if (successfully) {
+            history.push("/");
         }
     }    
     return (
