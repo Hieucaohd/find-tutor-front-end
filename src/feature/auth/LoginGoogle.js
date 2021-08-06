@@ -23,11 +23,11 @@ function LoginGoogle() {
         <div>
             <GoogleLogin
                 clientId={clientId}
-                buttonText="Sign In"
+                buttonText="Log in with Google"
                 onSuccess={onLoginSuccess}
                 onFailure={onLoginFailure}
                 cookiePolicy={'single_host_origin'}
-                isSignedIn={true}
+                isSignedIn={false}
             />
         </div>
     );

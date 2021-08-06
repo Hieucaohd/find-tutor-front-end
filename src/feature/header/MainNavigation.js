@@ -6,8 +6,9 @@ import {
   selectToken,
   selectType_tutor,
   selectType_parent,
-  logout,
   selectId_of_user,
+  logout,
+  selectRefreshToken,
 } from "../auth/authSlice";
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
@@ -16,13 +17,17 @@ import React from "react";
 function MainNavigation() {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
+  const refresh_token = useSelector(selectRefreshToken);
   const type_tutor = useSelector(selectType_tutor);
   const type_parent = useSelector(selectType_parent);
   const history = useHistory();
   const userId = useSelector(selectId_of_user);
   const handleLogOut = () => {
-    dispatch(logout());
-    history.push('/login');
+    dispatch(logout({
+      token: token,
+      refresh_token: refresh_token,
+    }));  
+    // history.push("/login");
   }
   
   return (

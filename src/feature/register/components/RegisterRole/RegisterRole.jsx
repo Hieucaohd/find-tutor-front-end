@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { GiTeacher } from "react-icons/gi";
 import { Button } from '@material-ui/core';
 import { RiParentFill } from "react-icons/ri";
 import "./styles.scss";
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectToken } from '../../../auth/authSlice';
 
 RegisterRole.propTypes = {
     
@@ -12,6 +14,13 @@ RegisterRole.propTypes = {
 
 function RegisterRole(props) {
     const history = useHistory();
+    const token = useSelector(selectToken);
+
+    useEffect( () => {
+        if(!token) {
+            history.push("/login");
+        }
+    }, [token])
 
     const handleChooseParent = () => {
         history.push("/signup/parent");

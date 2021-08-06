@@ -18,7 +18,7 @@ function LoginFacebook(props) {
         <div>
             <FacebookLogin
                 appId="290296406188562"
-                autoLoad={true}
+                autoLoad={false}
                 fields="name,email,picture"
                 callback={responseFacebook}
                 cssClass="my-facebook-button-class"

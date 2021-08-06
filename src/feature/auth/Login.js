@@ -52,8 +52,12 @@ function Login() {
             <div className="login__form__control">
               <Button variant="contained" color="primary" type="submit">Sign in</Button>
             </div>
-            <LoginGoogle />
-            <LoginFacebook />
+            <div className="login__form__control">
+              <LoginGoogle />
+            </div>
+            <div className="login__form__control">
+              <LoginFacebook />
+            </div>
             <div className="login__form__control">
               <Link to="/signup" className="login__form__control__register">Đăng kí tài khoản</Link>
             </div>
