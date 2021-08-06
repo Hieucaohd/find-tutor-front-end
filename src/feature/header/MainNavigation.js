@@ -9,6 +9,7 @@ import {
   logout,
   selectId_of_user,
 } from "../auth/authSlice";
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
 import React from "react";
 
@@ -23,9 +24,7 @@ function MainNavigation() {
     dispatch(logout());
     history.push('/login');
   }
-
   
-
   return (
     <div className="navbar">
       {token && <ul>
@@ -54,7 +53,8 @@ function MainNavigation() {
         <li className="navbar__signout">
           <button onClick={() =>handleLogOut()}><FaSignOutAlt /></button>
         </li>
-      </ul>}
+      </ul>
+    }
     </div>
   );
 }

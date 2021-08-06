@@ -24,13 +24,6 @@ function RegisterParent(props) {
         ward: 0
     })
 
-    //nếu đã đăng nhập trả về trang home
-    useEffect(() => {
-        if(token) {
-            history.push("/");
-        }
-    }, [token])
-
     //cắt lấy firstname và lastname 
     const getName = (name) => {
         return {

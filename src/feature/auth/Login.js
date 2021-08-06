@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { login } from "./authSlice";
+import LoginFacebook from "./LoginFacebook";
+import LoginGoogle from "./LoginGoogle";
 import "./styles.scss"
 
 const selectToken = (state) => state.auth.token;
@@ -50,10 +52,14 @@ function Login() {
             <div className="login__form__control">
               <Button variant="contained" color="primary" type="submit">Sign in</Button>
             </div>
+            <LoginGoogle />
+            <LoginFacebook />
             <div className="login__form__control">
               <Link to="/signup" className="login__form__control__register">Đăng kí tài khoản</Link>
             </div>
-          </form>   
+            
+
+          </form> 
     </div>              
   );
 }

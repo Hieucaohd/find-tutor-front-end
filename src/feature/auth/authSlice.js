@@ -29,13 +29,45 @@ export const login = createAsyncThunk("auth/authLogin", async (args) => {
   });
 });
 
+export const loginWithGoogle = createAsyncThunk("/social-auth/google-auth/", async (args) => {
+  try {
+    const response = await fetch(`${server_name}/social-auth/google-auth/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(args),
+    });
+    const responseJSON = await response.json();
+    return responseJSON;
+  } catch (error) {
+    console.log('Failed to login with google: ',error);
+  }
+});
+
+export const loginWithFacebook = createAsyncThunk("/social-auth/facebook-auth/", async (args) => {
+  try {
+    const response = await fetch(`${server_name}/social-auth/facebook-auth/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(args),
+    });
+    const responseJSON = await response.json();
+    return responseJSON;
+  } catch (error) {
+    console.log('Failed to login with facebook: ',error);
+  }
+})
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     logout(state, action) {
       state.token = "";
-      state.id = "";
+      state.id = ""; 
       state.type_tutor = "";
       state.type_parent = "";
     },
@@ -61,6 +93,34 @@ const authSlice = createSlice({
         state.status = "loading";
       })
       .addCase(login.fulfilled, (state, action) => {
+        state.status = "idle";
+        if(action.payload){
+          const { token, refresh_token, id, type_tutor, type_parent } = action.payload;
+          state.token = token;
+          state.refresh_token = refresh_token;
+          state.id = id;
+          state.type_tutor = type_tutor;
+          state.type_parent = type_parent;
+        }
+      })
+      .addCase(loginWithGoogle.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(loginWithGoogle.fulfilled, (state, action) => {
+        state.status = "idle";
+        if(action.payload){
+          const { token, refresh_token, id, type_tutor, type_parent } = action.payload;
+          state.token = token;
+          state.refresh_token = refresh_token;
+          state.id = id;
+          state.type_tutor = type_tutor;
+          state.type_parent = type_parent;
+        }
+      })
+      .addCase(loginWithFacebook.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(loginWithFacebook.fulfilled, (state, action) => {
         state.status = "idle";
         if(action.payload){
           const { token, refresh_token, id, type_tutor, type_parent } = action.payload;
