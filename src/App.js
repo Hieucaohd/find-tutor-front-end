@@ -11,11 +11,15 @@ import Register from "./feature/register/Register";
 import RegisterTutor from "./feature/register/components/RegisterTutor/RegisterTutor";
 import RegisterParent from "./feature/register/components/RegisterParent/RegisterParent";
 import RegisterRole from "./feature/register/components/RegisterRole/RegisterRole";
-
-// import RegisterTutor from "./feature/register/RegisterTutor/RegisterTutor";
-// import RegisterParent from "./feature/register/RegisterParent/RegisterParent";
+import { getNewToken, getToken } from "./feature/auth/authSlice";
+import { useDispatch } from "react-redux";
 
 function App() {
+
+  //get new token after 1hours
+  const dispatch = useDispatch();
+  getToken(dispatch);
+  
   return (
     <div className="App">
       <BrowserRouter>

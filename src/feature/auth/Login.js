@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { login } from "./authSlice";
+import { login, setStateFromCookies } from "./authSlice";
 import LoginFacebook from "./LoginFacebook";
 import LoginGoogle from "./LoginGoogle";
 import "./styles.scss"
@@ -16,6 +16,12 @@ function Login() {
   const { register, formState: { errors }, handleSubmit } = useForm();
   const token = useSelector(selectToken);
 
+  //lấy data từ cookies lưu vào state
+  if(!token){
+    dispatch(setStateFromCookies());
+  }
+
+  //token đã tồn tại chuyển sang trang home
   useEffect(() => {
     if (token) {
       history.push("/");

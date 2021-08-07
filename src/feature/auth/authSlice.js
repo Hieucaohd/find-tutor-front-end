@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
 import { server_name, token_prefix } from "../../namespace";
+import { getDataFromCookies, getRefreshTokenCookie, removeUserCookies, setNewTokenCookie, setParentCookieTrue, setTutorCookieTrue, setUserInfoCookies } from "./cookies";
 
 const initialState = {
   status: "idle",
@@ -72,10 +74,27 @@ export const logout = createAsyncThunk("/auth/logout/", async (args) => {
       },
       body: JSON.stringify({"refresh_token" : refresh_token}),
     });
+    removeUserCookies();
   } catch (error) {
     console.log("Failed to log out : ", error)
   }
-})
+});
+
+export const getNewToken = createAsyncThunk("/auth/token/refresh/", async (args) => {
+  try {
+    const response = await fetch(`${server_name}/auth/token/refresh/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(args),
+    });
+    const responseJSON = await response.json();
+    return responseJSON.access;
+  } catch (error) {
+    console.log("Failed to get new token: ", error)
+  }
+});
 
 const authSlice = createSlice({
   name: "auth",
@@ -83,18 +102,19 @@ const authSlice = createSlice({
   reducers: {
     setTutorTrue(state, action) {
       state.type_tutor = true;
+      setTutorCookieTrue();
     },
     setParentTrue(state, action) {
       state.type_parent = true;
+      setParentCookieTrue();
     },
-    setDataFromRegister(state, action) {
-      state.status = "idle";
-      const { token, refresh_token, id, type_tutor, type_parent } = action.payload;
+    setStateFromCookies(state) {
+      const {token, refreshToken, id, typeParent, typeTutor} = getDataFromCookies();
       state.token = token;
-      state.refresh_token = refresh_token;
+      state.refresh_token = refreshToken;
       state.id = id;
-      state.type_tutor = type_tutor;
-      state.type_parent = type_parent;
+      state.type_tutor = typeTutor;
+      state.type_parent = typeParent;
     }
   },
   extraReducers: (builder) => {
@@ -111,6 +131,7 @@ const authSlice = createSlice({
           state.id = id;
           state.type_tutor = type_tutor;
           state.type_parent = type_parent;
+          setUserInfoCookies(action.payload);
         }
       })
       .addCase(loginWithGoogle.pending, (state, action) => {
@@ -125,6 +146,7 @@ const authSlice = createSlice({
           state.id = id;
           state.type_tutor = type_tutor;
           state.type_parent = type_parent;
+          setUserInfoCookies(action.payload);
         }
       })
       .addCase(loginWithFacebook.pending, (state, action) => {
@@ -139,6 +161,7 @@ const authSlice = createSlice({
           state.id = id;
           state.type_tutor = type_tutor;
           state.type_parent = type_parent;
+          setUserInfoCookies(action.payload);
         }
       })
       .addCase(logout.pending, (state) => {
@@ -151,13 +174,21 @@ const authSlice = createSlice({
         state.id = "";
         state.type_tutor = "";
         state.type_parent = "";
-      });
+      })
+      .addCase(getNewToken.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getNewToken.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.token = action.payload;
+        setNewTokenCookie(action.payload);
+      })
   },
 });
 
 export default authSlice.reducer;
 
-export const { setTutorTrue, setParentTrue, setDataFromRegister } = authSlice.actions;
+export const { setTutorTrue, setParentTrue, setStateFromCookies } = authSlice.actions;
 
 // Lấy: id, token, type_tutor, type_parent cho component 
 export const selectToken = (state) => state.auth.token;
@@ -165,3 +196,10 @@ export const selectRefreshToken = (state) => state.auth.refresh_token;
 export const selectId_of_user = (state) => state.auth.id;
 export const selectType_tutor = (state) => state.auth.type_tutor;
 export const selectType_parent = (state) => state.auth.type_parent;
+
+export const getToken = (dispatch) => {
+  const refreshToken = getRefreshTokenCookie();
+  setInterval( ()=> {
+    dispatch(getNewToken(refreshToken));
+  }, 208800000)
+}
