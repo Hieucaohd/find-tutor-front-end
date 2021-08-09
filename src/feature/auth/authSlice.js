@@ -125,12 +125,13 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.status = "idle";
         if(action.payload){
+          console.log(action.payload)
           const { token, refresh_token, id, type_tutor, type_parent } = action.payload;
           state.token = token;
           state.refresh_token = refresh_token;
           state.id = id;
-          state.type_tutor = type_tutor;
-          state.type_parent = type_parent;
+          state.type_tutor = type_tutor ;
+          state.type_parent = type_parent ;
           setUserInfoCookies(action.payload);
         }
       })

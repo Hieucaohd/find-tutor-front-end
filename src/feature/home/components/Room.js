@@ -45,6 +45,8 @@ function Room({
             <p> 
               Room Id: {room.id}
               <br/>
+              Môn học: {room.subject}
+              <br/> 
               Lớp: {room.lop}
               <br/>
               Vị trí: {room.location}

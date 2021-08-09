@@ -11,14 +11,19 @@ import Register from "./feature/register/Register";
 import RegisterTutor from "./feature/register/components/RegisterTutor/RegisterTutor";
 import RegisterParent from "./feature/register/components/RegisterParent/RegisterParent";
 import RegisterRole from "./feature/register/components/RegisterRole/RegisterRole";
-import { getNewToken, getToken } from "./feature/auth/authSlice";
-import { useDispatch } from "react-redux";
+import { getNewToken, getToken, selectToken } from "./feature/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import TutorProfile from "./feature/profile/TutorProfile";
+import ParentProfile from "./feature/profile/ParentProfile";
 
 function App() {
 
   //get new token after 1hours
   const dispatch = useDispatch();
-  getToken(dispatch);
+  const token = useSelector(selectToken);
+  if(token){
+    getToken();
+  }
   
   return (
     <div className="App">
@@ -35,6 +40,8 @@ function App() {
           <Route exact path="/signup/chooserole" component={RegisterRole} />
           <Route exact path="/signup/parent" component={RegisterParent} />
           <Route exact path="/signup/tutor" component={RegisterTutor} />
+          <Route exact path="/tutorprofile/:tutorId" component={TutorProfile} />
+          <Route exact path="/parentprofile/:parentId" component={ParentProfile} />
         </Switch>
       </BrowserRouter>
     </div>

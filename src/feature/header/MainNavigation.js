@@ -36,11 +36,17 @@ function MainNavigation() {
         <li className = "navbar__home">
         <Link to="/"> <FaHome /> </Link>
         </li>
+
+        <li> 
+          <input type="text"/>
+          <button> search </button>
+        </li>
         {type_parent ? (
           <li className = "navbar__info">
             <Link to={`/parentInfo/${userId}`}>Parent Infor</Link>
           </li>
         ) : null}
+
 
         {type_parent ? 
           <li className = "navbar_createroom">  

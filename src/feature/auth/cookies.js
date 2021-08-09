@@ -8,7 +8,7 @@ export const setUserInfoCookies = (info) => {
     cookies.set('userRefreshToken', refresh_token, { secure: true, sameSite: true});
     cookies.set('userId', id, { secure: true, sameSite: true});
     cookies.set('userTypeParent', type_parent, { secure: true, sameSite: true});
-    cookies.set('userTypePutor', type_tutor, { secure: true, sameSite: true});
+    cookies.set('userTypeTutor', type_tutor, { secure: true, sameSite: true});
 }
 
 export const setParentCookieTrue = () => {
@@ -16,7 +16,7 @@ export const setParentCookieTrue = () => {
 }
 
 export const setTutorCookieTrue = () => {
-    cookies.set('userTypePutor', true, { secure: true, sameSite: true});
+    cookies.set('userTypeTutor', true, { secure: true, sameSite: true});
 }
 
 export const setNewTokenCookie = (newToken) => {
@@ -42,5 +42,5 @@ export const removeUserCookies = () => {
     cookies.remove('userRefreshToken');
     cookies.remove('userId');
     cookies.remove('userTypeParent');
-    cookies.remove('userTypePutor');
+    cookies.remove('userTypeTutor');
 }

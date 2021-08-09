@@ -6,7 +6,7 @@ import { selectId_of_user, selectToken } from "../auth/authSlice";
 import { addRoom } from "../home/homeSlice";
 import "./styles.scss";
 import { Button } from "@material-ui/core";
-import { useForm, useFormState } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import Location from "../location/Location";
 

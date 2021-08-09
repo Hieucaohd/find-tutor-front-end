@@ -1,21 +1,15 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { Button, Grid } from "@material-ui/core";
+import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
-  fetchRoomRelateTutor,
-} from "../auth/roomRelateTutorSlice";
-import { fetchRoomList, selectRoomList } from "./homeSlice";
-import Room from "./components/Room";
-import {
-  selectToken,
-  selectId_of_user,
-  selectType_tutor,
-  selectType_parent,
+  selectId_of_user, selectToken, selectType_parent, selectType_tutor
 } from "../auth/authSlice";
-import { Button, Grid } from "@material-ui/core";
-import "./styles.scss"
-
+import Room from "./components/Room";
+import { fetchRoomList, fetchFilterRoomList } from "./getRoom";
+import "./styles.scss";
+import { RiFilterFill, RiFilterOffFill } from "react-icons/ri";
+import FilterBar from "./components/FilterBar/FilterBar";
 const selectWaitingListForTutor = (state) =>
   state.roomRelateTutor.list_room_waiting;
 const selectInvitedListForTutor = (state) =>
@@ -25,47 +19,59 @@ const selectTryTeachingForTutor = (state) =>
 
 function Home() {
   let history = useHistory();
-  const dispatch = useDispatch();
 
-  const [isRenderCreateRoom, setIsRenderCreateRoom] = useState(false);  // hiện thị form để tạo lớp học.
   const [isRefreshListRoom, setIsRefreshListRoom] = useState(false); // refresh lại danh sách lớp học để cập nhật thêm các lớp học.
-
-  const roomList = useSelector(selectRoomList); // lấy danh sách lớp học từ homeSlice.js
   const list_room_waiting = useSelector(selectWaitingListForTutor); // lấy danh sách các lớp học đã ứng tuyển của gia sư từ roomRelateTutorSlice.js
   const list_room_invited = useSelector(selectInvitedListForTutor); // lấy danh sách các lớp học đã được mời của gia sư từ roomRelateTutorSlice.js
   const list_room_try_teaching = useSelector(selectTryTeachingForTutor); // lấy danh sách các lớp học đang dạy thử của gia sư từ roomRelateTutorSlice.js
-
   const token = useSelector(selectToken); // lấy mã token từ authSlice.js
   const id_of_user = Number(useSelector(selectId_of_user)); // lấy id từ authSlice.js
   const type_tutor = useSelector(selectType_tutor); // lấy type_tutor từ authSlice.js
   const type_parent = useSelector(selectType_parent); // lấy type_parent từ authSlice.js
-  console.log('type', type_tutor, type_parent)
-  //chưa đăng kí là gia sư hay phụ huynh trả đến trang đăng kí
+  const filterBar = useRef(null);
+  const homeOverlay = useRef(null);
+  const cancelFilter = useRef(null);
+  const [filter, setFilter] = useState({}); //bộ lọc
+  const [roomList, setRoomList] = useState([]);
   
+  //chưa đăng kí là gia sư hay phụ huynh trả đến trang đăng kí
   if(type_tutor === false && type_parent === false) {
     history.push("/signup/chooserole")
   }
-  // dispatch để nạp danh sách lớp học + thông tin về các lớp học của gia sư từ homeSlice.js và rooomRelateTutorSlice.js
-  const dispatchSomething = () => {
-    dispatch(fetchRoomList({ token: token }));
-    dispatch(fetchRoomRelateTutor({ token: token }));
-  };
 
   useEffect(() => {
     // nếu người dùng đã đăng nhập thì nạp danh sách lớp học + thông tin về các lớp học của gia sư từ homeSlice.js và rooomRelateTutorSlice.js
-    if (token) {
-      dispatchSomething();
-      setInterval(dispatchSomething, 1000 * 60 * 3);
-    }
-
+    // if (token) {
+    //   dispatchSomething();
+    //   setInterval(dispatchSomething, 1000 * 60 * 3);
+    // }
     // nếu người dùng chưa đăng nhập thì đưa người dùng về trang login.
     if (!token) {
       history.push("/login");
     }
-  }, [token, isRefreshListRoom]);
+  }, [token]);
 
+  
 
-  const renderRoomList = roomList.map((room) => {
+  useEffect( () => {
+    const getRoomList = async () => {
+      const list = await fetchRoomList();
+      setRoomList(list);
+    }
+    const getFilterRoomList = async ( params) => {
+      const filterRoomList = await fetchFilterRoomList(params);
+      setRoomList(filterRoomList);
+    }
+    if(Object.keys(filter).length === 0) {
+      getRoomList();
+    }
+    else {
+      getFilterRoomList(filter);
+    }
+    
+  }, [filter]);
+
+  const renderRoomList = roomList?.map((room) => {
     return (
       <Room
         room={room}
@@ -80,25 +86,49 @@ function Home() {
     
   });
 
-  const showFormCreateRoom = () => {
-    setIsRenderCreateRoom(true);
-  };
-
-  const closeFormCreateRoom = () => {
-    setIsRenderCreateRoom(false);
-  };
-
   const refreshListRoom = () => {
     setIsRefreshListRoom(!isRefreshListRoom);
   };
 
+  const handleShowFilterBar = () => {
+    filterBar.current.style.display = "flex";
+    homeOverlay.current.style.display = "block";
+  }
+
+  const handleCloseFilterBar = () => {
+    filterBar.current.style.display = "none";
+    homeOverlay.current.style.display = "none";
+  }
+
+  
+
+  const handleCancelFilter = () => {
+    setFilter({});
+  }
+
+  const onSubmitSearch = (newFilter) => {
+    setFilter(newFilter);
+    console.log(newFilter);
+    //close filter bar
+    handleCloseFilterBar();
+    cancelFilter.current.style.display = "block"
+  }
+
   return (
     <div className = "home">
-
+      <button className="home__toggle" onClick={handleShowFilterBar}> <RiFilterFill /> <br/> Lọc </button>
+      <button className="home__toggle" onClick={handleCancelFilter} ref={cancelFilter} style={{display: "none"}}> <RiFilterOffFill /> <br /> Hủy</button>
       <Grid container spacing={2}>{renderRoomList}</Grid>
 
+      <div ref={filterBar} className="home__filter"> 
+        <FilterBar onClose={handleCloseFilterBar} onSubmit={onSubmitSearch}/>
+      </div>
+      
       <div>
         <Button onClick={refreshListRoom} color="primary">More Room</Button>
+      </div>
+      <div className="home__overlay" ref={homeOverlay} onClick={handleCloseFilterBar}> 
+
       </div>
     </div>
   );

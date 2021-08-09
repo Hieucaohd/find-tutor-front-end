@@ -21,7 +21,6 @@ export const fetchRoomList = createAsyncThunk(
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${token_prefix} ${token}`,
       },
     }).then((response) => {
       if (response.ok) {
@@ -30,6 +29,11 @@ export const fetchRoomList = createAsyncThunk(
     });
   }
 );
+
+export const fetchFilterRoomList = createAsyncThunk()
+
+// lấy danh sách lớp học theo filter
+
 
 // Tạo lớp học.
 export const addRoom = createAsyncThunk("roomList/addRoom", async (args) => {
