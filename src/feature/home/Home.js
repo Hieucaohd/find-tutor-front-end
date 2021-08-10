@@ -58,7 +58,7 @@ function Home() {
       const list = await fetchRoomList();
       setRoomList(list);
     }
-    const getFilterRoomList = async ( params) => {
+    const getFilterRoomList = async (params) => {
       const filterRoomList = await fetchFilterRoomList(params);
       setRoomList(filterRoomList);
     }
@@ -107,8 +107,8 @@ function Home() {
   }
 
   const onSubmitSearch = (newFilter) => {
+    console.log('newfilter', newFilter)
     setFilter(newFilter);
-    console.log(newFilter);
     //close filter bar
     handleCloseFilterBar();
     cancelFilter.current.style.display = "block"

@@ -74,14 +74,12 @@ function FilterBar( {onClose = null, onSubmit = null}) {
             newFilter["district_code"] = Number(location.district);
         }
         if(Number(location.ward) !== 0) {
-            newFilter["province_code"] = Number(location.ward);
+            newFilter["ward_code"] = Number(location.ward);
         }
         const filter = {};
         filter["params"] = newFilter;
+        filter["lop"] = classCanTeach;
         
-        if(classCanTeach.length != 0) {
-            filter["lop"] = classCanTeach;
-        }
         onSubmit(filter);
     }
     

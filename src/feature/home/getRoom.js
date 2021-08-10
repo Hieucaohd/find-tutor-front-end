@@ -18,30 +18,18 @@ export const fetchRoomList = async () => {
 
 export const fetchFilterRoomList = async ({lop, params}) => {
     try {
-        if(lop) {
-            const paramsString = queryString.stringify(params);
-            const response = await fetch(`${server_name}/search/?type=room&${paramsString}`, {
-                method: "GET",
-                headers: {
-                "Content-Type": "application/json",
-                },
-                body: JSON.stringify({"lop": [
-                    8
-                ]}),
-            });
-            const responseJSON = await response.json();
-            return responseJSON;
-        } else {
-            const paramsString = queryString.stringify(params);
-            const response = await fetch(`${server_name}/search/?type=room&${paramsString}`, {
+            const paramsString = `&${queryString.stringify(params)}`;
+            console.log(paramsString);
+            const response = await fetch(`${server_name}/search/?type=room${paramsString}&lop=${lop}`, {
                 method: "GET",
                 headers: {
                 "Content-Type": "application/json",
                 },
             });
+            console.log(response); 
             const responseJSON = await response.json();
             return responseJSON;
-        }
+        
     } catch(error) {
         console.log("failed to fetch filter room list: ", error);
     }

@@ -49,7 +49,7 @@ function Room({
               <br/> 
               Lớp: {room.lop}
               <br/>
-              Vị trí: {room.location}
+              Vị trí: {room.province_code} , {room.district_code} , {room.ward_code}
               <br/>
               Ngày dạy: {room.day_can_teach}
               <br/>
