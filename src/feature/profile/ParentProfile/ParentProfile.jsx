@@ -45,7 +45,7 @@ function ParentProfile(props) {
                     FB: <a href="#">facebook.com/abc</a>
                 </div>
                 <div> 
-                    Ngày sinh: <a href="#">{formatBirthDay(parentInfo.birthday)}</a>
+                    Ngày sinh: {formatBirthDay(parentInfo.birthday)}
                 </div>
                 <div>
                     Email: abc@gmail.com
