@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Grid } from '@material-ui/core';
+import Room from '../../components/Room/Room';
 
 TeachingListForTutor.propTypes = {
     teachingList: PropTypes.array,
@@ -12,13 +14,11 @@ TeachingListForTutor.defaultProps = {
 function TeachingListForTutor( {teachingList} ) {
     
     return (
-        <ul>
+        <Grid container spacing={2}>
             {teachingList.map( (teach) => (
-                <li key={teach.id}>
-                id: {teach.id}, parent_room: {teach.parent_room}
-                </li>
+                <Room room={teach} color={"#B3E9CB"}/>
             ))}
-        </ul>
+        </Grid>
     );
 }
 

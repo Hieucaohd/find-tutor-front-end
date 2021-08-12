@@ -8,7 +8,7 @@ import "./styles.scss";
 import { Button } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { Alert, AlertTitle } from "@material-ui/lab";
-import Location from "../location/Location";
+import Location  from "../components/location/Location";
 
 function CreateRoom(props) {
   const dispatch = useDispatch();

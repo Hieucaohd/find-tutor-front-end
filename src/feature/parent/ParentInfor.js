@@ -1,24 +1,39 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import { Grid } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { selectId_of_user, selectToken } from '../auth/authSlice';
-import { selectRoomList } from '../home/homeSlice';
-import RoomCreated from './components/RoomCreated';
+import Room from '../components/Room/Room';
+import { fetchRoomList } from '../home/getRoom';
+import "./styles.scss";
+import { deleteRoom } from "../home/homeSlice";
 
 function ParentInfor() {
-    const roomList = useSelector(selectRoomList);
     const token = useSelector(selectToken);
     const parentId = useSelector(selectId_of_user);
-    const parentRoomList = roomList.filter( (room) => room.parent === parentId);
-
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const [parentRoomList, setParentRoomList] = useState([]);
+    if(!token) {
+        history.push("/login")
+    }
+    const handleDeleteRoom = (roomId) => {
+        dispatch(deleteRoom({ roomId: roomId, token: token }));
+    }
+    useEffect ( ()=> {
+        const getList = async () => {
+            const roomList = await fetchRoomList();
+            const parentRooms = await roomList.filter( (room) => room.parent === Number(parentId));;
+            setParentRoomList(parentRooms);
+        }
+        getList();
+    }, [])
     return (
-        <div>
-            <h4>Parent Id: {parentId}</h4>
-            <ul>
-            {parentRoomList.map( (room) => (
-                <RoomCreated room = {room} token = {token} parentid = {parentId} />
+        <Grid container spacing={2} className="parentinfo">
+            {parentRoomList.map( (room)=> (
+                <Room room={room} onDelete={handleDeleteRoom} color={"#7FDBCA"}/>
             ))}
-            </ul>
-        </div>
+        </Grid>
     )
 }
 

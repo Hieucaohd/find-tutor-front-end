@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Grid } from '@material-ui/core';
+import Room from '../../components/Room/Room';
 
 TryTeachingListForTutor.propTypes = {
     tryTeachingList: PropTypes.array,
@@ -27,23 +29,11 @@ function TryTeachingListForTutor(props) {
     }
 
     return (
-        <ul>
+        <Grid container spacing={2}>
             {tryTeachingList.map( (tryTeaching) => (
-                <li key={tryTeaching.id}>
-                id: {tryTeaching.id}, parent_room: {tryTeaching.parent_room}
-                {!tryTeaching.tutor_agree ? (
-                <button onClick={() => handleTeach(tryTeaching.id)}>
-                    Đồng ý dạy chính thức
-                </button>
-                ) : (
-                <button>Chờ phụ huynh đồng ý</button>
-                 )}
-                <button onClick={() => handleDontTeach(tryTeaching.id)}>
-                    Khong muon day tiep
-                </button>
-            </li>
+                <Room room={tryTeaching} onDelete={handleDontTeach} onCheck={handleTeach} onWait={tryTeaching.tutor_agree} color={"#4285F4"}/>
             ))}
-        </ul>
+        </Grid>
     );
 }
 

@@ -1,7 +1,7 @@
 import { Avatar, makeStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router-dom';
-import { getDistrictName, getProvinceName, getWardName } from '../../location/getLocation';
+import { getDistrictName, getProvinceName, getWardName } from "../../components/location/getLocation";
 import { formatBirthDay, getParentProfile } from '../profile';
 import "./styles.scss";
 

@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { selectToken, setId, setParentTrue } from '../../../auth/authSlice';
 import { setParentIdCookie } from '../../../auth/cookies';
-import Location from '../../../location/Location';
 import { registerParentInfor } from '../../registerAccount';
+import Location from "../../../components/location/Location.jsx";
+
 import "./styles.scss";
 
 function RegisterParent(props) {

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { selectToken, setId, setTutorTrue } from '../../../auth/authSlice';
 import { setTutorIdCookie } from '../../../auth/cookies';
-import Location from '../../../location/Location';
+import Location from "../../../components/location/Location.jsx";
 import { registerTutorInfor } from '../../registerAccount';
 import "./styles.scss";
 

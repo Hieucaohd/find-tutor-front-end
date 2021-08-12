@@ -1,12 +1,11 @@
-import React, {useRef} from 'react';
-import { NavLink, Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
-import "./styles.scss";
-import { useForm } from 'react-hook-form';
 import { Button } from '@material-ui/core';
-import { registerAccount, selectRegisterInfo, setInfo } from './registerAccount';
-import { Alert } from '@material-ui/lab';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useRef } from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { login } from '../auth/authSlice';
+import { registerAccount } from './registerAccount';
+import "./styles.scss";
 
 Register.propTypes = {
     

@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Grid } from '@material-ui/core';
+import Room from '../../components/Room/Room';
 
 WaitingListForTutor.propTypes = {
     waitingList: PropTypes.array,
@@ -16,17 +18,13 @@ function WaitingListForTutor( {waitingList, onDelete} ) {
         if(!onDelete) return;
         onDelete(waitingId)
     }
+    console.log(waitingList);
     return (
-        <ul>
+        <Grid container spacing={2}>
             {waitingList.map( (waiting) => (
-                <li key={waiting.id}>
-                    id: {waiting.id}, parent_room: {waiting.parent_room}
-                    <button onClick={() => handleDeleteWaiting(waiting.id)}>
-                     delete
-                    </button>
-                </li>
+                <Room room={waiting} onDelete={handleDeleteWaiting} color={"#FFE7C4"}/>
             ))}
-        </ul>
+        </Grid>
     );
 }
 

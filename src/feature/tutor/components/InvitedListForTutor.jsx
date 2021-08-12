@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Grid } from '@material-ui/core';
+import Room from '../../components/Room/Room';
 
 InvitedListForTutor.propTypes = {
     invitedList: PropTypes.array,
@@ -27,19 +29,11 @@ function InvitedListForTutor( props ) {
     }
 
     return (
-        <ul>
+        <Grid container spacing={2}>
             {invitedList.map( (invited)=> (
-                <li key={invited.id}>
-                    id: {invited.id}, parent_room: {invited.parent_room}
-                    <button onClick={() => handleTryTeach(invited.id)}>
-                    Dong y day thu
-                    </button>
-                    <button onClick={() => handleDontTryTeach(invited.id)}>
-                    Khong dong y day thu
-                    </button>
-                </li>
+                <Room room={invited} onDelete={handleDontTryTeach} onCheck={handleTryTeach} color={"#7FDBCA"}/>
             ))}
-        </ul>
+        </Grid>
     );
 }
 

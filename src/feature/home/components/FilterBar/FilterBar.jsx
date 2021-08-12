@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from "react-hook-form";
-import Location from "../../../location/Location"
 import "./styles.scss";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { Button, Grid } from '@material-ui/core';
-
+import Location from "../../../components/location/Location.jsx"
 FilterBar.propTypes = {
     onClose: PropTypes.func,
     onSubmit: PropTypes.func,

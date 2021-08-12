@@ -51,7 +51,7 @@ function Room({
   }
 
   return (
-    <Grid item key={room.id} className="room" xs={12} sm={6} md={4} lg={3}>
+    <Grid item key={room.id} className="room" xs={12} sm={6} md={3} lg={3}>
       <Box p={4}>
         <div className="room__item" onClick={() => handleShowDetailRoom(room)}>
           <p> 

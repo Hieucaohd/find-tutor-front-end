@@ -5,7 +5,7 @@ import roomListReducer from "./feature/home/homeSlice"
 import { parentRoomReducer } from "./feature/parent_room/parentRoomSlice";
 import roomRelateTutorReducer from "./feature/auth/roomRelateTutorSlice";
 import { tutorInforReducer } from "./feature/tutor/tutorInforSlice";
-
+import { parentRoomListReducer } from "./feature/parent/parentRoomSlice";
 const store = configureStore({
   reducer: {
     roomList: roomListReducer,

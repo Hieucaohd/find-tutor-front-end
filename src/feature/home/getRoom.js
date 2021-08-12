@@ -27,7 +27,6 @@ export const fetchFilterRoomList = async ({lop, params}) => {
                 "Content-Type": "application/json",
                 },
             });
-            console.log(response); 
             const responseJSON = await response.json();
             return responseJSON;
         

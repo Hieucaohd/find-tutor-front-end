@@ -27,7 +27,7 @@ import {
   fetchWaitingListForTutorInfor,
   selectWaitingListForTutorInfor
 } from "./waitingListForTutorInforSlice";
-
+import "./styles.scss";
 
 
 function TutorInfor() {
@@ -100,15 +100,14 @@ function TutorInfor() {
   const teaching = useSelector(selectTeachingForTutorInfor);
 
   return (
-    <div>
-      <h3>Id user: {id_of_user}</h3>
-      <h4>Danh sach cho</h4>
+    <div className="tutorinfo">
+      <h4>Danh sách chờ</h4>
       <WaitingListForTutor waitingList = {waitingList} onDelete = {handleDeleteWaiting}/>
-      <h4>Danh sach moi</h4> 
+      <h4>Danh sách mời</h4> 
       <InvitedListForTutor invitedList = {invitedList} onTryTeach = {handleTryTeach} onDelete = {handleDontTryTeach}/>
-      <h4>Danh sach day thu</h4>
+      <h4>Danh sách dạy thử</h4>
       <TryTeachingListForTutor tryTeachingList = {tryTeaching} onTeach = {handleTeach} onDelete = {handleDontTeach}/>
-      <h4>Danh sach dang day</h4>
+      <h4>Danh sách đang dạy</h4>
       <TeachingListForTutor teachingList = {teaching}/>
     </div>
   );

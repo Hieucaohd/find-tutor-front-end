@@ -20,7 +20,6 @@ import TutorInfor from "./feature/tutor/TutorInfor";
 function App() {
 
   //get new token after 1hours
-  const dispatch = useDispatch();
   const token = useSelector(selectToken);
   if(token){
     getToken();
