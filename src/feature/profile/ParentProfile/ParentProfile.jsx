@@ -2,7 +2,7 @@ import { Avatar, makeStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { getDistrictName, getProvinceName, getWardName } from '../../location/getLocation';
-import { getParentProfile } from '../profile';
+import { formatBirthDay, getParentProfile } from '../profile';
 import "./styles.scss";
 
 const useStyles = makeStyles({
@@ -43,6 +43,9 @@ function ParentProfile(props) {
             <div> 
                 <div> 
                     FB: <a href="#">facebook.com/abc</a>
+                </div>
+                <div> 
+                    Ngày sinh: <a href="#">{formatBirthDay(parentInfo.birthday)}</a>
                 </div>
                 <div>
                     Email: abc@gmail.com

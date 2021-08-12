@@ -6,7 +6,7 @@ import { FaBirthdayCake } from "react-icons/fa";
 import { AiFillMail, AiFillFacebook } from "react-icons/ai";
 import { BsFillPersonFill } from "react-icons/bs";
 import { useEffect } from 'react';
-import { getTutorProfile } from '../profile';
+import { formatBirthDay, getTutorProfile } from '../profile';
 
 const useStyles = makeStyles({
     root: {},
@@ -30,7 +30,6 @@ function TutorProfile(props) {
         }
         getUserInfo();
     }, [])
-    console.log(tutorInfo);
     const getTeachLevelString = (arr) => {
         if(!arr || arr.length === 0) {
             return "";
@@ -52,7 +51,7 @@ function TutorProfile(props) {
                     </div>
                     <div className="tutor__wallpaper__more__field"> 
                         <FaBirthdayCake /> 
-                        <div>{tutorInfo.birthday}</div>
+                        <div>{formatBirthDay(tutorInfo.birthday)}</div>
                     </div>
                     <div className="tutor__wallpaper__more__field"> 
                         <AiFillFacebook /> 

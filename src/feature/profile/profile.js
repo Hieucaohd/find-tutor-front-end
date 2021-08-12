@@ -29,3 +29,9 @@ export const getTutorProfile = async ({id}) => {
         console.log("Failed to get tutor profile : ", error)
     }
 }
+
+export const formatBirthDay = (birthday) => {
+  if(!birthday || birthday.length === 0) return "";
+  const newBirthDay = `${birthday.slice(-2)}-${birthday.slice(5,7)}-${birthday.slice(0,4)}`
+  return newBirthDay;
+}

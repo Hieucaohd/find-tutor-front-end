@@ -1,7 +1,7 @@
 import React from "react";
 import { FaHome, FaSignOutAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   logout, selectIdParent, selectIdTutor, selectId_of_user, selectRefreshToken, selectToken, selectType_parent, selectType_tutor
 } from "../auth/authSlice";
@@ -17,12 +17,13 @@ function MainNavigation() {
   const idTutor = useSelector(selectIdTutor);
   const idParent = useSelector(selectIdParent);
   const userId = useSelector(selectId_of_user);
+  const history = useHistory();
   const handleLogOut = () => {
     dispatch(logout({
       token: token,
       refresh_token: refresh_token,
     }));  
-    // history.push("/login");
+    history.push("/login");
   }
   
   return (
