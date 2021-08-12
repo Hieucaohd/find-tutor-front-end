@@ -1,15 +1,13 @@
 import { Button } from '@material-ui/core';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { selectToken, setParentTrue } from '../../../auth/authSlice';
+import { selectToken, setId, setParentTrue } from '../../../auth/authSlice';
+import { setParentIdCookie } from '../../../auth/cookies';
 import Location from '../../../location/Location';
 import { registerParentInfor } from '../../registerAccount';
 import "./styles.scss";
-RegisterParent.propTypes = {
-    
-};
 
 function RegisterParent(props) {
     const {register, formState: { errors }, handleSubmit, watch} = useForm();
@@ -54,11 +52,13 @@ function RegisterParent(props) {
         }
         
         dispatch(setParentTrue());
-        const successfully = await registerParentInfor({
+        const responseJSON = await registerParentInfor({
             token: token,
             parentInfor: parentInfor,
         });
-        if (successfully) {
+        dispatch(setId({idParent: responseJSON.id}));
+        setParentIdCookie(responseJSON.id);
+        if (responseJSON !== 'false') {
             history.push("/");
         }
     }

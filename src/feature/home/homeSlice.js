@@ -30,10 +30,6 @@ export const fetchRoomList = createAsyncThunk(
   }
 );
 
-export const fetchFilterRoomList = createAsyncThunk()
-
-// lấy danh sách lớp học theo filter
-
 
 // Tạo lớp học.
 export const addRoom = createAsyncThunk("roomList/addRoom", async (args) => {

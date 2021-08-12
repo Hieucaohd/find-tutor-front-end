@@ -1,12 +1,11 @@
-import { server_name, token_prefix } from "../../namespace";
+import { server_name } from "../../namespace";
 
-export const getParentProfile = async ({id, token}) => {
+export const getParentProfile = async ({id}) => {
     try {
         const response = await fetch(`${server_name}/findTutor/parentDetail/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `${token_prefix} ${token}`,
           },
         });
         const responseJSON = await response.json();
@@ -16,13 +15,12 @@ export const getParentProfile = async ({id, token}) => {
     }
 }
 
-export const getTutorProfile = async ({id, token}) => {
+export const getTutorProfile = async ({id}) => {
     try {
         const response = await fetch(`${server_name}/findTutor/tutorDetail/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `${token_prefix} ${token}`,
           },
         });
         const responseJSON = await response.json();

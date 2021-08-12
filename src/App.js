@@ -1,20 +1,21 @@
-import Home from "./feature/home/Home";
-import Login from "./feature/auth/Login";
-import MainNavigation from "./feature/header/MainNavigation";
-import ParentInfor from "./feature/parent/ParentInfor";
-import TutorInfor from "./feature/tutor/TutorInfor";
-
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import ParentRoom from "./feature/parent_room/ParentRoom";
+import { getToken, selectToken } from "./feature/auth/authSlice";
+import Login from "./feature/auth/Login";
 import CreateRoom from "./feature/CreateRoom/CreateRoom";
-import Register from "./feature/register/Register";
-import RegisterTutor from "./feature/register/components/RegisterTutor/RegisterTutor";
+import MainNavigation from "./feature/header/MainNavigation";
+import Home from "./feature/home/Home";
+import ParentInfor from "./feature/parent/ParentInfor";
+import ParentRoom from "./feature/parent_room/ParentRoom";
+import ParentProfile from "./feature/profile/ParentProfile/ParentProfile";
+import TutorProfile from "./feature/profile/TutorProfile/TutorProfile";
 import RegisterParent from "./feature/register/components/RegisterParent/RegisterParent";
 import RegisterRole from "./feature/register/components/RegisterRole/RegisterRole";
-import { getNewToken, getToken, selectToken } from "./feature/auth/authSlice";
-import { useDispatch, useSelector } from "react-redux";
-import TutorProfile from "./feature/profile/TutorProfile";
-import ParentProfile from "./feature/profile/ParentProfile";
+import RegisterTutor from "./feature/register/components/RegisterTutor/RegisterTutor";
+import Register from "./feature/register/Register";
+import Search from "./feature/search/Search";
+import TutorInfor from "./feature/tutor/TutorInfor";
+
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
           <Route exact path="/signup/tutor" component={RegisterTutor} />
           <Route exact path="/tutorprofile/:tutorId" component={TutorProfile} />
           <Route exact path="/parentprofile/:parentId" component={ParentProfile} />
+          <Route exact path="/search" component={Search} />
         </Switch>
       </BrowserRouter>
     </div>

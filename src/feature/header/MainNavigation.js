@@ -1,18 +1,12 @@
-import { Link, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import './styles.scss'
-import { FaHome, FaSignOutAlt } from "react-icons/fa";
-import {
-  selectToken,
-  selectType_tutor,
-  selectType_parent,
-  selectId_of_user,
-  logout,
-  selectRefreshToken,
-} from "../auth/authSlice";
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
-
 import React from "react";
+import { FaHome, FaSignOutAlt } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import {
+  logout, selectIdParent, selectIdTutor, selectId_of_user, selectRefreshToken, selectToken, selectType_parent, selectType_tutor
+} from "../auth/authSlice";
+import './styles.scss';
+
 
 function MainNavigation() {
   const dispatch = useDispatch();
@@ -20,7 +14,8 @@ function MainNavigation() {
   const refresh_token = useSelector(selectRefreshToken);
   const type_tutor = useSelector(selectType_tutor);
   const type_parent = useSelector(selectType_parent);
-  const history = useHistory();
+  const idTutor = useSelector(selectIdTutor);
+  const idParent = useSelector(selectIdParent);
   const userId = useSelector(selectId_of_user);
   const handleLogOut = () => {
     dispatch(logout({
@@ -58,6 +53,18 @@ function MainNavigation() {
         {type_tutor ? (
           <li className = "navbar__info">
             <Link to={`/tutorInfo/${userId}`}>Tutor Infor</Link>
+          </li>
+        ) : null}
+
+        {type_tutor ? (
+          <li className = "navbar__info">
+            <Link to={`/tutorprofile/${idTutor}`}>My Profile</Link>
+          </li>
+        ) : null}
+
+        {type_parent ? (
+          <li className = "navbar__info">
+            <Link to={`/parentprofile/${idParent}`}>My Profile</Link>
           </li>
         ) : null}
 

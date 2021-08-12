@@ -16,8 +16,6 @@ function WaitingListForTutor( {waitingList, onDelete} ) {
         if(!onDelete) return;
         onDelete(waitingId)
     }
-
-    
     return (
         <ul>
             {waitingList.map( (waiting) => (

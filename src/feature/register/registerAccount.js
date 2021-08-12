@@ -1,6 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
 import { server_name, token_prefix } from "../../namespace";
-import { setParentTrue, setTutorTrue } from "../auth/authSlice";
 
 export const registerAccount = async (args) => {
   return await fetch(`${server_name}/auth/register/`, {
@@ -22,9 +20,8 @@ export const registerTutorInfor = async ({ token, tutorInfor }) => {
     body: JSON.stringify(tutorInfor),
   }).then((response) => {
     if (response.ok) {
-      console.log(response);
       alert(`Bạn đã đăng kí làm gia sư thành công.`);
-      return true;
+      return response.json();
     } else {
       alert(
         "Có lỗi xảy ra, bạn hiện tại chưa thể đăng kí làm gia sư, vui lòng thử lại sau."
@@ -44,9 +41,8 @@ export const registerParentInfor = async ({ token, parentInfor }) => {
     body: JSON.stringify(parentInfor),
   }).then((response) => {
     if (response.ok) {
-      console.log(response);
       alert(`Bạn đã đăng kí làm phụ huynh thành công.`);
-      return true;
+      return response.json();
     } else {
       alert(
         "Có lỗi xảy ra, bạn hiện tại chưa thể đăng kí làm phụ huynh, vui lòng thử lại sau."

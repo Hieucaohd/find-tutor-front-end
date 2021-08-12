@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { useDispatch, useSelector } from "react-redux";
 import { server_name, token_prefix } from "../../namespace";
 import { getDataFromCookies, getRefreshTokenCookie, removeUserCookies, setNewTokenCookie, setParentCookieTrue, setTutorCookieTrue, setUserInfoCookies } from "./cookies";
 
@@ -10,6 +9,8 @@ const initialState = {
   id: "",
   type_tutor: "",
   type_parent: "",
+  id_parent: "",
+  id_tutor: "",
 };
 
 // Lấy: id, token, type_tutor, type_parent từ server.
@@ -100,6 +101,11 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    setId(state, action) {
+      const {idParent, idTutor} = action;
+      state.id_parent = idParent;
+      state.id_tutor = idTutor;
+    },
     setTutorTrue(state, action) {
       state.type_tutor = true;
       setTutorCookieTrue();
@@ -109,12 +115,14 @@ const authSlice = createSlice({
       setParentCookieTrue();
     },
     setStateFromCookies(state) {
-      const {token, refreshToken, id, typeParent, typeTutor} = getDataFromCookies();
+      const {token, refreshToken, id, typeParent, typeTutor, idParent, idTutor} = getDataFromCookies();
       state.token = token;
       state.refresh_token = refreshToken;
       state.id = id;
       state.type_tutor = typeTutor;
       state.type_parent = typeParent;
+      state.id_parent = idParent;
+      state.id_tutor = idTutor;
     }
   },
   extraReducers: (builder) => {
@@ -125,13 +133,14 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.status = "idle";
         if(action.payload){
-          console.log(action.payload)
-          const { token, refresh_token, id, type_tutor, type_parent } = action.payload;
+          const { token, refresh_token, id, type_tutor, type_parent, id_parent, id_tutor } = action.payload;
           state.token = token;
           state.refresh_token = refresh_token;
           state.id = id;
           state.type_tutor = type_tutor ;
           state.type_parent = type_parent ;
+          state.id_parent = id_parent;
+          state.id_tutor = id_tutor;
           setUserInfoCookies(action.payload);
         }
       })
@@ -141,12 +150,14 @@ const authSlice = createSlice({
       .addCase(loginWithGoogle.fulfilled, (state, action) => {
         state.status = "idle";
         if(action.payload){
-          const { token, refresh_token, id, type_tutor, type_parent } = action.payload;
+          const { token, refresh_token, id, type_tutor, type_parent, id_parent, id_tutor } = action.payload;
           state.token = token;
           state.refresh_token = refresh_token;
           state.id = id;
           state.type_tutor = type_tutor;
           state.type_parent = type_parent;
+          state.id_parent = id_parent;
+          state.id_tutor = id_tutor;
           setUserInfoCookies(action.payload);
         }
       })
@@ -156,12 +167,14 @@ const authSlice = createSlice({
       .addCase(loginWithFacebook.fulfilled, (state, action) => {
         state.status = "idle";
         if(action.payload){
-          const { token, refresh_token, id, type_tutor, type_parent } = action.payload;
+          const { token, refresh_token, id, type_tutor, type_parent, id_parent, id_tutor } = action.payload;
           state.token = token;
           state.refresh_token = refresh_token;
           state.id = id;
           state.type_tutor = type_tutor;
           state.type_parent = type_parent;
+          state.id_parent = id_parent;
+          state.id_tutor = id_tutor;
           setUserInfoCookies(action.payload);
         }
       })
@@ -189,7 +202,7 @@ const authSlice = createSlice({
 
 export default authSlice.reducer;
 
-export const { setTutorTrue, setParentTrue, setStateFromCookies } = authSlice.actions;
+export const {setId, setTutorTrue, setParentTrue, setStateFromCookies } = authSlice.actions;
 
 // Lấy: id, token, type_tutor, type_parent cho component 
 export const selectToken = (state) => state.auth.token;
@@ -197,7 +210,8 @@ export const selectRefreshToken = (state) => state.auth.refresh_token;
 export const selectId_of_user = (state) => state.auth.id;
 export const selectType_tutor = (state) => state.auth.type_tutor;
 export const selectType_parent = (state) => state.auth.type_parent;
-
+export const selectIdTutor = (state) => state.auth.id_tutor;
+export const selectIdParent = (state) => state.auth.id_parent
 export const getToken = (dispatch) => {
   const refreshToken = getRefreshTokenCookie();
   setInterval( ()=> {

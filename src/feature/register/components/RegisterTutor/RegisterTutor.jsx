@@ -1,18 +1,13 @@
 import { Button } from '@material-ui/core';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { selectToken, setTutorTrue } from '../../../auth/authSlice';
+import { selectToken, setId, setTutorTrue } from '../../../auth/authSlice';
+import { setTutorIdCookie } from '../../../auth/cookies';
 import Location from '../../../location/Location';
-import { registerTutorInfor, selectRegisterInfo } from '../../registerAccount';
+import { registerTutorInfor } from '../../registerAccount';
 import "./styles.scss";
-
-
-
-RegisterTutor.propTypes = {
-    
-};
 
 function RegisterTutor(props) {
     const token = useSelector(selectToken);
@@ -79,11 +74,13 @@ function RegisterTutor(props) {
         }
 
         dispatch(setTutorTrue());
-        const successfully = await registerTutorInfor({
+        const responseJSON = await registerTutorInfor({
             token: token,
             tutorInfor: tutorInfor,
         });
-        if (successfully) {
+        dispatch(setId({idTutor: responseJSON.id}));
+        setTutorIdCookie(responseJSON.id);
+        if (responseJSON !== 'false') {
             history.push("/");
         }
     }    

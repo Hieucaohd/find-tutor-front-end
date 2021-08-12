@@ -37,50 +37,62 @@ function Room({
       history.push(`/room/${room.id}`);
 
   }
+  let isRender = false;
+  if(!token) {
+    isRender = true;
+  }
+  else {
+    if(String(type_tutor) === "true") {
+      isRender =  renderThem(room.id,list_room_waiting,list_room_invited,list_room_try_teaching);
+    }
+    else if(room.parent === id_of_user) {
+      isRender = false;
+    }
+  }
 
   return (
-      <Grid item key={room.id} className="room" xs={12} sm={6} md={4} lg={3}>
-        <Box p={4}>
-          <div className="room__item" onClick={() => handleShowDetailRoom(room)}>
-            <p> 
-              Room Id: {room.id}
-              <br/>
-              Môn học: {room.subject}
-              <br/> 
-              Lớp: {room.lop}
-              <br/>
-              Vị trí: {room.province_code} , {room.district_code} , {room.ward_code}
-              <br/>
-              Ngày dạy: {room.day_can_teach}
-              <br/>
-              Parent Id: {room.parent}
-              <br/>
-              Yêu cầu khác: {room.other_require}
-            </p>
-            {String(type_tutor) === "true" &&
-              renderThem(
-              room.id,
-              list_room_waiting,
-              list_room_invited,
-              list_room_try_teaching
-            ) ? (
-            <button onClick={(e) => addToWaitingList(e, room.id)}><IoIosAddCircle /></button>
-          ) : null}
+    <Grid item key={room.id} className="room" xs={12} sm={6} md={4} lg={3}>
+      <Box p={4}>
+        <div className="room__item" onClick={() => handleShowDetailRoom(room)}>
+          <p> 
+            Room Id: {room.id}
+            <br/>
+            Môn học: {room.subject}
+            <br/> 
+            Lớp: {room.lop}
+            <br/>
+            Vị trí: {room.province_code} , {room.district_code} , {room.ward_code}
+            <br/>
+            Ngày dạy: {room.day_can_teach}
+            <br/>
+            Parent Id: {room.parent}
+            <br/>
+            Yêu cầu khác: {room.other_require}
+          </p>
           {String(type_tutor) === "true" &&
-              !renderThem(
-              room.id,
-              list_room_waiting,
-              list_room_invited,
-              list_room_try_teaching
-            ) ? (
-              <h5>Đã thêm</h5>
-          ) : null}
-          {room.parent === id_of_user ? (
-            <button onClick={(e) => handleDeleteRoom(e, room.id)}><TiDelete /></button>
-          ) : null}
-          </div>
-        </Box>
-      </Grid>
+            renderThem(
+            room.id,
+            list_room_waiting,
+            list_room_invited,
+            list_room_try_teaching
+          ) ? (
+          <button onClick={(e) => addToWaitingList(e, room.id)}><IoIosAddCircle /></button>
+        ) : null}
+        {String(type_tutor) === "true" &&
+            !renderThem(
+            room.id,
+            list_room_waiting,
+            list_room_invited,
+            list_room_try_teaching
+          ) ? (
+            <h5>Đã thêm</h5>
+        ) : null}
+        {room.parent === id_of_user ? (
+          <button onClick={(e) => handleDeleteRoom(e, room.id)}><TiDelete /></button>
+        ) : null}
+        </div>
+      </Box>
+    </Grid>
   );
 }
 
