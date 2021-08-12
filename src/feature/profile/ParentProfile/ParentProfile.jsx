@@ -38,7 +38,7 @@ function ParentProfile(props) {
                 <Avatar alt="Travis Howard" className={classes.avatar} src="https://laptrinhcuocsong.com/images/lap-trinh-vien.png" />
             </div>
             <div>
-                <h3>Nguyễn Văn Đức</h3>
+                <h3>{parentInfo.first_name} {parentInfo.last_name}</h3>
             </div>
             <div> 
                 <div> 
