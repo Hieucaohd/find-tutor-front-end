@@ -5,6 +5,8 @@ import {
 } from "@reduxjs/toolkit";
 import { deleteForTryTeachingTutorInfor } from "./invitedListForTutorInforSlice";
 
+import { server_name, token_prefix } from "../../namespace";
+
 const tryTeachingForTutorInforAdapter = createEntityAdapter();
 
 const initialState = tryTeachingForTutorInforAdapter.getInitialState({
@@ -15,11 +17,11 @@ export const fetchTryTeachingForTutorInfor = createAsyncThunk(
   "tryTeachingForTutorInfor/fetchTryTeachingForTutorInfor",
   async (args) => {
     const { token } = args;
-    return await fetch(`http://localhost:8000/findTutor/tryTeachingList/`, {
+    return await fetch(`${server_name}/findTutor/tryTeachingList/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
+        Authorization: `${token_prefix} ${token}`,
       },
     }).then((response) => response.json());
   }
@@ -30,12 +32,12 @@ export const addTryTeachingForTutorInfor = createAsyncThunk(
   async (args, thunkAPI) => {
     const { invitedId, token } = args;
     return await fetch(
-      `http://localhost:8000/findTutor/listInvitedDetail/${invitedId}`,
+      `${server_name}/findTutor/listInvitedDetail/${invitedId}`,
       {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `${token_prefix} ${token}`,
         },
       }
     ).then((response) => {
@@ -55,12 +57,12 @@ export const deleteTryTeachingForTutorInfor = createAsyncThunk(
   async (args, thunkAPI) => {
     const { try_teachingId, token } = args;
     return await fetch(
-      `http://localhost:8000/findTutor/tryTeachingDetail/${try_teachingId}`,
+      `${server_name}/findTutor/tryTeachingDetail/${try_teachingId}`,
       {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `${token_prefix} ${token}`,
         },
       }
     ).then((response) => {
@@ -77,7 +79,14 @@ export const deleteTryTeachingForTutorInfor = createAsyncThunk(
 const tryTeachingForTutorInforSlice = createSlice({
   name: "tryTeachingForTutorInfor",
   initialState,
-  reducers: {},
+  reducers: {
+    deleteForTeachingTutorInfor(state, action) {
+      tryTeachingForTutorInforAdapter.removeOne(state, action.payload);
+    },
+    upsertForTeachingTutorInfor(state, action) {
+      tryTeachingForTutorInforAdapter.upsertOne(state, action.payload);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTryTeachingForTutorInfor.pending, (state, action) => {
@@ -124,6 +133,10 @@ export default tryTeachingForTutorInforSlice.reducer;
 export const {
   selectAll: selectTryTeachingForTutorInfor,
   selectById: selectTryTeachingForTutorInforByIds,
+
 } = tryTeachingForTutorInforAdapter.getSelectors(
   (state) => state.tutorInfor.tryTeaching
 );
+
+export const { deleteForTeachingTutorInfor, upsertForTeachingTutorInfor } =
+  tryTeachingForTutorInforSlice.actions;

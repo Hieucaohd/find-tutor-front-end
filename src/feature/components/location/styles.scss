@@ -1,0 +1,10 @@
+.location {
+    display: flex;
+    flex-direction: column;
+    &__field {
+        padding: 8px 2px;
+        border: 1px solid;
+        margin-bottom: 2px;
+        border-radius: 4px;
+    }
+}

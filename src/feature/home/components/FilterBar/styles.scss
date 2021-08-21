@@ -1,0 +1,48 @@
+.filter {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+
+    input {
+        width: 95%;
+        padding: 4px;
+        border: 1px solid;
+        border-radius: 4px;
+    }
+
+    label {
+        font-size: 12px;
+    }
+
+    &__close {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        font-size: 24px;
+        background-color: transparent;
+        border: none;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &__class {
+        display: flex;
+        justify-self: center;
+        align-items: center;
+        flex-flow: wrap;
+        &__item {
+            display: flex;
+            flex-direction: column;
+            justify-self: center;
+            align-items: center;
+            width: 16%;
+        }
+        &__special {
+            width: 32%;
+        }
+        
+    }
+}

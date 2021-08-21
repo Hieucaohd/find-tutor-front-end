@@ -1,12 +1,44 @@
 .navbar {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 40px;
+    background-color: #4385F5;
+    padding: 0px 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 999;
 
-    ul {
+    &__item {
         display: flex;
-        justify-content: space-between;
-        li {
-            list-style-type: none;
+        align-items: center;
+    }
+    &__logo {
+        color: white;
+        margin: 0px;
+        display: flex;
+        align-items: center;
+
+        svg {
+            display: flex;
+            margin-right: 4px;
         }
     }
 
-
+    &__section {
+        margin-left: 12px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        a {
+            color: white;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        &:hover {
+            cursor: pointer;
+            background-color: #5690F4;
+        }
+    }
 }

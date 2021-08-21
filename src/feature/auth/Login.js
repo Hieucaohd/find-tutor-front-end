@@ -1,18 +1,22 @@
+import { Button } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { login } from "./authSlice";
+import { Link, useHistory } from "react-router-dom";
+import { login, setStateFromCookies } from "./authSlice";
+import { isTokenCookie } from "./cookies";
+import LoginFacebook from "./LoginFacebook";
+import LoginGoogle from "./LoginGoogle";
+import "./styles.scss"
 
 const selectToken = (state) => state.auth.token;
 
 function Login() {
   const dispatch = useDispatch();
   let history = useHistory();
-  const {register, handleSubmit} = useForm();
-
+  const { register, formState: { errors }, handleSubmit } = useForm();
   const token = useSelector(selectToken);
-
+  //token đã tồn tại chuyển sang trang home
   useEffect(() => {
     if (token) {
       history.push("/");
@@ -21,7 +25,7 @@ function Login() {
 
   const onSubmit = (data) => {
     const args = {
-      username: data.username,
+      email: data.email,
       password: data.password,
     };
 
@@ -29,19 +33,38 @@ function Login() {
   };
 
   return (
-    <div class="login">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="form-control">
-            <label>Username</label>
-            <input name="username" type="text" {...register("username", { required: true })}/>
-          </div>
-          <div className="form-control">
-            <label>Password</label>
-            <input name="password" type="password" {...register("password", { required: true })}/>
-          </div>
-          <button type="submit">Sign in</button>
-        </form>   
-        <button>Sign up</button>          
+    <div className = "login">
+          <form className = "login__form" onSubmit={handleSubmit(onSubmit)}>
+            <div className="login__form__control">
+              <input 
+                name="email" 
+                type="email" placeholder="Email" 
+                {...register("email", { required: true }
+                )}/>
+                <span className="login__error">{errors.email && "Email is required"}</span>
+            </div>
+            <div className="login__form__control">
+              <input name="password" 
+              type="password" 
+              placeholder="Password" 
+              {...register("password", { required: true })}/>
+              <span className="login__error">{errors.username && "Password is required"}</span>
+            </div>
+            <div className="login__form__control">
+              <Button variant="contained" color="primary" type="submit">Sign in</Button>
+            </div>
+            <div className="login__form__control">
+              <LoginGoogle />
+            </div>
+            <div className="login__form__control">
+              <LoginFacebook />
+            </div>
+            <div className="login__form__control">
+              <Link to="/signup" className="login__form__control__register">Đăng kí tài khoản</Link>
+            </div>
+            
+
+          </form> 
     </div>              
   );
 }

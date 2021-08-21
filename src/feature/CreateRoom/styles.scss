@@ -1,0 +1,48 @@
+.createroom {
+    margin-top: 32px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    &__field {
+        display: flex;
+        flex-direction: column;
+        width: 500px;
+        margin-bottom: 6px;
+        label {
+            font-size: 16px;
+        }
+        input {
+            padding: 4px 8px;
+        }
+    }
+
+    &__day {
+        display: flex;
+        margin-bottom: 6px;
+        label {
+            font-size: 16px;
+        }
+
+        &__field {
+           margin-right: 8px;
+        }
+    }
+
+    &__error {
+        font-size: 12px;
+        color: red;
+        margin-bottom: 2px;
+    }
+
+    &__success {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+    }
+}
