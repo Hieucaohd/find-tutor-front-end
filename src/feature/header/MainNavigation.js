@@ -1,13 +1,15 @@
 import React from "react";
 import { FaHome, FaSignOutAlt } from "react-icons/fa";
+import { HiHome, HiHeart } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import {
   logout, selectIdParent, selectIdTutor, selectId_of_user, selectRefreshToken, selectToken, selectType_parent, selectType_tutor
 } from "../auth/authSlice";
 import './styles.scss';
-
-
+import ToggleMenu from "./components/ToggleMenu"
+import { Avatar } from "@material-ui/core";
+import { FaUniversity } from "react-icons/fa";
 function MainNavigation() {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
@@ -18,6 +20,7 @@ function MainNavigation() {
   const idParent = useSelector(selectIdParent);
   const userId = useSelector(selectId_of_user);
   const history = useHistory();
+
   const handleLogOut = () => {
     dispatch(logout({
       token: token,
@@ -27,52 +30,31 @@ function MainNavigation() {
   }
   
   return (
-    <div className="navbar">
-      {token && <ul>
-        <li className = "navbar__home">
-        <Link to="/"> <FaHome /> </Link>
-        </li>
+    <div>
+      {token && <div className="navbar">
+        <div className="navbar__item">
+          <div>
+            <h3 className="navbar__logo">
+              <FaUniversity />
+              Find Tutor
+            </h3>
+          </div>
+          <div className="navbar__section">
+            <Link to="/">Home</Link>
+          </div>
+          <div className="navbar__section">
+            {type_tutor && <Link to={`/tutorInfo/${userId}`}>Room</Link>}
+            {type_parent && <Link to={`/parentInfo/${userId}`}>Room</Link>}
+          </div>
+          <div className="navbar__section">
+            {type_parent && <Link to="/createroom"> Tạo phòng </Link>}
+          </div>
+        </div>
 
-        <li> 
-          <input type="text"/>
-          <button> search </button>
-        </li>
-        {type_parent ? (
-          <li className = "navbar__info">
-            <Link to={`/parentInfo/${userId}`}>Parent Infor</Link>
-          </li>
-        ) : null}
-
-
-        {type_parent ? 
-          <li className = "navbar_createroom">  
-          <Link to="/createroom"> Create Room </Link>
-          </li>
-          : null
-        }
-
-        {type_tutor ? (
-          <li className = "navbar__info">
-            <Link to={`/tutorInfo/${userId}`}>Tutor Infor</Link>
-          </li>
-        ) : null}
-
-        {type_tutor ? (
-          <li className = "navbar__info">
-            <Link to={`/tutorprofile/${idTutor}`}>My Profile</Link>
-          </li>
-        ) : null}
-
-        {type_parent ? (
-          <li className = "navbar__info">
-            <Link to={`/parentprofile/${idParent}`}>My Profile</Link>
-          </li>
-        ) : null}
-
-        <li className="navbar__signout">
-          <button onClick={() =>handleLogOut()}><FaSignOutAlt /></button>
-        </li>
-      </ul>
+        <div className="navbar__item">
+          <ToggleMenu onLogOut={handleLogOut}/>
+        </div>
+      </div>
     }
     </div>
   );

@@ -38,10 +38,10 @@ function TutorInfor() {
   //thông tin người dùng
   const id_of_user = useSelector(selectId_of_user);
 
-  //chưa có tài khoản, đẩy về trang login
-  if (!token) {
-    history.push("/login");
-  }
+  // //chưa có tài khoản, đẩy về trang login
+  // if (!token) {
+  //   history.push("/login");
+  // }
 
   useEffect(() => {
     if (token) {

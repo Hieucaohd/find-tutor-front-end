@@ -83,7 +83,6 @@ function Home() {
         type_tutor={type_tutor}
       />
     );
-    
   });
 
   const refreshListRoom = () => {

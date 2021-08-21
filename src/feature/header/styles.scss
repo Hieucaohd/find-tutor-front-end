@@ -1,46 +1,44 @@
 .navbar {
-    background-color: #262d61;
     position: fixed;
     top: 0px;
     left: 0px;
     right: 0px;
-    z-index: 1000;
-    ul {
+    height: 40px;
+    background-color: #4385F5;
+    padding: 0px 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 999;
+
+    &__item {
+        display: flex;
+        align-items: center;
+    }
+    &__logo {
+        color: white;
         margin: 0px;
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        height: 32px;
-        li {
-            list-style-type: none;
+
+        svg {
+            display: flex;
+            margin-right: 4px;
         }
-        color: white;
-        padding: 0px 20px;
     }
 
-    &_createroom,
-    &__info,
-    &__home {
+    &__section {
+        margin-left: 12px;
+        padding: 4px 8px;
+        border-radius: 4px;
         a {
             color: white;
+            font-size: 14px;
             text-decoration: none;
-            &:hover {
-                opacity: 0.6;
-                cursor: pointer;
-            }
         }
-    }
-
-    &__signout button {
-        background-color: transparent;
-        border: none;
-        color: white;
-
         &:hover {
-            opacity: 0.6;
             cursor: pointer;
+            background-color: #5690F4;
         }
     }
-
-
 }

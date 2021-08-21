@@ -3,27 +3,26 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 export const setUserInfoCookies = (info) => {
-    console.log('info', info)
     const {token, id, refresh_token, type_parent, type_tutor, id_parent, id_tutor} = info;
-    cookies.set('userToken', token, { secure: true, sameSite: true});
-    cookies.set('userRefreshToken', refresh_token, { secure: true, sameSite: true});
+    cookies.set('userToken', token, { secure: true, sameSite: true, maxAge: 59*60});
+    cookies.set('userRefreshToken', refresh_token, { secure: true, sameSite: true, maxAge: 59*60});
     cookies.set('userId', id, { secure: true, sameSite: true});
-    cookies.set('userTypeParent', type_parent, { secure: true, sameSite: true});
-    cookies.set('userTypeTutor', type_tutor, { secure: true, sameSite: true});
-    cookies.set('userParentId', id_parent, { secure: true, sameSite: true});
-    cookies.set('userTutorId', id_tutor, { secure: true, sameSite: true});
+    cookies.set('userTypeParent', type_parent, { secure: true, sameSite: true, maxAge: 59*60});
+    cookies.set('userTypeTutor', type_tutor, { secure: true, sameSite: true, maxAge: 59*60});
+    cookies.set('userParentId', id_parent, { secure: true, sameSite: true, maxAge: 59*60});
+    cookies.set('userTutorId', id_tutor, { secure: true, sameSite: true, maxAge: 59*60});
 }
 
 export const setParentCookieTrue = () => {
-    cookies.set('userTypeParent', true, { secure: true, sameSite: true});
+    cookies.set('userTypeParent', true, { secure: true, sameSite: true, maxAge: 59*60});
 }
 
 export const setTutorCookieTrue = () => {
-    cookies.set('userTypeTutor', true, { secure: true, sameSite: true});
+    cookies.set('userTypeTutor', true, { secure: true, sameSite: true, maxAge: 59*60});
 }
 
 export const setNewTokenCookie = (newToken) => {
-    cookies.set('userToken', newToken, { secure: true, sameSite: true});
+    cookies.set('userToken', newToken, { secure: true, sameSite: true, maxAge: 59*60});
 }
 
 export const getDataFromCookies = () => {
@@ -48,6 +47,10 @@ export const setTutorIdCookie = (id) => {
 
 export const setParentIdCookie = (id) => {
     cookies.set('userParentId', id, { secure: true, sameSite: true});
+}
+
+export const isTokenCookie = () => {
+    return cookies.get('userToken') ? true : false;
 }
 
 export const removeUserCookies = () => {

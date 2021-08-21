@@ -75,7 +75,6 @@ export const logout = createAsyncThunk("/auth/logout/", async (args) => {
       },
       body: JSON.stringify({"refresh_token" : refresh_token}),
     });
-    removeUserCookies();
   } catch (error) {
     console.log("Failed to log out : ", error)
   }
@@ -188,7 +187,11 @@ const authSlice = createSlice({
         state.id = "";
         state.type_tutor = "";
         state.type_parent = "";
+        removeUserCookies();
       })
+      .addCase(logout.rejected, (state) => {
+        state.status =  "error";
+      } )
       .addCase(getNewToken.pending, (state) => {
         state.status = "loading";
       })

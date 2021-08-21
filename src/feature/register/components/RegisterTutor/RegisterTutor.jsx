@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,12 +16,12 @@ function RegisterTutor(props) {
     const password = useRef({});
     password.current = watch("password", "");
     const dispatch = useDispatch();
+    const loadingRef = useRef(null);
     const [location, setLocation] = useState({
         province: 0,
         district: 0,
         ward: 0
-    })
-
+    });
     //cắt lấy firstname và lastname 
     const getName = (name) => {
         return {
@@ -51,8 +51,8 @@ function RegisterTutor(props) {
         setLocation(data);
     }
 
-    const onSubmit = async (data) => {
-        
+    const onSubmit = (data) => {
+        loadingRef.current.style.display = "flex";
         const tutorInfor = {
             "profession": data.profession || null,
             "university": data.university || null,
@@ -74,15 +74,20 @@ function RegisterTutor(props) {
         }
 
         dispatch(setTutorTrue());
-        const responseJSON = await registerTutorInfor({
+        registerTutorInfor({
             token: token,
             tutorInfor: tutorInfor,
-        });
-        dispatch(setId({idTutor: responseJSON.id}));
-        setTutorIdCookie(responseJSON.id);
-        if (responseJSON !== 'false') {
-            history.push("/");
-        }
+        }).then((response) => {
+            if (response.ok) {
+                alert(`Bạn đã đăng kí làm gia sư thành công.`);
+                setTutorIdCookie(response.id);
+                dispatch(setId({idTutor: response.id}));
+                history.push("/");
+            } else {
+                loadingRef.current.style.display = "none";
+                alert("Có lỗi xảy ra, bạn hiện tại chưa thể đăng kí làm gia sư, vui lòng thử lại sau.");
+            }
+          });
     }    
     return (
         <div className="register__tutor">
@@ -226,6 +231,10 @@ function RegisterTutor(props) {
                     <Button variant="contained" color="primary" type="submit">Đăng kí</Button>
                 </div>
             </form>
+            <div ref={loadingRef} className="register__tutor__loading"> 
+                <CircularProgress />
+             </div>
+
         </div>
     );
 }

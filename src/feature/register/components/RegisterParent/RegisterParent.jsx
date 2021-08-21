@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,6 +17,7 @@ function RegisterParent(props) {
     const dispatch = useDispatch();
     const token = useSelector(selectToken);
     const history = useHistory();
+    const loadingRef = useRef(null);
     const [location, setLocation] = useState({
         province: 0,
         district: 0,
@@ -35,8 +36,8 @@ function RegisterParent(props) {
         setLocation(data);
     }
 
-    const onSubmit = async (data) => {
-
+    const onSubmit = (data) => {
+        loadingRef.current.style.display = "flex";
         const parentInfor = {
             "avatar": null,
             "identity_card": null,
@@ -53,15 +54,20 @@ function RegisterParent(props) {
         }
         
         dispatch(setParentTrue());
-        const responseJSON = await registerParentInfor({
+        registerParentInfor({
             token: token,
             parentInfor: parentInfor,
-        });
-        dispatch(setId({idParent: responseJSON.id}));
-        setParentIdCookie(responseJSON.id);
-        if (responseJSON !== 'false') {
-            history.push("/");
-        }
+        }).then((response) => {
+            if (response.ok) {
+                dispatch(setId({idParent: response.id}));
+                setParentIdCookie(response.id);
+                alert(`Bạn đã đăng kí làm phụ huynh thành công.`);
+                history.push("/");
+            } else {
+                loadingRef.current.style.display = "none";
+                alert("Có lỗi xảy ra, bạn hiện tại chưa thể đăng kí làm phụ huynh, vui lòng thử lại sau.");
+            }
+          });
     }
 
     return (
@@ -118,10 +124,13 @@ function RegisterParent(props) {
                         {...register("identitycard")}
                     />
                 </div>
-                <div className="register__tutor__form__control"> 
+                <div className="register__parent__form__control"> 
                     <Button variant="contained" color="primary" type="submit">Đăng kí</Button>
                 </div>
             </form>
+            <div ref={loadingRef} className="register__parent__loading"> 
+                <CircularProgress />
+             </div>
         </div>
     );
 }

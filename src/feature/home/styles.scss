@@ -40,7 +40,9 @@
     &__toggle {
         background-color: transparent;
         border: none;
-
+        position: fixed;
+        top: 60px;
+        left: 20px;
         &:hover {
             cursor: pointer;
         }

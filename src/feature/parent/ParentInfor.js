@@ -13,9 +13,7 @@ function ParentInfor() {
     const parentId = useSelector(selectId_of_user);
     const history = useHistory();
     const [parentRoomList, setParentRoomList] = useState([]);
-    if(!token) {
-        history.push("/login")
-    }
+    
     const handleDeleteRoom = async (roomId) => {
         let newParentRoomList = [...parentRoomList];
         newParentRoomList = await newParentRoomList.filter( (room) => room.id != roomId);
@@ -27,6 +25,7 @@ function ParentInfor() {
         const getList = async () => {
             const roomList = await fetchRoomList();
             const parentRooms = await roomList.filter( (room) => room.parent === Number(parentId));
+            console.log('roomlist', roomList);
             setParentRoomList(parentRooms);
         }
         getList();

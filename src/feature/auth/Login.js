@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { login, setStateFromCookies } from "./authSlice";
+import { isTokenCookie } from "./cookies";
 import LoginFacebook from "./LoginFacebook";
 import LoginGoogle from "./LoginGoogle";
 import "./styles.scss"
@@ -15,12 +16,6 @@ function Login() {
   let history = useHistory();
   const { register, formState: { errors }, handleSubmit } = useForm();
   const token = useSelector(selectToken);
-
-  //lấy data từ cookies lưu vào state
-  if(!token){
-    dispatch(setStateFromCookies());
-  }
-
   //token đã tồn tại chuyển sang trang home
   useEffect(() => {
     if (token) {

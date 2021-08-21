@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { getToken, selectToken } from "./feature/auth/authSlice";
+import { selectToken, setStateFromCookies } from "./feature/auth/authSlice";
+import { isTokenCookie } from "./feature/auth/cookies";
 import Login from "./feature/auth/Login";
 import CreateRoom from "./feature/CreateRoom/CreateRoom";
 import MainNavigation from "./feature/header/MainNavigation";
@@ -16,15 +18,15 @@ import Register from "./feature/register/Register";
 import Search from "./feature/search/Search";
 import TutorInfor from "./feature/tutor/TutorInfor";
 
-
 function App() {
-
-  //get new token after 1hours
   const token = useSelector(selectToken);
-  if(token){
-    getToken();
-  }
-  
+  const dispatch = useDispatch();
+  //lấy data từ cookies lưu vào state
+  useEffect(()=> {
+    if(!token && isTokenCookie){
+      dispatch(setStateFromCookies());
+    }
+  }, [])
   return (
     <div className="App">
       <BrowserRouter>

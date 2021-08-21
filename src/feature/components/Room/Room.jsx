@@ -20,7 +20,6 @@ function Room( {room, onDelete, onCheck, onWait, color} ) {
     const handleShowDetailRoom = (room) => {
         //navigate to detail room
         history.push(`/room/${room.id}`);
-  
     }
     const handleDelete = (e, id) => {
         e.stopPropagation();
@@ -33,7 +32,7 @@ function Room( {room, onDelete, onCheck, onWait, color} ) {
     return (
         <Grid item key={room.id} className="room" xs={12} sm={6} md={3} lg={3} className="room">
             <Box p={3}>
-            <div className="item__room" style={{backgroundColor: "#FFE7C4"}} onClick={() => handleShowDetailRoom(room)}>
+            <div className="item__room" style={{backgroundColor: `${color}`}} onClick={() => handleShowDetailRoom(room)}>
             <p> 
             Room Id: {room.id}
             <br/>
