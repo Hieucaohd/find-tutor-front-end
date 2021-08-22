@@ -1,16 +1,19 @@
 ## MỤC LỤC
 
-- [Tổng quan về trang web](#tổng-quan-về-trang-web)
-  - [Mục đích để tạo ra trang web](#mục-đích-để-tạo-ra-trang-web)
-  - [Cơ chế hoạt động của trang web](#cơ-chế-hoạt-động-của-trang-web)
-  - [Công nghệ](#công-nghệ)
-- [Bố cục của Code](#bố-cục-của-code)
-  - [auth](#auth)
-  - [header](#header)
-  - [home](#home)
-  - [parent_room](#parent_room)
-  - [parent](#parent)
-  - [tutor](#tutor)
+- [Tổng quan về trang web] (#tổng-quan-về-trang-web)
+  - [Mục đích để tạo ra trang web] (#mục-đích-để-tạo-ra-trang-web)
+  - [Cơ chế hoạt động của trang web] (#cơ-chế-hoạt-động-của-trang-web)
+  - [Công nghệ] (#công-nghệ)
+- [Bố cục của Code] (#bố-cục-của-code)
+  - [auth] (#auth)
+  - [header] (#header)
+  - [home] (#home)
+  - [CreateRoom] (#CreateRoom)
+  - [parent_room] (#parent_room)
+  - [parent] (#parent)
+  - [tutor] (#tutor)
+  - [profile] (#profile)
+  - [register] (#register)
 
 ## Tổng quan về trang web
 
@@ -38,7 +41,7 @@
 - Back-end: dùng django (framework được viết hoàn toàn bằng python):
   - Ưu điểm: giúp viết code nhanh, dễ dùng, có nhiều thư viện được viết sẵn, có thể áp dụng các công nghệ về bigdata, machine learning, AI, ...
   - Nhược điểm: tốc độ chậm (tốc độ của Python), đi sâu cần tốn thời gian nghiên cứu (khó dùng nếu muốn can thiệp sâu), thường chỉ dùng cho các dự án lớn, ...
-- Front-end: dùng reactjs, redux, css (chưa áp dụng):
+- Front-end: dùng reactjs, redux, redux toolkit, scss, Matterial Ui,  React Icon, React Hook Form... :
   - Ưu điểm: code dễ tái sử dụng, logic rõ ràng, thời gian phát triển nhanh, có nhiều thư viện hỗ trợ, có thể dễ dàng để chuyển đổi sang app mobie (react-native), ...
   - Nhược điểm: bố cục không được thống nhất, ...
 - Giao tiếp giữa back-end và front-end: thông qua rest API.
@@ -47,7 +50,7 @@
 
 (front-end):
 
-- Chia ra làm 6 feature chính:
+- Chia ra làm 8 feature chính:
   - auth: dùng để lưu thông tin đăng nhập, các thông tin về user
   - header: dùng để chuyển hướng qua lại giữa các trang.
     Các trang gồm:
@@ -55,7 +58,9 @@
   - parent_room: hiển thị chi tiết thông tin của từng lớp học.
   - parent: nếu user là phụ huynh thì đây là trang các nhân giúp phụ huynh quản lí các lớp học đã tạo, ...
   - tutor: nếu user là gia sư thì đây là trang cá nhân giúp gia sư quản lí các lớp học đã ứng tuyển, các lớp mà gia sư được mời dạy, ...
-
+  - create room: tạo phòng dành cho phụ huynh
+  - register: đăng kí tài khoản, đăng kí làm gia sư phụ huynh
+**note: thư mục components trong feature là thư mục chứa các components dùng chung giữa các feature
 ### auth
 
 - Có 2 slice:
@@ -71,28 +76,18 @@
 - Có 1 component Register.js: để đăng kí
 
 ### header
-
-- Có 1 thanh nav bar trong file MainNavigation.js
-
+  - MainNavigation.js: hiển thị thanh navbar 
+  - components: 
+    - ToggleMenu.jsx: hiển thị phần toggle menu của navbar, khi bấm vào avatar hiện phần điều hướng tới profile và đăng xuất
 ### home
-
-- Có 1 slice:
-  - homeSlice.js:
-    - Nạp danh sách lớp học từ server, thêm lớp học, xóa lớp học, ...
-
-- Có 3 component:
-  - Home.js:
-    - Hiển thị danh sách lớp học.
-
-  - component/Room.js:
-    - Hiện thị thông tin chi tiết của lớp học.
-
-  - CreateRoom.js:
-    - Hiện thị form để tạo lớp học.
-
+  - getRoom.js: lấy các phòng học hiện có, lấy phòng học được lọc theo yêu cầu
+  - homeSlice.js: (phần cũ chưa xử lí)
+  - Home.js hiển thị home
+  - components
+    - Room.js: hiển thị 1 phòng
+    - FilterBar
+      - Hiển thị thanh lọc phòng
 ### parent_room:
-
-- Có 5 slice:
   - waitingListForRoomSlice.js:
     - Nạp waitingList của lớp học từ server, thêm vào waitingList, xóa khỏi waitingList.
 
@@ -107,19 +102,45 @@
 
   - parentRoomSlice.js:
     - Tổng hợp các danh sách waitingList, invitedList, tryTeachingList, teachingList.
+  - components
+    - components
+      - invitedList.jsx : hiển thị invited list
+      - teachingList.jsx : hiern thị teaching list
+      - waitingList.jsx: hiển thị waiting list
+      - tryTeachingList.jsx: hiển thị try teaching list
+      - tutorItem.jsx
+    - ParentRoomMain.jsx: hiển thị phần chính của phòng bao gồm các list với thông tin phòng
 
-- Có 5 component:
-  - ParentRoom.js:
-    - Hiện thị danh sách waitingList, invitedList, tryTeachingList, teachingList cho lớp học.
+### profile :
+ - profile.js : các hàm lấy thông tin của user qua tutor id và parent id
+ - ParentProfile: Hiển thị thông tin của parent
+ - TutorProfile: hiển thị thông tin của tutor
 
-  - WaitingList.js:
-    - Hiện thị danh sách waitingList.
+### register: 
+  - registerAccount.js: các hàm đăng kí user, đăng kí làm gia sư, đăng kí làm phụ huynh
+  - Register.jsx: hiển thị form đăng kí tài khoản
+  - components
+    - RegisterRole: hiển thị chọn vai trò giữa phụ huynh và gia sư
+    - RegisterParent: hiển thị form đăng kí làm phụ huynh
+    - RegisterTutor: hiển thị form đăng kí làm gia sư
 
-  - InvitedList.js:
-    - Hiện thị danh sách invitedList.
+### CreateRoom:
+  - createRoom.jsx: hiển thị form tạo phòng
 
-  - TryTeaching.js:
-    - Hiện thị danh sách tryTeachingList.
-    
-  - Teaching.js:
-    - Hiện thị danh sách teachingList.
+### parent:
+  - parent.js: chứa hàm xóa phòng học
+  - ParentInfor.js: hiển thị các phòng học của parent đã tạo
+
+### tutor:
+  - Các Slice:
+    - tutorInforSlice.js: slice tổng các list slice
+    - waitingListForTutorInforSlice.js: lấy dữ liệu waiting list, thêm vào waiting list, xóa khỏi waiting list
+    - invitedListForTutorInforSlice.js: lấy dữ liệu invited list, thêm vào invited list, xóa khỏi invited list
+    - tryTeachingForTutorInforSlice.js: lấy dữ liệu try teaching list, thêm vào try teaching list,
+    xóa khỏi try teaching list
+    - teachingForTutorInforSlice.js: lấy dữ liệu teaching list
+  - tutorInfor.js: hiển thị các phòng đã thêm của gia sư
+  - components: 
+    - 4 file jsx hiển thị các list của gia sư
+  
+  
