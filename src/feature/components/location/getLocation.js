@@ -66,3 +66,26 @@ export const getWardName = async ({districtCode, wardCode}) => {
         console.log('Failed to get ward name: ', error);
     }
 }
+
+export const catchProvinceName = (name) => {
+    if(name.search('Thành phố')!==-1) {
+        return name.slice(10);
+    }
+    if(name.search('Tỉnh')!==-1) {
+        return name.slice(5)
+    }
+    return name;
+}
+
+export const catchDistrictName = (name) => {
+    if(name.search('Quận')!==-1){
+        return name.slice(5);
+    }
+    if(name.search('Huyện')!==-1){
+        return name.slice(6);
+    }
+    if(name.search('Thành phố')!==-1){
+        return name.slice(10);
+    }
+    return name;
+}
