@@ -38,13 +38,25 @@
         align-self: center;
     }
     &__toggle {
-        background-color: transparent;
-        border: none;
-        position: fixed;
-        top: 60px;
-        left: 20px;
-        &:hover {
-            cursor: pointer;
+        &__cancel {
+            background-color: transparent;
+            border: none;
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+        &__filter {
+            background-color: transparent;
+            border: none;
+            position: fixed;
+            top: 60px;
+            left: 20px;
+            &:hover {
+                cursor: pointer;
+            }
         }
     }
 }

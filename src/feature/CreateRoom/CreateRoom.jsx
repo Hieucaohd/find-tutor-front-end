@@ -95,8 +95,19 @@ function CreateRoom(props) {
           <input
             type="text"
             id="subject" 
+            list="subjects"
             {...register("subject", { required: true })}
           />
+          <datalist id="subjects">
+            <option value="Toán "/>
+            <option value="Ngữ Văn"/>
+            <option value="Hóa Học"/>
+            <option value="Vật Lý"/>
+            <option value="Sinh Học"/>
+            <option value="Địa Lý"/>
+            <option value="Lịch Sử"/>
+            <option value="Tiếng Việt"/>
+          </datalist>
           <span className="createroom__error">{errors.subject && "Cần nhập môn học"}</span>
         </div>
         <div className = "createroom__field">

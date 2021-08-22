@@ -18,6 +18,7 @@ function WaitingListForTutor( {waitingList, onDelete} ) {
         if(!onDelete) return;
         onDelete(waitingId)
     }
+    console.log(waitingList)
     return (
         <Grid container spacing={2}>
             {waitingList.map( (waiting) => (

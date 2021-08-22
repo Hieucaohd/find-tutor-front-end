@@ -1,15 +1,17 @@
 import { Button, Grid } from "@material-ui/core";
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
   selectId_of_user, selectToken, selectType_parent, selectType_tutor
 } from "../auth/authSlice";
-import Room from "./components/Room";
 import { fetchRoomList, fetchFilterRoomList } from "./getRoom";
 import "./styles.scss";
 import { RiFilterFill, RiFilterOffFill } from "react-icons/ri";
 import FilterBar from "./components/FilterBar/FilterBar";
+import Room from "../components/Room/Room";
+import { addWaitingListForRoom } from "../parent_room/waitingListForRoomSlice";
+
 const selectWaitingListForTutor = (state) =>
   state.roomRelateTutor.list_room_waiting;
 const selectInvitedListForTutor = (state) =>
@@ -33,7 +35,8 @@ function Home() {
   const cancelFilter = useRef(null);
   const [filter, setFilter] = useState({}); //bộ lọc
   const [roomList, setRoomList] = useState([]);
-  
+  const dispatch = useDispatch();
+
   //chưa đăng kí là gia sư hay phụ huynh trả đến trang đăng kí
   if(type_tutor === false && type_parent === false) {
     history.push("/signup/chooserole")
@@ -71,19 +74,19 @@ function Home() {
     
   }, [filter]);
 
-  const renderRoomList = roomList?.map((room) => {
-    return (
-      <Room
-        room={room}
-        token={token}
-        list_room_waiting={list_room_waiting}
-        list_room_invited={list_room_invited}
-        list_room_try_teaching={list_room_try_teaching}
-        id_of_user={id_of_user}
-        type_tutor={type_tutor}
-      />
-    );
-  });
+  // const renderRoomList = roomList?.map((room) => {
+  //   return (
+  //     <Room
+  //       room={room}
+  //       token={token}
+  //       list_room_waiting={list_room_waiting}
+  //       list_room_invited={list_room_invited}
+  //       list_room_try_teaching={list_room_try_teaching}
+  //       id_of_user={id_of_user}
+  //       type_tutor={type_tutor}
+  //     />
+  //   );
+  // });
 
   const refreshListRoom = () => {
     setIsRefreshListRoom(!isRefreshListRoom);
@@ -99,8 +102,6 @@ function Home() {
     homeOverlay.current.style.display = "none";
   }
 
-  
-
   const handleCancelFilter = () => {
     setFilter({});
   }
@@ -113,11 +114,20 @@ function Home() {
     cancelFilter.current.style.display = "block"
   }
 
+  const handleAddRoom = (id) => {
+    dispatch(addWaitingListForRoom({ roomId: id, token: token }));
+    alert("Đã thêm phòng");
+  }
+
   return (
     <div className = "home">
-      <button className="home__toggle" onClick={handleShowFilterBar}> <RiFilterFill /> <br/> Lọc </button>
-      <button className="home__toggle" onClick={handleCancelFilter} ref={cancelFilter} style={{display: "none"}}> <RiFilterOffFill /> <br /> Hủy</button>
-      <Grid container spacing={2}>{renderRoomList}</Grid>
+      <button className="home__toggle__filter" onClick={handleShowFilterBar}> <RiFilterFill /> <br/> Lọc </button>
+      <button className="home__toggle__cancel" onClick={handleCancelFilter} ref={cancelFilter} style={{display: "none"}}> <RiFilterOffFill /> <br /> Hủy</button>
+      <Grid container spacing={2}>{
+        roomList.map((room)=>(
+          <Room room={room} color="white" typeTutor = {type_tutor} onCheck={type_tutor && handleAddRoom} onHome={true}/>
+        ))}
+      </Grid>
 
       <div ref={filterBar} className="home__filter"> 
         <FilterBar onClose={handleCloseFilterBar} onSubmit={onSubmitSearch}/>

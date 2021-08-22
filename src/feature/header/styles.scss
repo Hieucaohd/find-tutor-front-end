@@ -29,16 +29,19 @@
 
     &__section {
         margin-left: 12px;
-        padding: 4px 8px;
-        border-radius: 4px;
+        height: 40px;
+        display: flex;
+        align-items: center;
         a {
             color: white;
             font-size: 14px;
             text-decoration: none;
-        }
-        &:hover {
-            cursor: pointer;
-            background-color: #5690F4;
-        }
+            border-radius: 4px;
+            padding: 4px 8px;
+            &:hover {
+                cursor: pointer;
+                background-color: #5690F4;
+            }
+        } 
     }
 }
