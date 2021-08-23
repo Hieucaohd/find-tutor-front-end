@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import authReducer from "./feature/auth/authSlice";
-import roomListReducer from "./feature/home/homeSlice"
-import { parentRoomReducer } from "./feature/parent_room/parentRoomSlice";
-import roomRelateTutorReducer from "./feature/auth/roomRelateTutorSlice";
-import { tutorInforReducer } from "./feature/tutor/tutorInforSlice";
+import authReducer from "./features/auth/authSlice";
+import roomListReducer from "./features/home/homeSlice"
+import { parentRoomReducer } from "./features/parent_room/parentRoomSlice";
+import roomRelateTutorReducer from "./features/auth/roomRelateTutorSlice";
+import { tutorInforReducer } from "./features/tutor/tutorInforSlice";
 
 const store = configureStore({
   reducer: {
