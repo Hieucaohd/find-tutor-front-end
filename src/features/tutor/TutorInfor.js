@@ -1,7 +1,7 @@
+import { makeStyles } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { selectId_of_user, selectToken } from "../auth/authSlice";
+import { selectToken } from "../auth/authSlice";
 import InvitedListForTutor from "./components/InvitedListForTutor";
 import TeachingListForTutor from "./components/TeachingListForTutor";
 import TryTeachingListForTutor from "./components/TryTeachingListForTutor";
@@ -11,7 +11,6 @@ import {
   fetchInvitedListForTutorInfor,
   selectInvitedListForTutorInfor
 } from "./invitedListForTutorInforSlice";
-import "./styles.scss";
 import {
   addToTeachingTutorInfor,
   fetchTeachingForTutorInfor,
@@ -29,11 +28,17 @@ import {
   selectWaitingListForTutorInfor
 } from "./waitingListForTutorInforSlice";
 
+const useStyles = makeStyles({
+  root: {
+    marginTop: "8px",
+    padding: "42px",
+  }
+})
 
 function TutorInfor() {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
-
+  const classes = useStyles();
   // //chưa có tài khoản, đẩy về trang login
   // if (!token) {
   //   history.push("/login");
@@ -96,7 +101,7 @@ function TutorInfor() {
   const teaching = useSelector(selectTeachingForTutorInfor);
 
   return (
-    <div className="tutorinfo">
+    <div className={classes.root}>
       <h4>Danh sách chờ</h4>
       <WaitingListForTutor waitingList = {waitingList} onDelete = {handleDeleteWaiting}/>
       <h4>Danh sách mời</h4> 

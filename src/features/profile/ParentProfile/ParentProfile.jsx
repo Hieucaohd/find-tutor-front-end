@@ -3,15 +3,20 @@ import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { getDistrictName, getProvinceName, getWardName } from "components/location/getLocation";
 import { formatBirthDay, getParentProfile } from '../profile';
-import "./styles.scss";
 
 const useStyles = makeStyles({
-    root: {},
+    root: {
+        height: "100vh",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+    },
     avatar: {
         width: 250,
         height: 250,
-    }
-
+    },
 });
 
 function ParentProfile(props) {
@@ -33,7 +38,7 @@ function ParentProfile(props) {
         getParentInfo();
     }, [])
     return (
-        <div className="parent">
+        <div className={classes.root}>
             <div> 
                 <Avatar alt="Travis Howard" className={classes.avatar} src="https://laptrinhcuocsong.com/images/lap-trinh-vien.png" />
             </div>

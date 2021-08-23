@@ -23,11 +23,7 @@ function Home() {
   let history = useHistory();
 
   const [isRefreshListRoom, setIsRefreshListRoom] = useState(false); // refresh lại danh sách lớp học để cập nhật thêm các lớp học.
-  const list_room_waiting = useSelector(selectWaitingListForTutor); // lấy danh sách các lớp học đã ứng tuyển của gia sư từ roomRelateTutorSlice.js
-  const list_room_invited = useSelector(selectInvitedListForTutor); // lấy danh sách các lớp học đã được mời của gia sư từ roomRelateTutorSlice.js
-  const list_room_try_teaching = useSelector(selectTryTeachingForTutor); // lấy danh sách các lớp học đang dạy thử của gia sư từ roomRelateTutorSlice.js
   const token = useSelector(selectToken); // lấy mã token từ authSlice.js
-  const id_of_user = Number(useSelector(selectId_of_user)); // lấy id từ authSlice.js
   const type_tutor = useSelector(selectType_tutor); // lấy type_tutor từ authSlice.js
   const type_parent = useSelector(selectType_parent); // lấy type_parent từ authSlice.js
   const filterBar = useRef(null);
@@ -39,22 +35,12 @@ function Home() {
 
   //chưa đăng kí là gia sư hay phụ huynh trả đến trang đăng kí
   if(type_tutor === false && type_parent === false) {
-    history.push("/signup/chooserole")
+    history.push("/signup/chooserole");
   }
 
-  useEffect(() => {
-    // nếu người dùng đã đăng nhập thì nạp danh sách lớp học + thông tin về các lớp học của gia sư từ homeSlice.js và rooomRelateTutorSlice.js
-    // if (token) {
-    //   dispatchSomething();
-    //   setInterval(dispatchSomething, 1000 * 60 * 3);
-    // }
-    // nếu người dùng chưa đăng nhập thì đưa người dùng về trang login.
-    if (!token) {
-      history.push("/login");
-    }
-  }, [token]);
-
-  
+  if(!token){
+    history.push("/login");
+  }
 
   useEffect( () => {
     const getRoomList = async () => {

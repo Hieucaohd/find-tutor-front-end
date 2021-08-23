@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -6,12 +6,17 @@ import { selectId_of_user, selectToken } from '../auth/authSlice';
 import Room from 'components/Room/Room.jsx';
 import { fetchRoomList } from '../home/getRoom';
 import { deleteRoom } from './parent';
-import "./styles.scss";
+
+const useStyles = makeStyles({
+    root: {
+        padding: "40px",
+    }
+})
 
 function ParentInfor() {
+    const classes = useStyles();
     const token = useSelector(selectToken);
     const parentId = useSelector(selectId_of_user);
-    const history = useHistory();
     const [parentRoomList, setParentRoomList] = useState([]);
     
     const handleDeleteRoom = async (roomId) => {
@@ -31,7 +36,7 @@ function ParentInfor() {
         getList();
     }, [])
     return (
-        <Grid container spacing={2} className="parentinfo">
+        <Grid container spacing={2} className={classes.root}>
             {parentRoomList.map( (room)=> (
                 <Room room={room} onDelete={handleDeleteRoom} color={"#7FDBCA"}/>
             ))}
