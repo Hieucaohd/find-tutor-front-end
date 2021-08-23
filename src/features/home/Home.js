@@ -7,7 +7,7 @@ import {
 } from "../auth/authSlice";
 import { fetchRoomList, fetchFilterRoomList } from "./getRoom";
 import "./styles.scss";
-import { RiFilterFill, RiFilterOffFill } from "react-icons/ri";
+import { RiFilterLine, RiFilterOffLine } from "react-icons/ri";
 import FilterBar from "./components/FilterBar/FilterBar";
 import Room from 'components/Room/Room';
 import { addWaitingListForRoom } from "../parent_room/waitingListForRoomSlice";
@@ -74,20 +74,6 @@ function Home() {
     
   }, [filter]);
 
-  // const renderRoomList = roomList?.map((room) => {
-  //   return (
-  //     <Room
-  //       room={room}
-  //       token={token}
-  //       list_room_waiting={list_room_waiting}
-  //       list_room_invited={list_room_invited}
-  //       list_room_try_teaching={list_room_try_teaching}
-  //       id_of_user={id_of_user}
-  //       type_tutor={type_tutor}
-  //     />
-  //   );
-  // });
-
   const refreshListRoom = () => {
     setIsRefreshListRoom(!isRefreshListRoom);
   };
@@ -104,6 +90,7 @@ function Home() {
 
   const handleCancelFilter = () => {
     setFilter({});
+    cancelFilter.current.style.display = "none";
   }
 
   const onSubmitSearch = (newFilter) => {
@@ -121,8 +108,8 @@ function Home() {
 
   return (
     <div className = "home">
-      <button className="home__toggle__filter" onClick={handleShowFilterBar}> <RiFilterFill /> <br/> Lọc </button>
-      <button className="home__toggle__cancel" onClick={handleCancelFilter} ref={cancelFilter} style={{display: "none"}}> <RiFilterOffFill /> <br /> Hủy</button>
+      <button className="home__toggle__filter" onClick={handleShowFilterBar}> <RiFilterLine /> <br/> Lọc </button>
+      <button className="home__toggle__cancel" onClick={handleCancelFilter} ref={cancelFilter} style={{display: "none"}}> <RiFilterOffLine /> <br /> Hủy</button>
       <Grid container spacing={2}>{
         roomList.map((room)=>(
           <Room room={room} color="white" typeTutor = {type_tutor} onCheck={type_tutor && handleAddRoom} onHome={true}/>
