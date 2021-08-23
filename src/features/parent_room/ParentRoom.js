@@ -1,3 +1,4 @@
+import { makeStyles } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch } from "react-router-dom";
@@ -8,7 +9,6 @@ import ParentRoomMain from "./components/ParentRoomMain/ParentRoomMain";
 import {
   fetchInvitedListForRoom
 } from "./invitedListForRoomSlice";
-import "./styles.scss";
 import {
   fetchTeachingForRoom
 } from "./teachingForRoomSlice";
@@ -18,20 +18,25 @@ import {
 import { fetchWaitingListForRoom } from "./waitingListForRoomSlice";
 
 
-ParentRoom.propTypes = {
-  
-};
+const useStyles = makeStyles({
+    root: {
+      height: "100vh",
+      padding: "0px 48px",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    }
+
+})
 
 function ParentRoom(props) {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const {
     params: {roomId}
   } = useRouteMatch();
-  const token = useSelector(selectToken);
 
-  const type_tutor = useSelector(selectType_tutor); 
-  const roomList = useSelector(selectRoomList);
-  const userId = Number(useSelector(selectId_of_user));
+  const token = useSelector(selectToken);
   const [roomDetail, setRoomDetail] = useState({});
   
   useEffect(() => {
@@ -57,7 +62,7 @@ function ParentRoom(props) {
   
   
   return (
-    <div className="parentroom">
+    <div className={classes.root}>
       <ParentRoomMain roomDetail={roomDetail}/>
     </div>
   );

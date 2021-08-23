@@ -23,10 +23,6 @@ function CreateRoom(props) {
     district: 0,
     ward: 0
   })
-  //if not logged in, will be redirected to the login page
-  if(!token) {
-    history.push("/login")
-  }
 
   const handleGetLocation = (data) => {
     setLocation(data);

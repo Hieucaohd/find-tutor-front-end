@@ -1,13 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { getDistrictList, getProvinceList, getWardList } from './getLocation';
-import "./styles.scss";
+import { makeStyles } from '@material-ui/core';
 
 Location.propTypes = {
     onChange: PropTypes.func,
 };
 
+const useStyles = makeStyles({
+    root: {
+        display: "flex",
+        flexDirection: "column",
+    },
+    field: {
+        padding: "8px 2px",
+        border: "1px solid",
+        marginBottom: "2px",
+        borderRadius: "4px",
+    }
+})
+
 function Location( {onChange = null}) {
+    const classes = useStyles();
     const [provinceList, setProvinceList] = useState([]);
     const [provinceCode, setProvinceCode] = useState(0);
     const [districtList, setDistrictList] = useState([]);
@@ -76,8 +90,8 @@ function Location( {onChange = null}) {
     }
 
     return (
-        <div class="location">
-            <select class="location__field" name="province" onChange={handleOnChangeProvinces} ref={selectProvince}> 
+        <div class={classes.root}>
+            <select class={classes.field} name="province" onChange={handleOnChangeProvinces} ref={selectProvince}> 
                     <option key={0} value={0}>
                         --Tỉnh, thành phố--
                     </option>
@@ -87,7 +101,7 @@ function Location( {onChange = null}) {
                     </option>
                 ))}
             </select>
-            <select class="location__field" name="district" onChange={handleOnChangeDistricts} ref={selectDistrict}> 
+            <select class={classes.field} name="district" onChange={handleOnChangeDistricts} ref={selectDistrict}> 
                     <option key={0} value={0}>
                         --Quận, huyện--
                     </option>
@@ -97,7 +111,7 @@ function Location( {onChange = null}) {
                     </option>
                 ))}
             </select>
-            <select class="location__field" name="ward" onChange={handleOnChangeWard} ref={selectWard}> 
+            <select class={classes.field} name="ward" onChange={handleOnChangeWard} ref={selectWard}> 
                 <option key={0} value={0}>
                         --Xã Phường--
                 </option>
