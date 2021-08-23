@@ -1,22 +1,22 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { selectToken, setStateFromCookies } from "./feature/auth/authSlice";
-import { isTokenCookie } from "./feature/auth/cookies";
-import Login from "./feature/auth/Login";
-import CreateRoom from "./feature/CreateRoom/CreateRoom";
-import MainNavigation from "./feature/header/MainNavigation";
-import Home from "./feature/home/Home";
-import ParentInfor from "./feature/parent/ParentInfor";
-import ParentRoom from "./feature/parent_room/ParentRoom";
-import ParentProfile from "./feature/profile/ParentProfile/ParentProfile";
-import TutorProfile from "./feature/profile/TutorProfile/TutorProfile";
-import RegisterParent from "./feature/register/components/RegisterParent/RegisterParent";
-import RegisterRole from "./feature/register/components/RegisterRole/RegisterRole";
-import RegisterTutor from "./feature/register/components/RegisterTutor/RegisterTutor";
-import Register from "./feature/register/Register";
-import Search from "./feature/search/Search";
-import TutorInfor from "./feature/tutor/TutorInfor";
+import { selectToken, setStateFromCookies } from "./features/auth/authSlice";
+import { isTokenCookie } from "./features/auth/cookies";
+import Login from "./features/auth/Login";
+import CreateRoom from "./features/CreateRoom/CreateRoom";
+import MainNavigation from "./features/header/MainNavigation";
+import Home from "./features/home/Home";
+import ParentInfor from "./features/parent/ParentInfor";
+import ParentRoom from "./features/parent_room/ParentRoom";
+import ParentProfile from "./features/profile/ParentProfile/ParentProfile";
+import TutorProfile from "./features/profile/TutorProfile/TutorProfile";
+import RegisterParent from "./features/register/components/RegisterParent/RegisterParent";
+import RegisterRole from "./features/register/components/RegisterRole/RegisterRole";
+import RegisterTutor from "./features/register/components/RegisterTutor/RegisterTutor";
+import Register from "./features/register/Register";
+import Search from "./features/search/Search";
+import TutorInfor from "./features/tutor/TutorInfor";
 
 function App() {
   const token = useSelector(selectToken);
