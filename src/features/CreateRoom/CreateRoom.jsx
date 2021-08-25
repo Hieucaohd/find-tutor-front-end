@@ -4,13 +4,63 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { selectId_of_user, selectToken } from "../auth/authSlice";
 import { addRoom } from "../home/homeSlice";
-import "./styles.scss";
-import { Button } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import Location  from "components/location/Location";
 
+const useStyles = makeStyles({
+  root: {
+    marginTop: "32px",
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+  },
+  field: {
+    display: "flex",
+    flexDirection: "column",
+    width: "500px",
+    marginBottom: "6px",
+    "& label": {
+        fontSize: "16px",
+    },
+    "& input": {
+        padding: "4px 8px",
+    },
+  },
+  day: {
+    display: "flex",
+    marginBottom: "6px",
+    label: {
+      fontSize: "16px",
+    }
+  },
+  dayField: {
+    marginRight: "8px",
+  },
+  error: {
+    fontSize: "12px",
+    color: "red",
+    marginBottom: "2px",
+  },
+  success: {
+    display: "none",
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    "z-index": "1000",
+        
+  },
+  addressInput: {
+    width: "94%",
+  }
+})
+
 function CreateRoom(props) {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
   const days = [2, 3, 4, 5, 6, 7, 8];
@@ -60,8 +110,8 @@ function CreateRoom(props) {
   }
 
   return (
-    <div className="createroom">
-      <div className = "createroom__success" ref={successRef}>
+    <div className={classes.root}>
+      <div className = {classes.success} ref={successRef}>
         <Alert severity="success" onClose={() => {history.push(`/parentinfo/${parentId}`)}}>
           <AlertTitle>Success</AlertTitle>
           Tạo phòng thành công
@@ -69,10 +119,10 @@ function CreateRoom(props) {
       </div>
       <form onSubmit={handleSubmit(onSubmit)}> 
         
-        <div className = "createroom__day"> 
+        <div className = {classes.day}> 
         {days.map((day, index) => {
           return (
-            <div className="createroom__day__field">
+            <div className={classes.dayField}>
               <label for={index}>{day === 8 ? "Chủ nhật " : "Thứ " + day}</label>
               <input
                 type="checkbox"
@@ -86,7 +136,7 @@ function CreateRoom(props) {
         })}
         </div>
 
-        <div className = "createroom__field">
+        <div className={classes.field}>
           <label for="subject">Môn học </label>
           <input
             type="text"
@@ -104,9 +154,9 @@ function CreateRoom(props) {
             <option value="Lịch Sử"/>
             <option value="Tiếng Việt"/>
           </datalist>
-          <span className="createroom__error">{errors.subject && "Cần nhập môn học"}</span>
+          <span className={classes.error}>{errors.subject && "Cần nhập môn học"}</span>
         </div>
-        <div className = "createroom__field">
+        <div className={classes.field}>
           <label for="lop">Lớp </label>
           <input
             type="number"
@@ -114,14 +164,14 @@ function CreateRoom(props) {
             min="0" max="15"
             {...register("class", { required: true })}
           />
-          <span className="createroom__error">{errors.class && "Cần nhập lớp"}</span>
+          <span className={classes.error}>{errors.class && "Cần nhập lớp"}</span>
         </div>
 
-        <div className="createroom__field">
+        <div className={classes.field}>
             <label>Địa chỉ</label>
             <Location onChange={handleGetLocation} />
         </div>
-        <div className="register__tutor__form__control">
+        <div className={classes.field}>
             <label>Chi tiết địa chỉ</label>
             <input 
               name="detailLocation" 
@@ -130,7 +180,7 @@ function CreateRoom(props) {
            />
         </div>
 
-        <div className = "createroom__field">
+        <div className={classes.field}>
           <label for="other_require">Yêu cầu khác </label>
           <input
             type="text"
@@ -139,7 +189,7 @@ function CreateRoom(props) {
           />
         </div>
 
-        <div className = "createroom__field">
+        <div className={classes.field}>
           <Button type="submit" variant="contained" color="primary" >Tạo phòng</Button>
         </div>
       </form>

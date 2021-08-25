@@ -1,5 +1,4 @@
-import { makeStyles } from '@material-ui/core';
-import { Grid } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -10,6 +9,7 @@ import { selectTeachingForRoom } from '../../teachingForRoomSlice';
 import { selectTryTeachingForRoom } from '../../tryTeachingForRoomSlice';
 import { selectWaitingListForRoom } from '../../waitingListForRoomSlice';
 import InvitedList from './components/InvitedList';
+import RoomInfo from './components/RoomInfo';
 import TeachingList from './components/TeachingList';
 import TryTeachingList from './components/TryTeachingList';
 import WaitingList from "./components/WaitingList";
@@ -27,18 +27,31 @@ const useStyles = makeStyles({
     "align-items": "center",
     "justify-content": "center",
     "height": "60vh",
-    backgroundColor: "#9EA7E6", 
+    backgroundColor: "white", 
   },
   block: {
     overflow: "auto",
     "&>div": {
       overflow: "auto",
       "text-align": "center",
-      backgroundColor: "#9EA7E6", 
+      backgroundColor: "white", 
       height: "100%",
       "border-radius": "4px",
     }
   },
+  relative: {
+    position: 'relative',
+  },
+  title: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0, 
+    fontWeight: 300,
+    backgroundColor: "#9EA7E6",
+    padding: "4px 0px",
+    "z-index": 1,
+  }
 })
 
 function ParentRoomMain( {roomDetail = {}} ) {
@@ -54,13 +67,13 @@ function ParentRoomMain( {roomDetail = {}} ) {
     const invitedList = useSelector(selectInvitedListForRoom);
     const tryTeachingList = useSelector(selectTryTeachingForRoom);
     const teachingList = useSelector(selectTeachingForRoom);
-  
+
     return (
         <Grid container spacing={3}>
         <Grid item xs={3} container direction="column" spacing={2}>
             <Grid item style={{flex: 1}} className={classes.block}>
-              <div>
-                Danh sách chờ
+              <div className={classes.relative}>
+                <span className={classes.title}>Danh sách chờ</span>
                 <WaitingList 
                   waitingList = {waitingList} 
                   parentId = {roomDetail.parent}
@@ -72,8 +85,8 @@ function ParentRoomMain( {roomDetail = {}} ) {
               </div>
             </Grid >
             <Grid item style={{flex: 1}} className={classes.block}>
-              <div>
-                Danh sách mời
+              <div className={classes.relative}>
+                <span className={classes.title}>Danh sách mời</span>
                 <InvitedList 
                   invitedList = {invitedList} 
                   typeTutor={typeTutor}
@@ -85,25 +98,13 @@ function ParentRoomMain( {roomDetail = {}} ) {
         </Grid>
         <Grid item xs={6}>
           <div className={classes['center-block']}>
-                Room Id: {roomDetail.id}
-                  <br/>
-                  Môn học: {roomDetail.subject}
-                  <br/> 
-                  Lớp: {roomDetail.lop}
-                  <br/>
-                  Vị trí: {roomDetail.province_code} , {roomDetail.district_code} , {roomDetail.ward_code}
-                  <br/>
-                  Ngày dạy: {roomDetail.day_can_teach}
-                  <br/>
-                  Parent Id: {roomDetail.parent}
-                  <br/>
-                  Yêu cầu khác: {roomDetail.other_require}
+              <RoomInfo roomDetail={roomDetail}/>
           </div>
         </Grid>
         <Grid item xs={3} container direction="column" spacing={2}>
             <Grid item style={{flex: 1}} className={classes.block}>
-              <div>
-                Danh sách dạy thử
+              <div className={classes.relative}>
+                <span className={classes.title}>Danh sách dạy thử</span>
                 <TryTeachingList
                   tryTeachingList = {tryTeachingList}
                   token = {token}
@@ -114,8 +115,8 @@ function ParentRoomMain( {roomDetail = {}} ) {
               </div>
             </Grid >
             <Grid item style={{flex: 1}} className={classes.block}>
-              <div>
-                Danh sách dạy chính thức
+              <div className={classes.relative}>
+                  <span className={classes.title}>Danh sách dạy chính thức</span>
                   <TeachingList 
                     teachingList={teachingList}
                   />

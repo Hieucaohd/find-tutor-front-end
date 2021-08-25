@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core";
+import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName, getWardName } from "components/location/getLocation";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch } from "react-router-dom";
@@ -52,10 +53,23 @@ function ParentRoom(props) {
   }, [])
 
   useEffect(()=> {
+  
     const getRoomDetail = async () => {
       const roomList = await fetchRoomList();
       const newRoomDetail = await roomList.find((room) => room.id === Number(roomId) );
-      setRoomDetail(newRoomDetail);
+      const provinceName = await getProvinceName(newRoomDetail.province_code);
+      const districtName = await getDistrictName({
+        provinceCode: newRoomDetail.province_code,
+        districtCode: newRoomDetail.district_code,
+      });
+      const wardName = await getWardName({
+        districtCode: newRoomDetail.district_code,
+        wardCode: newRoomDetail.ward_code,
+      })
+      setRoomDetail({
+        ...newRoomDetail,
+        address: `${wardName}, ${catchDistrictName(districtName)}, ${catchProvinceName(provinceName)}`
+      });
     }
     getRoomDetail();
   }, []);

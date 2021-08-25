@@ -39,10 +39,6 @@ function TutorInfor() {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const classes = useStyles();
-  // //chưa có tài khoản, đẩy về trang login
-  // if (!token) {
-  //   history.push("/login");
-  // }
 
   useEffect(() => {
     if (token) {
