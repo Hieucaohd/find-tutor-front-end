@@ -30,8 +30,13 @@ import {
 
 const useStyles = makeStyles({
   root: {
-    marginTop: "8px",
+    marginTop: "40px",
     padding: "42px",
+    "&>h4": {
+      margin: 0,
+      marginTop: '32px',
+      marginLeft: '24px',
+    }
   }
 })
 

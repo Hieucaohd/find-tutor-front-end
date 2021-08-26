@@ -1,17 +1,87 @@
-import { Button, CircularProgress } from '@material-ui/core';
+import { makeStyles, CircularProgress } from '@material-ui/core';
 import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { login } from '../auth/authSlice';
 import { registerAccount } from './registerAccount';
-import "./styles.scss";
 
-Register.propTypes = {
-    
-};
+const useStyles = makeStyles(theme => ({
+    root: {
+        width: '100%',
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 0,
+    },
+    form: {
+        [theme.breakpoints.down('sm')]: {
+            backgroundColor: 'none',
+        },
+        [theme.breakpoints.up('md')]: {
+            backgroundColor: 'white',
+        },
+        width: '260px',
+        padding: '80px',
+        borderRadius: '8px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    formField: {
+        width: '100%',
+        marginBottom: '8px',
+        display: 'flex',
+        flexDirection: 'column',
+        '& input': {
+            width: '89%',
+            padding: '10px 14px' , 
+            borderRadius: '64px',
+            border: '1px solid #ccc',
+            '&:focus-visible': {
+                outline: 'none',
+            }
+        },
+        '& button': {
+            width: '100%',
+        },
+        '& label': {
+            fontSize: '12px',
+            fontWeight: '500',
+        },
+    },
+    error: {
+        fontSize: '12px',
+        color: 'red',
+    },
+    submit:{
+        backgroundColor: '#5037EC',
+        color: 'white',
+        border: 'none',
+        borderRadius: '64px',
+        padding: '10px 0px',
+    },
+    loading: {
+        display: 'none',
+        position: 'fixed',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        height: '100%', 
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0,0,0,0.5)', /* Black background with opacity */
+        'z-index': 2,
+    }
+}))
 
 function Register(props) {
+    const classes = useStyles();
     const {register, formState: { errors }, handleSubmit, watch} = useForm();
     const password = useRef({});
     password.current = watch("password", "");
@@ -40,9 +110,9 @@ function Register(props) {
     }
     
     return (
-        <div class = "register">
-            <form class = "register__form" onSubmit={handleSubmit(onSubmit)}> 
-                <div className="register__form__control">
+        <div className = {classes.root}>
+            <form className ={classes.form} onSubmit={handleSubmit(onSubmit)}> 
+                <div className ={classes.formField}>
                         <label>Tên tài khoản</label>
                         <input
                             name="username" 
@@ -50,11 +120,11 @@ function Register(props) {
                             {...register("username", { required: true, minLength: 6})}
                          />
                         {errors.username && errors.username.type === "required" && 
-                            <span className="register__form__error">Cần nhập tên tài khoản</span>}
+                            <span className ={classes.error}>Cần nhập tên tài khoản</span>}
                         {errors.username && errors.username.type === "minLength" && 
-                            <span className="register__form__error">Tên tài khoản cần ít nhất 6 kí tự</span>}
+                            <span className ={classes.error}>Tên tài khoản cần ít nhất 6 kí tự</span>}
                     </div>
-                    <div className="register__form__control"> 
+                    <div className ={classes.formField}> 
                         <label>Email</label>
                         <input 
                             name="email" 
@@ -66,9 +136,9 @@ function Register(props) {
                             }})}
                         />
                         {errors.email && 
-                            <span className="register__form__error">Nhập đúng email của bạn</span>}
+                            <span className ={classes.error}>Nhập đúng email của bạn</span>}
                     </div>
-                    <div className="register__form__control"> 
+                    <div className ={classes.formField}> 
                         <label>Mật khẩu</label>
                         <input 
                             name="password" 
@@ -76,11 +146,11 @@ function Register(props) {
                             {...register("password", { required: true, minLength: 6})}
                         />
                         {errors.password && errors.password.type === "required" && 
-                            <span className="register__form__error">Nhập mật khẩu</span>}
+                            <span className ={classes.error}>Nhập mật khẩu</span>}
                         {errors.password && errors.password.type === "minLength" && 
-                            <span className="register__form__error">Mật khẩu cần ít nhất 6 kí tự</span>}
+                            <span className ={classes.error}>Mật khẩu cần ít nhất 6 kí tự</span>}
                     </div>
-                    <div className="register__form__control"> 
+                    <div className ={classes.formField}> 
                         <label>Nhập lại mật khẩu</label>
                         <input 
                             name="repassword" 
@@ -91,13 +161,13 @@ function Register(props) {
                             })}
                         />
                         {errors.repassword && 
-                            <span className="register__form__control">Mật khẩu không trùng khớp</span>}
+                            <span className ={classes.error}>Mật khẩu không trùng khớp</span>}
                     </div>
-                    <div className="register__form__control"> 
-                        <Button type="submit" >dang ki tai khoan</Button>
+                    <div className ={classes.formField}> 
+                        <button className ={classes.submit} type="submit" >Đăng kí tài khoản</button>
                     </div>
             </form>
-            <div ref={loadingRef} className="register__loading"> 
+            <div ref={loadingRef}  className ={classes.loading}> 
                 <CircularProgress />
              </div>
         </div>

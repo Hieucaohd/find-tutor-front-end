@@ -1,4 +1,4 @@
-import { Button, CircularProgress } from '@material-ui/core';
+import { Button, CircularProgress, makeStyles } from '@material-ui/core';
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,9 +7,105 @@ import { selectToken, setId, setTutorTrue } from '../../../auth/authSlice';
 import { setTutorIdCookie } from '../../../auth/cookies';
 import Location from "components/location/Location";
 import { registerTutorInfor } from '../../registerAccount';
-import "./styles.scss";
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 0,
+        marginTop: '56px',
+    },
+    form: {
+        [theme.breakpoints.down('sm')]: {
+            backgroundColor: 'none',
+            width: '310px',
+            padding: '0',
+        },
+        [theme.breakpoints.up('md')]: {
+            backgroundColor: 'white',
+            width: '400px',
+            padding: '20px 40px',
+        },
+        borderRadius: '8px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+
+        '& > p': {
+            fontSize: '18px',
+        }
+    },
+    formField: {
+        width: '100%',
+        marginBottom: '8px',
+        display: 'flex',
+        flexDirection: 'column',
+        '& input': {
+            width: '92%',
+            padding: '8px 16px',
+            borderRadius: '64px',
+            border: '1px solid #ccc',
+            '&:focus-visible': {
+                outline: 'none',
+            }
+        },
+        '& button': {
+            width: '100%',
+        },
+        '& label': {
+            fontSize: '12px',
+            fontWeight: 500,
+        }
+    },
+    check: {
+        display: 'flex',
+    },
+    profession: {
+        padding: '8px 8px',
+        border: '1px solid #ccc',
+        borderRadius: '64px',
+        marginTop: '2px',
+    },
+    choose: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        border: '1px solid',
+        borderRadius: '8px',
+        marginTop: '1px',
+    },
+    error: {
+        fontSize: '12px',
+        color: 'red',
+    },
+    submit: {
+        backgroundColor: '#5037EC',
+        color: 'white',
+        border: 'none',
+        borderRadius: '64px',
+        padding: '10px 0px',
+    },
+    loading: {
+        display: 'none',
+        position: 'fixed',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        height: '100%',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0,0,0,0.5)', /* Black background with opacity */
+        'z-index': 2,
+    }
+}));
 
 function RegisterTutor(props) {
+    const classes = useStyles();
     const token = useSelector(selectToken);
     const history = useHistory();
     const {register, formState: { errors }, handleSubmit, watch} = useForm();
@@ -90,10 +186,10 @@ function RegisterTutor(props) {
           });
     }    
     return (
-        <div className="register__tutor">
-            <form className="register__tutor__form" onSubmit={handleSubmit(onSubmit)}> 
-                <p className="resgister__tutor__form__title">Đăng kí làm gia sư</p>
-                <div className="register__tutor__form__control"> 
+        <div className={classes.root}>
+            <form className={classes.form} onSubmit={handleSubmit(onSubmit)}> 
+                <p>Đăng kí làm gia sư</p>
+                <div className={classes.formField}> 
                     <label>Họ và Tên</label>
                     <input 
                         name="text" 
@@ -101,9 +197,9 @@ function RegisterTutor(props) {
                         {...register("name", { required: true})}
                     />             
                     {errors.name && 
-                        <span className="register__tutor__form__error">Nhập đúng tên của bạn</span>}
+                        <span className={classes.error}>Nhập đúng tên của bạn</span>}
                 </div>
-                <div className="register__tutor__form__control">
+                <div className={classes.formField}>
                     <label>Ngày sinh</label>
                     <input 
                         name="birthday" 
@@ -111,9 +207,9 @@ function RegisterTutor(props) {
                         {...register("birthday", { required: true})}
                     />
                     {errors.birthday && 
-                        <span className="register__tutor__form__error">Cần nhập ngày sinh</span>}
+                        <span className={classes.error}>Cần nhập ngày sinh</span>}
                 </div>
-                <div className="register__tutor__form__control">
+                <div className={classes.formField}>
                     <label>Số điện thoại</label>
                     <input 
                         name="telephone" 
@@ -121,9 +217,9 @@ function RegisterTutor(props) {
                         {...register("telephone", { required: true, minLength: 8})}
                     />
                     {errors.telephone && 
-                        <span className="register__tutor__form__error">Cần nhập đúng số điện thoại</span>}
+                        <span className={classes.error}>Cần nhập đúng số điện thoại</span>}
                 </div>
-                <div className="register__tutor__form__control">
+                <div className={classes.formField}>
                     <label>Số CMND/CCCD (không bắt buộc)</label>
                     <input 
                         name="identitycard" 
@@ -131,11 +227,11 @@ function RegisterTutor(props) {
                         {...register("identitycard")}
                     />
                 </div>
-                <div className="register__tutor__form__control">
+                <div className={classes.formField}>
                     <label>Địa chỉ</label>
                     <Location onChange={handleGetLocation} />
                 </div>
-                <div className="register__tutor__form__control">
+                <div className={classes.formField}>
                     <label>Chi tiết địa chỉ</label>
                     <input 
                         name="detailLocation" 
@@ -143,20 +239,20 @@ function RegisterTutor(props) {
                         {...register("detailLocation")}
                     />
                 </div>
-                <div className="register__tutor__form__control">
+                <div className={classes.formField}>
                     <label>Ảnh đại diện</label>
                     <input type="file" name="avatar" />
                 </div>
-                <div className="register__tutor__form__control">
+                <div className={classes.formField}>
                     <label>Nghề nghiệp hiện tại</label>
-                    <select className="register__tutor__form__profession" name="profession" {...register("profession")}>
+                    <select className={classes.profession} name="profession" {...register("profession")}>
                         <option value="sv">Sinh Viên</option>
                         <option value="gv">Giáo Viên</option>
                     </select>
                 </div>
-                <div className="register__tutor__form__control" >
+                <div className={classes.formField} >
                     <label>Cấp dạy</label>
-                    <div className="register__tutor__form__choose">
+                    <div className={classes.choose}>
                     <div>
                             <label>Cấp một</label>
                             <input 
@@ -195,7 +291,7 @@ function RegisterTutor(props) {
                         </div>
                     </div>
                 </div>
-                <div className="register__tutor__form__control">
+                <div className={classes.formField}>
                     <label>Khu vực dạy (không bắt buộc)</label>
                     <input 
                         name="teachlocation" 
@@ -203,7 +299,7 @@ function RegisterTutor(props) {
                         {...register("teachLocation")}
                     />
                 </div>
-                <div className="register__tutor__form__control">
+                <div className={classes.formField}>
                     <label>Trường Đại Học (không bắt buộc)</label>
                     <input  
                         type="text" 
@@ -211,7 +307,7 @@ function RegisterTutor(props) {
                         {...register("university")}
                     />
                 </div>
-                <div className="register__tutor__form__control">
+                <div className={classes.formField}>
                     <label>Kinh nghiệm (không bắt buộc)</label>
                     <input 
                         name="experience" 
@@ -219,7 +315,7 @@ function RegisterTutor(props) {
                         {...register("experience")}
                     />
                 </div>
-                <div className="register__tutor__form__control">
+                <div className={classes.formField}>
                     <label>Thành tích nổi bật (không bắt buộc)</label>
                     <input 
                         name="achievement" 
@@ -227,11 +323,11 @@ function RegisterTutor(props) {
                         {...register("achievement")}
                     />
                 </div>
-                <div className="register__tutor__form__control"> 
-                    <Button variant="contained" color="primary" type="submit">Đăng kí</Button>
+                <div className={classes.formField}> 
+                    <button className={classes.submit} variant="contained" color="primary" type="submit">Đăng kí</button>
                 </div>
             </form>
-            <div ref={loadingRef} className="register__tutor__loading"> 
+            <div ref={loadingRef} className={classes.loading}> 
                 <CircularProgress />
              </div>
 
