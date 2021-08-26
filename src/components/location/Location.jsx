@@ -14,9 +14,9 @@ const useStyles = makeStyles({
     },
     field: {
         padding: "8px 2px",
-        border: "1px solid",
+        border: "1px solid #ccc",
         marginBottom: "2px",
-        borderRadius: "4px",
+        borderRadius: "64px",
     }
 })
 

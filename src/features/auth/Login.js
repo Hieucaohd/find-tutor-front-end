@@ -23,7 +23,12 @@ const useStyles = makeStyles(theme => ({
     padding: 0,
   },
   form: {
-    backgroundColor: 'white',
+    [theme.breakpoints.down('sm')]: {
+      backgroundColor: 'none',
+    },
+    [theme.breakpoints.up('md')]: {
+      backgroundColor: 'white',
+    },
     width: '260px',
     height: '320px',
     borderRadius: '8px',

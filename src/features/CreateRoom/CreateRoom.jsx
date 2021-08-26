@@ -1,13 +1,12 @@
-import React, { useRef } from "react";
-import { useState } from "react";
+import { makeStyles } from "@material-ui/core";
+import { Alert, AlertTitle } from "@material-ui/lab";
+import Location from "components/location/Location";
+import React, { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { selectId_of_user, selectToken } from "../auth/authSlice";
 import { addRoom } from "../home/homeSlice";
-import { Button, makeStyles } from "@material-ui/core";
-import { useForm } from "react-hook-form";
-import { Alert, AlertTitle } from "@material-ui/lab";
-import Location  from "components/location/Location";
 
 const useStyles = makeStyles({
   root: {
@@ -27,14 +26,17 @@ const useStyles = makeStyles({
         fontSize: "16px",
     },
     "& input": {
-        padding: "4px 8px",
+        padding: "8px 16px",
+        border: "1px solid #ccc",
+        borderRadius: "64px",
     },
   },
   day: {
     display: "flex",
     marginBottom: "6px",
     label: {
-      fontSize: "16px",
+      fontSize: '12px',
+      fontWeight: '500',
     }
   },
   dayField: {
@@ -56,7 +58,14 @@ const useStyles = makeStyles({
   },
   addressInput: {
     width: "94%",
-  }
+  },
+  submit: {
+    backgroundColor: '#5037EC',
+    color: 'white',
+    border: 'none',
+    borderRadius: '64px',
+    padding: '10px 0px',
+  },
 })
 
 function CreateRoom(props) {
@@ -190,7 +199,7 @@ function CreateRoom(props) {
         </div>
 
         <div className={classes.field}>
-          <Button type="submit" variant="contained" color="primary" >Tạo phòng</Button>
+          <button className={classes.submit} type="submit" variant="contained" color="primary" >Tạo phòng</button>
         </div>
       </form>
     </div>
