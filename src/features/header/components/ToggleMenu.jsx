@@ -11,7 +11,7 @@ ToggleMenu.propTypes = {
     onLogOut: PropTypes.func.isRequired,
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root: {
         position: "relative",
         display: "inline-block",
@@ -34,6 +34,14 @@ const useStyles = makeStyles({
             cursor: "pointer",
             opacity: "0.6",
         },
+        "& h4": {
+            margin: 0,
+            [theme.breakpoints.down('sm')]: {
+                "&": {
+                    display: 'none',
+                }
+            },
+        }, 
     },
     line: {
         width: "1px",
@@ -77,7 +85,7 @@ const useStyles = makeStyles({
         background:"rgba(0,0,0,0)",
         "z-index": "100",
     }
-})
+}));
 
 function ToggleMenu( {onLogOut} ) {
     const classes = useStyles();
@@ -125,7 +133,7 @@ function ToggleMenu( {onLogOut} ) {
                 <div className={classes.user} onClick={handleShowDropDown}>
                     <span className={classes.line}></span>
                     <BsFillCaretDownFill />
-                    {profile.userName}
+                    <h4>{profile.userName}</h4>
                     <Avatar src={profile.avatar}/>
                 </div>
                 <div class={classes.dropdown} onClick={handleDontShowDropDown} ref={dropDownRef}>

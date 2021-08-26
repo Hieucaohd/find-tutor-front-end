@@ -67,7 +67,6 @@ function TutorItem( {id, tutorId, onCheck, onDelete, onWait} ) {
                 avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScPuSSp3dmio9nEwA8FEAppD_ZzC7j7pCaDKYjiG1thpF4AyTQ-CvOonekXg3JdRl-_Kk&usqp=CAU"
             }
             setTutorInfo(newInfo);
-            console.log(newInfo);
         }
         getTutorInfo();
     }, [])

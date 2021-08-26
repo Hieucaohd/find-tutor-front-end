@@ -27,7 +27,6 @@ export const login = createAsyncThunk("auth/authLogin", async (args) => {
       return response.json();
     } else {
       alert("Ten dang nhat hoac mat khau khong dung.");
-      return response.json();
     }
   });
 });
@@ -207,7 +206,8 @@ export default authSlice.reducer;
 
 export const {setId, setTutorTrue, setParentTrue, setStateFromCookies } = authSlice.actions;
 
-// Lấy: id, token, type_tutor, type_parent cho component 
+// Lấy: id, token, type_tutor, type_parent cho component
+export const selectStateStatus = (state) => state.status;
 export const selectToken = (state) => state.auth.token;
 export const selectRefreshToken = (state) => state.auth.refresh_token;
 export const selectId_of_user = (state) => state.auth.id;
