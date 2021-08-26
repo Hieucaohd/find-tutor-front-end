@@ -68,6 +68,7 @@ export const getWardName = async ({districtCode, wardCode}) => {
 }
 
 export const catchProvinceName = (name) => {
+    if(!name) return "";
     if(name.search('Thành phố')!==-1) {
         return name.slice(10);
     }
@@ -78,6 +79,7 @@ export const catchProvinceName = (name) => {
 }
 
 export const catchDistrictName = (name) => {
+    if(!name) return "";
     if(name.search('Quận')!==-1){
         return name.slice(5);
     }

@@ -1,11 +1,25 @@
-import React, { useState } from 'react';
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { makeStyles } from '@material-ui/core';
+import React from 'react';
+import { GoogleLogin } from 'react-google-login';
 import { useDispatch } from 'react-redux';
 import { loginWithGoogle } from './authSlice';
 
 const clientId = "942367744238-iskdfiih91lh66ipgajrug7ioisfml0o.apps.googleusercontent.com";
 
+const useStyles = makeStyles({
+    root: {
+        
+        "& button": {
+            boxShadow: 'none!important',
+            borderRadius: '64px!important',
+            border: '1px solid #ccc!important',
+            justifyContent: 'center!important',
+        }
+    }
+})
+
 function LoginGoogle() {
+    const classes = useStyles();
     const dispatch = useDispatch();
 
     const onLoginSuccess = (res) => {
@@ -20,10 +34,10 @@ function LoginGoogle() {
     };
 
     return (
-        <div>
+        <div className={classes.root}>
             <GoogleLogin
                 clientId={clientId}
-                buttonText="Log in with Google"
+                buttonText="Sign in with Google"
                 onSuccess={onLoginSuccess}
                 onFailure={onLoginFailure}
                 cookiePolicy={'single_host_origin'}

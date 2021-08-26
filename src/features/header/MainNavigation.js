@@ -3,11 +3,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import {
-  logout, selectIdParent, selectIdTutor, selectId_of_user, selectRefreshToken, selectToken, selectType_parent, selectType_tutor
+  logout, selectId_of_user, selectRefreshToken, selectToken, selectType_parent, selectType_tutor
 } from "../auth/authSlice";
+import SearchBar from './components/SearchBar';
 import ToggleMenu from "./components/ToggleMenu";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     "position": "fixed",
     "top": "0px",
@@ -16,11 +17,16 @@ const useStyles = makeStyles({
     "height": "56px",
     "background-color": "white",
     "box-shadow": "0 14px 20px -12px rgb(0 0 0 / 20%)",
-    "padding": "0px 70px",
     "display": "flex",
     "align-items": "center",
     "justify-content": "space-between",
     "z-index": "999",
+    [theme.breakpoints.down('sm')]: {
+      "padding": "0px 24px",
+    },
+    [theme.breakpoints.up('md')]: {
+      "padding": "0px 70px",
+    },
   },
   item: {
       "display": "flex",
@@ -32,8 +38,8 @@ const useStyles = makeStyles({
     "align-items": "center",
     "& a" : {
       "color": "#404165",
-      "font-size": "14px",
-      "font-weight" : "500",
+      "font-size": "13px",
+      "font-weight" : "600",
       "text-decoration": "none",
       "border-radius": "12px",
       "padding": "4px 12px",
@@ -43,21 +49,29 @@ const useStyles = makeStyles({
           border: "1px solid #9EA7E6",
           
       }
-    } 
+    },
+    [theme.breakpoints.down('sm')]: {
+      display: "none",
+    },
   },
   logo: {
     "color": "black",
     "margin": "0px",
+    marginRight: "12px",
     "display": "flex",
     "align-items": "center",
-    "font-size": "24px",
     "& svg" : {
       "display": "flex",
       "margin-right": "4px",
-    }
+    },
+    [theme.breakpoints.down('sm')]: {
+      "font-size": "16px",
+    },
+    [theme.breakpoints.up('md')]: {
+      "font-size": "24px",
+    },
   }
-
-})
+}));
 
 function MainNavigation() {
   const dispatch = useDispatch();
@@ -65,8 +79,6 @@ function MainNavigation() {
   const refresh_token = useSelector(selectRefreshToken);
   const type_tutor = useSelector(selectType_tutor);
   const type_parent = useSelector(selectType_parent);
-  const idTutor = useSelector(selectIdTutor);
-  const idParent = useSelector(selectIdParent);
   const userId = useSelector(selectId_of_user);
   const history = useHistory();
   const classes = useStyles();
@@ -82,14 +94,9 @@ function MainNavigation() {
     <div>
       {token && <div className={classes.root}>
         <div className={classes.item}>
-          <div>
-            <h3 className={classes.logo}>
-              LOGO IS HERE
-            </h3>
-          </div>
-        </div>
-
-        <div className={classes.item}>
+          <h3 className={classes.logo}>
+            LOGO IS HERE
+          </h3>
           <div className={classes.section}>
             <Link to="/">Trang Chủ</Link>
           </div>
@@ -100,6 +107,10 @@ function MainNavigation() {
           <div className={classes.section}>
             {type_parent && <Link to="/createroom"> Tạo phòng </Link>}
           </div>
+        </div>
+
+        <div className={classes.item}>
+          <SearchBar />
           <ToggleMenu onLogOut={handleLogOut}/>
         </div>
       </div>
