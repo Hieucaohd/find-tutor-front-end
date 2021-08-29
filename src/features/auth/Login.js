@@ -24,18 +24,20 @@ const useStyles = makeStyles(theme => ({
   },
   form: {
     [theme.breakpoints.down('sm')]: {
-      backgroundColor: 'none',
-    },
-    [theme.breakpoints.up('md')]: {
+      backgroundColor: 'transparent',
+      padding: '0',
+      width: '80%',
+  },
+  [theme.breakpoints.up('md')]: {
       backgroundColor: 'white',
-    },
-    width: '260px',
+      padding: '80px',
+      width: '260px',
+  },
     height: '320px',
     borderRadius: '8px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    padding: '80px',
     position: 'relative'
   },
   formField: {
@@ -44,7 +46,6 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     '& input': {
-      width: '89%',
       padding: '12px 14px',
       borderRadius: '64px',
       border: '0.5px solid #ccc',

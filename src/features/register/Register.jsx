@@ -18,13 +18,16 @@ const useStyles = makeStyles(theme => ({
     },
     form: {
         [theme.breakpoints.down('sm')]: {
-            backgroundColor: 'none',
+            backgroundColor: 'transparent',
+            padding: '0',
+            width: '80%',
         },
         [theme.breakpoints.up('md')]: {
             backgroundColor: 'white',
+            padding: '80px',
+            width: '260px',
         },
-        width: '260px',
-        padding: '80px',
+
         borderRadius: '8px',
         display: 'flex',
         flexDirection: 'column',
@@ -37,7 +40,6 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         flexDirection: 'column',
         '& input': {
-            width: '89%',
             padding: '10px 14px' , 
             borderRadius: '64px',
             border: '1px solid #ccc',
