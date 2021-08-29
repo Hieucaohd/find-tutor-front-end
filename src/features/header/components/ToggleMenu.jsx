@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     line: {
         width: "1px",
         height: "28px",
-        backgroundColor: "black",
+        backgroundColor: "#ccc",
         marginRight: "12px",
         marginLeft: "8px",
         opacity: "0.6",

@@ -1,3 +1,4 @@
+import SkeletonPage from "components/Skeleton/SkeletonPage";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -45,6 +46,7 @@ function App() {
           <Route exact path="/tutorprofile/:tutorId" component={TutorProfile} />
           <Route exact path="/parentprofile/:parentId" component={ParentProfile} />
           <Route exact path="/search" component={Search} />
+          <Route exact path="/test" component={SkeletonPage} />
         </Switch>
       </BrowserRouter>
     </div>

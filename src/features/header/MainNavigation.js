@@ -7,7 +7,8 @@ import {
 } from "../auth/authSlice";
 import SearchBar from './components/SearchBar';
 import ToggleMenu from "./components/ToggleMenu";
-
+import { IoHomeOutline, IoPeopleOutline, IoAddOutline } from "react-icons/io5";
+import { AiOutlineAppstoreAdd } from "react-icons/ai";
 const useStyles = makeStyles((theme) => ({
   root: {
     "position": "fixed",
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     "right": "0px",
     "height": "56px",
     "background-color": "white",
-    "box-shadow": "0 14px 20px -12px rgb(0 0 0 / 20%)",
+    "box-shadow": "0 14px 20px -12px rgb(0 0 0 / 12%)",
     "display": "flex",
     "align-items": "center",
     "justify-content": "space-between",
@@ -38,20 +39,41 @@ const useStyles = makeStyles((theme) => ({
     "align-items": "center",
     "& a" : {
       "color": "#404165",
-      "font-size": "13px",
       "font-weight" : "600",
       "text-decoration": "none",
-      "border-radius": "12px",
-      "padding": "4px 12px",
+      
       "letter-spacing": "0.252291px",
+      [theme.breakpoints.down('sm')]: {
+        "padding": "8px",
+        "border-radius": "50%",
+        marginRight: '8px',
+        "font-size": "16px",
+      },
+      [theme.breakpoints.up('md')]: {
+        "padding": "4px 12px",
+        "border-radius": "12px",
+        "font-size": "13px",
+      },
       "&:hover": {
           "cursor": "pointer",
           border: "1px solid #9EA7E6",
-          
-      }
+      }, 
+      "& h4": {
+        margin: 0,
+        [theme.breakpoints.down('sm')]: {
+          display: 'none',
+        },
+      },
+      "& span": {
+        [theme.breakpoints.up('md')]: {
+          display: 'none',
+        },
+        "& svg": {
+          display: 'flex',
+        }
+      },
     },
     [theme.breakpoints.down('sm')]: {
-      display: "none",
     },
   },
   logo: {
@@ -66,10 +88,14 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down('sm')]: {
       "font-size": "16px",
+      display: 'none',
     },
     [theme.breakpoints.up('md')]: {
       "font-size": "24px",
     },
+  },
+  blueColor: {
+    color: '#5037EC' ,
   }
 }));
 
@@ -98,17 +124,29 @@ function MainNavigation() {
             LOGO IS HERE
           </h3>
           <div className={classes.section}>
-            <Link to="/">Trang Chủ</Link>
+            <Link to="/">
+              <span> <IoHomeOutline /></span>
+              <h4>Trang Chủ</h4>
+            </Link>
+
           </div>
           <div className={classes.section}>
-            {type_tutor && <Link to={`/tutorInfo/${userId}`}>Phòng của bạn</Link>}
-            {type_parent && <Link to={`/parentInfo/${userId}`}>Phòng của bạn</Link>}
+            {type_tutor && <Link to={`/tutorInfo/${userId}`}>
+              <span><IoPeopleOutline/></span>
+              <h4>Phòng của bạn</h4>
+              </Link>}
+            {type_parent && <Link to={`/parentInfo/${userId}`}>
+              <span><IoPeopleOutline/></span>
+              <h4>Phòng của bạn</h4>
+              </Link>}
           </div>
           <div className={classes.section}>
-            {type_parent && <Link to="/createroom"> Tạo phòng </Link>}
+            {type_parent && <Link to="/createroom"> 
+            <span className={classes.blueColor}> <AiOutlineAppstoreAdd /></span>
+            <h4>Tạo phòng</h4> 
+            </Link>}
           </div>
         </div>
-
         <div className={classes.item}>
           <SearchBar />
           <ToggleMenu onLogOut={handleLogOut}/>

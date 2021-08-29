@@ -32,7 +32,7 @@ function FilterBar( {onClose = null, onSubmit = null}) {
         if(lop === 13) {
             return (
                 <div key={13} className="filter__class__item filter__class__special"> 
-                    <label> Đại học </label>
+                    <span> Đại học </span>
                     <input 
                         type="checkbox"
                         value="checked"
@@ -43,7 +43,7 @@ function FilterBar( {onClose = null, onSubmit = null}) {
         } else {
             return (
                 <div key={lop} className="filter__class__item"> 
-                <label> {lop} </label>
+                <span> {lop} </span>
                 <input 
                     type="checkbox"
                     value="checked"

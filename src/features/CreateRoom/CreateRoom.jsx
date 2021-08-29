@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 import { selectId_of_user, selectToken } from "../auth/authSlice";
 import { addRoom } from "../home/homeSlice";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
     marginTop: "32px",
     height: "100vh",
@@ -20,7 +20,12 @@ const useStyles = makeStyles({
   field: {
     display: "flex",
     flexDirection: "column",
-    width: "500px",
+    [theme.breakpoints.down('sm')]: {
+      width: '80%',
+    },
+    [theme.breakpoints.up('md')]: {
+      width: '500px',
+    },
     marginBottom: "6px",
     "& label": {
         fontSize: "16px",
@@ -34,13 +39,29 @@ const useStyles = makeStyles({
   day: {
     display: "flex",
     marginBottom: "6px",
+    [theme.breakpoints.down('sm')]: {
+      width: '80%',
+    },
+    justifyContent: 'space-between',
     label: {
       fontSize: '12px',
       fontWeight: '500',
     }
   },
   dayField: {
-    marginRight: "8px",
+    [theme.breakpoints.down('sm')]: {
+      marginRight: 0,
+      display: 'flex',
+      alignItems: 'center',
+      flexDirection: "column",
+      '& label': {
+        fontSize: '12px',
+      }
+    },
+    [theme.breakpoints.up('md')]: {
+      marginRight: "8px",
+    },
+    
   },
   error: {
     fontSize: "12px",
@@ -66,7 +87,14 @@ const useStyles = makeStyles({
     borderRadius: '64px',
     padding: '10px 0px',
   },
-})
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  }
+}));
 
 function CreateRoom(props) {
   const classes = useStyles();
@@ -126,7 +154,7 @@ function CreateRoom(props) {
           Tạo phòng thành công
         </Alert>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}> 
+      <form className={classes.form} onSubmit={handleSubmit(onSubmit)}> 
         
         <div className = {classes.day}> 
         {days.map((day, index) => {

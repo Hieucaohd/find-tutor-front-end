@@ -6,7 +6,7 @@ export const setUserInfoCookies = (info) => {
     const {token, id, refresh_token, type_parent, type_tutor, id_parent, id_tutor} = info;
     cookies.set('userToken', token, { secure: true, sameSite: true, maxAge: 59*60});
     cookies.set('userRefreshToken', refresh_token, { secure: true, sameSite: true, maxAge: 59*60});
-    cookies.set('userId', id, { secure: true, sameSite: true});
+    cookies.set('userId', id, { secure: true, sameSite: true, maxAge: 59*60});
     cookies.set('userTypeParent', type_parent, { secure: true, sameSite: true, maxAge: 59*60});
     cookies.set('userTypeTutor', type_tutor, { secure: true, sameSite: true, maxAge: 59*60});
     cookies.set('userParentId', id_parent, { secure: true, sameSite: true, maxAge: 59*60});
