@@ -1,9 +1,6 @@
 import SkeletonPage from "components/Skeleton/SkeletonPage";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { selectToken, setStateFromCookies } from "./features/auth/authSlice";
-import { isTokenCookie } from "./features/auth/cookies";
+import "./App.css";
 import Login from "./features/auth/Login";
 import CreateRoom from "./features/CreateRoom/CreateRoom";
 import MainNavigation from "./features/header/MainNavigation";
@@ -20,14 +17,6 @@ import Search from "./features/search/Search";
 import TutorInfor from "./features/tutor/TutorInfor";
 
 function App() {
-  const token = useSelector(selectToken);
-  const dispatch = useDispatch();
-  //lấy data từ cookies lưu vào state
-  useEffect(()=> {
-    if(!token && isTokenCookie){
-      dispatch(setStateFromCookies());
-    }
-  }, [])
   return (
     <div className="App">
       <BrowserRouter>

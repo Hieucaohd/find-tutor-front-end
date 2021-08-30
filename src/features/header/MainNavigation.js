@@ -73,8 +73,6 @@ const useStyles = makeStyles((theme) => ({
         }
       },
     },
-    [theme.breakpoints.down('sm')]: {
-    },
   },
   logo: {
     "color": "black",
@@ -88,7 +86,6 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down('sm')]: {
       "font-size": "16px",
-      display: 'none',
     },
     [theme.breakpoints.up('md')]: {
       "font-size": "24px",
@@ -96,6 +93,44 @@ const useStyles = makeStyles((theme) => ({
   },
   blueColor: {
     color: '#5037EC' ,
+  },
+  home: {
+    "height": "40px",
+    "display": "flex",
+    "align-items": "center",
+    "& a" : {
+      "color": "#404165",
+      "font-weight" : "600",
+      "text-decoration": "none",
+      
+      "letter-spacing": "0.252291px",
+      [theme.breakpoints.down('sm')]: {
+        display: 'none',
+      },
+      [theme.breakpoints.up('md')]: {
+        "padding": "4px 12px",
+        "border-radius": "12px",
+        "font-size": "13px",
+      },
+      "&:hover": {
+          "cursor": "pointer",
+          border: "1px solid #9EA7E6",
+      }, 
+      "& h4": {
+        margin: 0,
+        [theme.breakpoints.down('sm')]: {
+          display: 'none',
+        },
+      },
+      "& span": {
+        [theme.breakpoints.up('md')]: {
+          display: 'none',
+        },
+        "& svg": {
+          display: 'flex',
+        }
+      },
+    },
   }
 }));
 
@@ -120,10 +155,12 @@ function MainNavigation() {
     <div>
       {token && <div className={classes.root}>
         <div className={classes.item}>
-          <h3 className={classes.logo}>
-            LOGO IS HERE
-          </h3>
-          <div className={classes.section}>
+          <Link to="/">
+            <h3 className={classes.logo}>
+              LOGO IS HERE
+            </h3>
+          </Link>
+          <div className={classes.home}>
             <Link to="/">
               <span> <IoHomeOutline /></span>
               <h4>Trang Chủ</h4>

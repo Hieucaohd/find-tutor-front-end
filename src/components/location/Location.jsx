@@ -11,6 +11,11 @@ const useStyles = makeStyles({
     root: {
         display: "flex",
         flexDirection: "column",
+        "& select": {
+            "&:focus-visible": {
+                outline: 'none',
+            }
+        }
     },
     field: {
         padding: "8px 2px",
