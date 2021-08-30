@@ -106,7 +106,7 @@ function ToggleMenu( {onLogOut} ) {
             }
             setProfile({
                 avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ5MNUpULlmtF1LYUWip59zHNtKmkxxhstvg&usqp=CAU",
-                userName: userInfo.user,
+                userName: userInfo?.user,
             })
         }
         getUserInfo();

@@ -1,8 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { server_name, token_prefix } from "../../namespace";
 import { getDataFromCookies, getRefreshTokenCookie, removeUserCookies, setNewTokenCookie, setParentCookieTrue, setTutorCookieTrue, setUserInfoCookies } from "./cookies";
+import Cookies from 'universal-cookie';
+ 
+const cookies = new Cookies();
 
-const initialState = {
+const initialState = cookies.get('userToken') ? {
+  status: "idle",
+  token: cookies.get('userToken'),
+  refresh_token: cookies.get('userRefreshToken'),
+  id: cookies.get('userId'),
+  type_tutor: cookies.get('userTypeTutor') === "false" ? false : true,
+  type_parent: cookies.get('userTypeParent') === "false" ? false : true,
+  id_parent: cookies.get('userParentId'),
+  id_tutor: cookies.get('userTutorId'),
+} : {
   status: "idle",
   token: "",
   refresh_token: "",
@@ -12,6 +24,7 @@ const initialState = {
   id_parent: "",
   id_tutor: "",
 };
+
 
 // Lấy: id, token, type_tutor, type_parent từ server.
 export const login = createAsyncThunk("auth/authLogin", async (args) => {

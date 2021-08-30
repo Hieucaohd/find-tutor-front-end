@@ -43,9 +43,6 @@ const useStyles = makeStyles(theme => ({
             padding: '10px 14px' , 
             borderRadius: '64px',
             border: '1px solid #ccc',
-            '&:focus-visible': {
-                outline: 'none',
-            }
         },
         '& button': {
             width: '100%',
