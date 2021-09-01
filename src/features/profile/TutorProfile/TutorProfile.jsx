@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import { getDistrictName, getProvinceName } from 'components/location/getLocation';
+import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName } from 'components/location/getLocation';
 import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { getTutorProfile } from '../profile';
@@ -74,7 +74,7 @@ function TutorProfile(props) {
             const info = await getTutorProfile( {id: tutorId});
             const provinceName = await getProvinceName(info.province_code) || "";
             const districtName = await getDistrictName({provinceCode: info.province_code, districtCode: info.district_code}) || "";
-            info["address"] = `${districtName}, ${provinceName}`;
+            info["address"] = `${catchDistrictName(districtName)}, ${catchProvinceName(provinceName)}`;
             setTutorInfo(info);
         }
         getUserInfo();

@@ -1,5 +1,4 @@
 import { Avatar, makeStyles } from '@material-ui/core';
-import { catchDistrictName, catchProvinceName } from 'components/location/getLocation';
 import { formatBirthDay } from 'features/profile/profile';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -32,11 +31,11 @@ const useStyles = makeStyles(theme => ({
     name: {
         "& h3": {
             fontWeight: 600,
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('xs')]: {
                 fontSize: '20px',
                 margin: 0,
             },
-            [theme.breakpoints.up('md')]: {
+            [theme.breakpoints.up('sm')]: {
                 fontSize: '28px',
             },
         },
@@ -63,19 +62,19 @@ const useStyles = makeStyles(theme => ({
         flex: 1,
         display: 'flex',
         justifyContent: 'flex-end',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('xs')]: {
             marginRight: '12px',
         },
-        [theme.breakpoints.up('md')]: {
+        [theme.breakpoints.up('sm')]: {
             marginRight: '56px',
         },
     },
     avatar: {
-        [theme.breakpoints.down('sm')]: {
-            width: '108px',
-            height: '180px',
+        [theme.breakpoints.down('xs')]: {
+            width: '102px',
+            height: '172px',
         },
-        [theme.breakpoints.up('md')]: {
+        [theme.breakpoints.up('sm')]: {
             width: '180px',
             height:' 220px',
         },
@@ -94,7 +93,20 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
     },
     birth: {
-        marginRight: '40px',
+        "& h4":{
+            [theme.breakpoints.down('xs')]: {
+                fontSize:  '14px',
+            },
+            [theme.breakpoints.up('sm')]: {
+                fontSize: '16px',
+            },
+        },
+        [theme.breakpoints.down('xs')]: {
+            marginRight: '16px',
+        },
+        [theme.breakpoints.up('sm')]: {
+            marginRight: '40px',
+        },
         "& span":{
             color: '#3b6997',
             fontSize: '12px',
@@ -102,6 +114,14 @@ const useStyles = makeStyles(theme => ({
         }
     },
     address: {
+        "& h4":{
+            [theme.breakpoints.down('xs')]: {
+                fontSize:  '14px',
+            },
+            [theme.breakpoints.up('sm')]: {
+                fontSize: '16px',
+            },
+        },
         "& span":{
             color: '#3b6997',
             fontSize: '12px',
@@ -111,10 +131,10 @@ const useStyles = makeStyles(theme => ({
     social: {
         "& a": {
             opacity: '0.6',
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('xs')]: {
                 fontSize: '24px',
             },
-            [theme.breakpoints.up('md')]: {
+            [theme.breakpoints.up('sm')]: {
                 fontSize: '32px',
             },
             "&:hover":{
