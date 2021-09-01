@@ -50,6 +50,16 @@
         
     }
 
+    &__submit {
+        background-color: #5037EC;
+        color: white;
+        border: none;
+        border-radius: 64px;
+        padding: 8px 0px;
+        width: 100%;
+        margin-top: 8px;
+    }
+
     span {
         font-weight: 400;
         font-size: 12px;

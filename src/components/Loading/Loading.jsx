@@ -1,6 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { CircularProgress, makeStyles } from '@material-ui/core';
+import React from 'react';
 
 Loading.propTypes = {
     

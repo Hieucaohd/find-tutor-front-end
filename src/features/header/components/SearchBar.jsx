@@ -1,7 +1,6 @@
-import React, { useRef } from 'react';
-import PropTypes from 'prop-types';
-import { AiOutlineSearch } from 'react-icons/ai';
 import { makeStyles } from '@material-ui/core';
+import React, { useRef } from 'react';
+import { AiOutlineSearch } from 'react-icons/ai';
 
 SearchBar.propTypes = {
     
@@ -27,7 +26,6 @@ const useStyles = makeStyles({
 
 function SearchBar(props) {
     const classes = useStyles();
-    const searchRef = useRef();
     const handleShowSearch = () => {
 
     }

@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { useForm } from "react-hook-form";
-import "./styles.scss";
-import { AiFillCloseCircle } from "react-icons/ai";
-import { Button, Grid } from '@material-ui/core';
 import Location from "components/location/Location.jsx";
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { useForm } from "react-hook-form";
+import { AiFillCloseCircle } from "react-icons/ai";
+import "./styles.scss";
 
 FilterBar.propTypes = {
     onClose: PropTypes.func,
@@ -107,7 +106,7 @@ function FilterBar( {onClose = null, onSubmit = null}) {
                     <Location onChange={handleGetLocation} />
                 </div>
                <div> 
-                <Button type="submit" variant="contained" color="primary"> Áp dụng</Button>
+                <button type="submit" variant="contained" color="primary" className="filter__submit"> Áp dụng</button>
                </div>
             </form>
         </div>
