@@ -4,6 +4,7 @@ import { Grid, Box, makeStyles } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 
 SkeletonPage.propTypes = {
+    number: PropTypes.number,
 };
 
 const useStyles = makeStyles({
@@ -13,10 +14,10 @@ const useStyles = makeStyles({
     },
 })
 
-function SkeletonPage() {
+function SkeletonPage( {number = 12}) {
     const classes= useStyles();
     let numberArr = [];
-    for(let i = 0; i<12; i++){
+    for(let i = 0; i<number; i++){
         numberArr.push(i);
     };
     return (

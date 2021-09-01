@@ -1,12 +1,10 @@
-import { Button, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import Loading from "components/Loading/Loading";
 import React, { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
-import { FaBorderNone } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { login } from "./authSlice";
-import LoginFacebook from "./LoginFacebook";
 import LoginGoogle from "./LoginGoogle";
 
 const selectToken = (state) => state.auth.token;

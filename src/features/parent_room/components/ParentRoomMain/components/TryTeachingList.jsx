@@ -53,7 +53,7 @@ function TryTeachingList(props) {
                              ? addToTeaching : null}
                         onDelete={Number(userId) === Number(tryTeaching.parent_room) || Number(userId) === Number(tryTeaching.tutor)
                              ? deleteFromTryTeaching : null}
-                        onWait = {typeParent && tryTeaching.parent_agree || typeTutor && tryTeaching.tutor_agree}
+                        onWait = { (typeParent && tryTeaching.parent_agree) || (typeTutor && tryTeaching.tutor_agree)}
                         />
                 </li>
             ))}

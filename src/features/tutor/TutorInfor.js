@@ -1,5 +1,7 @@
 import { makeStyles } from "@material-ui/core";
+import SkeletonPage from "components/Skeleton/SkeletonPage";
 import React, { useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectToken } from "../auth/authSlice";
 import InvitedListForTutor from "./components/InvitedListForTutor";
@@ -44,41 +46,46 @@ function TutorInfor() {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const classes = useStyles();
-
+  const [loading, setLoading] = useState(false);
+  const [loadingRooms, setLoadingRooms] = useState(true);
   useEffect(() => {
-    if (token) {
-      // dispatch something here.
+    const fetchRoomList = async () => {
       dispatch(fetchWaitingListForTutorInfor({ token }));
       dispatch(fetchInvitedListForTutorInfor({ token }));
       dispatch(fetchTryTeachingForTutorInfor({ token }));
-      dispatch(fetchTeachingForTutorInfor({ token }));
+      await dispatch(fetchTeachingForTutorInfor({ token }));
+      setLoadingRooms(false);
+    }
+    if (token) {
+      // dispatch something here.
+      fetchRoomList();
     }
   }, [token]);
 
   //xóa khỏi danh sách chờ
-  const handleDeleteWaiting = (waitingId) => {
-    dispatch(
+  const handleDeleteWaiting = async (waitingId) => {
+    await dispatch(
     deleteWaitingListForTutorInfor({ waitingId: waitingId, token: token })
     );
   };  
 
   //đồng ý dạy thử, thêm vào danh sách dạy thử
-  const handleTryTeach = (invitedId) => {
-    dispatch(
+  const handleTryTeach = async (invitedId) => {
+    await dispatch(
       addTryTeachingForTutorInfor({ invitedId: invitedId, token: token })
     );
   };
 
   //không đồng ý dạy thử, xóa khỏi danh sách mời
-  const handleDontTryTeach = (invitedId) => {
-    dispatch(
+  const handleDontTryTeach = async (invitedId) => {
+    await dispatch(
       deleteInvitedListForTutorInfor({ invitedId: invitedId, token: token })
     );
   };
 
   //đồng ý dạy chính thức
-  const handleTeach = (tryTeachId) => {
-    addToTeachingTutorInfor({
+  const handleTeach = async (tryTeachId) => {
+    await addToTeachingTutorInfor({
       try_teachingId: tryTeachId,
       token: token,
       dispatch: dispatch,
@@ -86,8 +93,8 @@ function TutorInfor() {
   };
 
   //không đồng ý dạy chính thức, xóa khỏi danh sách dạy thử
-  const handleDontTeach = (tryTeachId) => {
-    dispatch(
+  const handleDontTeach = async (tryTeachId) => {
+    await dispatch(
       deleteTryTeachingForTutorInfor({
         try_teachingId: tryTeachId,
         token: token,
@@ -103,14 +110,18 @@ function TutorInfor() {
 
   return (
     <div className={classes.root}>
-      <h4>Danh sách chờ</h4>
-      <WaitingListForTutor waitingList = {waitingList} onDelete = {handleDeleteWaiting}/>
-      <h4>Danh sách mời</h4> 
-      <InvitedListForTutor invitedList = {invitedList} onTryTeach = {handleTryTeach} onDelete = {handleDontTryTeach}/>
-      <h4>Danh sách dạy thử</h4>
-      <TryTeachingListForTutor tryTeachingList = {tryTeaching} onTeach = {handleTeach} onDelete = {handleDontTeach}/>
-      <h4>Danh sách đang dạy</h4>
-      <TeachingListForTutor teachingList = {teaching}/>
+        <h4>Danh sách chờ</h4>
+        {loadingRooms ? <SkeletonPage number={3} />
+        :<WaitingListForTutor waitingList = {waitingList} onDelete = {handleDeleteWaiting}/>}
+        <h4>Danh sách mời</h4> 
+        {loadingRooms ? <SkeletonPage number={3} /> 
+        :<InvitedListForTutor invitedList = {invitedList} onTryTeach = {handleTryTeach} onDelete = {handleDontTryTeach}/>}
+        <h4>Danh sách dạy thử</h4>
+        {loadingRooms ? <SkeletonPage number={3} /> 
+        :<TryTeachingListForTutor tryTeachingList = {tryTeaching} onTeach = {handleTeach} onDelete = {handleDontTeach}/>}
+        <h4>Danh sách đang dạy</h4>
+        {loadingRooms ? <SkeletonPage number={3} />
+        :<TeachingListForTutor teachingList = {teaching}/>}
     </div>
   );
 }

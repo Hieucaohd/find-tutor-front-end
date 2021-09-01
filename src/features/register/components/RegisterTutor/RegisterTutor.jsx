@@ -1,11 +1,11 @@
-import { Button, CircularProgress, makeStyles } from '@material-ui/core';
+import { CircularProgress, makeStyles } from '@material-ui/core';
+import Location from "components/location/Location";
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { selectToken, setId, setTutorTrue } from '../../../auth/authSlice';
 import { setTutorIdCookie } from '../../../auth/cookies';
-import Location from "components/location/Location";
 import { registerTutorInfor } from '../../registerAccount';
 
 const useStyles = makeStyles(theme => ({
@@ -244,6 +244,7 @@ function RegisterTutor(props) {
                     <select className={classes.profession} name="profession" {...register("profession")}>
                         <option value="sv">Sinh Viên</option>
                         <option value="gv">Giáo Viên</option>
+                        <option value="khac">Khác</option>
                     </select>
                 </div>
                 <div className={classes.formField} >

@@ -3,9 +3,8 @@ import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName,
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch } from "react-router-dom";
-import { selectId_of_user, selectToken, selectType_tutor } from "../auth/authSlice";
+import { selectToken } from "../auth/authSlice";
 import { fetchRoomList } from "../home/getRoom";
-import { selectRoomList } from "../home/homeSlice";
 import ParentRoomMain from "./components/ParentRoomMain/ParentRoomMain";
 import {
   fetchInvitedListForRoom

@@ -1,5 +1,4 @@
-import { server_name, token_prefix } from "../../namespace";
-import { renderThem } from "./conditionFunctionToRender";
+import { server_name } from "../../namespace";
 const queryString = require('query-string');
 
 export const fetchRoomList = async () => {
