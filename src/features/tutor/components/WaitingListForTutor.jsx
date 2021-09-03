@@ -21,7 +21,7 @@ function WaitingListForTutor( {waitingList, onDelete} ) {
     return (
         <Grid container spacing={2}>
             {waitingList.map( (waiting) => (
-                <Room room={waiting} onDelete={handleDeleteWaiting} color={"#FFE7C4"}/>
+                <Room room={waiting} onDelete={handleDeleteWaiting} color={"green"}/>
             ))}
         </Grid>
     );

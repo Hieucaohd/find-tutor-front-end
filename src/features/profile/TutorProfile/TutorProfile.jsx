@@ -11,8 +11,11 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         flexDirection: 'column',
         marginTop: '80px',
+        [theme.breakpoints.down('sm')]: {
+            padding: '0px 16px',
+        },
         [theme.breakpoints.up('md')]: {
-            padding: '0px 100px',
+            padding: '0px 220px',
         },
     },
     

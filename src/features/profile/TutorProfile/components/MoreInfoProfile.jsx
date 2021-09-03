@@ -18,6 +18,9 @@ const useStyles = makeStyles(theme => ({
     field: {
         display: 'flex',
         alignItems: 'center',
+        backgroundColor: 'white',
+        margin: '12px 0px',
+        borderRadius: '12px',
         "& h4": {
             color: '#3b6997',
             display: 'flex',
@@ -45,7 +48,7 @@ const useStyles = makeStyles(theme => ({
                 flex: 5,
             },
             [theme.breakpoints.up('sm')]: {
-                flex: 3,
+                flex: 4,
             },
             fontWeight: '500',
         }

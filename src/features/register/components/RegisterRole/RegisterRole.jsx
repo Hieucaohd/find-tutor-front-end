@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme =>({
         width: '100%',
         height: '100vh',
         flexDirection: 'row',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('xs')]: {
             flexDirection: 'column',
         },
     },
@@ -28,14 +28,25 @@ const useStyles = makeStyles(theme =>({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#0AC97F',
-        width: '250px',
-        height: '250px',
+        [theme.breakpoints.down('xs')]: {
+            width: '200px',
+            height: '200px'
+        },
+        [theme.breakpoints.up('sm')]: {
+            width: '250px',
+            height: '250px',
+        },
         margin: '32px',
         color: 'white',
         borderRadius: '44px',
         opacity: '0.7',
         '& span': {
-            fontSize: '100px',
+            [theme.breakpoints.down('xs')]: {
+                fontSize: '80px',
+            },
+            [theme.breakpoints.up('sm')]: {
+                fontSize: '100px',
+            },
         },
         '&:hover': {
             cursor: 'pointer',
@@ -47,15 +58,26 @@ const useStyles = makeStyles(theme =>({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '250px',
-        height: '250px',
+        [theme.breakpoints.down('xs')]: {
+            width: '200px',
+            height: '200px'
+        },
+        [theme.breakpoints.up('sm')]: {
+            width: '250px',
+            height: '250px',
+        },
         backgroundColor: '#9D56F7',
         margin: '32px',
         color: 'white',
         borderRadius: '44px',
         opacity: '0.7',
         '& span': {
-            fontSize: '100px',
+            [theme.breakpoints.down('xs')]: {
+                fontSize: '80px',
+            },
+            [theme.breakpoints.up('sm')]: {
+                fontSize: '100px',
+            },
         },
         '&:hover': {
             opacity: '1',

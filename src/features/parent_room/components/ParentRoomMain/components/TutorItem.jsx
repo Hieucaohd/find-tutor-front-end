@@ -28,7 +28,11 @@ const useStyles = makeStyles({
     flexbox: {
         display: "flex",
         "align-items": "center",
-        "justify-content": "center",
+        "justify-content": "space-between",
+    },
+    name: {
+        display: 'flex',
+        "align-items": "center",
     },
     check: {
         "background-color": "transparent",
@@ -50,6 +54,13 @@ const useStyles = makeStyles({
         "opacity" : 0.6,
         "&:hover": {
             "opacity" : 1,
+        }
+    },
+    buttonGroup: {
+        display: 'flex',
+        alignItems: "center",
+        "& button": {
+            padding: 0,
         }
     }
 });
@@ -83,13 +94,15 @@ function TutorItem( {id, tutorId, onCheck, onDelete, onWait} ) {
     }
     return (
         <div className={classes.flexbox}>
-            <div className={classes.flexbox} onClick={handleShowTutorInfo}>
+            <div className={classes.name} onClick={handleShowTutorInfo}>
                 <Avatar alt="tutor" src = {tutorInfo.avatar} className={classes.avatar}/>
                 {tutorInfo.name}
             </div>
-            {onCheck && !onWait && <button className={classes.check} onClick={handleCheck}><AiFillCheckCircle /></button> }
-            {onCheck && onWait && <button className={classes.check} > <IoMdPeople /></button>}
-            {onDelete && <button className={classes.delete} onClick={handleDelete}><TiDelete /></button> }
+            <div className={classes.buttonGroup}>
+                {onCheck && !onWait && <button className={classes.check} onClick={handleCheck}><AiFillCheckCircle /></button> }
+                {onCheck && onWait && <button className={classes.check} > <IoMdPeople /></button>}
+                {onDelete && <button className={classes.delete} onClick={handleDelete}><TiDelete /></button> }
+            </div>
         </div>
     );
 }

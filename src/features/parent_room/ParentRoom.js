@@ -18,7 +18,7 @@ import {
 import { fetchWaitingListForRoom } from "./waitingListForRoomSlice";
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme=>({
     root: {
       height: "100vh",
       padding: "0px 48px",
@@ -26,8 +26,7 @@ const useStyles = makeStyles({
       justifyContent: "center",
       alignItems: "center",
     }
-
-})
+}));
 
 function ParentRoom(props) {
   const classes = useStyles();
@@ -76,7 +75,8 @@ function ParentRoom(props) {
   
   return (
     <div className={classes.root}>
-      <ParentRoomMain roomDetail={roomDetail}/>
+      <ParentRoomMain roomDetail={roomDetail} className={classes.main}/>
+      {/* <ParentRoomMobile roomDetail={roomDetail} className={classes.mobile}/> */}
     </div>
   );
 }

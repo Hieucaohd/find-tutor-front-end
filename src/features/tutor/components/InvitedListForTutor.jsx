@@ -31,7 +31,7 @@ function InvitedListForTutor( props ) {
     return (
         <Grid container spacing={2}>
             {invitedList.map( (invited)=> (
-                <Room room={invited} onDelete={handleDontTryTeach} onCheck={handleTryTeach} color={"#7FDBCA"}/>
+                <Room room={invited} onDelete={handleDontTryTeach} onCheck={handleTryTeach} color={"yellow"}/>
             ))}
         </Grid>
     );

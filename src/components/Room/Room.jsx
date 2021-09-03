@@ -13,7 +13,7 @@ Room.propTypes = {
     onDelete: PropTypes.func,
     onCheck: PropTypes.func,
     onWait: PropTypes.bool,
-    color: PropTypes.string.isRequired,
+    color: PropTypes.string,
     onHome: PropTypes.string,
     typeTutor: PropTypes.bool,
 };
@@ -25,6 +25,25 @@ function Room( {room, onDelete, onCheck, onWait, color, onHome=false, typeTutor=
         //navigate to detail room
         history.push(`/room/${room.id}`);
     }
+
+    const getColor = (str) => {
+        if(str === 'red') {
+            return '#F76E5F';
+        }
+        else if(str === 'green') {
+            return '#0AC97F';
+        }
+        else if(str === 'blue') {
+            return '#19B6F6';
+        }
+        else if(str === 'yellow') {
+            return '#FFF37F';
+        }
+        else {
+            return '#9EA7E6';
+        }
+    }
+
     const handleDelete = (e, id) => {
         e.stopPropagation();
         onDelete(id);
@@ -51,7 +70,7 @@ function Room( {room, onDelete, onCheck, onWait, color, onHome=false, typeTutor=
         <Grid item key={room.id} className="room" xs={12} sm={6} md={3} lg={3} className="room">
             <Box p={3} display="flex" justifyContent="center" alignItems="center">
             <div className="item__room" onClick={() => handleShowDetailRoom(room)}>
-                <div className="item__room__thumbnail">
+                <div className="item__room__thumbnail" style={{ 'background-color': getColor(color)}}>
                     <div>
                         <h4>{room.subject}<span>{room.lop}</span></h4>
                     </div>

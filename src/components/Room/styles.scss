@@ -40,7 +40,6 @@ $cHeight: $cWidth*1.35;
         }
     }
     &__thumbnail {
-        background-color: #9EA7E6;
         position: absolute;
         top: 12px;
         left: 12px;
@@ -84,7 +83,7 @@ $cHeight: $cWidth*1.35;
         }
         & span {
             font-size: 14px;
-            color: #CECECE;
+            color: #6e6b6b;
         }
         &__heart {
             & svg {

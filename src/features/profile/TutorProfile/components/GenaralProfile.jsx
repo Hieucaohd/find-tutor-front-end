@@ -11,9 +11,10 @@ GenaralProfile.propTypes = {
 const useStyles = makeStyles(theme => ({
     wallpaper: {
         flex: 1,
-        height: '100vh',
         display: 'flex',
         padding: '24px 16px',
+        backgroundColor: 'white',
+        borderRadius: '12px',
         "& h5": {
             margin: 0,
         },
@@ -75,12 +76,12 @@ const useStyles = makeStyles(theme => ({
             height: '172px',
         },
         [theme.breakpoints.up('sm')]: {
-            width: '180px',
-            height:' 220px',
+            width: '160px',
+            height: '200px',
         },
     },
     info: {
-        flex: 3,
+        flex: 4,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-around',
