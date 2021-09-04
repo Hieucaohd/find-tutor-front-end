@@ -21,17 +21,21 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('sm')]: {
       backgroundColor: '#E9EBEE',
     },
+    backgroundImage: "url(\"https://i.ibb.co/bz8MNs8/giasu13-1.jpg\")", 
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize:'cover',
   },
   form: {
     [theme.breakpoints.down('sm')]: {
-      backgroundColor: 'transparent',
-      padding: '0',
+      backgroundColor: 'rgba(233,235,238,0.85)',
+      padding: '36px 24px',
       width: '80%',
   },
   [theme.breakpoints.up('md')]: {
-      backgroundColor: '#E9EBEE',
+      backgroundColor: 'rgba(233,235,238,0.85)',
       border: '0.5px solid rgba(0,0,0,0.1)',
-      padding: '60px 36px',
+      padding: '36px 20px',
       width: '300px',
   },
     height: '320px',
