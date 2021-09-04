@@ -177,12 +177,6 @@ function MainNavigation() {
               <h4>Phòng của bạn</h4>
               </Link>}
           </div>
-          <div className={classes.section}>
-            {type_parent && <Link to="/createroom"> 
-            <span className={classes.blueColor}> <AiOutlineAppstoreAdd /></span>
-            <h4>Tạo phòng</h4> 
-            </Link>}
-          </div>
         </div>
         <div className={classes.item}>
           <SearchBar />

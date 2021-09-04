@@ -17,8 +17,10 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#E9EBEE',
     padding: 0,
+    [theme.breakpoints.down('sm')]: {
+      backgroundColor: '#E9EBEE',
+    },
   },
   form: {
     [theme.breakpoints.down('sm')]: {
@@ -27,9 +29,10 @@ const useStyles = makeStyles(theme => ({
       width: '80%',
   },
   [theme.breakpoints.up('md')]: {
-      backgroundColor: 'white',
-      padding: '80px',
-      width: '260px',
+      backgroundColor: '#E9EBEE',
+      border: '0.5px solid rgba(0,0,0,0.1)',
+      padding: '60px 36px',
+      width: '300px',
   },
     height: '320px',
     borderRadius: '8px',

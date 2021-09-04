@@ -24,6 +24,12 @@
         display: none;
     }
 
+    &__create {
+        position: fixed;
+        top: 50%;
+        left: 20px;
+    }
+
     &__filter {
         position: fixed;
         left: 0px;
@@ -39,26 +45,20 @@
         justify-content: center;
         align-self: center;
     }
-    &__toggle {
-        &__cancel {
+
+    &__buttongroup {
+        position: fixed;
+        top: 40%;
+        left: 16px;
+        display: flex;
+        flex-direction: column;
+        & button {
+            font-size: 28px;
             background-color: transparent;
             border: none;
-            position: fixed;
-            top: 50%;
-            left: 20px;
             &:hover {
                 cursor: pointer;
             }
         }
-        &__filter {
-            background-color: transparent;
-            border: none;
-            position: fixed;
-            top: 40%;
-            left: 20px;
-            &:hover {
-                cursor: pointer;
-            }
-        }
-    }
+    } 
 }
