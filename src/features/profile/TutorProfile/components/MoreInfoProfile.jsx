@@ -18,7 +18,8 @@ const useStyles = makeStyles(theme => ({
     field: {
         display: 'flex',
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: '#E9E8EB',
+        border: '0.5px solid rgba(0, 0, 0, 0.1)',
         margin: '12px 0px',
         borderRadius: '12px',
         "& h4": {

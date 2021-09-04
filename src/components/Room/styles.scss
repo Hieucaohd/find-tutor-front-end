@@ -1,11 +1,12 @@
-$cWidth: 250px;
-$cHeight: $cWidth*1.35;
+$cWidth: 220px;
+$cHeight: $cWidth*1.45;
 
 .item__room {
     width: $cWidth;
     height: $cHeight;
-    background-color: white;
-    border-radius: 8px;
+    background-color: #E9E8EB;
+    border: 0.5px solid rgba(0,0,0,0.1);
+    border-radius: 16px;
     position: relative;
     opacity: 0.8;
     &:hover{
@@ -41,18 +42,18 @@ $cHeight: $cWidth*1.35;
     }
     &__thumbnail {
         position: absolute;
-        top: 12px;
-        left: 12px;
-        right: 12px;
-        height: 77%; 
-        border-radius: 8px;
+        top: 4px;
+        left: 4px;
+        right: 4px;
+        height: 82%; 
+        border-radius: 16px;
 
         & > div {
             padding: 25px 16px;
             & > h4 {
                 font-size: 25px;
                 margin: 0;
-                font-weight: 300;
+                font-weight: 500;
             }
             & span {
                 font-size: 38px;
@@ -70,15 +71,15 @@ $cHeight: $cWidth*1.35;
     }
     &__info {
         position: absolute;
-        bottom: 10px;
-        left: 12px;
-        right: 12px;
+        bottom: 8px;
+        left: 8px;
+        right: 8px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         & h5{
             margin: 0;
-            font-weight: 400;
+            font-weight: 500;
             font-size: 14px;
         }
         & span {
@@ -88,8 +89,9 @@ $cHeight: $cWidth*1.35;
         &__heart {
             & svg {
                 color: white;
-                background-color: red;
-                padding: 4px;
+                background-color: #E22B4E;
+                padding: 6px;
+                font-size: 16px;
                 border-radius: 50%;
             }
             background: transparent;

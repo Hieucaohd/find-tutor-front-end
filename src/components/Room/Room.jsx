@@ -20,7 +20,7 @@ Room.propTypes = {
 
 function Room( {room, onDelete, onCheck, onWait, color, onHome=false, typeTutor=false} ) {
     const history = useHistory();
-    const [address, setAddress] = useState({});
+    const [address, setAddress] = useState("");
     const handleShowDetailRoom = (room) => {
         //navigate to detail room
         history.push(`/room/${room.id}`);
@@ -28,19 +28,19 @@ function Room( {room, onDelete, onCheck, onWait, color, onHome=false, typeTutor=
 
     const getColor = (str) => {
         if(str === 'red') {
-            return '#F76E5F';
+            return '#FF7F7F';
         }
         else if(str === 'green') {
-            return '#0AC97F';
+            return '#79e279';
         }
         else if(str === 'blue') {
-            return '#19B6F6';
+            return '#6BBFE2';
         }
         else if(str === 'yellow') {
             return '#FFF37F';
         }
         else {
-            return '#9EA7E6';
+            return '#C3C8E8';
         }
     }
 
@@ -59,10 +59,7 @@ function Room( {room, onDelete, onCheck, onWait, color, onHome=false, typeTutor=
                 provinceCode: room.province_code,
                 districtCode: room.district_code,
             });
-            setAddress({
-                province: catchProvinceName(provinceName),
-                district: catchDistrictName (districtName),
-            })
+            setAddress(`${catchDistrictName(districtName)}, ${catchProvinceName(provinceName)}`)
         }
         getAddress();
     }, [])
@@ -78,7 +75,7 @@ function Room( {room, onDelete, onCheck, onWait, color, onHome=false, typeTutor=
                 </div>
                 <div className="item__room__info">
                     <div>
-                        <h5>{address.district}, {address.province}</h5>
+                        <h5>{address}</h5>
                         <span>150.000đ</span>
                     </div>
 

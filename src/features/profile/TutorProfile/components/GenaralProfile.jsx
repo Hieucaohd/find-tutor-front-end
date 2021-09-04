@@ -13,7 +13,8 @@ const useStyles = makeStyles(theme => ({
         flex: 1,
         display: 'flex',
         padding: '24px 16px',
-        backgroundColor: 'white',
+        backgroundColor: '#E9E8EB',
+        border: '0.5px solid rgba(0, 0, 0, 0.1)',
         borderRadius: '12px',
         "& h5": {
             margin: 0,
