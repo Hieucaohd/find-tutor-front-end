@@ -13,18 +13,37 @@ Room.propTypes = {
     onDelete: PropTypes.func,
     onCheck: PropTypes.func,
     onWait: PropTypes.bool,
-    color: PropTypes.string.isRequired,
+    color: PropTypes.string,
     onHome: PropTypes.string,
     typeTutor: PropTypes.bool,
 };
 
 function Room( {room, onDelete, onCheck, onWait, color, onHome=false, typeTutor=false} ) {
     const history = useHistory();
-    const [address, setAddress] = useState({});
+    const [address, setAddress] = useState("");
     const handleShowDetailRoom = (room) => {
         //navigate to detail room
         history.push(`/room/${room.id}`);
     }
+
+    const getColor = (str) => {
+        if(str === 'red') {
+            return '#FF7F7F';
+        }
+        else if(str === 'green') {
+            return '#79e279';
+        }
+        else if(str === 'blue') {
+            return '#6BBFE2';
+        }
+        else if(str === 'yellow') {
+            return '#FFF37F';
+        }
+        else {
+            return '#C3C8E8';
+        }
+    }
+
     const handleDelete = (e, id) => {
         e.stopPropagation();
         onDelete(id);
@@ -40,10 +59,7 @@ function Room( {room, onDelete, onCheck, onWait, color, onHome=false, typeTutor=
                 provinceCode: room.province_code,
                 districtCode: room.district_code,
             });
-            setAddress({
-                province: catchProvinceName(provinceName),
-                district: catchDistrictName (districtName),
-            })
+            setAddress(`${catchDistrictName(districtName)}, ${catchProvinceName(provinceName)}`)
         }
         getAddress();
     }, [])
@@ -51,7 +67,7 @@ function Room( {room, onDelete, onCheck, onWait, color, onHome=false, typeTutor=
         <Grid item key={room.id} className="room" xs={12} sm={6} md={3} lg={3} className="room">
             <Box p={3} display="flex" justifyContent="center" alignItems="center">
             <div className="item__room" onClick={() => handleShowDetailRoom(room)}>
-                <div className="item__room__thumbnail">
+                <div className="item__room__thumbnail" style={{ 'background-color': getColor(color)}}>
                     <div>
                         <h4>{room.subject}<span>{room.lop}</span></h4>
                     </div>
@@ -59,7 +75,7 @@ function Room( {room, onDelete, onCheck, onWait, color, onHome=false, typeTutor=
                 </div>
                 <div className="item__room__info">
                     <div>
-                        <h5>{address.district}, {address.province}</h5>
+                        <h5>{address}</h5>
                         <span>150.000đ</span>
                     </div>
 

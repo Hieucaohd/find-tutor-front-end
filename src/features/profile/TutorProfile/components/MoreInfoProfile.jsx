@@ -1,11 +1,11 @@
-import React from 'react';
+import { makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { IoLocation, IoSchoolOutline } from 'react-icons/io5';
-import { IoMdSchool } from 'react-icons/io';
-import { RiMedalFill, RiNumbersFill } from 'react-icons/ri';
+import React from 'react';
 import { AiFillExperiment } from 'react-icons/ai';
 import { GiBookCover } from 'react-icons/gi';
-import { makeStyles } from '@material-ui/core';
+import { IoMdSchool } from 'react-icons/io';
+import { IoLocation } from 'react-icons/io5';
+import { RiMedalFill, RiNumbersFill } from 'react-icons/ri';
 
 MoreInfoProfile.propTypes = {
     TutorInfo: PropTypes.object,
@@ -18,18 +18,23 @@ const useStyles = makeStyles(theme => ({
     field: {
         display: 'flex',
         alignItems: 'center',
+        backgroundColor: '#E9E8EB',
+        border: '0.5px solid rgba(0, 0, 0, 0.1)',
+        margin: '12px 0px',
+        borderRadius: '12px',
         "& h4": {
-            flex: 1,
             color: '#3b6997',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'flex-end',
             fontWeight: '400',
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('xs')]: {
+                flex: 2,
                 fontSize: '10px',
                 marginRight: '12px',
             },
-            [theme.breakpoints.up('md')]: {
+            [theme.breakpoints.up('sm')]: {
+                flex: 1,
                 marginRight: '56px',
                 fontSize: '12px',
             },
@@ -40,7 +45,12 @@ const useStyles = makeStyles(theme => ({
         },
 
         "& p": {
-            flex: 3,
+            [theme.breakpoints.down('xs')]: {
+                flex: 5,
+            },
+            [theme.breakpoints.up('sm')]: {
+                flex: 4,
+            },
             fontWeight: '500',
         }
 

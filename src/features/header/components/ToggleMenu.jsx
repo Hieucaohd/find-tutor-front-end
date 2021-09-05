@@ -56,9 +56,14 @@ const useStyles = makeStyles((theme) => ({
         marginTop: "11px",
         display: "none",
         position: "absolute",
-        right: "4px",
+        [theme.breakpoints.down('xs')]: {
+            right: "-12px",
+          },
+          [theme.breakpoints.up('sm')]: {
+            right: "4px",
+          },
         backgroundColor: "#f9f9f9",
-        minWidth: "120px",
+        minWidth: "136px",
         boxShadow: "0px 8px 16px 0px rgba(0,0,0,0.2)",
         "z-index": "1001",
         borderRadius: "4px",
@@ -137,8 +142,9 @@ function ToggleMenu( {onLogOut} ) {
                     <Avatar src={profile.avatar}/>
                 </div>
                 <div class={classes.dropdown} onClick={handleDontShowDropDown} ref={dropDownRef}>
-                    {typeTutor && <Link to={`/tutorprofile/${tutorId}`}>My Profile</Link>}
-                    {typeParent && <Link to={`/parentprofile/${parentId}`}>My Profile</Link>}
+                    {typeParent && <Link to={'/createroom'}>Tạo phòng</Link>}
+                    {typeTutor && <Link to={`/tutorprofile/${tutorId}`}>Thông tin cá nhân</Link>}
+                    {typeParent && <Link to={`/parentprofile/${parentId}`}>Thông tin cá nhân</Link>}
                     <a href="/login" onClick={handleLogout}>Đăng xuất</a>
                 </div>
             </div>

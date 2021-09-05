@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     "right": "0px",
     "height": "56px",
     "background-color": "white",
-    "box-shadow": "0 14px 20px -12px rgb(0 0 0 / 12%)",
+    borderBottom: '1px solid rgba(0,0,0,0.1)',
     "display": "flex",
     "align-items": "center",
     "justify-content": "space-between",
@@ -176,12 +176,6 @@ function MainNavigation() {
               <span><IoPeopleOutline/></span>
               <h4>Phòng của bạn</h4>
               </Link>}
-          </div>
-          <div className={classes.section}>
-            {type_parent && <Link to="/createroom"> 
-            <span className={classes.blueColor}> <AiOutlineAppstoreAdd /></span>
-            <h4>Tạo phòng</h4> 
-            </Link>}
           </div>
         </div>
         <div className={classes.item}>

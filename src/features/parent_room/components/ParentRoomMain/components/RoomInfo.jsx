@@ -2,6 +2,8 @@ import { makeStyles } from '@material-ui/core';
 import { subject } from 'components/Room/picture';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { FcDocument, FcHome, FcPlanner } from "react-icons/fc";
+import { RiNumber2 } from "react-icons/ri";
 
 RoomInfo.propTypes = {
     roomDetail: PropTypes.object,
@@ -20,7 +22,6 @@ const useStyles = makeStyles({
         paddingBottom: '12px',
     },
     main: {
-        backgroundColor: "#9EA7E6",
         height: "100%",
         borderRadius: "4px",
         display: 'flex',
@@ -54,8 +55,49 @@ const useStyles = makeStyles({
     detail: {
         marginLeft: '48px',
         lineHeight: 1.5,
-        "& span": {
-            color: '#5b65a9',
+        "& div" : {
+            display: 'flex',
+            "& h4": {
+                margin: 0,
+                flex: 4,
+                fontWeight: 500,
+            },
+            "& div": {
+                flex: 4,
+            },
+            "& span": {
+                flex: 1,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+                marginRight: '20px',
+                "& svg": {
+                    marginRight: '4px',
+                    color: '#F76E5F',
+                },
+                "& h5": {
+                    margin: 0,
+                    fontWeight: 400,
+                    color: 'black',
+                }
+                
+            }
+        }
+    },
+    days: {
+        display: 'flex',
+        padding: 0,
+        "& li": {
+            'list-style-type': 'none',
+            width: '24px',
+            height: '24px',
+            marginRight: '4px',
+            backgroundColor: '#F44336',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'white',
+            borderRadius: '50%',
         }
     }
 })
@@ -68,6 +110,17 @@ function RoomInfo( {roomDetail} ) {
         return str;
     }
     
+    const renderDay = (days) => {
+        if(!days || days.length ===0) return;
+        return (
+            <ul className={classes.days}>
+                {days.map((day)=> (
+                   <li>{day}</li> 
+                ))}
+            </ul>
+        )
+    }
+
     return (
         <div className={classes.root}>
             <div className={classes.item}>
@@ -83,13 +136,31 @@ function RoomInfo( {roomDetail} ) {
                 </div>
             </div>
             <div className={classes.item}>
-                <p className={classes.detail}>
-                    <span>Địa Điểm:</span> {roomDetail.address}
-                    <br/>
-                    <span>Ngày dạy:</span> {getDayString(roomDetail.day_can_teach)}
-                    <br/>
-                    <span>Yêu cầu khác:</span> 2 năm kinh nghiệm trở lên
-                </p>    
+                <div className={classes.detail}>
+                    <div>
+                        <span>
+                            <FcHome />
+                            <h5>Địa chỉ</h5>
+                        </span> 
+                        <h4>{roomDetail.address}</h4>
+                    </div>
+                    <div>
+                        <span>
+                            <FcPlanner />
+                            <h5>Ngày dạy</h5>
+                        </span>
+                        <div> 
+                            {renderDay(roomDetail.day_can_teach)} 
+                        </div>   
+                    </div>
+                    <div>
+                        <span>
+                            <FcDocument />
+                            <h5>Yêu cầu khác</h5>
+                        </span> 
+                        <h4>2 năm kinh nghiệm trở lên</h4> 
+                    </div>
+                </div>    
             </div>
         </div>
     );

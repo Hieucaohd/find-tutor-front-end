@@ -12,6 +12,8 @@ import FilterBar from "./components/FilterBar/FilterBar";
 import Room from 'components/Room/Room';
 import { addWaitingListForRoom } from "../parent_room/waitingListForRoomSlice";
 import SkeletonPage from "components/Skeleton/SkeletonPage";
+import { FcAddDatabase, FcClearFilters, FcFilledFilter } from "react-icons/fc";
+import CreateRoom from "features/CreateRoom/CreateRoom";
 
 function Home() {
   let history = useHistory();
@@ -90,11 +92,12 @@ function Home() {
     alert("Đã thêm phòng");
   }
 
+  const handleShowCreateRoom = () => {
+    history.push("/createroom");
+  }
+
   return (
     <div className = "home">
-      <button className="home__toggle__filter" onClick={handleShowFilterBar}> <RiFilterLine /> <br/> Lọc </button>
-      <button className="home__toggle__cancel" onClick={handleCancelFilter} ref={cancelFilter} style={{display: "none"}}> <RiFilterOffLine /> <br /> Hủy</button>
-      
       {loading ? <SkeletonPage /> 
       : <Grid container spacing={2}>{
         roomList.map((room)=>(
@@ -105,13 +108,19 @@ function Home() {
       <div ref={filterBar} className="home__filter"> 
         <FilterBar onClose={handleCloseFilterBar} onSubmit={onSubmitSearch}/>
       </div>
+
+      
+
+      <div className="home__buttongroup">
+        {token && type_parent && <button onClick={handleShowCreateRoom}><FcAddDatabase /></button>}
+        <button className="home__toggle__filter" onClick={handleShowFilterBar}> <FcFilledFilter /> </button>
+        <button className="home__toggle__cancel" onClick={handleCancelFilter} ref={cancelFilter} style={{display: "none"}}> <FcClearFilters /></button>
+      </div>
       
       <div>
         <Button onClick={refreshListRoom} color="primary">More Room</Button>
       </div>
-      <div className="home__overlay" ref={homeOverlay} onClick={handleCloseFilterBar}> 
-
-      </div>
+      <div className="home__overlay" ref={homeOverlay} onClick={handleCloseFilterBar}> </div>
     </div>
   );
 }

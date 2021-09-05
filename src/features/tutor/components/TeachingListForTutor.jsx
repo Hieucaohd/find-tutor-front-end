@@ -16,7 +16,7 @@ function TeachingListForTutor( {teachingList} ) {
     return (
         <Grid container spacing={2}>
             {teachingList.map( (teach) => (
-                <Room room={teach} color={"#B3E9CB"}/>
+                <Room room={teach} color={"red"}/>
             ))}
         </Grid>
     );

@@ -37,7 +37,7 @@ function LoginGoogle() {
         <div className={classes.root}>
             <GoogleLogin
                 clientId={clientId}
-                buttonText="Sign in with Google"
+                buttonText="Tiếp tục với Google"
                 onSuccess={onLoginSuccess}
                 onFailure={onLoginFailure}
                 cookiePolicy={'single_host_origin'}

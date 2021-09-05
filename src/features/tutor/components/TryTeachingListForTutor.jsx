@@ -31,7 +31,7 @@ function TryTeachingListForTutor(props) {
     return (
         <Grid container spacing={2}>
             {tryTeachingList.map( (tryTeaching) => (
-                <Room room={tryTeaching} onDelete={handleDontTeach} onCheck={handleTeach} onWait={tryTeaching.tutor_agree} color={"#4285F4"}/>
+                <Room room={tryTeaching} onDelete={handleDontTeach} onCheck={handleTeach} onWait={tryTeaching.tutor_agree} color={"blue"}/>
             ))}
         </Grid>
     );

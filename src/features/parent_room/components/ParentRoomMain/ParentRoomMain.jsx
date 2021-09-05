@@ -27,30 +27,32 @@ const useStyles = makeStyles({
     "align-items": "center",
     "justify-content": "center",
     "height": "60vh",
-    backgroundColor: "white", 
+    backgroundColor: '#E9E8EB',
+    border: '0.5px solid rgba(0, 0, 0, 0.1)', 
   },
   block: {
-    overflow: "auto",
+    position: 'relative',
+    height: '50%',
     "&>div": {
       overflow: "auto",
       "text-align": "center",
-      backgroundColor: "white", 
+      backgroundColor: '#E9E8EB',
+      border: '0.5px solid rgba(0, 0, 0, 0.1)',
       height: "100%",
       "border-radius": "4px",
     }
   },
-  relative: {
-    position: 'relative',
-  },
   title: {
     position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0, 
-    fontWeight: 300,
-    backgroundColor: "#9EA7E6",
+    bottom: 7,
+    left: 8,
+    right: 8, 
+    fontWeight: 500,
+    backgroundColor: 'rgb(195, 200, 232)',
     padding: "4px 0px",
     "z-index": 1,
+    borderRadius: '0 0 4px 4px',
+    textAlign: 'center',
   }
 })
 
@@ -73,7 +75,6 @@ function ParentRoomMain( {roomDetail = {}} ) {
         <Grid item xs={3} container direction="column" spacing={2}>
             <Grid item style={{flex: 1}} className={classes.block}>
               <div className={classes.relative}>
-                <span className={classes.title}>Danh sách chờ</span>
                 <WaitingList 
                   waitingList = {waitingList} 
                   parentId = {roomDetail.parent}
@@ -83,10 +84,11 @@ function ParentRoomMain( {roomDetail = {}} ) {
                   token = {token}
                 />
               </div>
+              <span className={classes.title}>Danh sách chờ</span>
+
             </Grid >
             <Grid item style={{flex: 1}} className={classes.block}>
-              <div className={classes.relative}>
-                <span className={classes.title}>Danh sách mời</span>
+              <div>
                 <InvitedList 
                   invitedList = {invitedList} 
                   typeTutor={typeTutor}
@@ -94,6 +96,8 @@ function ParentRoomMain( {roomDetail = {}} ) {
                   token = {token}
                 />
               </div>
+              <span className={classes.title}>Danh sách mời</span>
+
             </Grid>
         </Grid>
         <Grid item xs={6}>
@@ -103,8 +107,7 @@ function ParentRoomMain( {roomDetail = {}} ) {
         </Grid>
         <Grid item xs={3} container direction="column" spacing={2}>
             <Grid item style={{flex: 1}} className={classes.block}>
-              <div className={classes.relative}>
-                <span className={classes.title}>Danh sách dạy thử</span>
+              <div>
                 <TryTeachingList
                   tryTeachingList = {tryTeachingList}
                   token = {token}
@@ -113,14 +116,15 @@ function ParentRoomMain( {roomDetail = {}} ) {
                   typeParent={typeParent}
                 />
               </div>
+              <span className={classes.title}>Danh sách dạy thử</span>
             </Grid >
             <Grid item style={{flex: 1}} className={classes.block}>
-              <div className={classes.relative}>
-                  <span className={classes.title}>Danh sách dạy chính thức</span>
+              <div>
                   <TeachingList 
                     teachingList={teachingList}
                   />
               </div>
+              <span className={classes.title}>Danh sách dạy chính thức</span>
             </Grid>
         </Grid>
       </Grid>

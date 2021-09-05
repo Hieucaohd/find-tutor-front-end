@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
+import Loading from "components/Loading/Loading";
 import Location from "components/location/Location";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -110,13 +111,14 @@ function CreateRoom(props) {
     district: 0,
     ward: 0
   })
+  const loadingRef = useRef(null);
 
   const handleGetLocation = (data) => {
     setLocation(data);
   }
 
   //handle submit
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     
     // get day can teach
     let dayCanTeach = []
@@ -142,20 +144,18 @@ function CreateRoom(props) {
       token: token,
     };
     const action = addRoom(args);
-    dispatch(action);
-    successRef.current.style.display = "block";
+    loadingRef.current.style.display = "flex";
+    await dispatch(action);
+    loadingRef.current.style.display = "none";
+    alert('Tạo phòng thành công');
   }
 
   return (
     <div className={classes.root}>
-      <div className = {classes.success} ref={successRef}>
-        <Alert severity="success" onClose={() => {history.push(`/parentinfo/${parentId}`)}}>
-          <AlertTitle>Success</AlertTitle>
-          Tạo phòng thành công
-        </Alert>
+      <div ref={loadingRef} style={{display: 'none'}}>
+        <Loading />
       </div>
       <form className={classes.form} onSubmit={handleSubmit(onSubmit)}> 
-        
         <div className = {classes.day}> 
         {days.map((day, index) => {
           return (
