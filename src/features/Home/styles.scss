@@ -1,0 +1,64 @@
+@keyframes animateleft {
+    0% {
+        left: -300px;
+        opacity: 0;
+    }
+    100% {
+        left: 0;
+        opacity: 1;
+    }
+}
+
+.home {
+    padding: 24px 42px;
+    margin-top: 40px;
+    &__overlay {
+        z-index: 998;
+        position: fixed;
+        top: 0px;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        cursor: pointer;
+        display: none;
+    }
+
+    &__create {
+        position: fixed;
+        top: 50%;
+        left: 20px;
+    }
+
+    &__filter {
+        position: fixed;
+        left: 0px;
+        top: 57px;
+        bottom: 0px;
+        width: 220px;
+        background-color: white;
+        z-index: 999;
+        animation: animateleft 0.4s;
+        padding: 25px;
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-self: center;
+    }
+
+    &__buttongroup {
+        position: fixed;
+        top: 40%;
+        left: 16px;
+        display: flex;
+        flex-direction: column;
+        & button {
+            font-size: 28px;
+            background-color: transparent;
+            border: none;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    } 
+}

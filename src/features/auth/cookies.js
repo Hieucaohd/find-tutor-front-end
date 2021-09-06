@@ -11,6 +11,7 @@ export const setUserInfoCookies = (info) => {
     cookies.set('userTypeTutor', type_tutor, { secure: true, sameSite: true, maxAge: 59*60});
     cookies.set('userParentId', id_parent, { secure: true, sameSite: true, maxAge: 59*60});
     cookies.set('userTutorId', id_tutor, { secure: true, sameSite: true, maxAge: 59*60});
+    cookies.set('isSignedIn', true, { secure: true, sameSite: true, maxAge: 59*60});
 }
 
 export const setParentCookieTrue = () => {
@@ -61,4 +62,10 @@ export const removeUserCookies = () => {
     cookies.remove('userTypeTutor');
     cookies.remove('userParentId');
     cookies.remove('userTutorId');
+    cookies.remove('isSignedIn');
+}
+
+export const isSignedIn = () => {
+    if( cookies.get('isSignedIn') === 'true' ) return true;
+    return false;
 }

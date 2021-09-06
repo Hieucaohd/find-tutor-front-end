@@ -1,13 +1,11 @@
 import { makeStyles } from "@material-ui/core";
-import { Alert, AlertTitle } from "@material-ui/lab";
 import Loading from "components/Loading/Loading";
 import Location from "components/location/Location";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { selectId_of_user, selectToken } from "../auth/authSlice";
-import { addRoom } from "../home/homeSlice";
+import { selectToken } from "../auth/authSlice";
+import { addRoom } from "../Home/homeSlice";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -100,12 +98,9 @@ const useStyles = makeStyles(theme => ({
 function CreateRoom(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const history = useHistory();
   const days = [2, 3, 4, 5, 6, 7, 8];
   const token = useSelector(selectToken);
-  const parentId = useSelector(selectId_of_user);
   const { register, formState: { errors }, handleSubmit } = useForm();
-  let successRef = useRef(null);
   const [location, setLocation] = useState({
     province: 0,
     district: 0,

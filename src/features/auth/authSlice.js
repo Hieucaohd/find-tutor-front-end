@@ -191,8 +191,6 @@ const authSlice = createSlice({
       })
       .addCase(logout.pending, (state) => {
         state.status = "loading";
-      })
-      .addCase(logout.fulfilled, (state) => {
         state.status =  "idle";
         state.token = "";
         state.refresh_token = "";
@@ -200,6 +198,15 @@ const authSlice = createSlice({
         state.type_tutor = "";
         state.type_parent = "";
         removeUserCookies();
+      })
+      .addCase(logout.fulfilled, (state) => {
+        // state.status =  "idle";
+        // state.token = "";
+        // state.refresh_token = "";
+        // state.id = "";
+        // state.type_tutor = "";
+        // state.type_parent = "";
+        // removeUserCookies();
       })
       .addCase(logout.rejected, (state) => {
         state.status =  "error";
