@@ -4,8 +4,7 @@ import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { selectToken, setId, setParentTrue } from '../../../auth/authSlice';
-import { setParentIdCookie } from '../../../auth/cookies';
+import { selectToken } from '../../../auth/authSlice';
 import { registerParentInfor } from '../../registerAccount';
 
 const useStyles = makeStyles(theme => ({
@@ -110,7 +109,7 @@ function RegisterParent(props) {
         setLocation(data);
     }
 
-    const onSubmit = (data) => {
+    const onSubmit = async(data) => {
         loadingRef.current.style.display = "flex";
         const parentInfor = {
             "avatar": null,
@@ -127,21 +126,19 @@ function RegisterParent(props) {
             "detail_location": data.detailLocation || null,
         }
         
-        dispatch(setParentTrue());
-        registerParentInfor({
+        
+        const parentId = await registerParentInfor({
             token: token,
             parentInfor: parentInfor,
-        }).then((response) => {
-            if (response.ok) {
-                dispatch(setId({idParent: response.id}));
-                setParentIdCookie(response.id);
-                alert(`Bạn đã đăng kí làm phụ huynh thành công.`);
-                history.push("/");
-            } else {
-                loadingRef.current.style.display = "none";
-                alert("Có lỗi xảy ra, bạn hiện tại chưa thể đăng kí làm phụ huynh, vui lòng thử lại sau.");
-            }
-          });
+            dispatch: dispatch,
+        });
+        if(parentId){
+            alert('Bạn đã đăng kí làm phụ huynh thành công');
+            history.push("/");
+        }else {
+            loadingRef.current.style.display = "none";
+            alert("Có lỗi xảy ra, bạn hiện tại chưa thể đăng kí làm phụ huynh, vui lòng thử lại sau.");
+        }
     }
 
     return (

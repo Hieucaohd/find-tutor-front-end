@@ -113,9 +113,8 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setId(state, action) {
-      const {idParent, idTutor} = action;
-      state.id_parent = idParent;
-      state.id_tutor = idTutor;
+      state.id_parent = action.payload.parentId;
+      state.id_tutor = action.payload.tutorId;
     },
     setTutorTrue(state, action) {
       state.type_tutor = true;

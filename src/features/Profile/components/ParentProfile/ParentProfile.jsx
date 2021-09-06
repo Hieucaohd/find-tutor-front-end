@@ -22,6 +22,7 @@ const useStyles = makeStyles({
 function ParentProfile(props) {
     const match = useRouteMatch("/profile/parent/:parentId");
     const parentId = Number(match.params.parentId);
+    console.log(parentId);
     const classes = useStyles();
     const [parentInfo, setParentInfo] = useState({});
     useEffect ( () => {

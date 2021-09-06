@@ -7,12 +7,12 @@ Profile.propTypes = {
     
 };
 
-function Profile(props) {
+function Profile() {
     return (
         <div>
             <Switch> 
-                <Route exact="/profile/tutor/:tutorId" component={TutorProfile}/>
-                <Route exact="/profile/parent/:parentId" component={ParentProfile}/>
+                <Route exact path="/profile/tutor/:tutorId" component={TutorProfile}/>
+                <Route exact path="/profile/parent/:parentId" component={ParentProfile}/>
             </Switch>
         </div>
     );

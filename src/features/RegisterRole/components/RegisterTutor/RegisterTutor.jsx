@@ -4,8 +4,7 @@ import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { selectToken, setId, setTutorTrue } from '../../../auth/authSlice';
-import { setTutorIdCookie } from '../../../auth/cookies';
+import { selectToken } from '../../../auth/authSlice';
 import { registerTutorInfor } from '../../registerAccount';
 
 const useStyles = makeStyles(theme => ({
@@ -143,7 +142,7 @@ function RegisterTutor(props) {
         setLocation(data);
     }
 
-    const onSubmit = (data) => {
+    const onSubmit = async(data) => {
         loadingRef.current.style.display = "flex";
         const tutorInfor = {
             "profession": data.profession || null,
@@ -165,21 +164,18 @@ function RegisterTutor(props) {
             "detail_location": data.detailLocation || null,
         }
 
-        dispatch(setTutorTrue());
-        registerTutorInfor({
+        const tutorID = await registerTutorInfor({
             token: token,
             tutorInfor: tutorInfor,
-        }).then((response) => {
-            if (response.ok) {
-                alert(`Bạn đã đăng kí làm gia sư thành công.`);
-                setTutorIdCookie(response.id);
-                dispatch(setId({idTutor: response.id}));
-                history.push("/");
-            } else {
-                loadingRef.current.style.display = "none";
-                alert("Có lỗi xảy ra, bạn hiện tại chưa thể đăng kí làm gia sư, vui lòng thử lại sau.");
-            }
-          });
+            dispatch: dispatch,
+        });
+        if(tutorID){
+            alert('Bạn đã đăng kí làm gia sư thành công');
+            history.push("/");
+        }else {
+            loadingRef.current.style.display = "none";
+            alert("Có lỗi xảy ra, bạn hiện tại chưa thể đăng kí làm gia sư, vui lòng thử lại sau.");
+        }
     }    
     return (
         <div className={classes.root}>
