@@ -3,7 +3,7 @@ import { fetchGraphQl } from "./graphQl"
 export const SearchTutor = (search) => {
     const query = `
     {
-        search_tutor(search_infor: "hiệp") {
+        search_tutor(search_infor: "${search}") {
             id
             user {
                 id
@@ -20,11 +20,13 @@ export const SearchTutor = (search) => {
 export const SearchParent = (search) => {
     const query = `
     {
-        search_parent(search_infor: ${search}) {
+        search_parent(search_infor: "${search}") {
             id
+            user {
+                id
+            }
             first_name
             last_name
-            profession
         }
     }`
 

@@ -105,7 +105,6 @@ function Search({onClose}) {
                 search: searchRef.current.value,
                 type: typeRef.current.value,
             })
-            console.log(searchTerm);
         }, 500)
     };
     function handleSearchType () {
@@ -137,6 +136,7 @@ function Search({onClose}) {
         } else {
             getList(searchTerm);
         }
+        console.log(searchTerm);
     }, [searchTerm]);
     const handleClose = () => {
         onClose();
