@@ -1,9 +1,9 @@
 import { Grid, makeStyles } from '@material-ui/core';
 import Room from 'components/Room/Room.jsx';
+import { GetAllRoom } from 'graphql/HomeQueries';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectId_of_user, selectToken } from '../auth/authSlice';
-import { fetchRoomList } from '../Home/getRoom';
 import { deleteRoom } from './parent';
 
 const useStyles = makeStyles({
@@ -19,14 +19,14 @@ function ParentInfor() {
     const [parentRoomList, setParentRoomList] = useState([]);
     const handleDeleteRoom = async (roomId) => {
         let newParentRoomList = [...parentRoomList];
-        newParentRoomList = await newParentRoomList.filter( (room) => room.id != roomId);
+        newParentRoomList = await newParentRoomList.filter( (room) => Number(room.id) !== Number(roomId));
         setParentRoomList(newParentRoomList);
         await deleteRoom({ roomId: roomId, token: token });
-        
     }
+    
     useEffect ( ()=> {
         const getList = async () => {
-            const roomList = await fetchRoomList();
+            const roomList = await GetAllRoom();
             const parentRooms = await roomList.filter( (room) => room.parent === Number(parentId));
             setParentRoomList(parentRooms);
         }

@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { BsFillCaretDownFill } from "react-icons/bs";
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { selectIdParent, selectIdTutor, selectType_parent, selectType_tutor } from '../../auth/authSlice';
+import { selectIdParent, selectIdTutor, selectId_of_user, selectType_parent, selectType_tutor } from '../../auth/authSlice';
 import { getParentProfile, getTutorProfile } from '../../Profile/profile';
 
 ToggleMenu.propTypes = {
@@ -97,7 +97,8 @@ function ToggleMenu( {onLogOut} ) {
     const typeTutor = useSelector(selectType_tutor);
     const typeParent = useSelector(selectType_parent);
     const tutorId = useSelector(selectIdTutor);
-    const parentId = useSelector(selectIdParent)
+    const parentId = useSelector(selectIdParent);
+    const userId = useSelector(selectId_of_user);
     const [profile, setProfile] = useState({});
     const dropDownRef = useRef(null);
     const overlayRef = useRef(null);
@@ -143,8 +144,8 @@ function ToggleMenu( {onLogOut} ) {
                 </div>
                 <div class={classes.dropdown} onClick={handleDontShowDropDown} ref={dropDownRef}>
                     {typeParent && <Link to={'/createroom'}>Tạo phòng</Link>}
-                    {typeTutor && <Link to={`/profile/tutor/${tutorId}`}>Thông tin cá nhân</Link>}
-                    {typeParent && <Link to={`/profile/parent/${parentId}`}>Thông tin cá nhân</Link>}
+                    {typeTutor && <Link to={`/profile/tutor/${userId}`}>Thông tin cá nhân</Link>}
+                    {typeParent && <Link to={`/profile/parent/${userId}`}>Thông tin cá nhân</Link>}
                     <Link to={"/signin"} onClick={handleLogout}>Đăng xuất</Link>
                 </div>
             </div>

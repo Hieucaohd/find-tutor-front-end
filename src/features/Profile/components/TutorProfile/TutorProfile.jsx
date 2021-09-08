@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName } from 'components/location/getLocation';
+import { GetTutorProfile } from 'graphql/ProfileQueries';
 import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { getTutorProfile } from '../../profile';
@@ -74,7 +75,7 @@ function TutorProfile(props) {
     const [tutorInfo, setTutorInfo] = useState({});
     useEffect( () => {
         const getUserInfo = async () => {
-            const info = await getTutorProfile( {id: tutorId});
+            const info = await GetTutorProfile(tutorId);
             const provinceName = await getProvinceName(info.province_code) || "";
             const districtName = await getDistrictName({provinceCode: info.province_code, districtCode: info.district_code}) || "";
             info["address"] = `${catchDistrictName(districtName)}, ${catchProvinceName(provinceName)}`;

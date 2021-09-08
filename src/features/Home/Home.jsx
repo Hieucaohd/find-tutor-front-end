@@ -2,6 +2,7 @@ import { Button, Grid } from "@material-ui/core";
 import Room from 'components/Room/Room';
 import SkeletonPage from "components/Skeleton/SkeletonPage";
 import { isSignedIn } from "features/auth/cookies";
+import { GetAllRoom, GetFilterRoom } from "graphql/HomeQueries";
 import React, { useEffect, useRef, useState } from "react";
 import { FcAddDatabase, FcClearFilters, FcFilledFilter } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +12,6 @@ import {
 } from "../auth/authSlice";
 import { addWaitingListForRoom } from "../ParentRoom/waitingListForRoomSlice";
 import FilterBar from "./components/FilterBar/FilterBar";
-import { fetchFilterRoomList, fetchRoomList } from "./getRoom";
 import "./styles.scss";
 
 function Home() {
@@ -38,16 +38,18 @@ function Home() {
     history.push("/signin");
   }
 
+
   useEffect( () => {
     const getRoomList = async () => {
       setLoading(true);
-      const list = await fetchRoomList();
+      const list = await GetAllRoom();  
+      console.log(list);
       setRoomList(list);
       setLoading(false);
     }
     const getFilterRoomList = async (params) => {
       setLoading(true);
-      const filterRoomList = await fetchFilterRoomList(params);
+      const filterRoomList = await GetFilterRoom(filter);
       setRoomList(filterRoomList);
       setLoading(false);
     }
@@ -80,7 +82,6 @@ function Home() {
   }
 
   const onSubmitSearch = (newFilter) => {
-    console.log('newfilter', newFilter)
     setFilter(newFilter);
     //close filter bar
     handleCloseFilterBar();
@@ -100,7 +101,7 @@ function Home() {
     <div className = "home">
       {loading ? <SkeletonPage /> 
       : <Grid container spacing={2}>{
-        roomList.map((room)=>(
+        roomList?.map((room)=>(
           <Room room={room} color="white" typeTutor = {type_tutor} onCheck={type_tutor && handleAddRoom} onHome={true}/>
         ))}
       </Grid>}
