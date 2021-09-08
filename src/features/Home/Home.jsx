@@ -2,7 +2,7 @@ import { Button, Grid } from "@material-ui/core";
 import Room from 'components/Room/Room';
 import SkeletonPage from "components/Skeleton/SkeletonPage";
 import { isSignedIn } from "features/auth/cookies";
-import { GetAllRoom, GetFilterRoom } from "graphql/HomeQueries";
+import { GetAllRoom, GetFilterRoom } from "graphql/RoomQueries";
 import React, { useEffect, useRef, useState } from "react";
 import { FcAddDatabase, FcClearFilters, FcFilledFilter } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
@@ -43,13 +43,12 @@ function Home() {
     const getRoomList = async () => {
       setLoading(true);
       const list = await GetAllRoom();  
-      console.log(list);
       setRoomList(list);
       setLoading(false);
     }
     const getFilterRoomList = async (params) => {
       setLoading(true);
-      const filterRoomList = await GetFilterRoom(filter);
+      const filterRoomList = await GetFilterRoom(params);
       setRoomList(filterRoomList);
       setLoading(false);
     }

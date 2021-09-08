@@ -75,7 +75,7 @@ function FilterBar( {onClose = null, onSubmit = null}) {
         if(Number(location.ward) !== 0) {
             newFilter["ward_code"] = Number(location.ward);
         }
-        if(data.lop){
+        if(classCanTeach.length !== 0){
             newFilter["lop"] = classCanTeach;
         }
         

@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName, getWardName } from "components/location/getLocation";
-import { GetAllRoom } from "graphql/HomeQueries";
+import { GetAllRoom } from "graphql/RoomQueries";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch } from "react-router-dom";
@@ -53,9 +53,7 @@ function ParentRoom(props) {
   useEffect(()=> {
     const getRoomDetail = async () => {
       const roomList = await GetAllRoom();
-      console.log(roomList);
       const newRoomDetail = await roomList.find((room) => Number(room.id) === Number(roomId) );
-      console.log('new room', newRoomDetail)
       const provinceName = await getProvinceName(newRoomDetail.province_code);
       const districtName = await getDistrictName({
         provinceCode: newRoomDetail.province_code,
@@ -77,7 +75,6 @@ function ParentRoom(props) {
   return (
     <div className={classes.root}>
       <ParentRoomMain roomDetail={roomDetail} className={classes.main}/>
-      {/* <ParentRoomMobile roomDetail={roomDetail} className={classes.mobile}/> */}
     </div>
   );
 }

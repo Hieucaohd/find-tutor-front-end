@@ -1,6 +1,6 @@
 import { Grid, makeStyles } from '@material-ui/core';
 import Room from 'components/Room/Room.jsx';
-import { GetAllRoom } from 'graphql/HomeQueries';
+import { GetAllRoom, GetUserParentRoom } from 'graphql/RoomQueries';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectId_of_user, selectToken } from '../auth/authSlice';
@@ -26,8 +26,8 @@ function ParentInfor() {
     
     useEffect ( ()=> {
         const getList = async () => {
-            const roomList = await GetAllRoom();
-            const parentRooms = await roomList.filter( (room) => room.parent === Number(parentId));
+            const parentRooms = await GetUserParentRoom(parentId);
+            console.log(parentRooms);
             setParentRoomList(parentRooms);
         }
         getList();

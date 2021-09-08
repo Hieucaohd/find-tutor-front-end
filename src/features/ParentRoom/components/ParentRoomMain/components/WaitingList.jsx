@@ -28,7 +28,8 @@ function WaitingList( props ) {
     const {waitingList = [], parentId, roomId, userId, token = "", typeParent = false} = props;
     const classes = useStyles();
     const dispatch = useDispatch();
-
+    console.log('parentid', parentId);
+    console.log('userid', userId); 
     const deleteFromWaitingList = (waitingId) => {
         if(!waitingId) return;
         dispatch(deleteWaitingListForRoom({

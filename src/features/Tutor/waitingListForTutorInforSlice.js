@@ -3,6 +3,7 @@ import {
   createSlice,
   createAsyncThunk,
 } from "@reduxjs/toolkit";
+import { GetTutorWaitingList } from "graphql/TutorRoomQueries";
 
 import { server_name, token_prefix } from "../../namespace";
 
@@ -17,14 +18,10 @@ const initialState = waitingListForTutorInforAdapter.getInitialState({
 export const fetchWaitingListForTutorInfor = createAsyncThunk(
   "waitingListForTutorInfor/fetchWaitingListForTutorInfor",
   async (args, thunkAPI) => {
-    const { token } = args;
-    return await fetch(`${server_name}/findTutor/waitingTutorList/`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `${token_prefix} ${token}`,
-      },
-    }).then((response) => response.json());
+    const {id} = args;
+    const list =  await GetTutorWaitingList(id);
+    console.log('list', list);
+    return list;
   }
 );
 

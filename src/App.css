@@ -5,3 +5,7 @@ a {
 input:focus-visible {
     outline: none;
 }
+
+select:focus-visible {
+    outline: none;
+}

@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { isSignedIn } from 'features/auth/cookies';
-import React from "react";
+import Search from 'features/Header/components/Search/Search';
+import React, { useRef } from "react";
 import { IoHomeOutline, IoPeopleOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
@@ -9,6 +10,7 @@ import {
 } from "../auth/authSlice";
 import SearchBar from './components/SearchBar';
 import ToggleMenu from "./components/ToggleMenu";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     "position": "fixed",
@@ -21,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     "display": "flex",
     "align-items": "center",
     "justify-content": "space-between",
-    "z-index": "999",
+    "z-index": "700",
     [theme.breakpoints.down('sm')]: {
       "padding": "0px 24px",
     },
@@ -131,6 +133,9 @@ const useStyles = makeStyles((theme) => ({
         }
       },
     },
+  },
+  searchForm: {
+    position: 'fixed',
   }
 }));
 
@@ -143,7 +148,7 @@ function MainNavigation() {
   const userId = useSelector(selectId_of_user);
   const history = useHistory();
   const classes = useStyles();
-  
+  const searchRef = useRef(null);
   const handleLogOut = async() => {
     dispatch(logout({
       token: token,
@@ -151,7 +156,14 @@ function MainNavigation() {
     }));  
     history.push("/signin");
   }
-
+  const onShowSearchForm = () => {
+    if(searchRef.current)
+      searchRef.current.style.display = 'flex';
+  }
+  const onCloseSearchForm = () => {
+    if(searchRef.current)
+      searchRef.current.style.display = 'none';
+  }
   return (
     <div>
       {isSignedIn() && <div className={classes.root}>
@@ -180,8 +192,11 @@ function MainNavigation() {
           </div>
         </div>
         <div className={classes.item}>
-          <SearchBar />
-          <ToggleMenu onLogOut={handleLogOut}/>
+          <SearchBar onShow={onShowSearchForm}/>
+          <ToggleMenu onLogOut={handleLogOut} />
+        </div>
+        <div ref={searchRef} style={{display: 'none'}} className={classes.searchForm}>
+          <Search onClose={onCloseSearchForm}/>
         </div>
       </div>
     }
