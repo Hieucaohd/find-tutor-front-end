@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { selectToken } from '../../../auth/authSlice';
-import { registerTutorInfor } from '../../registerAccount';
+import { registerImageTutor, registerTutorInfor } from '../../registerAccount';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -143,6 +143,7 @@ function RegisterTutor(props) {
     }
 
     const onSubmit = async(data) => {
+        console.log('data', data)
         loadingRef.current.style.display = "flex";
         const tutorInfor = {
             "profession": data.profession || null,
@@ -164,12 +165,14 @@ function RegisterTutor(props) {
             "detail_location": data.detailLocation || null,
         }
 
+        const files = data.avatar;
+        console.log('files', files[0]);
         const tutorID = await registerTutorInfor({
             token: token,
             tutorInfor: tutorInfor,
-            dispatch: dispatch,
         });
-        if(tutorID){
+        const registerImage = await registerImageTutor({token: token, avatar: files[0], identity_card: files[0], student_card: files[0]});
+        if(registerImage){
             alert('Bạn đã đăng kí làm gia sư thành công');
             history.push("/");
         }else {
@@ -233,7 +236,7 @@ function RegisterTutor(props) {
                 </div>
                 <div className={classes.formField}>
                     <label>Ảnh đại diện</label>
-                    <input type="file" name="avatar" />
+                    <input type="file" name="avatar" {...register("avatar")}/>
                 </div>
                 <div className={classes.formField}>
                     <label>Nghề nghiệp hiện tại</label>

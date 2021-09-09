@@ -45,3 +45,20 @@ export const registerParentInfor = async ({ token, parentInfor, dispatch }) => {
     return false;
   }
 };
+
+export const registerImageTutor = async ({token, avatar, identity_card, student_card}) => {
+  try {
+    await fetch(`${server_name}/findTutor/imagePrivateUserList/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${token_prefix} ${token}`,
+      },
+      body: JSON.stringify({avatar: avatar, identity_card: identity_card , student_card: student_card}),
+    })
+    return true;
+  } catch(error) {
+    console.log('failed to register image ', error);
+    return false;
+  }
+}
