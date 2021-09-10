@@ -1,33 +1,41 @@
 import { fetchGraphQl } from "./graphQl"
 
-export const GetAllRoom = () => {
+export const GetAllRoom = (pages) => {
     const query = `{
-        all_room {
-          id
-          province_code
-          district_code
-          ward_code
-          lop
-          subject
+        all_room(page: ${pages}, num_in_page: 12){
+            result {
+              id
+              province_code
+              district_code
+              ward_code
+              lop
+              subject
+            }
+          num_pages
         }
     }`
     return  fetchGraphQl("room list", "all_room", query);
 }
-export const GetFilterRoom = ({lop, province_code, district_code, ward_code, subject }) => {
+export const GetFilterRoom = ({filterRoom, pages}) => {
+    const {lop, province_code, district_code, ward_code, subject } = filterRoom;
     const queryString = `${lop ? `lop: [${lop}],` : ``}, 
         ${province_code ? `province_code: ${province_code},` : ``},
         ${district_code ? `district_code: ${district_code}` : ``}
         ${ward_code ? `ward_code: ${ward_code},` : ``}
         ${subject ? `search_infor: "${subject}",` : ``}
+        page: ${pages}, num_in_page: 12
         `;
     const query = `{
         search_room (${queryString}) {
-          id
-          province_code
-          district_code
-          ward_code
-          lop
-          subject
+            result {
+                id
+                province_code
+                district_code
+                ward_code
+                lop
+                subject
+            }
+            num_pages
         }
     }`
     return fetchGraphQl("filter room list", "search_room", query);

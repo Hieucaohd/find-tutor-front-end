@@ -120,7 +120,13 @@ function RegisterTutor(props) {
           last_name: name.slice(name.indexOf(' ') + 1)
         }
     }
-
+    const [images, setImages] = React.useState([]);
+  const maxNumber = 69;
+  const onChange = (imageList, addUpdateIndex) => {
+    // data for submit
+    console.log(imageList, addUpdateIndex);
+    setImages(imageList);
+  };
     const getTeachingLevel = (data) => {
         const arr = [];
         if(data["cap1"]) {
@@ -170,8 +176,9 @@ function RegisterTutor(props) {
         const tutorID = await registerTutorInfor({
             token: token,
             tutorInfor: tutorInfor,
+            dispatch: dispatch,
         });
-        const registerImage = await registerImageTutor({token: token, avatar: files[0], identity_card: files[0], student_card: files[0]});
+        const registerImage = await registerImageTutor({token: token, avatar: files, identity_card: files, student_card: files});
         if(registerImage){
             alert('Bạn đã đăng kí làm gia sư thành công');
             history.push("/");
