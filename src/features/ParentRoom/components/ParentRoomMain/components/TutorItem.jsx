@@ -65,22 +65,9 @@ const useStyles = makeStyles({
     }
 });
 
-function TutorItem( {id, tutorId, onCheck, onDelete, onWait} ) {
+function TutorItem( {id, tutor, onCheck, onDelete, onWait} ) {
     const classes = useStyles();
-    const [tutorInfo, setTutorInfo] = useState({})
     const history = useHistory();
-    useEffect( () => {
-        const getTutorInfo = async () => {
-            const info = await getTutorProfile({id: tutorId});
-            const newInfo = {
-                id: tutorId,
-                name: `${info.first_name} ${info.last_name}`,
-                avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScPuSSp3dmio9nEwA8FEAppD_ZzC7j7pCaDKYjiG1thpF4AyTQ-CvOonekXg3JdRl-_Kk&usqp=CAU"
-            }
-            setTutorInfo(newInfo);
-        }
-        getTutorInfo();
-    }, [])
 
     const handleCheck = () => {
         onCheck(id);
@@ -90,13 +77,13 @@ function TutorItem( {id, tutorId, onCheck, onDelete, onWait} ) {
         onDelete(id);
     }
     const handleShowTutorInfo = () => {
-        history.push(`/tutorprofile/${tutorId}`)
+        history.push(`/profile/tutor/${tutor.user.id}`)
     }
     return (
         <div className={classes.flexbox}>
             <div className={classes.name} onClick={handleShowTutorInfo}>
-                <Avatar alt="tutor" src = {tutorInfo.avatar} className={classes.avatar}/>
-                {tutorInfo.name}
+                <Avatar alt="tutor" src = "https://static2.yan.vn/YanNews/2167221/202102/facebook-cap-nhat-avatar-doi-voi-tai-khoan-khong-su-dung-anh-dai-dien-e4abd14d.jpg" className={classes.avatar}/>
+                {tutor.first_name} {tutor.last_name}
             </div>
             <div className={classes.buttonGroup}>
                 {onCheck && !onWait && <button className={classes.check} onClick={handleCheck}><AiFillCheckCircle /></button> }

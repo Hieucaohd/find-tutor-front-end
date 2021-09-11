@@ -9,8 +9,6 @@ export const setUserInfoCookies = (info) => {
     cookies.set('userId', id, { secure: true, sameSite: true, maxAge: 59*60});
     cookies.set('userTypeParent', type_parent, { secure: true, sameSite: true, maxAge: 59*60});
     cookies.set('userTypeTutor', type_tutor, { secure: true, sameSite: true, maxAge: 59*60});
-    cookies.set('userParentId', id_parent, { secure: true, sameSite: true, maxAge: 59*60});
-    cookies.set('userTutorId', id_tutor, { secure: true, sameSite: true, maxAge: 59*60});
     cookies.set('isSignedIn', true, { secure: true, sameSite: true, maxAge: 59*60});
 }
 
@@ -33,21 +31,11 @@ export const getDataFromCookies = () => {
         id: cookies.get('userId'),
         typeParent: cookies.get('userTypeParent') === "false" ? false : true,
         typeTutor: cookies.get('userTypeTutor') === "false" ? false : true,
-        idParent: cookies.get('userParentId'),
-        idTutor: cookies.get('userTutorId'),
     }
 }
 
 export const getRefreshTokenCookie = () => {
     return cookies.get('userRefreshToken');
-}
-
-export const setTutorIdCookie = (id) => {
-    cookies.set('userTutorId', id, { secure: true, sameSite: true});
-}
-
-export const setParentIdCookie = (id) => {
-    cookies.set('userParentId', id, { secure: true, sameSite: true});
 }
 
 export const isTokenCookie = () => {
@@ -60,8 +48,6 @@ export const removeUserCookies = () => {
     cookies.remove('userId');
     cookies.remove('userTypeParent');
     cookies.remove('userTypeTutor');
-    cookies.remove('userParentId');
-    cookies.remove('userTutorId');
     cookies.remove('isSignedIn');
 }
 

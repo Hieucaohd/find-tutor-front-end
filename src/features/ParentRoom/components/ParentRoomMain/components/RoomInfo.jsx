@@ -103,9 +103,17 @@ const useStyles = makeStyles({
 
 function RoomInfo( {roomDetail} ) {
     const classes = useStyles();
-    
-    const renderDay = (days) => {
-        if(!days || days.length ===0) return;
+    console.log('detail', roomDetail)
+    const renderDay = (daysStr) => {
+        if(!daysStr || daysStr === "") return ;
+        let days = [];
+        for(let i = 0; i<daysStr.length; i++) {
+        const number = Number(daysStr[i]);
+            if(number >=2 && number <= 8) {
+                days.push(number);
+            }
+        }
+        console.log('day', days);
         return (
             <ul className={classes.days}>
                 {days.map((day)=> (
@@ -125,7 +133,7 @@ function RoomInfo( {roomDetail} ) {
                     />
                     <div className={classes.subject}>
                         <h1>{roomDetail.subject} <span>{roomDetail.lop}</span></h1>
-                        <h5>150.000đ</h5>
+                        <h5>{roomDetail.pricemodel_set} đ</h5>
                     </div>
                 </div>
             </div>

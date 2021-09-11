@@ -1,4 +1,5 @@
-import { Button, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
+import Pagination from '@material-ui/lab/Pagination';
 import Room from 'components/Room/Room';
 import SkeletonPage from "components/Skeleton/SkeletonPage";
 import { isSignedIn } from "features/auth/cookies";
@@ -13,7 +14,6 @@ import {
 import { addWaitingListForRoom } from "../ParentRoom/waitingListForRoomSlice";
 import FilterBar from "./components/FilterBar/FilterBar";
 import "./styles.scss";
-import Pagination from '@material-ui/lab/Pagination';
 
 function Home() {
   let history = useHistory();
@@ -48,19 +48,19 @@ function Home() {
     const getRoomList = async () => {
       setLoading(true);
       const list = await GetAllRoom(filter.pages); 
-      setMaxPagination(list["num_pages"]);
-      setRoomList(list.result);
+      setMaxPagination(list?.num_pages);
+      setRoomList(list?.result);
       setLoading(false);
     }
     const getFilterRoomList = async (params) => { 
       setLoading(true);
       const filterRoomList = await GetFilterRoom(params);
-      setMaxPagination(filterRoomList["num_pages"]);
-      setRoomList(filterRoomList.result);
+      setMaxPagination(filterRoomList?.num_pages);
+      setRoomList(filterRoomList?.result);
       setLoading(false);
     }
-    if(Object.keys(filter.filterRoom).length === 0) {
-      getRoomList(filter.pages);
+    if(Object.keys(filter?.filterRoom).length === 0) {
+      getRoomList(filter?.pages);
     }
     else {
       getFilterRoomList(filter);
@@ -74,10 +74,6 @@ function Home() {
       pages: pagination,
     })
   }, [pagination])
-
-  const refreshListRoom = () => {
-    setIsRefreshListRoom(!isRefreshListRoom);
-  };
 
   const handleShowFilterBar = () => {
     filterBar.current.style.display = "flex";
@@ -135,7 +131,7 @@ function Home() {
         <button className="home__toggle__cancel" onClick={handleCancelFilter} ref={cancelFilter} style={{display: "none"}}> <FcClearFilters /></button>
       </div>
       
-        <Pagination count={maxPagination} color="primary" className="home__pagination" onChange={handleChangePage}/>
+        {maxPagination > 1 && <Pagination count={maxPagination} color="primary" className="home__pagination" onChange={handleChangePage}/>}
       <div className="home__overlay" ref={homeOverlay} onClick={handleCloseFilterBar}> </div>
     </div>
   );

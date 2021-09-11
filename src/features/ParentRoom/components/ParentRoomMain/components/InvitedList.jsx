@@ -23,13 +23,14 @@ const useStyles = makeStyles({
 })
 
 function InvitedList( props ) {
-    const {invitedList = [], userId, token = "", typeTutor = false} = props;
+    const {invitedList = [],parent,roomId, userId, token = "", typeTutor = false} = props;
+    console.log('danh sach moi', invitedList);
     const classes = useStyles();
     const dispatch = useDispatch();
     const deleteFromInvitedList = (invitedId) => {
         dispatch(deleteInvitedListForRoom({ invitedId: invitedId, token: token }));
     };
-    
+    console.log('ba rừn id', parent.id, 'u sờ id', userId);
     const addToTryTeaching = (invitedId) => {
         dispatch(
           addTryTeachingForRoom({
@@ -44,9 +45,9 @@ function InvitedList( props ) {
                  <li key = {invited.id}>
                     <TutorItem
                         id = {invited.id}
-                        tutorId = {invited.tutor} 
-                        onCheck={typeTutor && Number(userId) === Number(invited.tutor) ? addToTryTeaching : null}
-                        onDelete={typeTutor && Number(userId) === Number(invited.tutor) ? deleteFromInvitedList : null}
+                        tutor = {invited.tutor} 
+                        onCheck={typeTutor && Number(invited.tutor.user.id) === Number(userId) ? addToTryTeaching : null}
+                        onDelete={typeTutor && Number(invited.tutor.user.id) === Number(userId) ? deleteFromInvitedList : null}
                     />
                 </li>
             ))}

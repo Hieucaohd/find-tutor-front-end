@@ -24,7 +24,7 @@ function TeachingList(props) {
             {teachingList.map( (teaching) => (
                  <li key = {teaching.id}>
                     <TutorItem
-                        tutorId = {teaching.tutor} 
+                        tutor = {teaching.tutor} 
                     />
                 </li>
             ))}

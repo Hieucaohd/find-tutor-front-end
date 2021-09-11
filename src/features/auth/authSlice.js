@@ -12,8 +12,6 @@ const initialState = cookies.get('userToken') ? {
   id: cookies.get('userId'),
   type_tutor: cookies.get('userTypeTutor') === "false" ? false : true,
   type_parent: cookies.get('userTypeParent') === "false" ? false : true,
-  id_parent: cookies.get('userParentId'),
-  id_tutor: cookies.get('userTutorId'),
 } : {
   status: "idle",
   token: "",
@@ -21,8 +19,6 @@ const initialState = cookies.get('userToken') ? {
   id: "",
   type_tutor: "",
   type_parent: "",
-  id_parent: "",
-  id_tutor: "",
 };
 
 
@@ -112,10 +108,6 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setId(state, action) {
-      state.id_parent = action.payload.parentId;
-      state.id_tutor = action.payload.tutorId;
-    },
     setTutorTrue(state, action) {
       state.type_tutor = true;
       setTutorCookieTrue();
@@ -131,8 +123,6 @@ const authSlice = createSlice({
       state.id = id;
       state.type_tutor = typeTutor;
       state.type_parent = typeParent;
-      state.id_parent = idParent;
-      state.id_tutor = idTutor;
     }
   },
   extraReducers: (builder) => {
@@ -149,8 +139,6 @@ const authSlice = createSlice({
           state.id = id;
           state.type_tutor = type_tutor ;
           state.type_parent = type_parent ;
-          state.id_parent = id_parent;
-          state.id_tutor = id_tutor;
           setUserInfoCookies(action.payload);
         }
       })
@@ -166,8 +154,6 @@ const authSlice = createSlice({
           state.id = id;
           state.type_tutor = type_tutor;
           state.type_parent = type_parent;
-          state.id_parent = id_parent;
-          state.id_tutor = id_tutor;
           setUserInfoCookies(action.payload);
         }
       })
@@ -183,14 +169,11 @@ const authSlice = createSlice({
           state.id = id;
           state.type_tutor = type_tutor;
           state.type_parent = type_parent;
-          state.id_parent = id_parent;
-          state.id_tutor = id_tutor;
           setUserInfoCookies(action.payload);
         }
       })
       .addCase(logout.pending, (state) => {
-        state.status = "loading";
-        state.status =  "idle";
+        state.status =  "loading";
         state.token = "";
         state.refresh_token = "";
         state.id = "";
@@ -199,13 +182,7 @@ const authSlice = createSlice({
         removeUserCookies();
       })
       .addCase(logout.fulfilled, (state) => {
-        // state.status =  "idle";
-        // state.token = "";
-        // state.refresh_token = "";
-        // state.id = "";
-        // state.type_tutor = "";
-        // state.type_parent = "";
-        // removeUserCookies();
+        state.status =  "idle";
       })
       .addCase(logout.rejected, (state) => {
         state.status =  "error";
@@ -223,7 +200,7 @@ const authSlice = createSlice({
 
 export default authSlice.reducer;
 
-export const {setId, setTutorTrue, setParentTrue, setStateFromCookies } = authSlice.actions;
+export const { setTutorTrue, setParentTrue, setStateFromCookies } = authSlice.actions;
 
 // Lấy: id, token, type_tutor, type_parent cho component
 export const selectStateStatus = (state) => state.status;
@@ -232,8 +209,6 @@ export const selectRefreshToken = (state) => state.auth.refresh_token;
 export const selectId_of_user = (state) => state.auth.id;
 export const selectType_tutor = (state) => state.auth.type_tutor;
 export const selectType_parent = (state) => state.auth.type_parent;
-export const selectIdTutor = (state) => state.auth.id_tutor;
-export const selectIdParent = (state) => state.auth.id_parent
 export const getToken = (dispatch) => {
   const refreshToken = getRefreshTokenCookie();
   setInterval( ()=> {

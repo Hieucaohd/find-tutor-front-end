@@ -10,8 +10,12 @@ export const GetAllRoom = (pages) => {
               ward_code
               lop
               subject
+              pricemodel_set {
+                money_per_day
+                time_in_one_day
+              }
             }
-          num_pages
+            num_pages
         }
     }`
     return  fetchGraphQl("room list", "all_room", query);
@@ -62,3 +66,108 @@ export const GetUserParentRoom = async (id) => {
     return parentModel.parentmodel.parentroommodel_set;
 }
 
+export const GetParentRoomDetail = async(id) => {
+    const query = `
+    {
+        room_by_id(id: ${id}) {
+            parent {
+                user {
+                    id
+                }
+                first_name
+                last_name
+            }
+            province_code
+            district_code
+            ward_code
+            detail_location
+            subject
+            lop
+            day_can_teach
+            other_require
+            pricemodel_set {
+                money_per_day
+                time_in_one_day
+                type_teacher
+                sex_of_teacher
+            }
+            waitingtutormodel_set {
+                id
+                tutor {
+                    user {
+                        id
+                        imageprivateusermodel {
+                            avatar
+                        }
+                    }
+                    first_name
+                    last_name
+                }
+            }
+            listinvitedmodel_set {
+                id
+                tutor {
+                    user {
+                        id
+                        imageprivateusermodel {
+                            avatar
+                        }
+                    }
+                    first_name
+                    last_name
+                }
+            }
+            tryteachingmodel {
+                id
+                tutor {
+                    user {
+                        id
+                        imageprivateusermodel {
+                            avatar
+                        }
+                    }
+                    first_name
+                    last_name
+                }
+            }
+            tutorteachingmodel {
+                id
+                tutor {
+                    user {
+                        id
+                        imageprivateusermodel {
+                            avatar
+                        }
+                    }
+                    first_name
+                    last_name
+                }
+            }
+        }
+    }`;
+    const roomModel = await fetchGraphQl("parent room detail", "room_by_id", query);
+    return roomModel;
+}
+
+export const GetAllParentRoom = async(id) => {
+    const query = `
+    {
+        user_by_id(id: ${id}){
+            parentmodel {
+                parentroommodel_set {
+                    id
+                    subject
+                    lop
+                    province_code
+                    district_code
+                    pricemodel_set {
+                        money_per_day
+                    }
+                }
+            }
+        }
+    }`;
+    const allroomModel = await fetchGraphQl("all user's parent room", "user_by_id", query);
+    const userParentRoom = await allroomModel?.parentmodel.parentroommodel_set;
+    return userParentRoom;
+}

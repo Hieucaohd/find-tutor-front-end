@@ -76,7 +76,7 @@ function Room( {room, onDelete, onCheck, onWait, color, onHome=false, typeTutor=
                 <div className="item__room__info">
                     <div>
                         <h5>{address}</h5>
-                        <span>150.000đ</span>
+                        <span>{room.pricemodel_set[0].money_per_day} đ / buổi</span>
                     </div>
 
                     {onHome && typeTutor && <button onClick={ (e) => handleCheck(e, room.id)} className="item__room__info__heart">

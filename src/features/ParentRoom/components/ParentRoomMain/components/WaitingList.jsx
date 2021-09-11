@@ -25,11 +25,10 @@ const useStyles = makeStyles({
 })
 
 function WaitingList( props ) {
-    const {waitingList = [], parentId, roomId, userId, token = "", typeParent = false} = props;
+    const {waitingList = [], parent, roomId, userId, token = "", typeParent = false} = props;
+    console.log('waitinglist2', waitingList);
     const classes = useStyles();
     const dispatch = useDispatch();
-    console.log('parentid', parentId);
-    console.log('userid', userId); 
     const deleteFromWaitingList = (waitingId) => {
         if(!waitingId) return;
         dispatch(deleteWaitingListForRoom({
@@ -49,9 +48,9 @@ function WaitingList( props ) {
                  <li key = {waiting.id}> 
                     <TutorItem 
                         id = {waiting.id}
-                        tutorId = {waiting.tutor} 
-                        onCheck={typeParent && Number(parentId) === Number(userId) ? addToInvitedList : null}
-                        onDelete={typeParent && Number(parentId) === Number(userId) ? deleteFromWaitingList : null}
+                        tutor={waiting.tutor}
+                        onCheck={typeParent && Number(parent.id) === Number(userId) ? addToInvitedList : null}
+                        onDelete={typeParent && Number(parent.id) === Number(userId) ? deleteFromWaitingList : null}
                     />
                 </li>
             ))}

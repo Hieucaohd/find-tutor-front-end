@@ -100,26 +100,6 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     width: '100%',
   },
-  doubleField: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    [theme.breakpoints.down('sm')]: {
-      width: '80%',
-    },
-    [theme.breakpoints.up('md')]: {
-      width: '500px',
-    },
-    marginBottom: "6px",
-  },
-  singleField: {
-    border: '1px solid #ccc',
-    padding: '4px 8px',
-    borderRadius: '28px',
-    "& input": {
-      border: 'none',
-      width: '80px',
-    }
-  },
   select: {
     padding: '8px 16px',
     borderRadius: '64px',
@@ -184,7 +164,7 @@ function CreateRoom(props) {
     }
     const moreInfo = {
       "time_in_one_day": Number(data.hours),
-      "money_per_day": Number(data.price),
+      "money_per_day": Number(data.price) < 1000 ? Number(data.price)*1000 : Number(data.price),
       "type_teacher": getTypeTeacher(data.job),
       "sex_of_teacher": getGender(data.gender),
     };
@@ -253,12 +233,13 @@ function CreateRoom(props) {
         </div>
         
         <div className={classes.field}>
-            <label>Giá tiền mỗi buổi</label>
+            <label>Giá tiền mỗi buổi (nghìn đồng)</label>
             <input 
               name="price" 
               type="number"
-              {...register("price")}
+              {...register("price", { required: true })}
             />
+            <span className={classes.error}>{errors.price && "Cần nhập giá tiền"}</span>
         </div>
         <div className={classes.field}>
             <label>Số giờ dạy mỗi buổi</label>
@@ -267,6 +248,7 @@ function CreateRoom(props) {
               type="number"
               {...register("hours")}
             />
+            <span className={classes.error}>{errors.hours && "Cần nhập số giờ"}</span>
         </div>
         <div className={classes.field}>
             <label>Giới tính gia sư</label>
@@ -295,6 +277,7 @@ function CreateRoom(props) {
               type="text"
               {...register("detailLocation")}
            />
+            <span className={classes.error}>{errors.detailLocation && "Cần nhập chi tiết địa chỉ"}</span>
         </div>
 
         <div className={classes.field}>

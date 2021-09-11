@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { selectToken } from '../../../auth/authSlice';
+import { selectToken, setParentTrue } from '../../../auth/authSlice';
 import { registerParentInfor } from '../../registerAccount';
 
 const useStyles = makeStyles(theme => ({

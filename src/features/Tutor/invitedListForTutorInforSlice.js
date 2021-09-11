@@ -17,6 +17,7 @@ import { server_name, token_prefix } from "../../namespace";
     async (args) => {
       const { id } = args;
       const list = await GetTutorInvitedList(id);
+      console.log('list', list);
       return list;
     }
   );

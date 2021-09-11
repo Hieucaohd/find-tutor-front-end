@@ -1,4 +1,5 @@
 import { Avatar, makeStyles } from '@material-ui/core';
+import { getUserNameAndAvatar } from 'graphql/ProfileQueries';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { BsFillCaretDownFill } from "react-icons/bs";
@@ -96,23 +97,16 @@ function ToggleMenu( {onLogOut} ) {
     const classes = useStyles();
     const typeTutor = useSelector(selectType_tutor);
     const typeParent = useSelector(selectType_parent);
-    const tutorId = useSelector(selectIdTutor);
-    const parentId = useSelector(selectIdParent);
     const userId = useSelector(selectId_of_user);
     const [profile, setProfile] = useState({});
     const dropDownRef = useRef(null);
     const overlayRef = useRef(null);
     useEffect( () => {
         const getUserInfo = async () => {
-            let userInfo = {};
-            if(typeTutor) {
-                userInfo = await getTutorProfile({id: tutorId});
-            } else if (typeParent) {
-                userInfo = await getParentProfile({id: parentId});
-            }
+            const userInfo = await getUserNameAndAvatar(userId)            
             setProfile({
-                avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ5MNUpULlmtF1LYUWip59zHNtKmkxxhstvg&usqp=CAU",
-                userName: userInfo?.user,
+                avatar: userInfo?.imageprivateusermodel?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_3I4Y2ydmFBosgWcdoqVBBCsYZksWAhHtjg&usqp=CAU",
+                userName: userInfo?.username,
             })
         }
         getUserInfo();

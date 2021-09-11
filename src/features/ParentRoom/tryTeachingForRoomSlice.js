@@ -95,6 +95,11 @@ const tryTeachingForRoomSlice = createSlice({
     upsertForTeaching(state, action) {
       tryTeachingForRoomAdapter.upsertOne(state, action.payload);
     },
+    getTryTeachingListForRoom(state, action) {
+      if (action.payload) {
+        tryTeachingForRoomAdapter.setAll(state, action.payload);
+      }
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -146,6 +151,6 @@ export const {
   (state) => state.parentRoom.tryTeaching
 );
 
-export const { deleteForTeaching, upsertForTeaching } =
+export const { deleteForTeaching, upsertForTeaching, getTryTeachingListForRoom } =
   tryTeachingForRoomSlice.actions;
 
