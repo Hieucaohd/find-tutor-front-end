@@ -16,6 +16,7 @@ InvitedList.propTypes = {
 const useStyles = makeStyles({
     root: {
         padding: "0px 8px",
+        margin: "8px 0",
         "& li": {
             "list-style-type": "none",
         }
@@ -30,7 +31,6 @@ function InvitedList( props ) {
     const deleteFromInvitedList = (invitedId) => {
         dispatch(deleteInvitedListForRoom({ invitedId: invitedId, token: token }));
     };
-    console.log('ba rừn id', parent.id, 'u sờ id', userId);
     const addToTryTeaching = (invitedId) => {
         dispatch(
           addTryTeachingForRoom({

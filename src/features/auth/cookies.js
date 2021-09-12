@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 export const setUserInfoCookies = (info) => {
-    const {token, id, refresh_token, type_parent, type_tutor, id_parent, id_tutor} = info;
+    const {token, id, refresh_token, type_parent, type_tutor} = info;
     cookies.set('userToken', token, { secure: true, sameSite: true, maxAge: 59*60});
     cookies.set('userRefreshToken', refresh_token, { secure: true, sameSite: true, maxAge: 59*60});
     cookies.set('userId', id, { secure: true, sameSite: true, maxAge: 59*60});

@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { getTutorProfile } from '../../../../Profile/profile';
 import { Avatar, makeStyles } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { AiFillCheckCircle } from "react-icons/ai";
-import { TiDelete } from "react-icons/ti";
 import { IoMdPeople } from "react-icons/io";
+import { TiDelete } from "react-icons/ti";
 import { useHistory } from 'react-router-dom';
 
 TutorItem.propTypes = {
@@ -25,14 +24,26 @@ const useStyles = makeStyles({
         height: 30,
         "margin-right" : 8,
     },
-    flexbox: {
+    item: {
         display: "flex",
         "align-items": "center",
         "justify-content": "space-between",
+        padding: '4px',
+        borderRadius: '4px',
+        "&:hover": {
+            backgroundColor: '#ccc',
+            cursor: 'pointer',
+        }
     },
     name: {
         display: 'flex',
         "align-items": "center",
+        fontSize: '12px',
+        "& span": {
+            marginLeft: '4px',
+            fontSize: '12px',
+            fontWeight: 300,
+        }
     },
     check: {
         "background-color": "transparent",
@@ -80,10 +91,13 @@ function TutorItem( {id, tutor, onCheck, onDelete, onWait} ) {
         history.push(`/profile/tutor/${tutor.user.id}`)
     }
     return (
-        <div className={classes.flexbox}>
+        <div className={classes.item}>
             <div className={classes.name} onClick={handleShowTutorInfo}>
-                <Avatar alt="tutor" src = "https://static2.yan.vn/YanNews/2167221/202102/facebook-cap-nhat-avatar-doi-voi-tai-khoan-khong-su-dung-anh-dai-dien-e4abd14d.jpg" className={classes.avatar}/>
-                {tutor.first_name} {tutor.last_name}
+                <Avatar alt="tutor" 
+                    src = {tutor?.user.imageprivateusermodel?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_3I4Y2ydmFBosgWcdoqVBBCsYZksWAhHtjg&usqp=CAU"}
+                    className={classes.avatar}
+                />
+                {tutor.first_name} {tutor.last_name} <span> ({tutor?.user.username})</span>
             </div>
             <div className={classes.buttonGroup}>
                 {onCheck && !onWait && <button className={classes.check} onClick={handleCheck}><AiFillCheckCircle /></button> }

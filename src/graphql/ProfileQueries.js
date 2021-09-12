@@ -68,3 +68,20 @@ export const getUserNameAndAvatar = (id) => {
     }`;
     return fetchGraphQl("user info", "user_by_id", query);
 }
+
+export const getTutorInfoForRoom = (id) => {
+    const query = `
+    {
+        user_by_id (id: ${id}) {
+            username
+            imageprivateusermodel {
+                avatar
+            }
+            tutormodel {
+                first_name
+                last_name
+            }
+        }
+    }`;
+    return fetchGraphQl("tutor info for room", "user_by_id", query);
+}

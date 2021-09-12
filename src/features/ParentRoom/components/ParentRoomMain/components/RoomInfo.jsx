@@ -1,8 +1,9 @@
-import { makeStyles } from '@material-ui/core';
+import { Avatar, makeStyles } from '@material-ui/core';
 import { subject } from 'components/Room/picture';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FcDocument, FcHome, FcPlanner } from "react-icons/fc";
+import { useHistory } from 'react-router-dom';
 
 RoomInfo.propTypes = {
     roomDetail: PropTypes.object,
@@ -14,6 +15,7 @@ const useStyles = makeStyles({
         flexDirection: "column",
         width: "100%",
         height: "100%",
+        position: 'relative',
     },
     item: {
         flex: 1,
@@ -27,7 +29,7 @@ const useStyles = makeStyles({
         alignItems: 'center',
         "& h1": {
             fontSize: '46px',
-            fontWeight: '200',
+            fontWeight: '600',
             margin: 0,
             "& span": {
                 fontSize: '56px',
@@ -98,12 +100,22 @@ const useStyles = makeStyles({
             color: 'white',
             borderRadius: '50%',
         }
+    },
+    parent: {
+        position: 'absolute',
+        top: '4px',
+        right: '8px',
+        opacity: '0.6',
+        "&:hover": {
+            opacity: 1,
+            cursor: 'pointer',
+        }
     }
 })
 
 function RoomInfo( {roomDetail} ) {
     const classes = useStyles();
-    console.log('detail', roomDetail)
+    const history = useHistory();
     const renderDay = (daysStr) => {
         if(!daysStr || daysStr === "") return ;
         let days = [];
@@ -122,9 +134,14 @@ function RoomInfo( {roomDetail} ) {
             </ul>
         )
     }
-
+    const handleShowParentProfile = (id) => {
+        history.push(`/profile/parent/${id}`)
+    }
     return (
         <div className={classes.root}>
+            <div className={classes.parent} onClick={() => handleShowParentProfile(roomDetail.parent.id)}>
+                <Avatar src={roomDetail.parent.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_3I4Y2ydmFBosgWcdoqVBBCsYZksWAhHtjg&usqp=CAU"}/>
+            </div>
             <div className={classes.item}>
                 <div className={classes.main}>
                     <img className={classes.img} 
@@ -133,7 +150,7 @@ function RoomInfo( {roomDetail} ) {
                     />
                     <div className={classes.subject}>
                         <h1>{roomDetail.subject} <span>{roomDetail.lop}</span></h1>
-                        <h5>{roomDetail.pricemodel_set} đ</h5>
+                        <h5>{roomDetail.pricemodel_set} đồng / buổi - {roomDetail.timeoneday} giờ</h5>
                     </div>
                 </div>
             </div>

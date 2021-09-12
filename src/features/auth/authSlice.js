@@ -117,7 +117,7 @@ const authSlice = createSlice({
       setParentCookieTrue();
     },
     setStateFromCookies(state) {
-      const {token, refreshToken, id, typeParent, typeTutor, idParent, idTutor} = getDataFromCookies();
+      const {token, refreshToken, id, typeParent, typeTutor} = getDataFromCookies();
       state.token = token;
       state.refresh_token = refreshToken;
       state.id = id;
@@ -133,7 +133,7 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.status = "idle";
         if(action.payload){
-          const { token, refresh_token, id, type_tutor, type_parent, id_parent, id_tutor } = action.payload;
+          const { token, refresh_token, id, type_tutor, type_parent } = action.payload;
           state.token = token;
           state.refresh_token = refresh_token;
           state.id = id;
@@ -148,7 +148,7 @@ const authSlice = createSlice({
       .addCase(loginWithGoogle.fulfilled, (state, action) => {
         state.status = "idle";
         if(action.payload){
-          const { token, refresh_token, id, type_tutor, type_parent, id_parent, id_tutor } = action.payload;
+          const { token, refresh_token, id, type_tutor, type_parent } = action.payload;
           state.token = token;
           state.refresh_token = refresh_token;
           state.id = id;
@@ -163,7 +163,7 @@ const authSlice = createSlice({
       .addCase(loginWithFacebook.fulfilled, (state, action) => {
         state.status = "idle";
         if(action.payload){
-          const { token, refresh_token, id, type_tutor, type_parent, id_parent, id_tutor } = action.payload;
+          const { token, refresh_token, id, type_tutor, type_parent } = action.payload;
           state.token = token;
           state.refresh_token = refresh_token;
           state.id = id;

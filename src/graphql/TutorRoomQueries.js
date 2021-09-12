@@ -6,13 +6,17 @@ export const GetTutorWaitingList =  async (id) => {
         user_by_id(id: ${id}){
             tutormodel {
                 waitingtutormodel_set {
-                    parent_room{
+                    parent_room {
                         id
                         province_code
                         district_code
                         ward_code
                         subject
                         lop
+                        pricemodel_set {
+                            money_per_day
+                            time_in_one_day
+                        }
                     }
                 }  
             }
@@ -39,6 +43,10 @@ export const GetTutorInvitedList =  async (id) => {
                         ward_code
                         subject
                         lop
+                        pricemodel_set {
+                            money_per_day
+                            time_in_one_day
+                        }
                     }
                 }  
             }
@@ -46,8 +54,7 @@ export const GetTutorInvitedList =  async (id) => {
     }
     `
     const tutorModel = await fetchGraphQl("tutor's invited list", "user_by_id", query);
-    console.log('model tutor', tutorModel)
-    const parentRoom = await tutorModel.tutormodel.listinvitedmodel_set.map((item) => {
+    const parentRoom = await tutorModel?.tutormodel.listinvitedmodel_set.map((item) => {
         return item.parent_room;
     });
     return parentRoom;
@@ -66,6 +73,10 @@ export const GetTutorTryTeachingList = async (id) => {
                         ward_code
                         subject
                         lop
+                        pricemodel_set {
+                            money_per_day
+                            time_in_one_day
+                          }
                     }
                 }  
             }
@@ -91,6 +102,10 @@ export const GetTutorTeachingList = async (id) => {
                         ward_code
                         subject
                         lop
+                        pricemodel_set {
+                            money_per_day
+                            time_in_one_day
+                          }
                     }
                 }  
             }
@@ -102,3 +117,4 @@ export const GetTutorTeachingList = async (id) => {
     });
     return parentRoom;
 };
+

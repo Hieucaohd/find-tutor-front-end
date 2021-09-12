@@ -13,7 +13,9 @@ MoreInfoProfile.propTypes = {
 
 const useStyles = makeStyles(theme => ({
     root: {
-
+        "& span": {
+            fontWeight: 300,
+        }
     },
     field: {
         display: 'flex',
@@ -46,10 +48,10 @@ const useStyles = makeStyles(theme => ({
 
         "& p": {
             [theme.breakpoints.down('xs')]: {
-                flex: 4,
+                flex: 10,
             },
             [theme.breakpoints.up('sm')]: {
-                flex: 4,
+                flex: 8,
             },
             fontWeight: '500',
         }
@@ -73,30 +75,26 @@ function MoreInfoProfile({tutorInfo}) {
     }
 
     return (
-        <div>
+        <div className={classes.root}>
             <div className={classes.field}>
-                <h4> <IoMdSchool />HỌC VẤN</h4>
-                <p>{tutorInfo.university}</p>
+                <h4> <IoMdSchool /></h4>
+                <p><span>Học tại </span>{tutorInfo.university}</p>
             </div>
             <div className={classes.field}>
-                <h4><RiMedalFill />THÀNH TỰU</h4>
+                <h4><RiMedalFill /></h4>
                 <p>{tutorInfo.achievement}</p>
             </div>
             <div className={classes.field}>
-                <h4><AiFillExperiment />KINH NGHIỆM</h4>
+                <h4><AiFillExperiment /></h4>
                 <p>{tutorInfo.experience}</p>
             </div>
             <div className={classes.field}>
-                <h4><IoLocation />KHU VỰC DẠY</h4>
-                <p>{tutorInfo.khu_vuc_day}</p>
+                <h4><IoLocation /></h4>
+                <p> <span>Dạy học tại</span> {tutorInfo.khu_vuc_day}</p>
             </div>
             <div className={classes.field}>
-                <h4><RiNumbersFill />CẤP DẠY</h4>
-                <p>{getTeachLevelString(tutorInfo.cap_day)}</p>
-            </div>
-            <div className={classes.field}>
-                <h4><GiBookCover />MÔN DẠY</h4>
-                <p>Toán, Hóa</p>
+                <h4><GiBookCover /></h4>
+                <p><span>Dạy môn </span>Toán, Hóa</p>
             </div>
         </div>
     );

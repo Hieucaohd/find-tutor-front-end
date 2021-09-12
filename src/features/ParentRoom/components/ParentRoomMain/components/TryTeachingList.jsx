@@ -17,6 +17,7 @@ TryTeachingList.propTypes = {
 const useStyles = makeStyles({
     root: {
         padding: "0px 8px",
+        margin: "8px 0",
         "& li": {
             "list-style-type": "none",
         }

@@ -12,7 +12,6 @@ const useStyles = makeStyles(theme => ({
     wallpaper: {
         flex: 1,
         display: 'flex',
-        padding: '24px 16px',
         backgroundColor: '#E9E8EB',
         border: '0.5px solid rgba(0, 0, 0, 0.1)',
         borderRadius: '12px',
@@ -27,7 +26,13 @@ const useStyles = makeStyles(theme => ({
         },
         "& p": {
             margin: 0,
-        }
+        },
+        [theme.breakpoints.down('xs')]: {
+            padding: '12px 8px',
+        },
+        [theme.breakpoints.up('sm')]: {
+            padding: '24px 16px',
+        },
     },
     
     name: {

@@ -18,6 +18,7 @@ WaitingList.propTypes = {
 const useStyles = makeStyles({
     root: {
         padding: "0px 8px",
+        margin: "8px 0",
         "& li": {
             "list-style-type": "none",
         }
@@ -26,7 +27,6 @@ const useStyles = makeStyles({
 
 function WaitingList( props ) {
     const {waitingList = [], parent, roomId, userId, token = "", typeParent = false} = props;
-    console.log('waitinglist2', waitingList);
     const classes = useStyles();
     const dispatch = useDispatch();
     const deleteFromWaitingList = (waitingId) => {

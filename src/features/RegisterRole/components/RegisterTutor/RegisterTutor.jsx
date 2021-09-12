@@ -121,13 +121,6 @@ function RegisterTutor(props) {
           last_name: name.slice(name.indexOf(' ') + 1)
         }
     }
-    const [images, setImages] = React.useState([]);
-  const maxNumber = 69;
-  const onChange = (imageList, addUpdateIndex) => {
-    // data for submit
-    console.log(imageList, addUpdateIndex);
-    setImages(imageList);
-  };
     const getTeachingLevel = (data) => {
         const arr = [];
         if(data["cap1"]) {

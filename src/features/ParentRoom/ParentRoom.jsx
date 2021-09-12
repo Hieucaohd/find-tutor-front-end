@@ -58,6 +58,7 @@ function ParentRoom(props) {
           id: newRoomDetail.parent.user.id,
           first_name: newRoomDetail.parent.first_name,
           last_name: newRoomDetail.parent.last_name,
+          avatar: newRoomDetail?.parent.user.imageprivateusermodel?.avatar,
         },
         pricemodel_set: newRoomDetail.pricemodel_set[0].money_per_day || 0,
         timeoneday: newRoomDetail.pricemodel_set[0].time_in_one_day || 0,

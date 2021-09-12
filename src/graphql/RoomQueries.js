@@ -73,6 +73,10 @@ export const GetParentRoomDetail = async(id) => {
             parent {
                 user {
                     id
+                    username
+                    imageprivateusermodel {
+                        avatar
+                    }
                 }
                 first_name
                 last_name
@@ -99,6 +103,7 @@ export const GetParentRoomDetail = async(id) => {
                         imageprivateusermodel {
                             avatar
                         }
+                        username
                     }
                     first_name
                     last_name
@@ -109,6 +114,7 @@ export const GetParentRoomDetail = async(id) => {
                 tutor {
                     user {
                         id
+                        username
                         imageprivateusermodel {
                             avatar
                         }
@@ -125,6 +131,7 @@ export const GetParentRoomDetail = async(id) => {
                         imageprivateusermodel {
                             avatar
                         }
+                        username
                     }
                     first_name
                     last_name
@@ -138,6 +145,7 @@ export const GetParentRoomDetail = async(id) => {
                         imageprivateusermodel {
                             avatar
                         }
+                        username
                     }
                     first_name
                     last_name
