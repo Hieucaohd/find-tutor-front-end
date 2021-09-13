@@ -12,6 +12,7 @@ import {
   selectToken, selectType_parent, selectType_tutor
 } from "../auth/authSlice";
 import { addWaitingListForRoom } from "../ParentRoom/waitingListForRoomSlice";
+import Categories from "./components/Categories";
 import FilterBar from "./components/FilterBar/FilterBar";
 import "./styles.scss";
 
@@ -112,6 +113,7 @@ function Home() {
 
   return (
     <div className = "home">
+      <Categories />
       {loading ? <SkeletonPage /> 
       : <Grid container spacing={2}>{
         roomList?.map((room)=>(

@@ -38,11 +38,19 @@ const useStyles = makeStyles({
     name: {
         display: 'flex',
         "align-items": "center",
-        fontSize: '12px',
-        "& span": {
-            marginLeft: '4px',
-            fontSize: '12px',
-            fontWeight: 300,
+        "& div": {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            justifyContent: 'center',
+            "& h5": {
+                margin: 0,
+                fontSize: '12px',
+            },
+            "& span": {
+                fontSize: '10px',
+                fontWeight: 300,
+            },
         }
     },
     check: {
@@ -97,7 +105,7 @@ function TutorItem( {id, tutor, onCheck, onDelete, onWait} ) {
                     src = {tutor?.user.imageprivateusermodel?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_3I4Y2ydmFBosgWcdoqVBBCsYZksWAhHtjg&usqp=CAU"}
                     className={classes.avatar}
                 />
-                {tutor.first_name} {tutor.last_name} <span> ({tutor?.user.username})</span>
+                <div><h5>{tutor.first_name} {tutor.last_name}</h5> <span>{tutor?.user.username}</span></div>
             </div>
             <div className={classes.buttonGroup}>
                 {onCheck && !onWait && <button className={classes.check} onClick={handleCheck}><AiFillCheckCircle /></button> }

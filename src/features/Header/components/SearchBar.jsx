@@ -31,7 +31,7 @@ function SearchBar({onShow}) {
     }
     return (
         <div className={classes.root} onClick={handleShowSearch}>
-            <AiOutlineSearch onClick={handleShowSearch}/>
+            <AiOutlineSearch onClick={handleShowSearch}/> 
             <input className={classes.search} type="text" />
         </div>
     );
