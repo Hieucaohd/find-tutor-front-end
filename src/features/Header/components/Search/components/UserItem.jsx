@@ -13,6 +13,9 @@ const useStyles = makeStyles({
         borderRadius: '8px',
         "& h4": {
             margin: 0,
+            "& span": {
+                fontWeight: 300,
+            }
         },
         "& h5": {
             margin: 0,
@@ -46,9 +49,11 @@ function UserItem({userInfo, onShow, onClose}) {
     }
     return (
         <div className={classes.root} onClick={() => handleShowUser(user.id)}>
-            <Avatar className={classes.avatar} alt="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH-hKqjdMBPMxy9KqzNx-xR_DWYJRkTmCY7w&usqp=CAU"/>
+            <Avatar className={classes.avatar} alt="avatar" 
+                src={user?.imageprivateusermodel?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_3I4Y2ydmFBosgWcdoqVBBCsYZksWAhHtjg&usqp=CAU"}
+            />
             <div> 
-                <h4>{first_name} {last_name}</h4>
+                <h4>{first_name} {last_name} <span>({user.username})</span></h4>
                 <h5>{getProfession(profession)}</h5>
             </div>
         </div>

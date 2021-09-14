@@ -5,8 +5,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { BsFillCaretDownFill } from "react-icons/bs";
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { selectIdParent, selectIdTutor, selectId_of_user, selectType_parent, selectType_tutor } from '../../auth/authSlice';
-import { getParentProfile, getTutorProfile } from '../../Profile/profile';
+import { selectId_of_user, selectType_parent, selectType_tutor } from '../../auth/authSlice';
 
 ToggleMenu.propTypes = {
     onLogOut: PropTypes.func.isRequired,

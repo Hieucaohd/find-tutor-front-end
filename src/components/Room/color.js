@@ -8,6 +8,18 @@ export const gradientColor = {
     "Lịch Sử": "linear-gradient( 135deg, #81FFEF 10%, #F067B4 100%)",
     "Địa Lý": "linear-gradient( 135deg, #FFE985 10%, #FA742B 100%)",
     "Tiếng Việt": "linear-gradient( 135deg, #FFF5C3 10%, #9452A5 100%)",
-    "Sinh Học": "linear-gradient( 135deg, #FAD7A1 10%, #E96D71 100%)",
     "Khác": "linear-gradient( 135deg, #C2FFD8 10%, #465EFB 100%)"
+}
+
+export const chooseColor = {
+    "Toán": "#ef476f",
+    "Ngữ Văn": "#ffd166",
+    "Hóa Học": "#06d6a0" ,
+    "Vật Lý": "#4cc9f0",
+    "Tiếng Anh": "#f15bb5",
+    "Lịch Sử": "#bdb2ff",
+    "Địa Lý": "#89b0ae",
+    "Tiếng Việt": "#90be6d",
+    "Sinh Học": "#f5cac3",
+    "Khác": "#0096c7",
 }

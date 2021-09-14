@@ -60,9 +60,10 @@ function ParentRoom(props) {
           last_name: newRoomDetail.parent.last_name,
           avatar: newRoomDetail?.parent.user.imageprivateusermodel?.avatar,
         },
-        pricemodel_set: newRoomDetail.pricemodel_set[0].money_per_day || 0,
-        timeoneday: newRoomDetail.pricemodel_set[0].time_in_one_day || 0,
-        typeteacher: newRoomDetail.pricemodel_set[0].type_teacher || 0,
+        pricemodel_set: newRoomDetail.pricemodel_set[0].money_per_day,
+        timeoneday: newRoomDetail.pricemodel_set[0].time_in_one_day,
+        sexteacher: newRoomDetail.pricemodel_set[0].sex_of_teacher,
+        typeteacher: newRoomDetail.pricemodel_set[0].type_teacher,
         address: `${wardName}, ${catchDistrictName(districtName)}, ${catchProvinceName(provinceName)}`
       });
       setLoading(false);

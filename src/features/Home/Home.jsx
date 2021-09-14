@@ -7,7 +7,7 @@ import { GetAllRoom, GetFilterRoom } from "graphql/RoomQueries";
 import React, { useEffect, useRef, useState } from "react";
 import { FcAddDatabase, FcClearFilters, FcFilledFilter } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import {
   selectToken, selectType_parent, selectType_tutor
 } from "../auth/authSlice";
@@ -39,10 +39,11 @@ function Home() {
   if(type_tutor === false && type_parent === false) {
     history.push("/role/chooserole");
   }
-
-  if(!isSignedIn()){
-    history.push("/signin");
-  }
+  const match = useLocation();
+  console.log("match", match)
+  // if(!isSignedIn()){
+  //   history.push("/signin");
+  // }
 
 
   useEffect( () => {

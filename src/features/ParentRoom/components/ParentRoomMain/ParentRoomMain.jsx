@@ -1,7 +1,7 @@
 import { Grid, makeStyles } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router-dom';
 import { selectId_of_user, selectToken, selectType_parent, selectType_tutor } from '../../../auth/authSlice';
@@ -9,6 +9,7 @@ import { selectInvitedListForRoom } from '../../invitedListForRoomSlice';
 import { selectTeachingForRoom } from '../../teachingForRoomSlice';
 import { selectTryTeachingForRoom } from '../../tryTeachingForRoomSlice';
 import { selectWaitingListForRoom } from '../../waitingListForRoomSlice';
+import Comment from './components/Comment';
 import InvitedList from './components/InvitedList';
 import RoomInfo from './components/RoomInfo';
 import TeachingList from './components/TeachingList';
@@ -49,7 +50,8 @@ const useStyles = makeStyles({
     left: 8,
     right: 8, 
     fontWeight: 500,
-    backgroundColor: 'rgb(195, 200, 232)',
+    backgroundColor: '#725eef',
+    color: 'white',
     padding: "4px 0px",
     "z-index": 1,
     borderRadius: '0 0 4px 4px',
@@ -62,6 +64,7 @@ function ParentRoomMain( {roomDetail = {}, isLoading} ) {
     const userId = useSelector(selectId_of_user);
     const typeParent = useSelector(selectType_parent);
     const typeTutor = useSelector(selectType_tutor);
+    const [showComment, setShowComment] = useState(false);
     const {
       params: {roomId}
     } = useRouteMatch();
@@ -70,7 +73,12 @@ function ParentRoomMain( {roomDetail = {}, isLoading} ) {
     const invitedList = useSelector(selectInvitedListForRoom);
     const tryTeachingList = useSelector(selectTryTeachingForRoom);
     const teachingList = useSelector(selectTeachingForRoom);
-    console.log('try teaching main', tryTeachingList);
+    const handleShowComment = () => {
+      setShowComment(true);
+    }
+    const handleCloseComment = () => {
+      setShowComment(false);
+    }
     return (
         <Grid container spacing={3}>
         <Grid item xs={3} container direction="column" spacing={2}>
@@ -108,8 +116,9 @@ function ParentRoomMain( {roomDetail = {}, isLoading} ) {
         </Grid>
         <Grid item xs={6}>
           <div className={classes['center-block']}>
-              {isLoading ? <Skeleton variant="rect" style={{width: "100%", height: "100%"}} />
-              : <RoomInfo roomDetail={roomDetail}/>}
+              {isLoading && <Skeleton variant="rect" style={{width: "100%", height: "100%"}} />}
+              {!showComment && !isLoading &&  <RoomInfo roomDetail={roomDetail} onClose={handleShowComment}/>}
+              {showComment && !isLoading && <Comment onClose={handleCloseComment} />}
           </div>
         </Grid>
         <Grid item xs={3} container direction="column" spacing={2}>

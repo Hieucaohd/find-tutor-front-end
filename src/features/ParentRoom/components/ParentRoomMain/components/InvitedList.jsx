@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 })
 
 function InvitedList( props ) {
-    const {invitedList = [],parent,roomId, userId, token = "", typeTutor = false} = props;
+    const {invitedList = [], userId, token = "", typeTutor = false} = props;
     console.log('danh sach moi', invitedList);
     const classes = useStyles();
     const dispatch = useDispatch();

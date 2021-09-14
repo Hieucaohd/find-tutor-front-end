@@ -8,6 +8,10 @@ export const SearchTutor = async (search) => {
                 id
                 user {
                     id
+                    username
+                    imageprivateusermodel{
+                        avatar
+                    }
                 }
                 first_name
                 last_name
@@ -29,6 +33,10 @@ export const SearchParent = async (search) => {
                 id
                 user {
                     id
+                    username
+                    imageprivateusermodel{
+                        avatar
+                    }
                 }
                 first_name
                 last_name

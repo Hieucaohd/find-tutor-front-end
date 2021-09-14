@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, makeStyles } from '@material-ui/core';
 import { subject } from "components/Room/picture";
-import { gradientColor } from "components/Room/color";
+import { chooseColor, gradientColor } from "components/Room/color";
 Categories.propTypes = {
     
 };
@@ -11,17 +11,19 @@ const useStyles = makeStyles(theme => ({
     root: {
         width: "100%",
         overflow: "auto",
-        height: "36px",
+        height: "40px",
+        marginTop: '8px',
+        marginBottom: '20px',
     },
     list: {
         display: "flex",
-        margin: "0px 12px",
         justifyContent: "space-between",
         [theme.breakpoints.down('sm')]: {
-            width: "1090px",
+            width: "1100px",
           },
-          [theme.breakpoints.up('md')]: {
-          },
+        [theme.breakpoints.up('md')]: {
+            margin: "0px 12px",
+        },
 
         "& img": {
             width: '20px',
@@ -37,7 +39,8 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         padding: '4px 12px',
         margin: '0px 8px',
-        borderRadius: '12px',
+        borderRadius: '30px',
+        border: '0.5px solid rgba(0,0,0,0.1)',
         opacity: '0.7',
         "&:hover": {
             opacity: "1",
@@ -56,40 +59,40 @@ function Categories(props) {
                     <img src="https://i.ibb.co/7YyVn6m/all.png"/>
                     <h5>Tất cả</h5>
                 </div>
-                <div className={classes.item} style={{"background-image": gradientColor["Toán"]}}> 
-                    <img src={subject["Toán"]}/>
+                <div className={classes.item} style={{"background-color": chooseColor["Toán"]}}> 
+                    <img src={subject["Toán"]} alt="toán"/>
                     <h5>Toán</h5>
                 </div>
-                <div className={classes.item} style={{"background-image": gradientColor["Ngữ Văn"]}}> 
-                    <img src={subject["Ngữ Văn"]}/>
+                <div className={classes.item} style={{"background-color": chooseColor["Ngữ Văn"]}}> 
+                    <img src={subject["Ngữ Văn"]} alt="văn"/>
                     <h5>Ngữ Văn</h5>
                 </div>
-                <div className={classes.item} style={{"background-image": gradientColor["Tiếng Anh"]}}> 
-                    <img src={subject["Tiếng Anh"]}/>
+                <div className={classes.item} style={{"background-color": chooseColor["Tiếng Anh"]}}> 
+                    <img src={subject["Tiếng Anh"]} alt="anh"/>
                     <h5>Tiếng Anh</h5>
                 </div>
-                <div className={classes.item} style={{"background-image": gradientColor["Vật Lý"]}}> 
-                    <img src={subject["Vật Lý"]}/>
+                <div className={classes.item} style={{"background-color": chooseColor["Vật Lý"]}}> 
+                    <img src={subject["Vật Lý"]} alt="vat ly"/>
                     <h5>Vật Lý</h5>
                 </div>
-                <div className={classes.item} style={{"background-image": gradientColor["Hóa Học"]}}> 
+                <div className={classes.item} style={{"background-color": chooseColor["Hóa Học"]}}> 
                     <img src={subject["Hóa Học"]}/>
                     <h5>Hóa Học</h5>
                 </div>
-                <div className={classes.item} style={{"background-image": gradientColor["Sinh Học"]}}> 
-                    <img src={subject["Sinh Học"]}/>
+                <div className={classes.item} style={{"background-color": chooseColor["Sinh Học"]}}> 
+                    <img src={subject["Sinh Học"]} alt="sinh"/>
                     <h5>Sinh Học</h5>
                 </div>
-                <div className={classes.item} style={{"background-image": gradientColor["Lịch Sử"]}}> 
-                    <img src={subject["Lịch Sử"]}/>
+                <div className={classes.item} style={{"background-color": chooseColor["Lịch Sử"]}}> 
+                    <img src={subject["Lịch Sử"]} alt="su"/>
                     <h5>Lịch Sử</h5>
                 </div>
-                <div className={classes.item} style={{"background-image": gradientColor["Địa Lý"]}}> 
-                    <img src={subject["Địa Lý"]}/>
+                <div className={classes.item} style={{"background-color": chooseColor["Địa Lý"]}}> 
+                    <img src={subject["Địa Lý"]} alt="dia ly"/>
                     <h5>Địa Lý</h5>
                 </div>
-                <div className={classes.item} style={{"background-image": gradientColor["Tiếng Việt"]}}> 
-                    <img src={subject["Tiếng Việt"]}/>
+                <div className={classes.item} style={{"background-color": chooseColor["Tiếng Việt"]}}> 
+                    <img src={subject["Tiếng Việt"]} alt="tieng viet"/>
                     <h5>Tiếng Việt</h5>
                 </div>
             </div>
