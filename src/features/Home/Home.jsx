@@ -1,17 +1,19 @@
-import { Button, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
+import Pagination from '@material-ui/lab/Pagination';
 import Room from 'components/Room/Room';
 import SkeletonPage from "components/Skeleton/SkeletonPage";
 import { isSignedIn } from "features/auth/cookies";
+import { GetAllRoom, GetFilterRoom } from "graphql/RoomQueries";
 import React, { useEffect, useRef, useState } from "react";
 import { FcAddDatabase, FcClearFilters, FcFilledFilter } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import {
   selectToken, selectType_parent, selectType_tutor
 } from "../auth/authSlice";
 import { addWaitingListForRoom } from "../ParentRoom/waitingListForRoomSlice";
+import Categories from "./components/Categories";
 import FilterBar from "./components/FilterBar/FilterBar";
-import { fetchFilterRoomList, fetchRoomList } from "./getRoom";
 import "./styles.scss";
 
 function Home() {
@@ -23,36 +25,44 @@ function Home() {
   const filterBar = useRef(null);
   const homeOverlay = useRef(null);
   const cancelFilter = useRef(null);
-  const [filter, setFilter] = useState({}); //bộ lọc
+  const [filter, setFilter] = useState({
+    filterRoom: {},
+    pages: 1,
+  }); //bộ lọc
   const [roomList, setRoomList] = useState([]);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const token = useSelector(selectToken);
-
+  const [pagination, setPagination] = useState(1);
+  const [maxPagination, setMaxPagination] = useState(1);
   //chưa đăng kí là gia sư hay phụ huynh trả đến trang đăng kí
   if(type_tutor === false && type_parent === false) {
     history.push("/role/chooserole");
   }
+  const match = useLocation();
+  console.log("match", match)
+  // if(!isSignedIn()){
+  //   history.push("/signin");
+  // }
 
-  if(!isSignedIn()){
-    history.push("/signin");
-  }
 
   useEffect( () => {
     const getRoomList = async () => {
       setLoading(true);
-      const list = await fetchRoomList();
-      setRoomList(list);
+      const list = await GetAllRoom(filter.pages); 
+      setMaxPagination(list?.num_pages);
+      setRoomList(list?.result);
       setLoading(false);
     }
-    const getFilterRoomList = async (params) => {
+    const getFilterRoomList = async (params) => { 
       setLoading(true);
-      const filterRoomList = await fetchFilterRoomList(params);
-      setRoomList(filterRoomList);
+      const filterRoomList = await GetFilterRoom(params);
+      setMaxPagination(filterRoomList?.num_pages);
+      setRoomList(filterRoomList?.result);
       setLoading(false);
     }
-    if(Object.keys(filter).length === 0) {
-      getRoomList();
+    if(Object.keys(filter?.filterRoom).length === 0) {
+      getRoomList(filter?.pages);
     }
     else {
       getFilterRoomList(filter);
@@ -60,9 +70,12 @@ function Home() {
     
   }, [filter]);
 
-  const refreshListRoom = () => {
-    setIsRefreshListRoom(!isRefreshListRoom);
-  };
+  useEffect(()=> {
+    setFilter({
+      ...filter,
+      pages: pagination,
+    })
+  }, [pagination])
 
   const handleShowFilterBar = () => {
     filterBar.current.style.display = "flex";
@@ -75,13 +88,12 @@ function Home() {
   }
 
   const handleCancelFilter = () => {
-    setFilter({});
+    setFilter({filterRoom: {}, pages: 1});
     cancelFilter.current.style.display = "none";
   }
 
   const onSubmitSearch = (newFilter) => {
-    console.log('newfilter', newFilter)
-    setFilter(newFilter);
+    setFilter({filterRoom: newFilter, pages: 1});
     //close filter bar
     handleCloseFilterBar();
     cancelFilter.current.style.display = "block"
@@ -96,11 +108,16 @@ function Home() {
     history.push("/createroom");
   }
 
+  const handleChangePage = (event, value) => {
+    setPagination(Number(value));
+  }
+
   return (
     <div className = "home">
+      <Categories />
       {loading ? <SkeletonPage /> 
       : <Grid container spacing={2}>{
-        roomList.map((room)=>(
+        roomList?.map((room)=>(
           <Room room={room} color="white" typeTutor = {type_tutor} onCheck={type_tutor && handleAddRoom} onHome={true}/>
         ))}
       </Grid>}
@@ -117,9 +134,7 @@ function Home() {
         <button className="home__toggle__cancel" onClick={handleCancelFilter} ref={cancelFilter} style={{display: "none"}}> <FcClearFilters /></button>
       </div>
       
-      <div>
-        <Button onClick={refreshListRoom} color="primary">More Room</Button>
-      </div>
+        {maxPagination > 1 && <Pagination count={maxPagination} color="primary" className="home__pagination" onChange={handleChangePage}/>}
       <div className="home__overlay" ref={homeOverlay} onClick={handleCloseFilterBar}> </div>
     </div>
   );

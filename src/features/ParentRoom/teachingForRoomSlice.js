@@ -80,6 +80,11 @@ const teachingForRoomSlice = createSlice({
     addTeachingForRoom(state, action) {
       teachingForRoomAdapter.addOne(state, action.payload);
     },
+    getTeachingListForRoom(state, action) {
+      if (action.payload) {
+        teachingForRoomAdapter.setAll(state, action.payload);
+      }
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -97,7 +102,7 @@ const teachingForRoomSlice = createSlice({
 
 export default teachingForRoomSlice.reducer;
 
-export const { addTeachingForRoom } = teachingForRoomSlice.actions;
+export const { addTeachingForRoom, getTeachingListForRoom } = teachingForRoomSlice.actions;
 
 export const {
   selectAll: selectTeachingForRoom,

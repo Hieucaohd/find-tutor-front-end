@@ -1,14 +1,16 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { isSignedIn } from 'features/auth/cookies';
-import React from "react";
+import Search from 'features/Header/components/Search/Search';
+import React, { useRef } from "react";
 import { IoHomeOutline, IoPeopleOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import {
   logout, selectId_of_user, selectRefreshToken, selectToken, selectType_parent, selectType_tutor
 } from "../auth/authSlice";
 import SearchBar from './components/SearchBar';
 import ToggleMenu from "./components/ToggleMenu";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     "position": "fixed",
@@ -21,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     "display": "flex",
     "align-items": "center",
     "justify-content": "space-between",
-    "z-index": "999",
+    "z-index": "700",
     [theme.breakpoints.down('sm')]: {
       "padding": "0px 24px",
     },
@@ -131,6 +133,22 @@ const useStyles = makeStyles((theme) => ({
         }
       },
     },
+  },
+  searchForm: {
+    position: 'fixed',
+  },
+  signin: {
+    backgroundColor: '#5037EC',
+    color: 'white',
+    border: 'none',
+    padding: '8px 12px',
+    borderRadius: '52px',
+    opacity: 0.8,
+    marginLeft: "16px",
+    "&:hover": {
+      opacity: 1,
+      cursor: 'pointer',
+    }
   }
 }));
 
@@ -143,7 +161,9 @@ function MainNavigation() {
   const userId = useSelector(selectId_of_user);
   const history = useHistory();
   const classes = useStyles();
-  
+  const searchRef = useRef(null);
+  const location = useLocation();
+
   const handleLogOut = async() => {
     dispatch(logout({
       token: token,
@@ -151,10 +171,21 @@ function MainNavigation() {
     }));  
     history.push("/signin");
   }
-
+  const onShowSearchForm = () => {
+    if(searchRef.current)
+      searchRef.current.style.display = 'flex';
+  }
+  const onCloseSearchForm = () => {
+    if(searchRef.current)
+      searchRef.current.style.display = 'none';
+  }
+  const handleShowLogin = () => {
+    history.push("/signin");
+  }
   return (
     <div>
-      {isSignedIn() && <div className={classes.root}>
+      {location.pathname !== "/signin" && location.pathname !== "/signup" &&
+      <div className={classes.root}>
         <div className={classes.item}>
           <Link to="/">
             <h3 className={classes.logo}>
@@ -180,11 +211,17 @@ function MainNavigation() {
           </div>
         </div>
         <div className={classes.item}>
-          <SearchBar />
-          <ToggleMenu onLogOut={handleLogOut}/>
+          <SearchBar onShow={onShowSearchForm}/>
+          {isSignedIn() && <ToggleMenu onLogOut={handleLogOut} />}
+          {!isSignedIn() && <button className={classes.signin} onClick={() => handleShowLogin()}>
+            Đăng nhập
+          </button>}
         </div>
-      </div>
-    }
+        
+        <div ref={searchRef} style={{display: 'none'}} className={classes.searchForm}>
+          <Search onClose={onCloseSearchForm}/>
+        </div>
+      </div>}
     </div>
   );
 }

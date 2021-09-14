@@ -6,6 +6,7 @@ import {
 import { upsertForTeachingTutorInfor, deleteForTeachingTutorInfor } from "./tryTeachingForTutorInforSlice";
 
 import { server_name, token_prefix } from "../../namespace";
+import { GetTutorTeachingList } from "graphql/TutorRoomQueries";
 
 const teachingForTutorInforAdapter = createEntityAdapter();
 
@@ -16,17 +17,9 @@ const initialState = teachingForTutorInforAdapter.getInitialState({
 export const fetchTeachingForTutorInfor = createAsyncThunk(
   "teachingForTutorInfor/fetchTeachingForTutorInfor",
   async (args) => {
-    const { roomId, token } = args;
-    return await fetch(
-      `${server_name}/findTutor/teachingList/?pk_room=${roomId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${token_prefix} ${token}`,
-        },
-      }
-    ).then((response) => response.json());
+    const { id } = args;
+    const list = await GetTutorTeachingList(id);
+    return list;
   }
 );
 

@@ -10,6 +10,7 @@ TeachingList.propTypes = {
 const useStyles = makeStyles({
     root: {
         padding: "0px 8px",
+        margin: "8px 0",
         "& li": {
             "list-style-type": "none",
         }
@@ -24,7 +25,7 @@ function TeachingList(props) {
             {teachingList.map( (teaching) => (
                  <li key = {teaching.id}>
                     <TutorItem
-                        tutorId = {teaching.tutor} 
+                        tutor = {teaching.tutor} 
                     />
                 </li>
             ))}

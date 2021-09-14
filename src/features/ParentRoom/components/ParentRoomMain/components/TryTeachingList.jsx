@@ -17,6 +17,7 @@ TryTeachingList.propTypes = {
 const useStyles = makeStyles({
     root: {
         padding: "0px 8px",
+        margin: "8px 0",
         "& li": {
             "list-style-type": "none",
         }
@@ -24,10 +25,10 @@ const useStyles = makeStyles({
 })
 
 function TryTeachingList(props) {
-    const {tryTeachingList = [], userId, token = "", typeTutor = false, typeParent = false} = props;
+    const {tryTeachingList = [],parent , userId, token = "", typeTutor = false, typeParent = false} = props;
     const classes = useStyles();
     const dispatch = useDispatch();
-
+    console.log('try teaching list', tryTeachingList)
     const addToTeaching = (try_teachingId) => {
         addToTeachingForRoom({
           try_teachingId: try_teachingId,
@@ -48,13 +49,13 @@ function TryTeachingList(props) {
                  <li key = {tryTeaching.id}>
                     <TutorItem
                         id = {tryTeaching.id}
-                        tutorId = {tryTeaching.tutor} 
+                        tutor = {tryTeaching.tutor} 
                         onCheck={Number(userId) === Number(tryTeaching.parent_room) || Number(userId) === Number(tryTeaching.tutor)
                              ? addToTeaching : null}
                         onDelete={Number(userId) === Number(tryTeaching.parent_room) || Number(userId) === Number(tryTeaching.tutor)
                              ? deleteFromTryTeaching : null}
                         onWait = { (typeParent && tryTeaching.parent_agree) || (typeTutor && tryTeaching.tutor_agree)}
-                        />
+                    />
                 </li>
             ))}
         </ul>

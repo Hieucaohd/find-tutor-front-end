@@ -3,10 +3,6 @@ import React, { useState } from 'react';
 import Login from './components/Login';
 import Register from './components/Register';
 
-Auth.propTypes = {
-    
-};
-
 const useStyles= makeStyles(theme=>({
     root: {
         position: 'fixed',
@@ -22,6 +18,7 @@ const useStyles= makeStyles(theme=>({
 }));
 
 function Auth(props) {
+    
     const classes = useStyles();
     const [showLoginForm, setShowLoginForm] = useState(true);
     const handleShowRegisterForm = () => {

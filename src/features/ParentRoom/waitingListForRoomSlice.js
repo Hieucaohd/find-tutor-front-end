@@ -101,7 +101,11 @@ const waitingListForRoomSlice = createSlice({
     deleteForInivted(state, action) {
       waitingListForRoomAdapter.removeOne(state, action.payload);
     },
-    
+    getWaitingListForRoom(state, action) {
+      if(action.payload) {
+          waitingListForRoomAdapter.setAll(state, action.payload);
+      }
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -154,7 +158,7 @@ export const {
   (state) => state.parentRoom.waitingList
 );
 
-export const { deleteForInivted } = waitingListForRoomSlice.actions;
+  export const { deleteForInivted, getWaitingListForRoom } = waitingListForRoomSlice.actions;
 
 // export const selectWaitingListForRoomStatus = (state) =>
 //   state.parentRoom.waitingList.status;

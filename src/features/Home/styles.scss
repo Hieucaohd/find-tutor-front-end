@@ -11,9 +11,9 @@
 
 .home {
     padding: 24px 42px;
-    margin-top: 40px;
+    margin-top: 56px;
     &__overlay {
-        z-index: 998;
+        z-index: 698;
         position: fixed;
         top: 0px;
         left: 0;
@@ -37,7 +37,7 @@
         bottom: 0px;
         width: 220px;
         background-color: white;
-        z-index: 999;
+        z-index: 699;
         animation: animateleft 0.4s;
         padding: 25px;
         display: none;
@@ -61,4 +61,10 @@
             }
         }
     } 
+
+    &__pagination {
+        ul {
+            justify-content: center;
+        }
+    }
 }

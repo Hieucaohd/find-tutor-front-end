@@ -93,6 +93,11 @@ const invitedListForRoomSlice = createSlice({
     deleteForTryTeaching(state, action) {
       invitedListForRoomAdapter.removeOne(state, action.payload);
     },
+    getInvitedListForRoom(state, action) {
+      if (action.payload) {
+        invitedListForRoomAdapter.setAll(state, action.payload);
+      }
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -143,4 +148,4 @@ export const {
   (state) => state.parentRoom.invitedList
 );
 
-export const { deleteForTryTeaching } = invitedListForRoomSlice.actions;
+export const { deleteForTryTeaching, getInvitedListForRoom } = invitedListForRoomSlice.actions;

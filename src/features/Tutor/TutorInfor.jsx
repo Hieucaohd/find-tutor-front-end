@@ -3,7 +3,7 @@ import SkeletonPage from "components/Skeleton/SkeletonPage";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectToken } from "../auth/authSlice";
+import { selectId_of_user, selectToken } from "../auth/authSlice";
 import InvitedListForTutor from "./components/InvitedListForTutor";
 import TeachingListForTutor from "./components/TeachingListForTutor";
 import TryTeachingListForTutor from "./components/TryTeachingListForTutor";
@@ -48,12 +48,13 @@ function TutorInfor() {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const [loadingRooms, setLoadingRooms] = useState(true);
+  const userId = useSelector(selectId_of_user)
   useEffect(() => {
     const fetchRoomList = async () => {
-      dispatch(fetchWaitingListForTutorInfor({ token }));
-      dispatch(fetchInvitedListForTutorInfor({ token }));
-      dispatch(fetchTryTeachingForTutorInfor({ token }));
-      await dispatch(fetchTeachingForTutorInfor({ token }));
+      dispatch(fetchWaitingListForTutorInfor({ id: userId }));
+      dispatch(fetchInvitedListForTutorInfor({ id: userId }));
+      dispatch(fetchTryTeachingForTutorInfor({ id: userId }));
+      await dispatch(fetchTeachingForTutorInfor({ id: userId }));
       setLoadingRooms(false);
     }
     if (token) {

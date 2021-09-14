@@ -1,10 +1,10 @@
 import {
-    createEntityAdapter,
-    createSlice,
-    createAsyncThunk,
-  } from "@reduxjs/toolkit";
+  createAsyncThunk, createEntityAdapter,
+  createSlice
+} from "@reduxjs/toolkit";
+import { GetTutorInvitedList } from "graphql/TutorRoomQueries";
+import { server_name, token_prefix } from "../../namespace";
   
-  import { server_name, token_prefix } from "../../namespace";
   
   const invitedListForTutorInforAdapter = createEntityAdapter();
   
@@ -15,14 +15,10 @@ import {
   export const fetchInvitedListForTutorInfor = createAsyncThunk(
     "invitedListForTutorInfor/fetchInvitedListForTutorInfor",
     async (args) => {
-      const { token } = args;
-      return await fetch(`${server_name}/findTutor/listInvitedList/`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${token_prefix} ${token}`,
-        },
-      }).then((response) => response.json());
+      const { id } = args;
+      const list = await GetTutorInvitedList(id);
+      console.log('list', list);
+      return list;
     }
   );
   

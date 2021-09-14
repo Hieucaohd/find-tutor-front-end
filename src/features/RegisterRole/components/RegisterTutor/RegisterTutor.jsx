@@ -1,11 +1,12 @@
 import { CircularProgress, makeStyles } from '@material-ui/core';
 import Location from "components/location/Location";
+import FormData from 'form-data';
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { selectToken } from '../../../auth/authSlice';
-import { registerTutorInfor } from '../../registerAccount';
+import { registerImageTutor, registerTutorInfor } from '../../registerAccount';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -120,7 +121,6 @@ function RegisterTutor(props) {
           last_name: name.slice(name.indexOf(' ') + 1)
         }
     }
-
     const getTeachingLevel = (data) => {
         const arr = [];
         if(data["cap1"]) {
@@ -143,6 +143,7 @@ function RegisterTutor(props) {
     }
 
     const onSubmit = async(data) => {
+        console.log('data', data)
         loadingRef.current.style.display = "flex";
         const tutorInfor = {
             "profession": data.profession || null,
@@ -164,12 +165,18 @@ function RegisterTutor(props) {
             "detail_location": data.detailLocation || null,
         }
 
-        const tutorID = await registerTutorInfor({
+        await registerTutorInfor({
             token: token,
             tutorInfor: tutorInfor,
             dispatch: dispatch,
         });
-        if(tutorID){
+        const file = new FormData()
+        file.append('avatar', data.avatar[0]);
+        file.append('identity_card', data.cccd[0]);
+        file.append('student_card', data.thesv[0]);
+        
+        const registerImage = await registerImageTutor({token: token, file: file});
+        if(registerImage){
             alert('Bạn đã đăng kí làm gia sư thành công');
             history.push("/");
         }else {
@@ -233,7 +240,11 @@ function RegisterTutor(props) {
                 </div>
                 <div className={classes.formField}>
                     <label>Ảnh đại diện</label>
-                    <input type="file" name="avatar" />
+                    <input type="file" name="avatar" {...register("avatar")}/>
+                </div>
+                <div className={classes.formField}>
+                    <label>Ảnh CCCD</label>
+                    <input type="file" name="avatar" {...register("cccd")}/>
                 </div>
                 <div className={classes.formField}>
                     <label>Nghề nghiệp hiện tại</label>
@@ -293,7 +304,7 @@ function RegisterTutor(props) {
                     />
                 </div>
                 <div className={classes.formField}>
-                    <label>Trường Đại Học (không bắt buộc)</label>
+                    <label>Trường Đại Học/Cao Đẳng </label>
                     <input  
                         type="text" 
                         name="university"
@@ -301,7 +312,11 @@ function RegisterTutor(props) {
                     />
                 </div>
                 <div className={classes.formField}>
-                    <label>Kinh nghiệm (không bắt buộc)</label>
+                    <label>Ảnh thẻ sinh viên</label>
+                    <input type="file" name="avatar" {...register("thesv")}/>
+                </div>
+                <div className={classes.formField}>
+                    <label>Kinh nghiệm </label>
                     <input 
                         name="experience" 
                         type="text"
@@ -309,7 +324,7 @@ function RegisterTutor(props) {
                     />
                 </div>
                 <div className={classes.formField}>
-                    <label>Thành tích nổi bật (không bắt buộc)</label>
+                    <label>Thành tích nổi bật </label>
                     <input 
                         name="achievement" 
                         type="text"

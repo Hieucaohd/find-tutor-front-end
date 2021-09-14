@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { getTutorProfile } from '../../../../Profile/profile';
 import { Avatar, makeStyles } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { AiFillCheckCircle } from "react-icons/ai";
-import { TiDelete } from "react-icons/ti";
 import { IoMdPeople } from "react-icons/io";
+import { TiDelete } from "react-icons/ti";
 import { useHistory } from 'react-router-dom';
 
 TutorItem.propTypes = {
@@ -25,14 +24,34 @@ const useStyles = makeStyles({
         height: 30,
         "margin-right" : 8,
     },
-    flexbox: {
+    item: {
         display: "flex",
         "align-items": "center",
         "justify-content": "space-between",
+        padding: '4px',
+        borderRadius: '4px',
+        "&:hover": {
+            backgroundColor: '#ccc',
+            cursor: 'pointer',
+        }
     },
     name: {
         display: 'flex',
         "align-items": "center",
+        "& div": {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            justifyContent: 'center',
+            "& h5": {
+                margin: 0,
+                fontSize: '12px',
+            },
+            "& span": {
+                fontSize: '10px',
+                fontWeight: 300,
+            },
+        }
     },
     check: {
         "background-color": "transparent",
@@ -65,22 +84,9 @@ const useStyles = makeStyles({
     }
 });
 
-function TutorItem( {id, tutorId, onCheck, onDelete, onWait} ) {
+function TutorItem( {id, tutor, onCheck, onDelete, onWait} ) {
     const classes = useStyles();
-    const [tutorInfo, setTutorInfo] = useState({})
     const history = useHistory();
-    useEffect( () => {
-        const getTutorInfo = async () => {
-            const info = await getTutorProfile({id: tutorId});
-            const newInfo = {
-                id: tutorId,
-                name: `${info.first_name} ${info.last_name}`,
-                avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScPuSSp3dmio9nEwA8FEAppD_ZzC7j7pCaDKYjiG1thpF4AyTQ-CvOonekXg3JdRl-_Kk&usqp=CAU"
-            }
-            setTutorInfo(newInfo);
-        }
-        getTutorInfo();
-    }, [])
 
     const handleCheck = () => {
         onCheck(id);
@@ -90,13 +96,16 @@ function TutorItem( {id, tutorId, onCheck, onDelete, onWait} ) {
         onDelete(id);
     }
     const handleShowTutorInfo = () => {
-        history.push(`/tutorprofile/${tutorId}`)
+        history.push(`/profile/tutor/${tutor.user.id}`)
     }
     return (
-        <div className={classes.flexbox}>
+        <div className={classes.item}>
             <div className={classes.name} onClick={handleShowTutorInfo}>
-                <Avatar alt="tutor" src = {tutorInfo.avatar} className={classes.avatar}/>
-                {tutorInfo.name}
+                <Avatar alt="tutor" 
+                    src = {tutor?.user.imageprivateusermodel?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_3I4Y2ydmFBosgWcdoqVBBCsYZksWAhHtjg&usqp=CAU"}
+                    className={classes.avatar}
+                />
+                <div><h5>{tutor.first_name} {tutor.last_name}</h5> <span>{tutor?.user.username}</span></div>
             </div>
             <div className={classes.buttonGroup}>
                 {onCheck && !onWait && <button className={classes.check} onClick={handleCheck}><AiFillCheckCircle /></button> }

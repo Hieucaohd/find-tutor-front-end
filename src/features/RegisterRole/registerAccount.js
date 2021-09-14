@@ -1,7 +1,6 @@
-import { setId, setParentTrue, setTutorTrue } from "features/auth/authSlice";
-import { setParentIdCookie, setTutorIdCookie } from "features/auth/cookies";
+import axios from "axios";
+import { setParentTrue, setTutorTrue } from "features/auth/authSlice";
 import { server_name, token_prefix } from "../../namespace";
-
 
 
 export const registerTutorInfor = async ({ token, tutorInfor, dispatch }) => {
@@ -15,9 +14,7 @@ export const registerTutorInfor = async ({ token, tutorInfor, dispatch }) => {
       body: JSON.stringify(tutorInfor),
     })
     const responseJSON = await response.json();
-    setTutorIdCookie(responseJSON.id);
     dispatch(setTutorTrue());
-    dispatch(setId({tutorId: responseJSON.id}));
     return true;
   } catch(error) {
     console.log('Failed to resgister tutor', error);
@@ -36,8 +33,6 @@ export const registerParentInfor = async ({ token, parentInfor, dispatch }) => {
       body: JSON.stringify(parentInfor),
     })
     const responseJSON = await response.json();
-    setParentIdCookie(responseJSON.id);
-    dispatch(setId({parentId: responseJSON.id}));
     dispatch(setParentTrue());
     return true;
   } catch(error) {
@@ -45,3 +40,22 @@ export const registerParentInfor = async ({ token, parentInfor, dispatch }) => {
     return false;
   }
 };
+
+export const registerImageTutor = async ({token, file}) => {
+  try {
+    const data = file;
+    axios({
+      method: "POST",
+      url: `${server_name}/findTutor/imagePrivateUserList/`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${token_prefix} ${token}`
+      },
+      data
+    })
+    return true;
+  } catch(error) {
+    console.log('failed to register image ', error);
+    return false;
+  }
+}

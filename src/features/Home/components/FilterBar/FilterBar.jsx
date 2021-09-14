@@ -64,7 +64,7 @@ function FilterBar( {onClose = null, onSubmit = null}) {
             }
         }
         if(data.subject){
-            newFilter["search"] = data.subject;
+            newFilter["subject"] = data.subject;
         }
         if(Number(location.province) !== 0) {
             newFilter["province_code"] = Number(location.province);
@@ -75,11 +75,11 @@ function FilterBar( {onClose = null, onSubmit = null}) {
         if(Number(location.ward) !== 0) {
             newFilter["ward_code"] = Number(location.ward);
         }
-        const filter = {};
-        filter["params"] = newFilter;
-        filter["lop"] = classCanTeach;
+        if(classCanTeach.length !== 0){
+            newFilter["lop"] = classCanTeach;
+        }
         
-        onSubmit(filter);
+        onSubmit(newFilter);
     }
     
     return (

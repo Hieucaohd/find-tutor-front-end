@@ -3,18 +3,23 @@ import Loading from "components/Loading/Loading";
 import Location from "components/location/Location";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { selectToken } from "../auth/authSlice";
-import { addRoom } from "../Home/homeSlice";
+import { addParentRoom } from "./createroom";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    marginTop: "32px",
+    marginTop: "100px",
     height: "100vh",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
+    "& label": {
+      fontSize: '12px',
+      fontWeight: '500',
+    },
   },
   field: {
     display: "flex",
@@ -26,9 +31,6 @@ const useStyles = makeStyles(theme => ({
       width: '500px',
     },
     marginBottom: "6px",
-    "& label": {
-        fontSize: "16px",
-    },
     "& input": {
         padding: "8px 16px",
         border: "1px solid #ccc",
@@ -40,6 +42,9 @@ const useStyles = makeStyles(theme => ({
     marginBottom: "6px",
     [theme.breakpoints.down('sm')]: {
       width: '80%',
+    },
+    [theme.breakpoints.up('md')]: {
+      width: '500px',
     },
     justifyContent: 'space-between',
     label: {
@@ -59,6 +64,8 @@ const useStyles = makeStyles(theme => ({
     },
     [theme.breakpoints.up('md')]: {
       marginRight: "8px",
+      display: 'flex',
+      alignItems: 'center',
     },
     
   },
@@ -92,13 +99,18 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-  }
+  },
+  select: {
+    padding: '8px 16px',
+    borderRadius: '64px',
+    border: '1px solid #ccc',
+  },
 }));
 
 function CreateRoom(props) {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const days = [2, 3, 4, 5, 6, 7, 8];
+  const history = useHistory();
   const token = useSelector(selectToken);
   const { register, formState: { errors }, handleSubmit } = useForm();
   const [location, setLocation] = useState({
@@ -114,7 +126,7 @@ function CreateRoom(props) {
 
   //handle submit
   const onSubmit = async (data) => {
-    
+    console.log(data);
     // get day can teach
     let dayCanTeach = []
     for(let i = 2; i<9; i++) {
@@ -133,16 +145,37 @@ function CreateRoom(props) {
       "ward_code": Number(location.ward),
       "detail_location": data.detailLocation || null,
     };
-  
-    const args = {
-      roomInfor: roomInfor,
-      token: token,
+
+    const getTypeTeacher = (str) => {
+      if(str === 'both') {
+        return ["sv", "gv"];
+      } else if (str === 'sv') {
+        return ["sv"];
+      } 
+      return ["gv"];
+    }
+    const getGender = (str) => {
+      if(str === 'both') {
+        return ["nam", "nu"];
+      } else if (str === 'nam') {
+        return ["nam"];
+      }
+      return ["nu"];
+    }
+    const moreInfo = {
+      "time_in_one_day": Number(data.hours),
+      "money_per_day": Number(data.price) < 1000 ? Number(data.price)*1000 : Number(data.price),
+      "type_teacher": getTypeTeacher(data.job),
+      "sex_of_teacher": getGender(data.gender),
     };
-    const action = addRoom(args);
+    
     loadingRef.current.style.display = "flex";
-    await dispatch(action);
+    const response = await addParentRoom({token: token, roomInfor: roomInfor, price: moreInfo});
     loadingRef.current.style.display = "none";
-    alert('Tạo phòng thành công');
+    if(response) {
+      history.push("/");
+      alert('Tạo phòng thành công');
+    }
   }
 
   return (
@@ -170,26 +203,20 @@ function CreateRoom(props) {
 
         <div className={classes.field}>
           <label for="subject">Môn học </label>
-          <input
-            type="text"
-            id="subject" 
-            list="subjects"
-            {...register("subject", { required: true })}
-          />
-          <datalist id="subjects">
-            <option value="Toán "/>
-            <option value="Ngữ Văn"/>
-            <option value="Hóa Học"/>
-            <option value="Vật Lý"/>
-            <option value="Sinh Học"/>
-            <option value="Địa Lý"/>
-            <option value="Lịch Sử"/>
-            <option value="Tiếng Việt"/>
-          </datalist>
+          <select name="subject" className={classes.select} {...register("subject", { required: true })}>
+            <option value="Toán ">Toán</option>
+            <option value="Ngữ Văn">Ngữ Văn</option>
+            <option value="Hóa Học">Hóa Học</option>
+            <option value="Vật Lý">Vật Lý</option>
+            <option value="Sinh Học">Sinh Học</option>
+            <option value="Địa Lý">Địa Lý</option>
+            <option value="Lịch Sử">Lịch Sử</option>
+            <option value="Tiếng Việt">Tiếng Việt</option>
+          </select>
           <span className={classes.error}>{errors.subject && "Cần nhập môn học"}</span>
         </div>
         <div className={classes.field}>
-          <label for="lop">Lớp </label>
+        <label for="lop">Lớp </label>
           <input
             type="number"
             id="lop" 
@@ -198,7 +225,41 @@ function CreateRoom(props) {
           />
           <span className={classes.error}>{errors.class && "Cần nhập lớp"}</span>
         </div>
-
+        
+        <div className={classes.field}>
+            <label>Giá tiền mỗi buổi (nghìn đồng)</label>
+            <input 
+              name="price" 
+              type="number"
+              {...register("price", { required: true })}
+            />
+            <span className={classes.error}>{errors.price && "Cần nhập giá tiền"}</span>
+        </div>
+        <div className={classes.field}>
+            <label>Số giờ dạy mỗi buổi</label>
+            <input 
+              name="hours" 
+              type="number"
+              {...register("hours")}
+            />
+            <span className={classes.error}>{errors.hours && "Cần nhập số giờ"}</span>
+        </div>
+        <div className={classes.field}>
+            <label>Giới tính gia sư</label>
+            <select name="gender" className={classes.select} {...register("gender")}>
+              <option value="both">Không</option>
+              <option value="nam">Nam</option>
+              <option value="nu">Nữ</option>
+            </select>
+        </div>
+        <div className={classes.field}>
+            <label>Loại gia sư</label>
+            <select name="job" className={classes.select} {...register("job")}>
+              <option value="both">Cả 2</option>
+              <option value="sv">Sinh viên</option>
+              <option value="gv">Giáo viên</option>
+            </select>
+        </div>
         <div className={classes.field}>
             <label>Địa chỉ</label>
             <Location onChange={handleGetLocation} />
@@ -210,6 +271,7 @@ function CreateRoom(props) {
               type="text"
               {...register("detailLocation")}
            />
+            <span className={classes.error}>{errors.detailLocation && "Cần nhập chi tiết địa chỉ"}</span>
         </div>
 
         <div className={classes.field}>

@@ -1,8 +1,9 @@
 import { Avatar, makeStyles } from '@material-ui/core';
+import { getDistrictName, getProvinceName, getWardName } from "components/location/getLocation";
+import { GetParentProfile } from 'graphql/ProfileQueries';
 import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router-dom';
-import { getDistrictName, getProvinceName, getWardName } from "components/location/getLocation";
-import { formatBirthDay, getParentProfile } from '../../profile';
+import { formatBirthDay } from '../../profile';
 
 const useStyles = makeStyles({
     root: {
@@ -22,12 +23,11 @@ const useStyles = makeStyles({
 function ParentProfile(props) {
     const match = useRouteMatch("/profile/parent/:parentId");
     const parentId = Number(match.params.parentId);
-    console.log(parentId);
     const classes = useStyles();
     const [parentInfo, setParentInfo] = useState({});
     useEffect ( () => {
         const getParentInfo = async () => {
-            const info = await getParentProfile({id: parentId});
+            const info = await GetParentProfile(parentId);
             const provinceName = await getProvinceName(info.province_code) || "";
             const districtName = await getDistrictName({provinceCode: info.province_code, districtCode: info.district_code}) || "";
             const wardName = await getWardName({districtCode: info.district_code, wardCode: info.ward_code});
