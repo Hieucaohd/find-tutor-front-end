@@ -39,10 +39,6 @@ function Home() {
   if(type_tutor === false && type_parent === false) {
     history.push("/role/chooserole");
   }
-  // if(!isSignedIn()){
-  //   history.push("/signin");
-  // }
-
 
   useEffect( () => {
     const getRoomList = async () => {
