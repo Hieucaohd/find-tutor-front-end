@@ -9,6 +9,86 @@ import LoginGoogle from "./LoginGoogle";
 
 const selectToken = (state) => state.auth.token;
 
+function Login({onShow}) {
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { register, formState: { errors }, handleSubmit } = useForm();
+  const token = useSelector(selectToken);
+  const loadingRef = useRef(null);
+
+  //token đã tồn tại chuyển sang trang home
+  useEffect(() => {
+    if (token) {
+      history.push("/");
+    }
+  }, [token]);
+
+  const onSubmit = async (data) => {
+    const args = {
+      email: data.email,
+      password: data.password,
+    };
+    loadingRef.current.style.display = "flex";
+    await dispatch(login(args));
+    loadingRef.current.style.display = "none";
+  };
+
+  const handleShowRegisterForm = () => {
+    if(!onShow) return;
+    onShow();
+  }
+
+  return (
+    <div className={classes.root}>
+      <div ref={loadingRef} style={{display: 'none'}}>
+        <Loading />
+      </div>
+          <form className ={classes.form} onSubmit={handleSubmit(onSubmit)}>
+          <div className={classes.formField}>
+              <LoginGoogle />
+            </div>
+          <div className={classes.lineSpace}>
+            <span/>
+            <div> hoặc đăng nhập với email</div>
+            <span/>
+          </div>
+          {/* <div className={classes.formField}>
+              <LoginFacebook />
+          </div> */}
+            <div className={classes.formField}>
+              <label className={classes.label}>Email*</label>
+              <input 
+                name="email" 
+                type="email" placeholder="mail@website.com" 
+                {...register("email", { required: true }
+                )}/>
+                <span className={classes.error}>{errors.email && "Cần nhập Email"}</span>
+            </div>
+            <div className={classes.formField}>
+              <label className={classes.label}>Mật khẩu*</label>
+              <input name="password" 
+              type="password" 
+              placeholder="Tối thiểu 6 kí tự" 
+              {...register("password", { required: true })}/>
+              <span className={classes.error}>{errors.username && "Cần nhập mật khẩu"}</span>
+            </div>
+            <div className={classes.forget}>
+              <a href="/forget">Quên mật khẩu?</a>
+            </div>
+            <div className={classes.formField}>
+              <button type="submit" className={classes.submit}>Sign in</button>
+            </div>
+            <div>
+              <span className={classes.registerspan}>Chưa có tài khoản?</span>
+              <span onClick={handleShowRegisterForm} className={classes.register}>
+                Đăng kí tài khoản</span>
+            </div>
+          </form> 
+    </div>              
+  );
+}
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
@@ -112,85 +192,5 @@ const useStyles = makeStyles(theme => ({
     }
   }
 }))
-
-function Login({onShow}) {
-  const classes = useStyles();
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const { register, formState: { errors }, handleSubmit } = useForm();
-  const token = useSelector(selectToken);
-  const loadingRef = useRef(null);
-
-  //token đã tồn tại chuyển sang trang home
-  useEffect(() => {
-    if (token) {
-      history.push("/");
-    }
-  }, [token]);
-
-  const onSubmit = async (data) => {
-    const args = {
-      email: data.email,
-      password: data.password,
-    };
-    loadingRef.current.style.display = "flex";
-    await dispatch(login(args));
-    loadingRef.current.style.display = "none";
-  };
-
-  const handleShowRegisterForm = () => {
-    if(!onShow) return;
-    onShow();
-  }
-
-  return (
-    <div className={classes.root}>
-      <div ref={loadingRef} style={{display: 'none'}}>
-        <Loading />
-      </div>
-          <form className ={classes.form} onSubmit={handleSubmit(onSubmit)}>
-          <div className={classes.formField}>
-              <LoginGoogle />
-            </div>
-          <div className={classes.lineSpace}>
-            <span/>
-            <div> hoặc đăng nhập với email</div>
-            <span/>
-          </div>
-          {/* <div className={classes.formField}>
-              <LoginFacebook />
-          </div> */}
-            <div className={classes.formField}>
-              <label className={classes.label}>Email*</label>
-              <input 
-                name="email" 
-                type="email" placeholder="mail@website.com" 
-                {...register("email", { required: true }
-                )}/>
-                <span className={classes.error}>{errors.email && "Cần nhập Email"}</span>
-            </div>
-            <div className={classes.formField}>
-              <label className={classes.label}>Mật khẩu*</label>
-              <input name="password" 
-              type="password" 
-              placeholder="Tối thiểu 6 kí tự" 
-              {...register("password", { required: true })}/>
-              <span className={classes.error}>{errors.username && "Cần nhập mật khẩu"}</span>
-            </div>
-            <div className={classes.forget}>
-              <a href="/forget">Quên mật khẩu?</a>
-            </div>
-            <div className={classes.formField}>
-              <button type="submit" className={classes.submit}>Sign in</button>
-            </div>
-            <div>
-              <span className={classes.registerspan}>Chưa có tài khoản?</span>
-              <span onClick={handleShowRegisterForm} className={classes.register}>
-                Đăng kí tài khoản</span>
-            </div>
-          </form> 
-    </div>              
-  );
-}
 
 export default Login;

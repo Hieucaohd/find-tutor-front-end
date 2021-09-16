@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
-import { getDistrictList, getProvinceList, getWardList } from './getLocation';
 import { makeStyles } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import React, { useEffect, useRef, useState } from 'react';
+import { getDistrictList, getProvinceList, getWardList } from './getLocation';
 
 Location.propTypes = {
     onChange: PropTypes.func,

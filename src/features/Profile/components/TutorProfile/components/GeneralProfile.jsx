@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { AiOutlineFacebook, AiOutlineInstagram, AiOutlineLinkedin } from 'react-icons/ai';
 
-GenaralProfile.propTypes = {
+GeneralProfile.propTypes = {
     TutorInfo: PropTypes.object,
 };
 
@@ -145,7 +145,7 @@ const getJobName = (str) => {
     else return 'Khác';
 }
 
-function GenaralProfile({tutorInfo}) {
+function GeneralProfile({tutorInfo}) {
     const classes = useStyles();
     return (
         <div className={classes.wallpaper}>
@@ -180,4 +180,4 @@ function GenaralProfile({tutorInfo}) {
     );
 }
 
-export default GenaralProfile;
+export default GeneralProfile;

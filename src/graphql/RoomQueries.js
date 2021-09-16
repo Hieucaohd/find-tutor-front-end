@@ -5,6 +5,15 @@ export const GetAllRoom = (pages) => {
         all_room(page: ${pages}, num_in_page: 12){
             result {
               id
+              parent {
+                user {
+                    id
+                    username
+                    imageprivateusermodel {
+                        avatar
+                    }
+                }
+            }
               province_code
               district_code
               ward_code
@@ -13,20 +22,25 @@ export const GetAllRoom = (pages) => {
               pricemodel_set {
                 money_per_day
                 time_in_one_day
+                type_teacher
+                sex_of_teacher
               }
             }
             num_pages
         }
     }`
-    return  fetchGraphQl("room list", "all_room", query);
+    return fetchGraphQl("room list", "all_room", query);
 }
 export const GetFilterRoom = ({filterRoom, pages}) => {
-    const {lop, province_code, district_code, ward_code, subject } = filterRoom;
-    const queryString = `${lop ? `lop: [${lop}],` : ``}, 
-        ${province_code ? `province_code: ${province_code},` : ``},
+    const {lop, province_code, district_code, ward_code, subject, sex, job, price } = filterRoom;
+    const queryString = `${lop ? `lop: [${lop}],` : ``}
+        ${province_code ? `province_code: ${province_code},` : ``}
         ${district_code ? `district_code: ${district_code}` : ``}
         ${ward_code ? `ward_code: ${ward_code},` : ``}
         ${subject ? `search_infor: "${subject}",` : ``}
+        ${sex ? `sex_of_teacher: "${sex}",` : ``}
+        ${job ? `type_teacher: "${job}",` : ``}
+        ${price ? `price: [${price}],`: ``}
         page: ${pages}, num_in_page: 12
         `;
     const query = `{
@@ -38,6 +52,12 @@ export const GetFilterRoom = ({filterRoom, pages}) => {
                 ward_code
                 lop
                 subject
+                pricemodel_set {
+                    money_per_day
+                    time_in_one_day
+                    type_teacher
+                    sex_of_teacher
+                }
             }
             num_pages
         }

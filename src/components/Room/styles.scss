@@ -6,7 +6,7 @@ $cHeight: $cWidth*1.45;
     height: $cHeight;
     background-color: #E9E8EB;
     border: 0.5px solid rgba(0,0,0,0.1);
-    border-radius: 16px;
+    border-radius: 20px;
     position: relative;
     opacity: 0.8;
     &:hover{
@@ -45,8 +45,8 @@ $cHeight: $cWidth*1.45;
         top: 4px;
         left: 4px;
         right: 4px;
-        height: 82%; 
-        border-radius: 16px;
+        height: 81%; 
+        border-radius: 20px;
 
         & > div {
             padding: 25px 16px;
@@ -71,20 +71,31 @@ $cHeight: $cWidth*1.45;
     }
     &__info {
         position: absolute;
-        bottom: 8px;
+        bottom: 6px;
         left: 8px;
         right: 8px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        & h5{
+        & div {
+            display: flex;
+            flex-direction: column;
+        }
+        & h4{
             margin: 0;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 14px;
         }
-        & span {
-            font-size: 14px;
+        
+        & h5 {
+            margin: 0;
+            font-size: 12px;
+            font-weight: 500;
             color: #6e6b6b;
+            & span {
+                color: black;
+                font-weight: 500;
+            }
         }
         &__heart {
             & svg {

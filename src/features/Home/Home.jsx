@@ -39,8 +39,6 @@ function Home() {
   if(type_tutor === false && type_parent === false) {
     history.push("/role/chooserole");
   }
-  const match = useLocation();
-  console.log("match", match)
   // if(!isSignedIn()){
   //   history.push("/signin");
   // }

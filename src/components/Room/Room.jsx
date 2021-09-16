@@ -5,9 +5,10 @@ import { AiFillCheckCircle, AiFillCloseCircle, AiFillHeart } from "react-icons/a
 import { BsFillPeopleFill } from "react-icons/bs";
 import { useHistory } from 'react-router-dom';
 import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName } from '../location/getLocation';
+import { chooseColor } from "./color";
 import { subject } from "./picture";
 import "./styles.scss";
-import { chooseColor, gradientColor } from "./color";
+
 Room.propTypes = {
     room: PropTypes.object.isRequired,
     onDelete: PropTypes.func,
@@ -21,6 +22,7 @@ Room.propTypes = {
 function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false} ) {
     const history = useHistory();
     const [address, setAddress] = useState("");
+    const [showModal, setShowModal] = useState(false);
     const handleShowDetailRoom = (room) => {
         //navigate to detail room
         history.push(`/room/${room.id}`);
@@ -30,10 +32,45 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false} 
         e.stopPropagation();
         onDelete(id);
     }
+
     const handleCheck = (e, id) => {
         e.stopPropagation();
         onCheck(id);
     }
+
+    const getTypeRoomString = (typeTeacher, sexTeacher) => {
+        if(!typeTeacher && !sexTeacher) return ;
+        let ans = "";
+        if(typeTeacher === "Giao Vien, Sinh Vien") {
+            ans += "Giáo viên, Sinh viên";
+        } else if (typeTeacher === "Giao Vien") {
+            ans += "Giáo viên";
+        } else if (typeTeacher === "Sinh Vien") {
+            ans += "Sinh viên"
+        }
+        if (sexTeacher === "NAM") {
+            ans += " nam";
+        } else if (sexTeacher === "NU") {
+            ans += " nữ";
+        }
+        return ans;
+    }
+
+    const formatPriceString = (price) => {
+        const priceString = price.toString();
+        let ans = "";
+        const len = priceString.length;
+        let count = 0;
+        for(let i = len - 1; i >= 0; i--) {
+          count++;
+          ans = priceString[i] + ans;
+          if(count %3 ===0 && count != len) {
+            ans = "." + ans
+          }
+        }
+        return ans;
+    }
+
     useEffect( () => {
         const getAddress = async () => {
             const provinceName = await getProvinceName(room.province_code);
@@ -44,7 +81,7 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false} 
             setAddress(`${catchDistrictName(districtName)}, ${catchProvinceName(provinceName)}`)
         }
         getAddress();
-    }, [])
+    }, []);
     return (
         <Grid item key={room.id} className="room" xs={12} sm={6} md={3} lg={3} className="room">
             <Box mb={4} display="flex" justifyContent="center" alignItems="center">
@@ -57,10 +94,11 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false} 
                 </div>
                 <div className="item__room__info">
                     <div>
-                        <h5>{address}</h5>
-                        <span>{room.pricemodel_set[0].money_per_day} đ / buổi</span>
+                        <h4>{address}</h4>
+                        <h5>{getTypeRoomString(room.pricemodel_set[0].type_teacher, room.pricemodel_set[0].sex_of_teacher)}</h5>
+                        <h5><span>{formatPriceString(room.pricemodel_set[0].money_per_day)}</span> đ / buổi</h5>
+                    
                     </div>
-
                     {onHome && typeTutor && <button onClick={ (e) => handleCheck(e, room.id)} className="item__room__info__heart">
                         <AiFillHeart />
                     </button> 

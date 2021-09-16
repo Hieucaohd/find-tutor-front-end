@@ -8,97 +8,6 @@ import { useHistory } from 'react-router-dom';
 import { selectToken } from '../../../auth/authSlice';
 import { registerImageTutor, registerTutorInfor } from '../../registerAccount';
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 0,
-        marginTop: '56px',
-    },
-    form: {
-        [theme.breakpoints.down('sm')]: {
-            backgroundColor: 'transparent',
-            padding: '0',
-            width: '80%',
-        },
-        [theme.breakpoints.up('md')]: {
-            backgroundColor: 'white',
-            padding: '80px',
-            width: '500px',
-        },
-        borderRadius: '8px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-
-        '& > p': {
-            fontSize: '18px',
-        }
-    },
-    formField: {
-        width: '100%',
-        marginBottom: '8px',
-        display: 'flex',
-        flexDirection: 'column',
-        '& input': {
-            padding: '8px 16px',
-            borderRadius: '64px',
-            border: '1px solid #ccc',
-        },
-        '& button': {
-            width: '100%',
-        },
-        '& label': {
-            fontSize: '12px',
-            fontWeight: 500,
-        }
-    },
-    check: {
-        display: 'flex',
-    },
-    profession: {
-        padding: '8px 8px',
-        border: '1px solid #ccc',
-        borderRadius: '64px',
-        marginTop: '2px',
-    },
-    choose: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        border: '1px solid',
-        borderRadius: '8px',
-        marginTop: '1px',
-    },
-    error: {
-        fontSize: '12px',
-        color: 'red',
-    },
-    submit: {
-        backgroundColor: '#5037EC',
-        color: 'white',
-        border: 'none',
-        borderRadius: '64px',
-        padding: '10px 0px',
-    },
-    loading: {
-        display: 'none',
-        position: 'fixed',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        height: '100%',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0,0,0,0.5)', /* Black background with opacity */
-        'z-index': 2,
-    }
-}));
 
 function RegisterTutor(props) {
     const classes = useStyles();
@@ -342,5 +251,98 @@ function RegisterTutor(props) {
         </div>
     );
 }
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 0,
+        marginTop: '56px',
+    },
+    form: {
+        [theme.breakpoints.down('sm')]: {
+            backgroundColor: 'transparent',
+            padding: '0',
+            width: '80%',
+        },
+        [theme.breakpoints.up('md')]: {
+            backgroundColor: 'white',
+            padding: '80px',
+            width: '500px',
+        },
+        borderRadius: '8px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+
+        '& > p': {
+            fontSize: '18px',
+        }
+    },
+    formField: {
+        width: '100%',
+        marginBottom: '8px',
+        display: 'flex',
+        flexDirection: 'column',
+        '& input': {
+            padding: '8px 16px',
+            borderRadius: '64px',
+            border: '1px solid #ccc',
+        },
+        '& button': {
+            width: '100%',
+        },
+        '& label': {
+            fontSize: '12px',
+            fontWeight: 500,
+        }
+    },
+    check: {
+        display: 'flex',
+    },
+    profession: {
+        padding: '8px 8px',
+        border: '1px solid #ccc',
+        borderRadius: '64px',
+        marginTop: '2px',
+    },
+    choose: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        border: '1px solid',
+        borderRadius: '8px',
+        marginTop: '1px',
+    },
+    error: {
+        fontSize: '12px',
+        color: 'red',
+    },
+    submit: {
+        backgroundColor: '#5037EC',
+        color: 'white',
+        border: 'none',
+        borderRadius: '64px',
+        padding: '10px 0px',
+    },
+    loading: {
+        display: 'none',
+        position: 'fixed',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        height: '100%',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0,0,0,0.5)', /* Black background with opacity */
+        'z-index': 2,
+    }
+}));
+
 
 export default RegisterTutor;

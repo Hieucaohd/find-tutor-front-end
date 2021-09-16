@@ -4,7 +4,7 @@ import { GetTutorProfile } from 'graphql/ProfileQueries';
 import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { getTutorProfile } from '../../profile';
-import GenaralProfile from './components/GenaralProfile';
+import GeneralProfile from './components/GeneralProfile';
 import MoreInfoProfile from './components/MoreInfoProfile';
 import ProfileSkeleton from './components/ProfileSkeleton';
 
@@ -44,7 +44,7 @@ function TutorProfile(props) {
         <div className={classes.root}> 
             {loading ? <ProfileSkeleton /> 
             :  <div>
-                <GenaralProfile tutorInfo={tutorInfo} />
+                <GeneralProfile tutorInfo={tutorInfo} />
                 <MoreInfoProfile tutorInfo={tutorInfo}/> 
             </div>
         }

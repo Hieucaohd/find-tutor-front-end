@@ -9,24 +9,6 @@ import { useHistory } from 'react-router-dom';
 import { selectId_of_user, selectToken, selectType_parent } from '../auth/authSlice';
 import { deleteRoom } from './parent';
 
-const useStyles = makeStyles({
-    root: {
-        marginTop: '28px',
-        padding: "40px",
-    },
-    addRoom: {
-        position: 'fixed',
-        top: '40%',
-        left: '16px',
-        backgroundColor: 'transparent',
-        border: 'none',
-        fontSize: '32px',
-        "&:hover": {
-            cursor: 'pointer',
-        }
-    }
-})
-
 function ParentInfor() {
     const classes = useStyles();
     const token = useSelector(selectToken);
@@ -65,5 +47,23 @@ function ParentInfor() {
         </div>
     )
 }
+
+const useStyles = makeStyles({
+    root: {
+        marginTop: '28px',
+        padding: "40px",
+    },
+    addRoom: {
+        position: 'fixed',
+        top: '40%',
+        left: '16px',
+        backgroundColor: 'transparent',
+        border: 'none',
+        fontSize: '32px',
+        "&:hover": {
+            cursor: 'pointer',
+        }
+    }
+})
 
 export default ParentInfor

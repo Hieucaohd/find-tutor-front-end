@@ -16,6 +16,8 @@ export const GetTutorWaitingList =  async (id) => {
                         pricemodel_set {
                             money_per_day
                             time_in_one_day
+                            type_teacher
+                            sex_of_teacher
                         }
                     }
                 }  
@@ -46,6 +48,8 @@ export const GetTutorInvitedList =  async (id) => {
                         pricemodel_set {
                             money_per_day
                             time_in_one_day
+                            type_teacher
+                            sex_of_teacher
                         }
                     }
                 }  
@@ -76,6 +80,8 @@ export const GetTutorTryTeachingList = async (id) => {
                         pricemodel_set {
                             money_per_day
                             time_in_one_day
+                            type_teacher
+                            sex_of_teacher
                           }
                     }
                 }  
@@ -105,6 +111,8 @@ export const GetTutorTeachingList = async (id) => {
                         pricemodel_set {
                             money_per_day
                             time_in_one_day
+                            type_teacher
+                            sex_of_teacher
                           }
                     }
                 }  

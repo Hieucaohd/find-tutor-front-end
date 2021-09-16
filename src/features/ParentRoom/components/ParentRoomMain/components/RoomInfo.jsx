@@ -157,7 +157,7 @@ function RoomInfo( {roomDetail, onClose} ) {
     }
     const typeTutorString = (type) => {
         if(!type) return;
-        if(Array.isArray(type) && type.length === 2) {
+        if(type === "Giao Vien, Sinh Vien") {
             return "Giáo viên, Sinh viên";
         } else if (type === "Giao Vien") {
             return "Giáo viên";
@@ -167,7 +167,7 @@ function RoomInfo( {roomDetail, onClose} ) {
     }
     const sexTutorString = (sex) => {
         if(!sex) return;
-        if(Array.isArray(sex) && sex.length === 2) {
+        if(sex === "NU, NAM") {
             return "Gia sư nam, Gia sư nữ";
         } else if (sex === "NAM") {
             return "Gia sư nam";
