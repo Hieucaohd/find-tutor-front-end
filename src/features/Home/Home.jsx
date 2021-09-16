@@ -39,7 +39,6 @@ function Home() {
   if(type_tutor === false && type_parent === false) {
     history.push("/role/chooserole");
   }
-
   useEffect( () => {
     const getRoomList = async () => {
       setLoading(true);
