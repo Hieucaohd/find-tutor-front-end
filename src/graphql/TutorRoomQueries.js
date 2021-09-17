@@ -6,6 +6,7 @@ export const GetTutorWaitingList =  async (id) => {
         user_by_id(id: ${id}){
             tutormodel {
                 waitingtutormodel_set {
+                    id
                     parent_room {
                         id
                         province_code
@@ -27,7 +28,7 @@ export const GetTutorWaitingList =  async (id) => {
     `
     const tutorModel = await fetchGraphQl("tutor's waiting list", "user_by_id", query);
     const parentRoom = await tutorModel?.tutormodel.waitingtutormodel_set.map((item) => {
-        return item.parent_room;
+        return {...item.parent_room, roomId: item.parent_room.id, id: item.id};
     });
     return parentRoom;
 }
@@ -38,6 +39,7 @@ export const GetTutorInvitedList =  async (id) => {
         user_by_id(id: ${id}){
             tutormodel {
                 listinvitedmodel_set {
+                    id
                     parent_room{
                         id
                         province_code
@@ -59,7 +61,7 @@ export const GetTutorInvitedList =  async (id) => {
     `
     const tutorModel = await fetchGraphQl("tutor's invited list", "user_by_id", query);
     const parentRoom = await tutorModel?.tutormodel.listinvitedmodel_set.map((item) => {
-        return item.parent_room;
+        return {...item.parent_room, roomId: item.parent_room.id, id: item.id};
     });
     return parentRoom;
 }
@@ -70,6 +72,7 @@ export const GetTutorTryTeachingList = async (id) => {
         user_by_id(id: ${id}){
             tutormodel {
                 tryteachingmodel_set {
+                    id
                     parent_room{
                         id
                         province_code
@@ -90,7 +93,7 @@ export const GetTutorTryTeachingList = async (id) => {
     }`
     const tutorModel = await fetchGraphQl("tutor's try teaching list", "user_by_id", query);
     const parentRoom = await tutorModel?.tutormodel.tryteachingmodel_set.map((item) => {
-        return item.parent_room;
+        return {...item.parent_room, roomId: item.parent_room.id, id: item.id};
     });
     return parentRoom;
 };
@@ -101,6 +104,7 @@ export const GetTutorTeachingList = async (id) => {
         user_by_id(id: ${id}){
             tutormodel {
                 tutorteachingmodel_set {
+                    id
                     parent_room{
                         id
                         province_code
@@ -121,7 +125,7 @@ export const GetTutorTeachingList = async (id) => {
     }`
     const tutorModel = await fetchGraphQl("tutor's teaching list", "user_by_id", query);
     const parentRoom = await tutorModel?.tutormodel.tutorteachingmodel_set.map((item) => {
-        return item.parent_room;
+        return {...item.parent_room, roomId: item.parent_room.id, id: item.id};
     });
     return parentRoom;
 };

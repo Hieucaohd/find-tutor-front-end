@@ -5,7 +5,7 @@ import { AiFillCheckCircle, AiFillCloseCircle, AiFillHeart } from "react-icons/a
 import { BsFillPeopleFill } from "react-icons/bs";
 import { useHistory } from 'react-router-dom';
 import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName } from '../location/getLocation';
-import { chooseColor } from "./color";
+import { gradientColor } from "./color";
 import { subject } from "./picture";
 import "./styles.scss";
 
@@ -22,10 +22,10 @@ Room.propTypes = {
 function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false} ) {
     const history = useHistory();
     const [address, setAddress] = useState("");
-    const [showModal, setShowModal] = useState(false);
-    const handleShowDetailRoom = (room) => {
+    // const [showModal, setShowModal] = useState(false);
+    const handleShowDetailRoom = (id) => {
         //navigate to detail room
-        history.push(`/room/${room.id}`);
+        history.push(`/room/${id}`);
     }
 
     const handleDelete = (e, id) => {
@@ -64,7 +64,7 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false} 
         for(let i = len - 1; i >= 0; i--) {
           count++;
           ans = priceString[i] + ans;
-          if(count %3 ===0 && count != len) {
+          if(count %3 ===0 && count !== len) {
             ans = "." + ans
           }
         }
@@ -85,15 +85,15 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false} 
     return (
         <Grid item key={room.id} className="room" xs={12} sm={6} md={3} lg={3} className="room">
             <Box mb={4} display="flex" justifyContent="center" alignItems="center">
-            <div className="item__room" onClick={() => handleShowDetailRoom(room)}>
-                <div className="item__room__thumbnail" style={{ 'background-color': chooseColor[room.subject] || chooseColor["Khác"]}}>
+            <div className="item__room" onClick={() => handleShowDetailRoom(room.roomId)}>
+                <div className="item__room__thumbnail" style={{ 'background-image': gradientColor[room.subject] || gradientColor["Khác"]}}>
                     <div>
                         <h4>{room.subject}<span>{room.lop}</span></h4>
                     </div>
-                    <img src={subject[room.subject] || subject["Mặc Định"]} />
+                    <img src={subject[room.subject] || subject["Mặc Định"]} alt="mon hoc"/>
                 </div>
                 <div className="item__room__info">
-                    <div>
+                    <div className="item__room__info__price">
                         <h4>{address}</h4>
                         <h5>{getTypeRoomString(room.pricemodel_set[0].type_teacher, room.pricemodel_set[0].sex_of_teacher)}</h5>
                         <h5><span>{formatPriceString(room.pricemodel_set[0].money_per_day)}</span> đ / buổi</h5>

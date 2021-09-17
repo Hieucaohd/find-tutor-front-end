@@ -53,7 +53,11 @@ export const GetParentProfile = async (id) => {
     }
     `
     const parentprofile = await fetchGraphQl("parent profile", "user_by_id", query);
-    return parentprofile?.parentmodel;
+    return {
+        ...parentprofile?.parentmodel,
+        username: parentprofile?.username,
+        imageprivateusermodel: parentprofile?.imageprivateusermodel,
+    };
 }
 
 export const getUserNameAndAvatar = (id) => {

@@ -46,7 +46,6 @@ function TutorInfor() {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const classes = useStyles();
-  const [loading, setLoading] = useState(false);
   const [loadingRooms, setLoadingRooms] = useState(true);
   const userId = useSelector(selectId_of_user)
   useEffect(() => {

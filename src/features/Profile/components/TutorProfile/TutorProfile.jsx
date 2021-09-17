@@ -1,9 +1,8 @@
 import { makeStyles } from '@material-ui/core';
-import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName } from 'components/location/getLocation';
+import { catchDistrictName, catchProvinceName, catchWardName, getDistrictName, getProvinceName, getWardName } from 'components/location/getLocation';
 import { GetTutorProfile } from 'graphql/ProfileQueries';
 import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router-dom';
-import { getTutorProfile } from '../../profile';
 import GeneralProfile from './components/GeneralProfile';
 import MoreInfoProfile from './components/MoreInfoProfile';
 import ProfileSkeleton from './components/ProfileSkeleton';
@@ -33,12 +32,13 @@ function TutorProfile(props) {
             const info = await GetTutorProfile(tutorId);
             const provinceName = await getProvinceName(info.province_code) || "";
             const districtName = await getDistrictName({provinceCode: info.province_code, districtCode: info.district_code}) || "";
-            info["address"] = `${catchDistrictName(districtName)}, ${catchProvinceName(provinceName)}`;
+            const wardName = await getWardName({districtCode: info.district_code, wardCode: info.ward_code});
+            info["address"] = `${catchWardName(wardName)}, ${catchDistrictName(districtName)}, ${catchProvinceName(provinceName)}`;
             setTutorInfo(info);
             setLoading(false);
         }
         getUserInfo();
-    }, [])
+    }, []);
 
     return (
         <div className={classes.root}> 

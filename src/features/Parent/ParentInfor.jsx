@@ -1,7 +1,7 @@
 import { Grid, makeStyles } from '@material-ui/core';
 import Room from 'components/Room/Room.jsx';
 import { isSignedIn } from 'features/auth/cookies';
-import { GetAllParentRoom, GetAllRoom, GetUserParentRoom } from 'graphql/RoomQueries';
+import { GetAllParentRoom } from 'graphql/RoomQueries';
 import React, { useEffect, useState } from 'react';
 import { FcAddDatabase } from 'react-icons/fc';
 import { useSelector } from 'react-redux';
@@ -19,7 +19,7 @@ function ParentInfor() {
 
     const handleDeleteRoom = async (roomId) => {
         let newParentRoomList = [...parentRoomList];
-        newParentRoomList = await newParentRoomList.filter( (room) => room.id != roomId);
+        newParentRoomList = await newParentRoomList.filter( (room) => Number(room.id) !== Number(roomId));
         setParentRoomList(newParentRoomList);
         await deleteRoom({ roomId: roomId, token: token });
     }
@@ -41,7 +41,7 @@ function ParentInfor() {
             {isSignedIn() && typeParent && <button onClick={handleShowCreateRoom} className={classes.addRoom}><FcAddDatabase /></button>}
             <Grid container spacing={2} className={classes.root}>
                 {parentRoomList.map( (room)=> (
-                    <Room room={room} onDelete={handleDeleteRoom} color={"#7FDBCA"}/>
+                    <Room room={{...room, roomId: room.id}} onDelete={handleDeleteRoom}/>
                 ))}
             </Grid>
         </div>

@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { isSignedIn } from 'features/auth/cookies';
 import Search from 'features/Header/components/Search/Search';
 import React, { useRef } from "react";
-import { IoHomeOutline, IoPeopleOutline } from "react-icons/io5";
+import { IoPeopleOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import {
@@ -51,13 +51,6 @@ function MainNavigation() {
               LOGO IS HERE
             </h3>
           </Link>
-          <div className={classes.home}>
-            <Link to="/">
-              <span> <IoHomeOutline /></span>
-              <h4>Trang Chủ</h4>
-            </Link>
-
-          </div>
           <div className={classes.section}>
             {type_tutor && <Link to={`/tutorInfo/${userId}`}>
               <span><IoPeopleOutline/></span>
@@ -169,44 +162,6 @@ const useStyles = makeStyles((theme) => ({
   },
   blueColor: {
     color: '#5037EC' ,
-  },
-  home: {
-    "height": "40px",
-    "display": "flex",
-    "align-items": "center",
-    "& a" : {
-      "color": "#404165",
-      "font-weight" : "600",
-      "text-decoration": "none",
-      
-      "letter-spacing": "0.252291px",
-      [theme.breakpoints.down('sm')]: {
-        display: 'none',
-      },
-      [theme.breakpoints.up('md')]: {
-        "padding": "4px 12px",
-        "border-radius": "12px",
-        "font-size": "13px",
-      },
-      "&:hover": {
-          "cursor": "pointer",
-          border: "1px solid #9EA7E6",
-      }, 
-      "& h4": {
-        margin: 0,
-        [theme.breakpoints.down('sm')]: {
-          display: 'none',
-        },
-      },
-      "& span": {
-        [theme.breakpoints.up('md')]: {
-          display: 'none',
-        },
-        "& svg": {
-          display: 'flex',
-        }
-      },
-    },
   },
   searchForm: {
     position: 'fixed',

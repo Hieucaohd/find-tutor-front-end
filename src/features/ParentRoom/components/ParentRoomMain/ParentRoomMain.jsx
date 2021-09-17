@@ -101,14 +101,14 @@ function ParentRoomMain( {roomDetail = {}, isLoading} ) {
               <div>
                 {isLoading ? <Skeleton variant="rect" style={{width: "100%", height: "100%"}} />
                  :<InvitedList 
-                 invitedList = {invitedList} 
-                 parent = {roomDetail.parent}
-                 roomId = {roomId}
-                 typeTutor={typeTutor}
-                 typeParent={typeParent}
-                 userId = {userId}
-                 token = {token}
-                />}
+                    invitedList = {invitedList} 
+                    parent = {roomDetail.parent}
+                    roomId = {roomId}
+                    typeTutor={typeTutor}
+                    typeParent={typeParent}
+                    userId = {userId}
+                    token = {token}
+                  />}
               </div>
               <span className={classes.title}>Danh sách mời</span>
 

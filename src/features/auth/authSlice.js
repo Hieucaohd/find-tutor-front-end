@@ -75,7 +75,7 @@ export const loginWithFacebook = createAsyncThunk("/social-auth/facebook-auth/",
 export const logout = createAsyncThunk("/auth/logout/", async (args) => {
   try {
     const {token , refresh_token } = args;
-    const response = await fetch(`${server_name}/auth/logout/`, {
+    await fetch(`${server_name}/auth/logout/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

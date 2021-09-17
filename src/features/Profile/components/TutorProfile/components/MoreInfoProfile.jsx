@@ -5,7 +5,7 @@ import { AiFillExperiment } from 'react-icons/ai';
 import { GiBookCover } from 'react-icons/gi';
 import { IoMdSchool } from 'react-icons/io';
 import { IoLocation } from 'react-icons/io5';
-import { RiMedalFill, RiNumbersFill } from 'react-icons/ri';
+import { RiMedalFill } from 'react-icons/ri';
 
 MoreInfoProfile.propTypes = {
     TutorInfo: PropTypes.object,
@@ -61,18 +61,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function MoreInfoProfile({tutorInfo}) {
-    console.log(tutorInfo);
     const classes = useStyles();
 
-    const getTeachLevelString = (arr) => {
-        if(!arr || arr.length === 0) {
-            return "";
-        }
-        const ans = arr.map( (item) => {
-            return `Cấp ${item}`
-        })
-        return ans.join(', ')
-    }
+    // const getTeachLevelString = (arr) => {
+    //     if(!arr || arr.length === 0) {
+    //         return "";
+    //     }
+    //     const ans = arr.map( (item) => {
+    //         return `Cấp ${item}`
+    //     })
+    //     return ans.join(', ')
+    // }
 
     return (
         <div className={classes.root}>

@@ -2,9 +2,8 @@ import { makeStyles } from "@material-ui/core";
 import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName, getWardName } from "components/location/getLocation";
 import { GetParentRoomDetail } from "graphql/RoomQueries";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useRouteMatch } from "react-router-dom";
-import { selectToken } from "../auth/authSlice";
 import ParentRoomMain from "./components/ParentRoomMain/ParentRoomMain";
 import { getInvitedListForRoom } from "./invitedListForRoomSlice";
 import { getTeachingListForRoom } from "./teachingForRoomSlice";
@@ -29,7 +28,6 @@ function ParentRoom(props) {
     params: {roomId}
   } = useRouteMatch();
 
-  const token = useSelector(selectToken);
   const [roomDetail, setRoomDetail] = useState({});
   const [loading, setLoading] = useState(true);
   useEffect(()=> {
@@ -44,8 +42,8 @@ function ParentRoom(props) {
         districtCode: newRoomDetail.district_code || 0,
         wardCode: newRoomDetail.ward_code || 0,
       });
-      dispatch(getWaitingListForRoom(newRoomDetail.waitingtutormodel_set || []));
-      dispatch(getInvitedListForRoom(newRoomDetail.listinvitedmodel_set) || []);
+      dispatch(getWaitingListForRoom(newRoomDetail.waitingtutormodel_set));
+      dispatch(getInvitedListForRoom(newRoomDetail.listinvitedmodel_set));
       if(newRoomDetail.tryteachingmodel){
         dispatch(getTryTeachingListForRoom([newRoomDetail.tryteachingmodel]));
       }
@@ -56,6 +54,7 @@ function ParentRoom(props) {
         ...newRoomDetail,
         parent: {
           id: newRoomDetail.parent.user.id,
+          username: newRoomDetail.parent.user.username,
           first_name: newRoomDetail.parent.first_name,
           last_name: newRoomDetail.parent.last_name,
           avatar: newRoomDetail?.parent.user.imageprivateusermodel?.avatar,
