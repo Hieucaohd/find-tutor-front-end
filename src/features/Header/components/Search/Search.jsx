@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
-import { AiOutlineSearch } from 'react-icons/ai';
+import { selectToken } from 'features/auth/authSlice';
 import { SearchParent, SearchTutor } from 'graphql/SearchQueries';
-import UserItem from './components/UserItem';
+import React, { useEffect, useRef, useState } from 'react';
+import { AiOutlineSearch } from 'react-icons/ai';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import UserItem from './components/UserItem';
 
 const useStyles = makeStyles({
     root: {
@@ -92,6 +93,7 @@ function Search({onClose}) {
     const searchRef = useRef(null);
     const typeRef = useRef(null);
     const [searchList, setSearchList] = useState([]);
+    const token = useSelector(selectToken);
     const history = useHistory();
     function handleSearchForm (e) {
         
@@ -124,10 +126,10 @@ function Search({onClose}) {
     useEffect( () => {
         const getList = async (searchTerm) => {
             if(searchTerm.type === 'tutor') {
-                const listSearch = await SearchTutor(searchTerm.search);
+                const listSearch = await SearchTutor(searchTerm.search, token);
                 setSearchList(listSearch || []);
             } else {
-                const listSearch = await SearchParent(searchTerm.search);
+                const listSearch = await SearchParent(searchTerm.search, token);
                 setSearchList(listSearch || []);
             }
         }

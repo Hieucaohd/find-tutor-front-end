@@ -7,7 +7,7 @@ import { GetAllRoom, GetFilterRoom } from "graphql/RoomQueries";
 import React, { useEffect, useRef, useState } from "react";
 import { FcAddDatabase, FcClearFilters, FcFilledFilter } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
   selectToken, selectType_parent, selectType_tutor
 } from "../auth/authSlice";
@@ -17,9 +17,7 @@ import FilterBar from "./components/FilterBar/FilterBar";
 import "./styles.scss";
 
 function Home() {
-  let history = useHistory();
-
-  const [isRefreshListRoom, setIsRefreshListRoom] = useState(false); // refresh lại danh sách lớp học để cập nhật thêm các lớp học.
+  const history = useHistory();
   const type_tutor = useSelector(selectType_tutor); // lấy type_tutor từ authSlice.js
   const type_parent = useSelector(selectType_parent); // lấy type_parent từ authSlice.js
   const filterBar = useRef(null);
@@ -39,22 +37,17 @@ function Home() {
   if(type_tutor === false && type_parent === false) {
     history.push("/role/chooserole");
   }
-  // if(!isSignedIn()){
-  //   history.push("/signin");
-  // }
-
-
   useEffect( () => {
     const getRoomList = async () => {
       setLoading(true);
-      const list = await GetAllRoom(filter.pages); 
+      const list = await GetAllRoom(filter.pages, token); 
       setMaxPagination(list?.num_pages);
       setRoomList(list?.result);
       setLoading(false);
     }
     const getFilterRoomList = async (params) => { 
       setLoading(true);
-      const filterRoomList = await GetFilterRoom(params);
+      const filterRoomList = await GetFilterRoom({...params, token});
       setMaxPagination(filterRoomList?.num_pages);
       setRoomList(filterRoomList?.result);
       setLoading(false);
@@ -116,7 +109,7 @@ function Home() {
       {loading ? <SkeletonPage /> 
       : <Grid container spacing={2}>{
         roomList?.map((room)=>(
-          <Room room={room} color="white" typeTutor = {type_tutor} onCheck={type_tutor && handleAddRoom} onHome={true}/>
+          <Room room={{...room, roomId: room.id}} typeTutor = {type_tutor} onCheck={type_tutor && handleAddRoom} onHome={true}/>
         ))}
       </Grid>}
 

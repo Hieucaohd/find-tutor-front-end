@@ -1,6 +1,6 @@
 import { fetchGraphQl } from "./graphQl"
 
-export const GetAllRoom = (pages) => {
+export const GetAllRoom = (pages, token) => {
     const query = `{
         all_room(page: ${pages}, num_in_page: 12){
             result {
@@ -29,9 +29,9 @@ export const GetAllRoom = (pages) => {
             num_pages
         }
     }`
-    return fetchGraphQl("room list", "all_room", query);
+    return fetchGraphQl("room list", "all_room", query, token);
 }
-export const GetFilterRoom = ({filterRoom, pages}) => {
+export const GetFilterRoom = ({filterRoom, pages, token}) => {
     const {lop, province_code, district_code, ward_code, subject, sex, job, price } = filterRoom;
     const queryString = `${lop ? `lop: [${lop}],` : ``}
         ${province_code ? `province_code: ${province_code},` : ``}
@@ -62,7 +62,7 @@ export const GetFilterRoom = ({filterRoom, pages}) => {
             num_pages
         }
     }`
-    return fetchGraphQl("filter room list", "search_room", query);
+    return fetchGraphQl("filter room list", "search_room", query, token);
 }
 
 export const GetUserParentRoom = async (id) => {
@@ -190,6 +190,9 @@ export const GetAllParentRoom = async(id) => {
                     district_code
                     pricemodel_set {
                         money_per_day
+                        time_in_one_day
+                        type_teacher
+                        sex_of_teacher
                     }
                 }
             }

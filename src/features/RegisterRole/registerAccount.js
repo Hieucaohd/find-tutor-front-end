@@ -13,7 +13,7 @@ export const registerTutorInfor = async ({ token, tutorInfor, dispatch }) => {
       },
       body: JSON.stringify(tutorInfor),
     })
-    const responseJSON = await response.json();
+    await response.json();
     dispatch(setTutorTrue());
     return true;
   } catch(error) {
@@ -32,7 +32,7 @@ export const registerParentInfor = async ({ token, parentInfor, dispatch }) => {
       },
       body: JSON.stringify(parentInfor),
     })
-    const responseJSON = await response.json();
+    await response.json();
     dispatch(setParentTrue());
     return true;
   } catch(error) {

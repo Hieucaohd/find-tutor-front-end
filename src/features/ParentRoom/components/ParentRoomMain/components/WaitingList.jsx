@@ -27,6 +27,7 @@ const useStyles = makeStyles({
 
 function WaitingList( props ) {
     const {waitingList = [], parent, roomId, userId, token = "", typeParent = false} = props;
+    console.log('waitng list', waitingList)
     const classes = useStyles();
     const dispatch = useDispatch();
     const deleteFromWaitingList = (waitingId) => {
@@ -38,9 +39,9 @@ function WaitingList( props ) {
         }));
     };
 
-    const addToInvitedList = (waitingId) => {
+    const addToInvitedList = async (waitingId) => {
         if(!waitingId) return;
-        dispatch(addInvitedListForRoom({ waitingId: waitingId, token: token }));
+        await dispatch(addInvitedListForRoom({ waitingId: waitingId, token: token }));
     };
     return (
         <ul className={classes.root}>

@@ -102,10 +102,10 @@ function TutorItem( {id, tutor, onCheck, onDelete, onWait} ) {
         <div className={classes.item}>
             <div className={classes.name} onClick={handleShowTutorInfo}>
                 <Avatar alt="tutor" 
-                    src = {tutor?.user.imageprivateusermodel?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_3I4Y2ydmFBosgWcdoqVBBCsYZksWAhHtjg&usqp=CAU"}
+                    src = {tutor?.user?.imageprivateusermodel?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_3I4Y2ydmFBosgWcdoqVBBCsYZksWAhHtjg&usqp=CAU"}
                     className={classes.avatar}
                 />
-                <div><h5>{tutor.first_name} {tutor.last_name}</h5> <span>{tutor?.user.username}</span></div>
+                <div><h5>{tutor?.first_name} {tutor?.last_name}</h5> <span>{tutor?.user?.username}</span></div>
             </div>
             <div className={classes.buttonGroup}>
                 {onCheck && !onWait && <button className={classes.check} onClick={handleCheck}><AiFillCheckCircle /></button> }

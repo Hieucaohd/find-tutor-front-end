@@ -83,6 +83,9 @@ const useStyles = makeStyles(theme => ({
     },
     generalInfo: {
         display: 'flex',
+        [theme.breakpoints.down('xs')]: {
+            flexDirection: 'column-reverse'
+        },
     },
     birth: {
         "& h4":{

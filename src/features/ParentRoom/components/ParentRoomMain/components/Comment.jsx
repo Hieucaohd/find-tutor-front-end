@@ -1,7 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FcUndo } from 'react-icons/fc';
 import { makeStyles } from '@material-ui/core';
+import React from 'react';
+import { FcUndo } from 'react-icons/fc';
 
 Comment.propTypes = {
     

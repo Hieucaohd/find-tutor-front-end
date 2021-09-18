@@ -72,7 +72,7 @@ export const catchProvinceName = (name) => {
     if(name.search('Thành phố')!==-1) {
         return name.slice(10);
     }
-    if(name.search('Tỉnh')!==-1) {
+    else if(name.search('Tỉnh')!==-1) {
         return name.slice(5)
     }
     return name;
@@ -81,13 +81,24 @@ export const catchProvinceName = (name) => {
 export const catchDistrictName = (name) => {
     if(!name) return "";
     if(name.search('Quận')!==-1){
-        return name.slice(5);
+        return name.replace("Quận", "Q.");
     }
-    if(name.search('Huyện')!==-1){
-        return name.slice(6);
+    else if(name.search('Huyện')!==-1){
+        return name.replace("Huyện", "H.");
     }
-    if(name.search('Thành phố')!==-1){
-        return name.slice(10);
+    else if(name.search('Thành phố')!==-1){
+        return name.replace('Thành phố', 'TP.');
+    }
+    else if(name.search('Thị xã')!==-1){
+        return name.replace('Thị xã', 'TX.');
+    }
+    return name;
+}
+
+export const catchWardName = (name) => {
+    if(!name) return "";
+    if(name.search('Phường')!==-1){
+        return name.replace("Phường", "P.");
     }
     return name;
 }

@@ -1,12 +1,10 @@
 import {
-  createEntityAdapter,
-  createSlice,
-  createAsyncThunk,
+  createAsyncThunk, createEntityAdapter,
+  createSlice
 } from "@reduxjs/toolkit";
-
 import { server_name, token_prefix } from "../../namespace";
 
-import { deleteForInivted } from "./waitingListForRoomSlice";
+
 
 const invitedListForRoomAdapter = createEntityAdapter();
 
@@ -40,24 +38,23 @@ export const fetchInvitedListForRoom = createAsyncThunk(
 export const addInvitedListForRoom = createAsyncThunk(
   "invitedListForRoom/addInvitedListForRoom",
   async (args, thunkAPI) => {
-    const { waitingId, token } = args;
-    return fetch(
-      `${server_name}/findTutor/waitingTutorDetail/${waitingId}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${token_prefix} ${token}`,
-        },
-      }
-    ).then((response) => {
-      if (response.ok) {
-        thunkAPI.dispatch(deleteForInivted(waitingId));
-        return response.json();
-      } else {
-        alert("Co loi xay ra.");
-      }
-    });
+    try {
+      const { waitingId, token } = args;
+      const response = await fetch(
+        `${server_name}/findTutor/waitingTutorDetail/${waitingId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token_prefix} ${token}`,
+          },
+        }
+      )
+      const responseJSON = await response.json();
+      return responseJSON;
+    } catch (error){
+      console.log("Failed to add invited list: ", error);
+    }
   }
 );
 

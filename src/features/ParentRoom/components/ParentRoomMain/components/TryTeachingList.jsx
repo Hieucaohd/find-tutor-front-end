@@ -25,10 +25,9 @@ const useStyles = makeStyles({
 })
 
 function TryTeachingList(props) {
-    const {tryTeachingList = [],parent , userId, token = "", typeTutor = false, typeParent = false} = props;
+    const {tryTeachingList = [] , userId, token = "", typeTutor = false, typeParent = false} = props;
     const classes = useStyles();
     const dispatch = useDispatch();
-    console.log('try teaching list', tryTeachingList)
     const addToTeaching = (try_teachingId) => {
         addToTeachingForRoom({
           try_teachingId: try_teachingId,
