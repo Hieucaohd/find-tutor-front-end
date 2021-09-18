@@ -33,14 +33,14 @@ function ParentRoom(props) {
   useEffect(()=> {
     const getRoomDetail = async () => {
       const newRoomDetail = await GetParentRoomDetail(roomId);
-      const provinceName = await getProvinceName(newRoomDetail.province_code || 0);
+      const provinceName = await getProvinceName(newRoomDetail?.province_code || 0);
       const districtName = await getDistrictName({
-        provinceCode: newRoomDetail.province_code || 0,
-        districtCode: newRoomDetail.district_code || 0,
+        provinceCode: newRoomDetail?.province_code || 0,
+        districtCode: newRoomDetail?.district_code || 0,
       });
       const wardName = await getWardName({
-        districtCode: newRoomDetail.district_code || 0,
-        wardCode: newRoomDetail.ward_code || 0,
+        districtCode: newRoomDetail?.district_code || 0,
+        wardCode: newRoomDetail?.ward_code || 0,
       });
       dispatch(getWaitingListForRoom(newRoomDetail.waitingtutormodel_set));
       dispatch(getInvitedListForRoom(newRoomDetail.listinvitedmodel_set));

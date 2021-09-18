@@ -1,13 +1,14 @@
 import { Box, Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { AiFillCheckCircle, AiFillCloseCircle, AiFillHeart } from "react-icons/ai";
-import { BsFillPeopleFill } from "react-icons/bs";
+import { AiOutlineClockCircle } from "react-icons/ai";
+import { IoMaleFemaleOutline, IoSchoolOutline, IoLocationOutline, IoTimerOutline } from "react-icons/io5";
 import { useHistory } from 'react-router-dom';
 import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName } from '../location/getLocation';
-import { gradientColor } from "./color";
 import { subject } from "./picture";
 import "./styles.scss";
+import { Avatar, makeStyles } from '@material-ui/core';
+import HomeButton from './components/HomeButton/HomeButton';
 
 Room.propTypes = {
     room: PropTypes.object.isRequired,
@@ -19,41 +20,43 @@ Room.propTypes = {
     typeTutor: PropTypes.bool,
 };
 
-function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false} ) {
+function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, type} ) {
+    console.log('room', room)
     const history = useHistory();
     const [address, setAddress] = useState("");
     // const [showModal, setShowModal] = useState(false);
-    const handleShowDetailRoom = (id) => {
+    const handleShowDetailRoom = () => {
         //navigate to detail room
-        history.push(`/room/${id}`);
+        history.push(`/room/${room.roomId}`);
     }
 
-    const handleDelete = (e, id) => {
-        e.stopPropagation();
-        onDelete(id);
+    const handleDelete = () => {
+        onDelete(room.id);
     }
 
-    const handleCheck = (e, id) => {
-        e.stopPropagation();
-        onCheck(id);
+    const handleCheck = () => {
+        onCheck(room.id);
     }
 
-    const getTypeRoomString = (typeTeacher, sexTeacher) => {
-        if(!typeTeacher && !sexTeacher) return ;
-        let ans = "";
+    const getTypeTutorString = (typeTeacher) => {
+        if(!typeTeacher) return ;
         if(typeTeacher === "Giao Vien, Sinh Vien") {
-            ans += "Giáo viên, Sinh viên";
+            return false;
         } else if (typeTeacher === "Giao Vien") {
-            ans += "Giáo viên";
+            return "Giáo viên";
         } else if (typeTeacher === "Sinh Vien") {
-            ans += "Sinh viên"
+            return "Sinh viên"
         }
-        if (sexTeacher === "NAM") {
-            ans += " nam";
-        } else if (sexTeacher === "NU") {
-            ans += " nữ";
+    }
+
+    const getSexOfTeacher = (sex)=> {
+        if(!sex) return "";
+        if (sex === "NAM") {
+            return "Gia sư nam";
+        } else if (sex === "NU") {
+            return"Gia sư nữ";
         }
-        return ans;
+        return false;
     }
 
     const formatPriceString = (price) => {
@@ -83,42 +86,40 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false} 
         getAddress();
     }, []);
     return (
-        <Grid item key={room.id} className="room" xs={12} sm={6} md={3} lg={3} className="room">
+        <Grid item key={room.id} className="room" xs={12} sm={6} md={4} lg={3} className="room" >
             <Box mb={4} display="flex" justifyContent="center" alignItems="center">
-            <div className="item__room" onClick={() => handleShowDetailRoom(room.roomId)}>
-                <div className="item__room__thumbnail" style={{ 'background-image': gradientColor[room.subject] || gradientColor["Khác"]}}>
-                    <div>
-                        <h4>{room.subject}<span>{room.lop}</span></h4>
-                    </div>
+            <div className="item__room">
+                <div className="item__room__avatar">
+                    <Avatar 
+                        src = {room?.parent?.user?.imageprivateusermodel?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_3I4Y2ydmFBosgWcdoqVBBCsYZksWAhHtjg&usqp=CAU"}
+                    />
+                
+                {room?.parent?.user?.username}</div>
+                <span className="item__room__clock"><AiOutlineClockCircle/> 2 giờ trước</span>
+                <div className="item__room__thumbnail">
                     <img src={subject[room.subject] || subject["Mặc Định"]} alt="mon hoc"/>
+                    <div>
+                        <h3>{room.subject} <span>{room.lop}</span></h3>
+                        <h5>{formatPriceString(room.pricemodel_set[0].money_per_day)} đ/buổi</h5>
+                    </div>
                 </div>
                 <div className="item__room__info">
-                    <div className="item__room__info__price">
-                        <h4>{address}</h4>
-                        <h5>{getTypeRoomString(room.pricemodel_set[0].type_teacher, room.pricemodel_set[0].sex_of_teacher)}</h5>
-                        <h5><span>{formatPriceString(room.pricemodel_set[0].money_per_day)}</span> đ / buổi</h5>
-                    
+                    {getSexOfTeacher(room.pricemodel_set[0].sex_of_teacher) && <div>
+                        <IoMaleFemaleOutline /> {getSexOfTeacher(room.pricemodel_set[0].sex_of_teacher)}
+                    </div>}
+                    { getTypeTutorString(room.pricemodel_set[0].type_teacher) && <div>
+                        <IoSchoolOutline /> {getTypeTutorString(room.pricemodel_set[0].type_teacher)}
+                    </div>}
+                    <div>
+                        <IoLocationOutline /> {address}
                     </div>
-                    {onHome && typeTutor && <button onClick={ (e) => handleCheck(e, room.id)} className="item__room__info__heart">
-                        <AiFillHeart />
-                    </button> 
-                    }
-                    {!onHome && <div>
-                        {onWait === undefined 
-                            ? <div className="item__room__button">
-                                   {onCheck && onWait === undefined ? <button className="item__room__button__check" onClick={ (e) => handleCheck(e, room.id)}><AiFillCheckCircle /></button> : null}
-                                   {onDelete ? <button className="item__room__button__delete" onClick={ (e) => handleDelete(e, room.id)}><AiFillCloseCircle /></button> :null }
-                               </div>
-                           : <div className="item__room__button">
-                                   {onCheck && onWait === false ? <button className="item__room__button__check" onClick={ (e) => handleCheck(e, room.id)}><AiFillCheckCircle /></button> : null}
-                                   {onCheck && onWait === true ? <button className="item__room__button__check"><BsFillPeopleFill /></button> : null}
-                                   {onDelete ? <button className="item__room__button__delete" onClick={ (e) => handleDelete(e, room.id)}><AiFillCloseCircle /></button> :null }
-                               </div>
-                           }
-                        </div>
-                    }
+                    <div>
+                        <IoTimerOutline /> {room.pricemodel_set[0].time_in_one_day} tiếng/buổi
+                    </div>
                 </div>
-          </div>
+                <span className="item__room__current">Có 4 gia sư đang ứng tuyển</span>
+                {type==="home" && <HomeButton onCheck={handleCheck} id={room.roomId} onShow={handleShowDetailRoom}/>}
+            </div>
         </Box>
         </Grid>
     );

@@ -10,7 +10,7 @@
 }
 
 .home {
-    padding: 24px 42px;
+    padding: 24px 52px;
     margin-top: 56px;
     &__overlay {
         z-index: 698;
@@ -49,7 +49,7 @@
     &__buttongroup {
         position: fixed;
         top: 40%;
-        left: 16px;
+        left: 8px;
         display: flex;
         flex-direction: column;
         & button {

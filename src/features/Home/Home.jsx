@@ -105,11 +105,11 @@ function Home() {
 
   return (
     <div className = "home">
-      <Categories />
+      {/* <Categories /> */}
       {loading ? <SkeletonPage /> 
-      : <Grid container spacing={2}>{
+      : <Grid container>{
         roomList?.map((room)=>(
-          <Room room={{...room, roomId: room.id}} typeTutor = {type_tutor} onCheck={type_tutor && handleAddRoom} onHome={true}/>
+          <Room room={{...room, roomId: room.id}} typeTutor = {type_tutor} onCheck={type_tutor && handleAddRoom} type={"home"}/>
         ))}
       </Grid>}
 

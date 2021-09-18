@@ -1,0 +1,30 @@
+.button {
+    position: absolute;
+        right: 4px;
+        left: 4px;
+        bottom: 4px;
+        display: flex;
+        align-items: center;
+        & button {
+            flex: 1;
+            margin: 8px;
+            padding: 8px 4px;
+            border-radius: 4px;
+            font-weight: 600;
+            opacity: 0.8;
+            &:hover {
+                opacity: 1;
+                cursor: pointer;
+            }
+        }
+        &__apply {
+            background-color: #0061ff;
+            border: none;
+            color: white;
+            
+        }
+        &__detail {
+            border: none;
+            background-color: #F0F0F0;
+        }
+}
