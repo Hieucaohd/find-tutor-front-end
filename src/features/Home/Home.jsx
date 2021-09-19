@@ -5,17 +5,17 @@ import SkeletonPage from "components/Skeleton/SkeletonPage";
 import { isSignedIn } from "features/auth/cookies";
 import { GetAllRoom, GetFilterRoom } from "graphql/RoomQueries";
 import React, { useEffect, useRef, useState } from "react";
-import { FcAddDatabase, FcClearFilters, FcFilledFilter } from "react-icons/fc";
+import { AiOutlineAppstoreAdd } from "react-icons/ai";
+import { RiFilter2Line, RiFilterOffLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
   selectToken, selectType_parent, selectType_tutor
 } from "../auth/authSlice";
 import { addWaitingListForRoom } from "../ParentRoom/waitingListForRoomSlice";
-import Categories from "./components/Categories";
 import FilterBar from "./components/FilterBar/FilterBar";
 import "./styles.scss";
-
+import Categories from "./components/Categories";
 function Home() {
   const history = useHistory();
   const type_tutor = useSelector(selectType_tutor); // lấy type_tutor từ authSlice.js
@@ -23,6 +23,7 @@ function Home() {
   const filterBar = useRef(null);
   const homeOverlay = useRef(null);
   const cancelFilter = useRef(null);
+  const isSigned = isSignedIn();
   const [filter, setFilter] = useState({
     filterRoom: {},
     pages: 1,
@@ -91,8 +92,12 @@ function Home() {
   }
 
   const handleAddRoom = (id) => {
-    dispatch(addWaitingListForRoom({ roomId: id, token: token }));
-    alert("Đã thêm phòng");
+    if(isSigned){
+      dispatch(addWaitingListForRoom({ roomId: id, token: token }));
+      alert("Đã thêm phòng");
+    } else {
+      history.push("/signin");
+    }
   }
 
   const handleShowCreateRoom = () => {
@@ -105,30 +110,27 @@ function Home() {
 
   return (
     <div className = "home">
-      {/* <Categories /> */}
+      <Categories />
       {loading ? <SkeletonPage /> 
       : <Grid container>{
         roomList?.map((room)=>(
-          <Room room={{...room, roomId: room.id}} typeTutor = {type_tutor} onCheck={type_tutor && handleAddRoom} type={"home"}/>
+          <Room room={{...room, roomId: room.id}} typeTutor = {type_tutor} typeParent={type_parent} onCheck={handleAddRoom} type={"home"}/>
         ))}
       </Grid>}
 
       <div ref={filterBar} className="home__filter"> 
         <FilterBar onClose={handleCloseFilterBar} onSubmit={onSubmitSearch}/>
       </div>
-
-      
-
       <div className="home__buttongroup">
-        {isSignedIn() && type_parent && <button onClick={handleShowCreateRoom}><FcAddDatabase /></button>}
-        <button className="home__toggle__filter" onClick={handleShowFilterBar}> <FcFilledFilter /> </button>
-        <button className="home__toggle__cancel" onClick={handleCancelFilter} ref={cancelFilter} style={{display: "none"}}> <FcClearFilters /></button>
+        {isSigned && type_parent && <button onClick={handleShowCreateRoom}><AiOutlineAppstoreAdd /></button>}
+        {isSigned && <button className="home__toggle__filter" onClick={handleShowFilterBar}> <RiFilter2Line /> </button>}
+        <button className="home__toggle__cancel" onClick={handleCancelFilter} ref={cancelFilter} style={{display: "none"}}> <RiFilterOffLine /></button>
       </div>
-      
         {maxPagination > 1 && <Pagination count={maxPagination} color="primary" className="home__pagination" onChange={handleChangePage}/>}
       <div className="home__overlay" ref={homeOverlay} onClick={handleCloseFilterBar}> </div>
     </div>
   );
 }
+
 
 export default Home;

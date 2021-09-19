@@ -13,7 +13,7 @@
     padding: 24px 52px;
     margin-top: 56px;
     &__overlay {
-        z-index: 698;
+        z-index: 800;
         position: fixed;
         top: 0px;
         left: 0;
@@ -33,17 +33,18 @@
     &__filter {
         position: fixed;
         left: 0px;
-        top: 57px;
+        top: 0px;
         bottom: 0px;
         width: 220px;
         background-color: white;
-        z-index: 699;
+        z-index: 801;
         animation: animateleft 0.4s;
         padding: 25px;
         display: none;
         flex-direction: column;
         justify-content: center;
         align-self: center;
+        
     }
 
     &__buttongroup {
@@ -65,6 +66,15 @@
     &__pagination {
         ul {
             justify-content: center;
+        }
+    }
+
+    &__toggle {
+        &__filter {
+            color: #0061ff;
+        }
+        &__cancel {
+            color: #ccc;
         }
     }
 }

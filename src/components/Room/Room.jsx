@@ -20,8 +20,7 @@ Room.propTypes = {
     typeTutor: PropTypes.bool,
 };
 
-function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, type} ) {
-    console.log('room', room)
+function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, typeParent=false, type} ) {
     const history = useHistory();
     const [address, setAddress] = useState("");
     // const [showModal, setShowModal] = useState(false);
@@ -118,7 +117,7 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, 
                     </div>
                 </div>
                 <span className="item__room__current">Có 4 gia sư đang ứng tuyển</span>
-                {type==="home" && <HomeButton onCheck={handleCheck} id={room.roomId} onShow={handleShowDetailRoom}/>}
+                {type==="home" && <HomeButton onCheck={handleCheck} id={room.roomId} onShow={handleShowDetailRoom} typeParent={typeParent}/>}
             </div>
         </Box>
         </Grid>

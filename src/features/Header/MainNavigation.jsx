@@ -10,6 +10,7 @@ import {
 } from "../auth/authSlice";
 import SearchBar from './components/SearchBar';
 import ToggleMenu from "./components/ToggleMenu";
+import WebBanner from "./components/WebBanner";
 
 function MainNavigation() {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ function MainNavigation() {
   }
   return (
     <div>
+      {!isSignedIn() && <WebBanner />}
       {location.pathname !== "/signin" && location.pathname !== "/signup" &&
       <div className={classes.root}>
         <div className={classes.item}>
@@ -85,8 +87,8 @@ const useStyles = makeStyles((theme) => ({
     "left": "0px",
     "right": "0px",
     "height": "56px",
-    "background-color": "white",
-    borderBottom: '1px solid rgba(0,0,0,0.1)',
+    // "background-color": "white",
+    // borderBottom: '1px solid rgba(0,0,0,0.1)',
     "display": "flex",
     "align-items": "center",
     "justify-content": "space-between",
@@ -167,11 +169,12 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
   },
   signin: {
-    backgroundColor: '#5037EC',
+    backgroundColor: '#0061FF',
     color: 'white',
     border: 'none',
     padding: '8px 12px',
-    borderRadius: '52px',
+    borderRadius: '4px',
+    fontWeight: 600,
     opacity: 0.8,
     marginLeft: "16px",
     "&:hover": {
