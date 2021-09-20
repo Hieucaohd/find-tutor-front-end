@@ -21,7 +21,7 @@ function App() {
           <MainNavigation />
           <Switch>
             <Route path="/signin" component={Auth} />
-            <Route path="/" component={Home} />
+            <Route exact path="/" component={Home} />
             <Route exact path="/signup" component={Register} />
             <Route exact path="/tutorInfo/:tutorId" component={TutorInfor} />
             <Route exact path="/parentInfo/:parentId" component={ParentInfor} />
