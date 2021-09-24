@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName, getWardName } from "components/location/getLocation";
-import { selectToken } from "features/auth/authSlice";
+import { selectToken, selectType_parent } from "features/auth/authSlice";
 import { addToApplyList, addToTeachingList } from "graphql/mutationGraphQl";
 import { GetParentRoomDetail } from "graphql/RoomQueries";
 import React, { useEffect, useState } from "react";
@@ -32,6 +32,7 @@ function ParentRoom(props) {
   const [teaching, setTeaching] = useState(null);
   const [roomDetail, setRoomDetail] = useState({});
   const [loading, setLoading] = useState(true);
+  const typeParent = useSelector(selectType_parent);
   useEffect(()=> {
     const getRoomDetail = async () => {
       const newRoomDetail = await GetParentRoomDetail(roomId);
@@ -144,6 +145,7 @@ function ParentRoom(props) {
         deleteFromApplyList = {handleDelFromApplyList}
         deleteFromTeachingList = {handleDelFromTeachingList}
         addToApplyList = {handleAddToApplyList}
+        typeParent={typeParent}
       />
     </div>
   );

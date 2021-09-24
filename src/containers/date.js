@@ -17,5 +17,5 @@ export const handleTime = (startTime) => {
     } else if (minute > 0) {
         return `${minute} phút trước`;
     }
-    return "mới tạo"
+    return "bây giờ"
 }

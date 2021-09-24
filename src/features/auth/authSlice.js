@@ -154,7 +154,9 @@ const authSlice = createSlice({
           state.id = id;
           state.type_tutor = type_tutor;
           state.type_parent = type_parent;
-          setUserInfoCookies(action.payload);
+          if(token) {
+            setUserInfoCookies(action.payload);
+          }
         }
       })
       .addCase(loginWithFacebook.pending, (state, action) => {
@@ -169,7 +171,7 @@ const authSlice = createSlice({
           state.id = id;
           state.type_tutor = type_tutor;
           state.type_parent = type_parent;
-          setUserInfoCookies(action.payload);
+          // setUserInfoCookies(action.payload);
         }
       })
       .addCase(logout.pending, (state) => {

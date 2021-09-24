@@ -11,7 +11,7 @@ RoomInfo.propTypes = {
     roomDetail: PropTypes.object,
 };
 
-function RoomInfo( {room, applyList, userId, addToApplyList} ) {
+function RoomInfo( {room, applyList, userId, addToApplyList, typeParent} ) {
     const classes = useStyles();
     const history = useHistory();
     const renderDay = (daysStr) => {
@@ -100,7 +100,7 @@ function RoomInfo( {room, applyList, userId, addToApplyList} ) {
                         <MdAccessTime /> Được đăng {handleTime(room?.create_at)}
                     </div>
                     <div>
-                        {!isOnList(userId, applyList) && <button className={classes.apply} onClick={handleAddToApplyList}>Ứng tuyển</button>}
+                        {!isOnList(userId, applyList) && !typeParent && <button className={classes.apply} onClick={handleAddToApplyList}>Ứng tuyển</button>}
                     </div>
                 </div>
             </div>

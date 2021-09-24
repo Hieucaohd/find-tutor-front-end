@@ -43,7 +43,7 @@ export const isOnList = (userId, waitingList) => {
     return false;
   }
   for(let i = 0; i<waitingList?.length; i++) {
-    if(Number(waitingList[i].tutor?.user?.id) === Number(userId)) {
+    if(Number(waitingList[i]?.tutor?.user?.id) === Number(userId)) {
       return true;
     }
   }

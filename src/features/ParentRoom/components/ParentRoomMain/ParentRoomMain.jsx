@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function ParentRoomMain( {roomDetail = {}, applyList, teaching, addToTeaching, deleteFromApplyList, deleteFromTeachingList, addToApplyList} ) {
+function ParentRoomMain( {roomDetail = {}, typeParent, applyList, teaching, addToTeaching, deleteFromApplyList, deleteFromTeachingList, addToApplyList} ) {
     const userId = useSelector(selectId_of_user);
     const {
       params: {roomId}
@@ -53,7 +53,7 @@ function ParentRoomMain( {roomDetail = {}, applyList, teaching, addToTeaching, d
 
     return (
       <div className={classes.root}>
-        <RoomInfo room={roomDetail} applyList={applyList} userId = {userId} addToApplyList={handleAddToApplyList}/>
+        <RoomInfo room={roomDetail} applyList={applyList} userId = {userId} addToApplyList={handleAddToApplyList} typeParent={typeParent}/>
         {applyList.length !== 0 && <h5 className={classes.title}>Danh sách ứng tuyển</h5> }
         {applyList?.map((item) => (
           <TutorItem key={item?.id} tutorInfo={item} isOwner={isOwner} onAdd={handleAddToTeaching} isTeaching={false} onDelete={handleDeleteFromApplyList} userId={userId}/>
