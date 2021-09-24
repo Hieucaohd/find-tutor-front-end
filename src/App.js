@@ -14,7 +14,6 @@ import Search from "./features/Header/components/Search/Search";
 import TutorInfor from "./features/Tutor/TutorInfor";
 
 function App() {
-
   return (
     <div className="App">
         <BrowserRouter>

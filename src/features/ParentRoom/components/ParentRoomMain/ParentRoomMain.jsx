@@ -1,153 +1,70 @@
-import { Grid, makeStyles } from '@material-ui/core';
-import Skeleton from '@material-ui/lab/Skeleton';
-import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router-dom';
 import { selectId_of_user, selectToken, selectType_parent, selectType_tutor } from '../../../auth/authSlice';
-import { selectInvitedListForRoom } from '../../invitedListForRoomSlice';
-import { selectTeachingForRoom } from '../../teachingForRoomSlice';
-import { selectTryTeachingForRoom } from '../../tryTeachingForRoomSlice';
-import { selectWaitingListForRoom } from '../../waitingListForRoomSlice';
-import Comment from './components/Comment';
-import InvitedList from './components/InvitedList';
 import RoomInfo from './components/RoomInfo';
-import TeachingList from './components/TeachingList';
-import TryTeachingList from './components/TryTeachingList';
-import WaitingList from "./components/WaitingList";
+import TutorItem from './components/TutorItem';
 import "./styles.scss";
 
-ParentRoomMain.propTypes = {
-    roomDetail: PropTypes.object,
-};
 
-const useStyles = makeStyles({
-  root: {},
-  "center-block" : {
-    "border-radius": "4px",
-    "display": "flex",
-    "align-items": "center",
-    "justify-content": "center",
-    "height": "60vh",
-    backgroundColor: '#E9E8EB',
-    border: '0.5px solid rgba(0, 0, 0, 0.1)', 
-  },
-  block: {
-    position: 'relative',
-    height: '50%',
-    "&>div": {
-      overflow: "auto",
-      "text-align": "center",
-      backgroundColor: '#E9E8EB',
-      border: '0.5px solid rgba(0, 0, 0, 0.1)',
-      height: "100%",
-      "border-radius": "4px",
-    }
+// ParentRoomMain.propTypes = {
+//     roomDetail: PropTypes.object,
+// };
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    
+    [theme.breakpoints.up('md')]: {
+      padding: "12px 48px", 
+    },
   },
   title: {
-    position: "absolute",
-    bottom: 7,
-    left: 8,
-    right: 8, 
-    fontWeight: 500,
-    backgroundColor: '#725eef',
-    color: 'white',
-    padding: "4px 0px",
-    "z-index": 1,
-    borderRadius: '0 0 4px 4px',
-    textAlign: 'center',
+    textAlign: "center",
   }
-})
+}))
 
-function ParentRoomMain( {roomDetail = {}, isLoading} ) {
-    const token = useSelector(selectToken);
+function ParentRoomMain( {roomDetail = {}, applyList, teaching, addToTeaching, deleteFromApplyList, deleteFromTeachingList, addToApplyList} ) {
     const userId = useSelector(selectId_of_user);
-    const typeParent = useSelector(selectType_parent);
-    const typeTutor = useSelector(selectType_tutor);
-    const [showComment, setShowComment] = useState(false);
     const {
       params: {roomId}
     } = useRouteMatch();
     const classes = useStyles();
-    const waitingList = useSelector(selectWaitingListForRoom);
-    const invitedList = useSelector(selectInvitedListForRoom);
-    const tryTeachingList = useSelector(selectTryTeachingForRoom);
-    const teachingList = useSelector(selectTeachingForRoom);
-    const handleShowComment = () => {
-      setShowComment(true);
+    const isOwner = Number(userId) === Number(roomDetail?.parent?.id);
+
+    const handleAddToApplyList = () => {
+      if(!addToApplyList) return;
+      addToApplyList();
     }
-    const handleCloseComment = () => {
-      setShowComment(false);
+
+    const handleAddToTeaching = (id) => {
+      addToTeaching(id);
     }
+
+    const handleDeleteFromApplyList = (id) => {
+      if(!deleteFromApplyList) return;
+      deleteFromApplyList(id)
+    }
+
+    const handleDeleteFromTeachingList = (id) => {
+      if(!deleteFromTeachingList) return;
+      deleteFromTeachingList(id);
+    }
+
     return (
-        <Grid container spacing={3}>
-        <Grid item xs={3} container direction="column" spacing={2}>
-            <Grid item style={{flex: 1}} className={classes.block}>
-              <div className={classes.relative}>
-                {isLoading ? <Skeleton variant="rect" style={{width: "100%", height: "100%"}} />
-                : <WaitingList 
-                waitingList = {waitingList} 
-                parent = {roomDetail.parent}
-                roomId = {roomId}
-                typeParent={typeParent}
-                userId = {userId}
-                token = {token}
-                />}
-              </div>
-              <span className={classes.title}>Danh sách chờ</span>
-
-            </Grid >
-            <Grid item style={{flex: 1}} className={classes.block}>
-              <div>
-                {isLoading ? <Skeleton variant="rect" style={{width: "100%", height: "100%"}} />
-                 :<InvitedList 
-                    invitedList = {invitedList} 
-                    parent = {roomDetail.parent}
-                    roomId = {roomId}
-                    typeTutor={typeTutor}
-                    typeParent={typeParent}
-                    userId = {userId}
-                    token = {token}
-                  />}
-              </div>
-              <span className={classes.title}>Danh sách mời</span>
-
-            </Grid>
-        </Grid>
-        <Grid item xs={6}>
-          <div className={classes['center-block']}>
-              {isLoading && <Skeleton variant="rect" style={{width: "100%", height: "100%"}} />}
-              {!showComment && !isLoading &&  <RoomInfo roomDetail={roomDetail} onClose={handleShowComment}/>}
-              {showComment && !isLoading && <Comment onClose={handleCloseComment} />}
-          </div>
-        </Grid>
-        <Grid item xs={3} container direction="column" spacing={2}>
-            <Grid item style={{flex: 1}} className={classes.block}>
-              <div>
-                {isLoading ? <Skeleton variant="rect" style={{width: "100%", height: "100%"}} />
-                : <TryTeachingList
-                tryTeachingList = {tryTeachingList} 
-                parent = {roomDetail.parent}
-                roomId = {roomId}
-                typeTutor={typeTutor}
-                typeParent={typeParent}
-                userId = {userId}
-                token = {token}
-                /> }
-              </div>
-              <span className={classes.title}>Danh sách dạy thử</span>
-            </Grid >
-            <Grid item style={{flex: 1}} className={classes.block}>
-              <div>
-                  {isLoading ? <Skeleton variant="rect" style={{width: "100%", height: "100%"}} />
-                  :  <TeachingList 
-                    teachingList={teachingList}
-                  /> }
-              </div>
-              <span className={classes.title}>Danh sách dạy chính thức</span>
-            </Grid>
-        </Grid>
-      </Grid>
+      <div className={classes.root}>
+        <RoomInfo room={roomDetail} applyList={applyList} userId = {userId} addToApplyList={handleAddToApplyList}/>
+        {applyList.length !== 0 && <h5 className={classes.title}>Danh sách ứng tuyển</h5> }
+        {applyList?.map((item) => (
+          <TutorItem key={item?.id} tutorInfo={item} isOwner={isOwner} onAdd={handleAddToTeaching} isTeaching={false} onDelete={handleDeleteFromApplyList} userId={userId}/>
+        ))}
+        {/* {parentInvitedList.length !== 0 && <h5 className={classes.title}>Danh sách được chọn</h5>}
+        {parentInvitedList?.map((item) => (
+          <TutorItem key={item.id} tutorInfo={item} isOwner={isOwner}/>
+        ))} */}
+        {teaching && <h5 className={classes.title}>Gia sư đang dạy</h5>}
+        {teaching && <TutorItem key={teaching.id} tutorInfo={teaching} isOwner={isOwner} userId={userId} isTeaching={true} onDelete={handleDeleteFromTeachingList}/>}
+      </div>
     );
 }
 

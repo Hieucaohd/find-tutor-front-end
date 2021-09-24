@@ -9,26 +9,26 @@ Categories.propTypes = {
 const useStyles = makeStyles(theme => ({
     root: {
         width: "100%",
-        height: 104,
+        height: 84,
         overflow: "auto",
         marginBottom: '32px',
     },
     list: {
         display: "flex",
         [theme.breakpoints.down('sm')]: {
-            width: "900px",
-            height: 100,
+            width: "760px",
           },
         [theme.breakpoints.up('md')]: {
         },
 
         "& img": {
-            width: '40px',
-            height: '40px',
+            width: '24px',
+            height: '24px',
             marginBottom: 8,
         },
         "& h5": {
-            margin: 0
+            margin: 0,
+            fontSize: 12,
         }
     },
     item: {
@@ -38,10 +38,11 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         borderRadius: 4,
         marginRight: 16,
-        width: 80,
-        height: 92,
-        border: '1px solid rgba(0,0,0,0.1)',
+        width: 60,
+        height: 72,
+        boxShadow: '0 1px 4px 0 #ccc',
         opacity: '0.7',
+        backgroundColor: 'white',
         "&:hover": {
             opacity: "1",
             cursor: 'pointer',

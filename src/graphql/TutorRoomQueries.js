@@ -14,6 +14,7 @@ export const GetTutorWaitingList =  async (id) => {
                         ward_code
                         subject
                         lop
+                        number_waiting
                         pricemodel_set {
                             money_per_day
                             time_in_one_day
@@ -47,6 +48,7 @@ export const GetTutorInvitedList =  async (id) => {
                         ward_code
                         subject
                         lop
+                        number_waiting
                         pricemodel_set {
                             money_per_day
                             time_in_one_day
@@ -80,6 +82,7 @@ export const GetTutorTryTeachingList = async (id) => {
                         ward_code
                         subject
                         lop
+                        number_waiting
                         pricemodel_set {
                             money_per_day
                             time_in_one_day
@@ -112,6 +115,7 @@ export const GetTutorTeachingList = async (id) => {
                         ward_code
                         subject
                         lop
+                        number_waiting
                         pricemodel_set {
                             money_per_day
                             time_in_one_day
@@ -130,3 +134,52 @@ export const GetTutorTeachingList = async (id) => {
     return parentRoom;
 };
 
+export const getTutorRoomList = async (id) => {
+    const query = ` 
+    {
+        user_by_id(id: ${id}){
+            tutormodel {
+                waitingtutormodel_set {
+                    id
+                    parent_room {
+                        id
+                        province_code
+                        district_code
+                        ward_code
+                        subject
+                        lop
+                        number_waiting
+                        create_at
+                        pricemodel_set {
+                            money_per_day
+                            time_in_one_day
+                            type_teacher
+                            sex_of_teacher
+                        }
+                    }
+                } 
+                tutorteachingmodel_set {
+                    id
+                    parent_room{
+                        id
+                        province_code
+                        district_code
+                        ward_code
+                        subject
+                        lop
+                        number_waiting
+                        create_at
+                        pricemodel_set {
+                            money_per_day
+                            time_in_one_day
+                            type_teacher
+                            sex_of_teacher
+                          }
+                    }
+                }  
+            }
+        }
+    }`
+    const parentRoom = await fetchGraphQl("tutor's teaching list", "user_by_id", query);
+    return parentRoom.tutormodel;
+}

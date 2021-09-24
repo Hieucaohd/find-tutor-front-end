@@ -40,8 +40,8 @@ function ParentInfor() {
         <div>
             {isSignedIn() && typeParent && <button onClick={handleShowCreateRoom} className={classes.addRoom}><FcAddDatabase /></button>}
             <Grid container spacing={2} className={classes.root}>
-                {parentRoomList.map( (room)=> (
-                    <Room room={{...room, roomId: room.id}} onDelete={handleDeleteRoom}/>
+                {parentRoomList?.map( (room)=> (
+                    <Room room={{...room, roomId: room.id}} type="userroom" onDelete={handleDeleteRoom}/>
                 ))}
             </Grid>
         </div>
@@ -51,12 +51,12 @@ function ParentInfor() {
 const useStyles = makeStyles({
     root: {
         marginTop: '28px',
-        padding: "40px",
+        padding: "52px",
     },
     addRoom: {
         position: 'fixed',
         top: '40%',
-        left: '16px',
+        left: '8px',
         backgroundColor: 'transparent',
         border: 'none',
         fontSize: '32px',

@@ -4,7 +4,7 @@ import Register from './components/Register';
 import "./styles.scss";
 
 function Auth(props) {
-
+    
     const [showLoginForm, setShowLoginForm] = useState(true);
     const handleShowRegisterForm = () => {
         setShowLoginForm(false);

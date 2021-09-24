@@ -9,13 +9,14 @@ import { AiOutlineAppstoreAdd } from "react-icons/ai";
 import { RiFilter2Line, RiFilterOffLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { addToApplyList } from "../../graphql/mutationGraphQl";
 import {
   selectToken, selectType_parent, selectType_tutor
 } from "../auth/authSlice";
-import { addWaitingListForRoom } from "../ParentRoom/waitingListForRoomSlice";
+import Categories from "./components/Categories";
 import FilterBar from "./components/FilterBar/FilterBar";
 import "./styles.scss";
-import Categories from "./components/Categories";
+
 function Home() {
   const history = useHistory();
   const type_tutor = useSelector(selectType_tutor); // lấy type_tutor từ authSlice.js
@@ -32,6 +33,9 @@ function Home() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const token = useSelector(selectToken);
+
+
+
   const [pagination, setPagination] = useState(1);
   const [maxPagination, setMaxPagination] = useState(1);
   //chưa đăng kí là gia sư hay phụ huynh trả đến trang đăng kí
@@ -91,9 +95,9 @@ function Home() {
     cancelFilter.current.style.display = "block"
   }
 
-  const handleAddRoom = (id) => {
+  const handleAddRoom = async (id) => {
     if(isSigned){
-      dispatch(addWaitingListForRoom({ roomId: id, token: token }));
+      const response = await addToApplyList({token: token, parentRoomId: id});
       alert("Đã thêm phòng");
     } else {
       history.push("/signin");

@@ -23,7 +23,6 @@ function MainNavigation() {
   const classes = useStyles();
   const searchRef = useRef(null);
   const location = useLocation();
-
   const handleLogOut = async() => {
     dispatch(logout({
       token: token,
@@ -76,6 +75,7 @@ function MainNavigation() {
           <Search onClose={onCloseSearchForm}/>
         </div>
       </div>}
+
     </div>
   );
 }

@@ -5,6 +5,7 @@ export const GetAllRoom = (pages, token) => {
         all_room(page: ${pages}, num_in_page: 12){
             result {
               id
+              number_waiting
               parent {
                 user {
                     id
@@ -19,6 +20,7 @@ export const GetAllRoom = (pages, token) => {
               ward_code
               lop
               subject
+              create_at
               pricemodel_set {
                 money_per_day
                 time_in_one_day
@@ -31,6 +33,7 @@ export const GetAllRoom = (pages, token) => {
     }`
     return fetchGraphQl("room list", "all_room", query, token);
 }
+
 export const GetFilterRoom = ({filterRoom, pages, token}) => {
     const {lop, province_code, district_code, ward_code, subject, sex, job, price } = filterRoom;
     const queryString = `${lop ? `lop: [${lop}],` : ``}
@@ -52,6 +55,8 @@ export const GetFilterRoom = ({filterRoom, pages, token}) => {
                 ward_code
                 lop
                 subject
+                number_waiting
+                create_at
                 pricemodel_set {
                     money_per_day
                     time_in_one_day
@@ -100,6 +105,9 @@ export const GetParentRoomDetail = async(id) => {
                 }
                 first_name
                 last_name
+                province_code
+                district_code
+                birthday
             }
             province_code
             district_code
@@ -109,6 +117,7 @@ export const GetParentRoomDetail = async(id) => {
             lop
             day_can_teach
             other_require
+            create_at   
             pricemodel_set {
                 money_per_day
                 time_in_one_day
@@ -118,57 +127,45 @@ export const GetParentRoomDetail = async(id) => {
             waitingtutormodel_set {
                 id
                 tutor {
-                    user {
-                        id
-                        imageprivateusermodel {
-                            avatar
-                        }
-                        username
-                    }
-                    first_name
-                    last_name
-                }
-            }
-            listinvitedmodel_set {
-                id
-                tutor {
+                    id
                     user {
                         id
                         username
                         imageprivateusermodel {
                             avatar
-                        }
+                        } 
                     }
                     first_name
-                    last_name
-                }
-            }
-            tryteachingmodel {
-                id
-                tutor {
-                    user {
-                        id
-                        imageprivateusermodel {
-                            avatar
-                        }
-                        username
-                    }
-                    first_name
-                    last_name
+                    last_name 
+                    province_code
+                    district_code
+                    ward_code
+                    profession
+                    number_teaching
+                    birthday
+                    university
                 }
             }
             tutorteachingmodel {
                 id
                 tutor {
+                    id
                     user {
                         id
+                        username
                         imageprivateusermodel {
                             avatar
-                        }
-                        username
+                        } 
                     }
                     first_name
-                    last_name
+                    last_name 
+                    province_code
+                    district_code
+                    ward_code
+                    profession
+                    number_teaching
+                    birthday
+                    university
                 }
             }
         }
@@ -188,6 +185,8 @@ export const GetAllParentRoom = async(id) => {
                     lop
                     province_code
                     district_code
+                    number_waiting
+                    create_at
                     pricemodel_set {
                         money_per_day
                         time_in_one_day

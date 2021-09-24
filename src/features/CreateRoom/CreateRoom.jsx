@@ -1,12 +1,12 @@
 import { makeStyles } from "@material-ui/core";
 import Loading from "components/Loading/Loading";
 import Location from "components/location/Location";
+import { CreateParentRoom } from "graphql/mutationGraphQl";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { selectToken } from "../auth/authSlice";
-import { addParentRoom } from "./createroom";
+import { selectId_of_user, selectToken } from "../auth/authSlice";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -118,6 +118,7 @@ function CreateRoom(props) {
     district: 0,
     ward: 0
   })
+  const id = useSelector(selectId_of_user)
   const loadingRef = useRef(null);
 
   const handleGetLocation = (data) => {
@@ -134,18 +135,6 @@ function CreateRoom(props) {
         dayCanTeach.push(i);
       }
     }
-
-    const roomInfor = {
-      "day_can_teach": dayCanTeach || null, 
-      "subject": data.subject || null,
-      "lop": data.class || null,
-      "other_require": data.other_require || null,
-      "province_code": Number(location.province),
-      "district_code": Number(location.district),
-      "ward_code": Number(location.ward),
-      "detail_location": data.detailLocation || null,
-    };
-
     const getTypeTeacher = (str) => {
       if(str === 'both') {
         return ["sv", "gv"];
@@ -162,19 +151,30 @@ function CreateRoom(props) {
       }
       return ["nu"];
     }
-    const moreInfo = {
+    
+    const roomInfor = {
+      "day_can_teach": dayCanTeach || null, 
+      "subject": data.subject || null,
+      "lop": data.class || null,
+      "other_require": data.other_require || null,
+      "province_code": Number(location.province),
+      "district_code": Number(location.district),
+      "ward_code": Number(location.ward),
+      "detail_location": data.detailLocation || null,
       "time_in_one_day": Number(data.hours),
       "money_per_day": Number(data.price) < 1000 ? Number(data.price)*1000 : Number(data.price),
       "type_teacher": getTypeTeacher(data.job),
       "sex_of_teacher": getGender(data.gender),
     };
+
     
-    loadingRef.current.style.display = "flex";
-    const response = await addParentRoom({token: token, roomInfor: roomInfor, price: moreInfo});
-    loadingRef.current.style.display = "none";
-    if(response) {
-      history.push("/");
-      alert('Tạo phòng thành công');
+    try {
+      loadingRef.current.style.display = "flex";
+      await CreateParentRoom({token: token, roomInfo: roomInfor});
+      history.push(`/parentInfo/${id}`)
+    } catch (error){
+      loadingRef.current.style.display = "none";
+      console.log(error);
     }
   }
 
