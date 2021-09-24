@@ -1,5 +1,4 @@
-import { makeStyles } from '@material-ui/core';
-import { gradientColor } from "components/Room/color";
+import { makeStyles } from '@material-ui/core/styles';
 import { subject } from "components/Room/picture";
 import React from 'react';
 Categories.propTypes = {

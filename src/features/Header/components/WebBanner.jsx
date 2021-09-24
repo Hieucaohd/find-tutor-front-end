@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { isSignedIn } from 'features/auth/cookies';
 
@@ -14,6 +14,7 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: '#E1EEFE',
         display: 'flex',
         marginBottom: '-40px',
+        position: 'relative',
         [theme.breakpoints.down('xs')]: {
             paddingTop: '60px',
             flexDirection: 'column',
@@ -25,22 +26,38 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         justifyContent: 'center',
         "& img": {
-            [theme.breakpoints.down('sm')]: {
-                height: '55%',
+            [theme.breakpoints.down('xs')]: {
+                height: '46%',
+                
               },
-              [theme.breakpoints.up('md')]: {
-                height: '100%',
+              [theme.breakpoints.up('sm')]: {
+                height: '76%',
+                right: '48px',
             },
+            [theme.breakpoints.up('md')]: {
+                right: '48px',
+            },
+            position: 'absolute',
+            
+            bottom: 0,
         },
         "& h3": {
-            fontSize: '20px',
+            [theme.breakpoints.down('sm')]: {
+                fontSize: '20px',
+
+              },
+              [theme.breakpoints.up('md')]: {
+                fontSize: '32px',
+            },
             "& span": {
                 color: "#0076FE",
-            }
+            },
+            margin: "16px 0",
         },
         "& h4": {
             margin: 0,
-            marginBottom: 8,
+            marginBottom: 16,
+            fontWeight: 500,
         },
         padding: '0px 20px',
         "& button": {
@@ -59,6 +76,10 @@ const useStyles = makeStyles(theme => ({
                 opacity: 1,
             }
         }
+    },
+    slogan: {
+        position: "absolute",
+        left: 48
     }
 }))
 
@@ -66,8 +87,10 @@ function Banner(props) {
     const classes = useStyles(isSignedIn());
     return (
         <div className={classes.root}>
-            <div>
-                <h3>Bạn muốn kiếm <span>công việc gia sư</span> hoặc <span>thuê gia sư</span> ?</h3>
+            <div className={classes.slogan}>
+                <h3>Bạn muốn kiếm <span>công việc gia sư</span> 
+                <br/>
+                hoặc <span>thuê gia sư</span> ?</h3>
                 
                 <h4>Đăng kí tài khoản ngay </h4>
                 <button>

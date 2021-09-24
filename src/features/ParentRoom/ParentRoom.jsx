@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName, getWardName } from "components/location/getLocation";
 import { selectToken, selectType_parent } from "features/auth/authSlice";
 import { addToApplyList, addToTeachingList } from "graphql/mutationGraphQl";

@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { catchDistrictName, catchProvinceName, catchWardName, getDistrictName, getProvinceName, getWardName } from "components/location/getLocation";
 import { GetParentProfile } from 'graphql/ProfileQueries';
 import { GetAllParentRoom } from 'graphql/RoomQueries';
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
             padding: '0px 12px',
         },
         [theme.breakpoints.up('md')]: {
-            padding: '0px 220px',
+            padding: '0px 120px',
         },
     },
     empty: {

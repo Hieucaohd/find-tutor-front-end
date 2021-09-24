@@ -8,6 +8,7 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import {
   logout, selectId_of_user, selectRefreshToken, selectToken, selectType_parent, selectType_tutor
 } from "../auth/authSlice";
+import MobileNavBar from './components/MobileNavBar/MobileNavBar';
 import SearchBar from './components/SearchBar';
 import ToggleMenu from "./components/ToggleMenu";
 import WebBanner from "./components/WebBanner";
@@ -23,6 +24,7 @@ function MainNavigation() {
   const classes = useStyles();
   const searchRef = useRef(null);
   const location = useLocation();
+  const isSigned = isSignedIn()
   const handleLogOut = async() => {
     dispatch(logout({
       token: token,
@@ -43,7 +45,7 @@ function MainNavigation() {
   }
   return (
     <div>
-      {!isSignedIn() && <WebBanner />}
+      {!isSigned && <WebBanner />}
       {location.pathname !== "/signin" && location.pathname !== "/signup" &&
       <div className={classes.root}>
         <div className={classes.item}>
@@ -75,7 +77,9 @@ function MainNavigation() {
           <Search onClose={onCloseSearchForm}/>
         </div>
       </div>}
-
+      {isSigned && <div className={classes.navBar}>
+        <MobileNavBar userId={userId} typeTutor={type_tutor} typeParent={type_parent}/>
+      </div>}
     </div>
   );
 }
@@ -119,6 +123,7 @@ const useStyles = makeStyles((theme) => ({
         "border-radius": "50%",
         marginRight: '8px',
         "font-size": "16px",
+        display: 'none',
       },
       [theme.breakpoints.up('md')]: {
         "padding": "4px 12px",
@@ -181,6 +186,14 @@ const useStyles = makeStyles((theme) => ({
       opacity: 1,
       cursor: 'pointer',
     }
+  },
+  navBar: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'block',
+    },
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
   }
 }));
 

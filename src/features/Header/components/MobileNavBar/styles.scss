@@ -1,0 +1,28 @@
+.navbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 800;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: white;
+    font-size: 12px;
+    box-shadow: 0 1px 6px #ccc;
+    .active {
+        color: #64a7f4;
+    }
+    & a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #ccc;
+        
+        font-weight: 500;
+        & svg {
+            font-size: 28px;
+        }
+    }
+}
+
