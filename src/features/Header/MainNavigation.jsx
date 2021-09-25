@@ -43,9 +43,10 @@ function MainNavigation() {
   const handleShowLogin = () => {
     history.push("/signin");
   }
+  
   return (
     <div>
-      {!isSigned && <WebBanner />}
+      {!isSigned && location.pathname === "/" && <WebBanner />}
       {location.pathname !== "/signin" && location.pathname !== "/signup" &&
       <div className={classes.root}>
         <div className={classes.item}>

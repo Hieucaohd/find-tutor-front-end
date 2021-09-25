@@ -12,6 +12,7 @@ import ParentRoom from "./features/ParentRoom/ParentRoom";
 import RegisterRole from "./features/RegisterRole/RegisterRole";
 import Search from "./features/Header/components/Search/Search";
 import TutorInfor from "./features/Tutor/TutorInfor";
+import SignUp from "features/SignUp/SignUp";
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
           <Switch>
             <Route path="/signin" component={Auth} />
             <Route exact path="/" component={Home} />
-            <Route exact path="/signup" component={Register} />
+            <Route exact path="/signup" component={SignUp} />
             <Route exact path="/tutorInfo/:tutorId" component={TutorInfor} />
             <Route exact path="/parentInfo/:parentId" component={ParentInfor} />
             <Route exact path="/room/:roomId" component={ParentRoom}/>

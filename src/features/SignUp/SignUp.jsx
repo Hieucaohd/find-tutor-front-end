@@ -1,8 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useState } from 'react';
-import Login from './components/Login';
-import Register from './components/Register';
-import "./styles.scss";
+import SignUpForm from './components/SignUpForm';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -40,7 +38,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-function Auth(props) {
+function SignUp(props) {
     const classes = useStyles();
     return (
         <div className={classes.root}>
@@ -48,10 +46,10 @@ function Auth(props) {
                 <img src="https://i.ibb.co/R4cCHXL/Student-giving-test-to-teacher-2.webp" alt="Student-giving-test-to-teacher-2" border="0" />
             </div>
             <div className={classes.login}>
-                <Login/>
+                <SignUpForm />
             </div>
         </div>
     );
 }
 
-export default Auth;
+export default SignUp;

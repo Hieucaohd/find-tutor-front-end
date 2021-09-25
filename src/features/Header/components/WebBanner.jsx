@@ -59,18 +59,18 @@ const useStyles = makeStyles(theme => ({
             marginBottom: 16,
             fontWeight: 500,
         },
+        "& a": {
+        },
         padding: '0px 20px',
         "& button": {
             border: 'none',
             backgroundColor: 'white',
             padding: '15px',
-            "& a": {
-                color: '#0076FE',
-            },
             fontWeight: 800,
             fontSize: '16px',
             borderRadius: '4px',
             opacity: 0.8,
+            color: '#0076FE',
             "&:hover": {
                 cursor: "pointer",
                 opacity: 1,
@@ -80,7 +80,8 @@ const useStyles = makeStyles(theme => ({
     slogan: {
         position: "absolute",
         left: 48
-    }
+    },
+    
 }))
 
 function Banner(props) {
@@ -93,11 +94,13 @@ function Banner(props) {
                 hoặc <span>thuê gia sư</span> ?</h3>
                 
                 <h4>Đăng kí tài khoản ngay </h4>
-                <button>
-                    <Link to="/signin">
-                    Đăng kí tài khoản
-                    </Link>
-                </button>
+                
+                <Link to="/signup">
+                    <button className={classes.button}>
+                        Đăng kí tài khoản
+                    </button>
+                </Link>
+                
             </div>
             <img src="https://i.ibb.co/d4TqFW2/homeschooling-hero.webp" alt="banner" />
         </div>
