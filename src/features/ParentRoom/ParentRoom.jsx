@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName, getWardName } from "components/location/getLocation";
 import { selectToken, selectType_parent } from "features/auth/authSlice";
+import { isSignedIn } from "features/auth/cookies";
 import { addToApplyList, addToTeachingList } from "graphql/mutationGraphQl";
 import { GetParentRoomDetail } from "graphql/RoomQueries";
 import React, { useEffect, useState } from "react";
@@ -8,7 +9,7 @@ import { useSelector } from "react-redux";
 import { useRouteMatch } from "react-router-dom";
 import ParentRoomMain from "./components/ParentRoomMain/ParentRoomMain";
 import { deleteFromWaitingList, deleteTutorFromTeachingList } from "./parentroom";
-
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles(theme=>({
     root: {
@@ -24,6 +25,7 @@ const useStyles = makeStyles(theme=>({
 function ParentRoom(props) {
   const classes = useStyles();
   const token = useSelector(selectToken);
+  const history = useHistory();
   const {
     params: {roomId}
   } = useRouteMatch();
@@ -107,6 +109,7 @@ function ParentRoom(props) {
   }
 
   const handleAddToApplyList = async () => {
+    if(!isSignedIn()) history.push("/signin");
     try {
       const response = await addToApplyList({token: token, parentRoomId: roomId});
       console.log('response', response)

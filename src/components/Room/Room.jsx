@@ -86,6 +86,29 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, 
         }
         getAddress();
     }, []);
+    function removeAccents(str) {
+        var AccentsMap = [
+          "aàảãáạăằẳẵắặâầẩẫấậ",
+          "AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬ",
+          "dđ", "DĐ",
+          "eèẻẽéẹêềểễếệ",
+          "EÈẺẼÉẸÊỀỂỄẾỆ",
+          "iìỉĩíị",
+          "IÌỈĨÍỊ",
+          "oòỏõóọôồổỗốộơờởỡớợ",
+          "OÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢ",
+          "uùủũúụưừửữứự",
+          "UÙỦŨÚỤƯỪỬỮỨỰ",
+          "yỳỷỹýỵ",
+          "YỲỶỸÝỴ"    
+        ];
+        for (var i=0; i<AccentsMap.length; i++) {
+          var re = new RegExp('[' + AccentsMap[i].substr(1) + ']', 'g');
+          var char = AccentsMap[i][0];
+          str = str.replace(re, char);
+        }
+        return str;
+      }
     return (
         <Grid item key={room.id} className="room" xs={12} sm={6} md={4} lg={3} className="room" >
             <Box mb={4} display="flex" justifyContent="center" alignItems="center">
@@ -99,7 +122,7 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, 
                 {room?.parent?.user?.username}</div>
                 <span className="item__room__clock"><AiOutlineClockCircle/> {handleTime(room?.create_at)}</span>
                 <div className="item__room__thumbnail">
-                    <img src={subject[room.subject] || subject["Mặc Định"]} alt="mon hoc"/>
+                    <img src={subject[room.subject.trim()] || subject["Mặc Định"]} alt="mon hoc"/>
                     <div>
                         <h3>{room.subject} <span>{room.lop}</span></h3>
                         <h5>{formatPriceString(room?.pricemodel_set[0]?.money_per_day)} đ/buổi</h5>

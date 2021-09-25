@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { createTheme, makeStyles } from "@material-ui/core";
 import Loading from "components/Loading/Loading";
 import Location from "components/location/Location";
 import { CreateParentRoom } from "graphql/mutationGraphQl";
@@ -8,14 +8,19 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { selectId_of_user, selectToken } from "../auth/authSlice";
 
+
 const useStyles = makeStyles(theme => ({
-  root: {
-    marginTop: "100px",
-    height: "100vh",
+  root: { 
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
+    [theme.breakpoints.down('sm')]: {
+      marginTop: 60,
+    },
+    [theme.breakpoints.up('md')]: {
+      marginTop: "100px",
+    },
     "& label": {
       fontSize: '12px',
       fontWeight: '500',

@@ -154,6 +154,7 @@ const useStyles = makeStyles(theme => ({
     header: {
         display: 'flex',
         marginBottom: 16,
+        marginTop: 20,
         [theme.breakpoints.down('xs')]: {
             alignItems: 'flex-start',
         },
@@ -184,9 +185,10 @@ const useStyles = makeStyles(theme => ({
     // room: {
     //     flex: 3,
     // },
-    // parentInfo: {
-    //     flex: 2,
-    // },
+    parentInfo: {
+        marginBottom: 30,
+        marginTop: 20,
+    },
     info: {
         display: 'flex',
         flexDirection: 'column',
@@ -241,6 +243,7 @@ const useStyles = makeStyles(theme => ({
         }
     },
     parent: {
+
         width: 220,
         padding: "12px 20px 56px 20px",
         height: 240,  

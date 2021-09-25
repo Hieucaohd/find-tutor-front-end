@@ -39,7 +39,7 @@ function ParentInfor() {
     return (
         <div>
             {isSignedIn() && typeParent && <button onClick={handleShowCreateRoom} className={classes.addRoom}><FcAddDatabase /></button>}
-            <Grid container spacing={2} className={classes.root}>
+            <Grid container className={classes.root}>
                 {parentRoomList?.map( (room)=> (
                     <Room room={{...room, roomId: room.id}} type="userroom" onDelete={handleDeleteRoom}/>
                 ))}

@@ -98,9 +98,8 @@ function Banner(props) {
                     Đăng kí tài khoản
                     </Link>
                 </button>
-
             </div>
-            <img src="https://i.ibb.co/RPjyDCY/homeschooling-hero.png" alt="banner" />
+            <img src="https://i.ibb.co/d4TqFW2/homeschooling-hero.webp" alt="banner" />
         </div>
     );
 }
