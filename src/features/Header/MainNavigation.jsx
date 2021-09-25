@@ -52,7 +52,9 @@ function MainNavigation() {
         <div className={classes.item}>
           <Link to="/">
             <h3 className={classes.logo}>
-              LOGO IS HERE
+              {/* <img src="https://cdn-icons-png.flaticon.com/512/4634/4634764.png" />
+               Tìm gia sư */}
+               LOGO IS HERE
             </h3>
           </Link>
           <div className={classes.section}>
