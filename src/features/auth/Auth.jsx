@@ -1,7 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
-import React, { useState } from 'react';
+import React from 'react';
 import Login from './components/Login';
-import Register from './components/Register';
 import "./styles.scss";
 
 const useStyles = makeStyles(theme => ({

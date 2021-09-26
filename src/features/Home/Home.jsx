@@ -134,8 +134,8 @@ function Home() {
         {maxPagination > 1 && <Pagination count={maxPagination} color="primary" className="home__pagination" onChange={handleChangePage}/>}
       <div className="home__overlay" ref={homeOverlay} onClick={handleCloseFilterBar}> </div>
       
-      {showCheckModal && <Modal typeIcon="check" text="Thêm phòng thành công" onAgree={() => setShowCheckModal(false)} />}
-      {showFailModal && <Modal typeIcon="fail" text="Thêm phòng không thành công" onAgree={() => setShowFailModal(false)} />}
+      {showCheckModal && <Modal typeIcon="check" text="Ứng tuyển thành công" onAgree={() => setShowCheckModal(false)} />}
+      {showFailModal && <Modal typeIcon="fail" text="Ứng tuyển không thành công" onAgree={() => setShowFailModal(false)} />}
     
     </div>
   );

@@ -7,6 +7,7 @@ InfoButton.propTypes = {
 
 
 function InfoButton({onShow}) {
+    
     return (
         <div className="button">
             <button className="button__detail" onClick={()=>onShow()}>Xem chi tiết</button>

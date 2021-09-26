@@ -87,7 +87,7 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, 
     }, []);
     
     return (
-        <Grid item key={room.id} className="room" xs={12} sm={6} md={4} lg={3} className="room" >
+        <Grid item key={room.id} className="room" xs={12} sm={6} md={4} lg={3} >
             <Box mb={4} display="flex" justifyContent="center" alignItems="center">
             
             <div className="item__room">

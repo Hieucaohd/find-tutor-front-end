@@ -22,6 +22,9 @@ $cHeight: $cWidth;
         display: flex;
         align-items: center;
         font-size: 12px;
+        & svg {
+            margin-right: 4px;
+        }
     }
     &__thumbnail {
         display: flex;

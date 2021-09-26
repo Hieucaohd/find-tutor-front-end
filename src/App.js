@@ -1,19 +1,19 @@
-import SkeletonPage from "components/Skeleton/SkeletonPage";
+import Modal from "components/Modal/Modal";
+import NotFound from "features/404NotFound/NotFound";
 import Auth from "features/auth/Auth";
-import Register from "features/auth/components/Register";
 import Profile from "features/Profile/Profile";
+import Settings from "features/Settings/Settings";
+import SignUp from "features/SignUp/SignUp";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import CreateRoom from "./features/CreateRoom/CreateRoom";
+import Search from "./features/Header/components/Search/Search";
 import MainNavigation from "./features/Header/MainNavigation";
 import Home from "./features/Home/Home";
 import ParentInfor from "./features/Parent/ParentInfor";
 import ParentRoom from "./features/ParentRoom/ParentRoom";
 import RegisterRole from "./features/RegisterRole/RegisterRole";
-import Search from "./features/Header/components/Search/Search";
 import TutorInfor from "./features/Tutor/TutorInfor";
-import SignUp from "features/SignUp/SignUp";
-import Modal from "components/Modal/Modal";
 
 function App() {
   return (
@@ -32,6 +32,8 @@ function App() {
             <Route path="/profile" component={Profile} />
             <Route exact path="/search" component={Search} />
             <Route exact path="/test" component={Modal} />
+            <Route exact path="/settings" component={Settings}/>
+            <Route path="*" component={NotFound} />
           </Switch>
         </BrowserRouter>
     </div>

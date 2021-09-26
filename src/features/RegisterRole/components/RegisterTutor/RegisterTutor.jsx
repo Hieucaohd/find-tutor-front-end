@@ -1,12 +1,13 @@
 import { CircularProgress, makeStyles } from '@material-ui/core';
 import Location from "components/location/Location";
+import Modal from 'components/Modal/Modal';
 import FormData from 'form-data';
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { selectToken } from '../../../auth/authSlice';
-import { registerImageTutor, registerTutorInfor } from '../../registerAccount';
+import { registerImage, registerTutorInfor } from '../../registerAccount';
 
 
 function RegisterTutor(props) {
@@ -23,6 +24,8 @@ function RegisterTutor(props) {
         district: 0,
         ward: 0
     });
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const [showFailedModal, setShowFailedModal] = useState(false);
     //cắt lấy firstname và lastname 
     const getName = (name) => {
         return {
@@ -52,7 +55,6 @@ function RegisterTutor(props) {
     }
 
     const onSubmit = async(data) => {
-        console.log('data', data)
         loadingRef.current.style.display = "flex";
         const tutorInfor = {
             "profession": data.profession || null,
@@ -74,7 +76,7 @@ function RegisterTutor(props) {
             "detail_location": data.detailLocation || null,
         }
 
-        await registerTutorInfor({
+        const resgisterTutor = await registerTutorInfor({
             token: token,
             tutorInfor: tutorInfor,
             dispatch: dispatch,
@@ -83,14 +85,14 @@ function RegisterTutor(props) {
         file.append('avatar', data.avatar[0]);
         file.append('identity_card', data.cccd[0]);
         file.append('student_card', data.thesv[0]);
-        
-        const registerImage = await registerImageTutor({token: token, file: file});
-        if(registerImage){
-            alert('Bạn đã đăng kí làm gia sư thành công');
+        const imageReponse = resgisterTutor ? await registerImage({token: token, file: file}) : false;
+        if(imageReponse ){
+            loadingRef.current.style.display = "none";
+            setShowSuccessModal(true);
             history.push("/");
         }else {
             loadingRef.current.style.display = "none";
-            alert("Có lỗi xảy ra, bạn hiện tại chưa thể đăng kí làm gia sư, vui lòng thử lại sau.");
+            setShowFailedModal(true);
         }
     }    
     return (
@@ -247,7 +249,8 @@ function RegisterTutor(props) {
             <div ref={loadingRef} className={classes.loading}> 
                 <CircularProgress />
              </div>
-
+            {showSuccessModal && <Modal typeIcon="check" text="Đăng kí làm gia sư thành công" onAgree={() => history.push("/") }/>}
+            {showFailedModal && <Modal typeIcon="fail" text="Đăng kí làm gia sư không thành công" onAgree={() => setShowFailedModal(false)} />}
         </div>
     );
 }
@@ -261,6 +264,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         padding: 0,
         marginTop: '56px',
+        marginBottom: 56,
     },
     form: {
         [theme.breakpoints.down('sm')]: {
@@ -269,8 +273,8 @@ const useStyles = makeStyles(theme => ({
             width: '80%',
         },
         [theme.breakpoints.up('md')]: {
-            backgroundColor: 'white',
-            padding: '80px',
+            // backgroundColor: 'white',
+            // padding: '80px',
             width: '500px',
         },
         borderRadius: '8px',
@@ -290,8 +294,8 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'column',
         '& input': {
             padding: '8px 16px',
-            borderRadius: '64px',
-            border: '1px solid #ccc',
+            borderRadius: '8px',
+            border: '0.5px solid #ccc',
         },
         '& button': {
             width: '100%',
@@ -313,9 +317,15 @@ const useStyles = makeStyles(theme => ({
     choose: {
         display: 'flex',
         justifyContent: 'space-between',
-        border: '1px solid',
+        border: '0.5px solid #ccc',
+        backgroundColor: 'white',
+        padding: 8,
         borderRadius: '8px',
         marginTop: '1px',
+        "& div": {
+            display: 'flex',
+            alignItems: 'center',
+        }
     },
     error: {
         fontSize: '12px',

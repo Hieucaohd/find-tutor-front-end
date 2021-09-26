@@ -1,8 +1,9 @@
 import { makeStyles } from "@material-ui/core";
 import Loading from "components/Loading/Loading";
-import React, { useEffect, useRef } from "react";
+import Modal from "components/Modal/Modal";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { login } from "../authSlice";
 import LoginGoogle from "./LoginGoogle";
@@ -14,24 +15,30 @@ function Login({onShow}) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { register, formState: { errors }, handleSubmit } = useForm();
-  const token = useSelector(selectToken);
   const loadingRef = useRef(null);
-
-  //token đã tồn tại chuyển sang trang home
-  useEffect(() => {
-    if (token) {
-      history.push("/");
-    }
-  }, [token]);
-
+  const [showFailedModal, setShowFailedModal] = useState(false);
+  // //token đã tồn tại chuyển sang trang home
+  // // useEffect(() => {
+  // //   if (token) {
+  // //     history.push("/");
+  // //   }
+  // // }, [token]);
+  // if (token) {
+  //   //     history.push("/");
+  //   //   }
   const onSubmit = async (data) => {
     const args = {
       email: data.email,
       password: data.password,
     };
     loadingRef.current.style.display = "flex";
-    await dispatch(login(args));
-    loadingRef.current.style.display = "none";
+    const loginDispatch = await dispatch(login(args));
+    if(!loginDispatch.payload) {
+      loadingRef.current.style.display = "none";
+      setShowFailedModal(true);
+    } else {
+      history.push("/");
+    }
   };
 
   const handleShowRegisterForm = () => {
@@ -89,6 +96,7 @@ function Login({onShow}) {
               </Link>
             </div>
           </form> 
+          {showFailedModal && <Modal typeIcon="fail" text="Email hoặc mật khẩu không đúng" onAgree={() => setShowFailedModal(false)}  />}
     </div>              
   );
 }

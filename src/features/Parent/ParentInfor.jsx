@@ -17,15 +17,12 @@ function ParentInfor() {
     const typeParent = useSelector(selectType_parent);
     const history = useHistory();
     const [parentRoomList, setParentRoomList] = useState([]);
-    const [alertModal, setAlertModal] = useState(false);
-    const [currentId, setCurrentId] = useState(null);
 
-    const handleDeleteRoom = async () => {
+    const handleDeleteRoom = async (id) => {
         let newParentRoomList = [...parentRoomList];
-        newParentRoomList = await newParentRoomList.filter( (room) => Number(room.id) !== Number(currentId));
+        newParentRoomList = await newParentRoomList.filter( (room) => Number(room.id) !== Number(id));
         setParentRoomList(newParentRoomList);
-        await deleteRoom({ roomId: currentId, token: token });
-        setAlertModal(false);
+        await deleteRoom({ roomId: id, token: token });
     }
     
     useEffect ( ()=> {
@@ -39,29 +36,23 @@ function ParentInfor() {
     const handleShowCreateRoom = () => {
         history.push("/createroom");
     };
-
-    const handleShowAlertBox = (id) => {
-        setCurrentId(id);
-        setAlertModal(true);
-    }   
+ 
 
     return (
-        <div>
+        <div className={classes.root}>
             {isSignedIn() && typeParent && <button onClick={handleShowCreateRoom} className={classes.addRoom}><FcAddDatabase /></button>}
-            <Grid container className={classes.root}>
+            {parentRoomList.length !== 0 ? <Grid container className={classes.root}>
                 {parentRoomList?.map( (room)=> (
-                    <Room room={{...room, roomId: room.id}} type="userroom" onDelete={handleShowAlertBox}/>
+                    <Room room={{...room, roomId: room.id}} type="userroom" onDelete={handleDeleteRoom}/>
                 ))}
-            </Grid>
-            {alertModal && <Modal typeIcon="delete" text="Xóa phòng học này" onAgree={() => handleDeleteRoom()} />}
+            </Grid> : <span className={classes.none}>Bạn chưa tạo phòng nào</span>}
         </div>
     )
 }
 
 const useStyles = makeStyles({
     root: {
-        marginTop: '28px',
-        padding: "52px",
+        padding: '48px 28px',
     },
     addRoom: {
         position: 'fixed',
@@ -73,6 +64,12 @@ const useStyles = makeStyles({
         "&:hover": {
             cursor: 'pointer',
         }
+    },
+    none: {
+        fontStyle: 'italic',
+        position: 'fixed',
+        top: 100,
+        left: 72,
     }
 })
 

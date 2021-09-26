@@ -1,28 +1,21 @@
 import { Avatar, makeStyles } from '@material-ui/core';
+import Modal from 'components/Modal/Modal';
 import React from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-
-// TutorItem.propTypes = {
-//     tutorId: PropTypes.number.isRequired,
-//     onCheck: PropTypes.func,
-//     onDelete: PropTypes.func,
-//     id: PropTypes.number.isRequired,
-// };
-
 
 
 function TutorItem( {tutorInfo = {}, isOwner = false, onAdd = null, userId = 0, isTeaching = false, onDelete=null} ) {
     const classes = useStyles();
     const history = useHistory();
     const {id, tutor} = tutorInfo;
+    const [showCheckModal, setShowCheckModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     
-    // const handleCheck = () => {
-    //     onCheck(id);
-    // }
-
     const handleDelete = () => {
         if(!onDelete) return;
         onDelete(id);
+        setShowDeleteModal(false);
     }
     const handleShowTutorInfo = () => {
         history.push(`/profile/tutor/${tutor.user.id}`)
@@ -31,10 +24,17 @@ function TutorItem( {tutorInfo = {}, isOwner = false, onAdd = null, userId = 0, 
     const handleCheck = () => {
         if(!onAdd) return;
         onAdd(id);
+        setShowCheckModal(false);
+    }
+
+    const handleShowText = () => {
+        if(isOwner) return "Xóa gia sư này khỏi danh sách ?";
+        else if(isThisTutor) return "Hủy ứng tuyển/dạy học ?"
     }
 
     //kiểm tra user có phải gia sư này không
     const isThisTutor = Number(userId) === Number(tutor?.user.id);
+
     return (
         <div className={classes.root}>
             <div className={classes.info}>
@@ -53,10 +53,12 @@ function TutorItem( {tutorInfo = {}, isOwner = false, onAdd = null, userId = 0, 
                 </div>
             </div>
             <div className={classes.button}>
-                { (isOwner && !isTeaching) && <button className={classes.agree} onClick={handleCheck}>Đồng ý</button>}
-                { (isOwner || isThisTutor) && <button className={classes.delete} onClick={handleDelete}>Xóa</button>}
+                { (isOwner && !isTeaching) && <button className={classes.agree} onClick={() => setShowCheckModal(true)}>Đồng ý</button>}
+                { (isOwner || isThisTutor) && <button className={classes.delete} onClick={() => setShowDeleteModal(true)}>Xóa</button>}
                 {isOwner && <button className={classes.call}>Liên hệ</button>}
             </div>
+            {showCheckModal && <Modal typeIcon="check" text="Đồng ý gia sư này dạy học ?" onAgree={handleCheck} onDisagree={() => setShowCheckModal(false)}/>}
+            {showDeleteModal && <Modal typeIcon="delete" text={handleShowText()} onAgree={handleDelete} onDisagree={() => setShowDeleteModal(false)}/>}
         </div>
     )
 

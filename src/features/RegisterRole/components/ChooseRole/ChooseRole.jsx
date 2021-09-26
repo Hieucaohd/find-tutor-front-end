@@ -1,8 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import { isSignedIn } from 'features/auth/cookies';
 import React from 'react';
-import { GiTeacher } from "react-icons/gi";
-import { RiParentFill } from "react-icons/ri";
 import { useHistory } from 'react-router-dom';
 
 RegisterRole.propTypes = {

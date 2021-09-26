@@ -35,7 +35,7 @@ export const login = createAsyncThunk("auth/authLogin", async (args) => {
     if (response.ok) {
       return response.json();
     } else {
-      alert("Ten dang nhat hoac mat khau khong dung.");
+      // alert("Ten dang nhat hoac mat khau khong dung.");
     }
   });
 });
@@ -127,8 +127,11 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(login.pending, (state, action) => {
+      .addCase(login.pending, (state) => {
         state.status = "loading";
+      })
+      .addCase(login.rejected, (state) => {
+        state.status = "error";
       })
       .addCase(login.fulfilled, (state, action) => {
         state.status = "idle";

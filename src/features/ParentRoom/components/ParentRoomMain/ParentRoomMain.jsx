@@ -2,27 +2,11 @@ import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router-dom';
-import { selectId_of_user, selectToken, selectType_parent, selectType_tutor } from '../../../auth/authSlice';
+import { selectId_of_user } from '../../../auth/authSlice';
 import RoomInfo from './components/RoomInfo';
 import TutorItem from './components/TutorItem';
 import "./styles.scss";
 
-
-// ParentRoomMain.propTypes = {
-//     roomDetail: PropTypes.object,
-// };
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    
-    [theme.breakpoints.up('md')]: {
-      padding: "12px 48px", 
-    },
-  },
-  title: {
-    textAlign: "center",
-  }
-}))
 
 function ParentRoomMain( {roomDetail = {}, typeParent, applyList, teaching, addToTeaching, deleteFromApplyList, deleteFromTeachingList, addToApplyList} ) {
     const userId = useSelector(selectId_of_user);
@@ -67,5 +51,17 @@ function ParentRoomMain( {roomDetail = {}, typeParent, applyList, teaching, addT
       </div>
     );
 }
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    
+    [theme.breakpoints.up('md')]: {
+      padding: "12px 48px", 
+    },
+  },
+  title: {
+    textAlign: "center",
+  }
+}))
 
 export default ParentRoomMain;

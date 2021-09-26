@@ -112,7 +112,6 @@ function ParentRoom(props) {
     if(!isSignedIn()) history.push("/signin");
     try {
       const response = await addToApplyList({token: token, parentRoomId: roomId});
-      console.log('response', response)
       setApplyList([
         ...applyList,
         response,

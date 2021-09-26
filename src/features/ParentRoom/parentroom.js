@@ -1,5 +1,4 @@
-import { server_name, token_prefix } from "namespace"
-import { FaBullseye } from "react-icons/fa";
+import { server_name, token_prefix } from "namespace";
 
 export const deleteFromWaitingList = async ({waitingId, token}) => {
     try {
