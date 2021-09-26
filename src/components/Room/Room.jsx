@@ -25,7 +25,6 @@ Room.propTypes = {
 function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, typeParent=false, type} ) {
     const history = useHistory();
     const [address, setAddress] = useState("");
-    // const [showModal, setShowModal] = useState(false);
     const handleShowDetailRoom = () => {
         //navigate to detail room
         history.push(`/room/${room.roomId}`);
@@ -86,29 +85,7 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, 
         }
         getAddress();
     }, []);
-    function removeAccents(str) {
-        var AccentsMap = [
-          "aàảãáạăằẳẵắặâầẩẫấậ",
-          "AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬ",
-          "dđ", "DĐ",
-          "eèẻẽéẹêềểễếệ",
-          "EÈẺẼÉẸÊỀỂỄẾỆ",
-          "iìỉĩíị",
-          "IÌỈĨÍỊ",
-          "oòỏõóọôồổỗốộơờởỡớợ",
-          "OÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢ",
-          "uùủũúụưừửữứự",
-          "UÙỦŨÚỤƯỪỬỮỨỰ",
-          "yỳỷỹýỵ",
-          "YỲỶỸÝỴ"    
-        ];
-        for (var i=0; i<AccentsMap.length; i++) {
-          var re = new RegExp('[' + AccentsMap[i].substr(1) + ']', 'g');
-          var char = AccentsMap[i][0];
-          str = str.replace(re, char);
-        }
-        return str;
-      }
+    
     return (
         <Grid item key={room.id} className="room" xs={12} sm={6} md={4} lg={3} className="room" >
             <Box mb={4} display="flex" justifyContent="center" alignItems="center">

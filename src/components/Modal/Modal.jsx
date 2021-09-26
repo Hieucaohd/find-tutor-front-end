@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { TiDeleteOutline, TiInfoOutline, TiInputChecked } from "react-icons/ti";
 
 Modal.propTypes = {
     text: PropTypes.string,
@@ -20,39 +21,62 @@ const useStyles = makeStyles({
         alignItems: "center",
         backgroundColor: "rgba(0,0,0,0.5)", /* Black background with opacity */
         "z-index": "899",
+        "& svg": {
+            fontSize: 80,
+        }
     },
     modal: {
-        width: "240px",
-        height: "76px",
+        width: "308px",
+        height: "172px",
         backgroundColor: "white",
-        borderRadius: "8px",
+        borderRadius: "4px",
         position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "space-around",
+        padding: 8,
     },
     text: {
         fontSize: "16px",
-        marginLeft: "12px",
+        margin: 0,
     },
     buttonGroup: {
-        display: "flex",
-        position: 'absolute',
-        right: "12px",
-        bottom: "12px",
+        // display: "flex",
+        // position: 'absolute',
+        // right: "12px",
+        // bottom: "12px",
         "& button": {
-            backgroundColor: "transparent",
+            // backgroundColor: "transparent",
             border: "none",
-            fontSize: "14px",
-            color: "#1976D2",
+            fontSize: "16px",
+            // color: "#1976D2",
             opacity: "0.6",
+            margin: "0 8px",
+            padding: '4px 8px',
+            borderRadius: 4,
+            color: 'white',
             "&:hover": {
                 cursor: "pointer",
                 opacity: "1",
             }
         }
+    },
+    delete: {
+        color: 'red',
+    },
+    check: {
+        color: '#00AA85',
+    }, 
+    agree: {
+        backgroundColor: '#0061FF',
+    },
+    disagree: {
+        backgroundColor: '#AAAAAA',
     }
-
 })
 
-function Modal({text, onAgree = null, onDisagree = null}) {
+function Modal({typeIcon, text, onAgree = null, onDisagree = null}) {
     const classes = useStyles();
     const handleAgree = () => {
         onAgree();
@@ -63,15 +87,18 @@ function Modal({text, onAgree = null, onDisagree = null}) {
     return (
         <div className={classes.root}>
             <div className={classes.modal}>
+                {typeIcon === 'delete' && <TiDeleteOutline className={classes.delete}/>}
+                {typeIcon === 'check' && <TiInputChecked className={classes.check}/>}
+                {typeIcon === 'fail' && <TiInfoOutline className={classes.delete}/>}
                 <p className={classes.text}>
                     {text}
                 </p>
                 <div className={classes.buttonGroup}>
-                    {onDisagree && <button onClick={handleDisagree}>
-                        Hủy
+                    {onAgree && <button className={classes.agree} onClick={handleAgree}>
+                        Tiếp tục
                     </button>}
-                    {onAgree && <button onClick={handleAgree}>
-                        Đồng ý
+                    {onDisagree && <button className={classes.disagree} onClick={handleDisagree}>
+                        Hủy
                     </button>}
                 </div>
             </div>

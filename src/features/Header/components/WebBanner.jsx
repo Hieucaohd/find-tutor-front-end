@@ -1,8 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
 import { isSignedIn } from 'features/auth/cookies';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 Banner.propTypes = {
     
@@ -78,8 +77,10 @@ const useStyles = makeStyles(theme => ({
         }
     },
     slogan: {
-        position: "absolute",
-        left: 48
+        [theme.breakpoints.up('md')]: {
+            position: 'absolute',
+            left: 48
+        },
     },
     
 }))

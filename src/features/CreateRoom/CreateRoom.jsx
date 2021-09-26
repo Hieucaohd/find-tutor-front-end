@@ -1,4 +1,4 @@
-import { createTheme, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import Loading from "components/Loading/Loading";
 import Location from "components/location/Location";
 import { CreateParentRoom } from "graphql/mutationGraphQl";
@@ -7,119 +7,15 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { selectId_of_user, selectToken } from "../auth/authSlice";
-
-
-const useStyles = makeStyles(theme => ({
-  root: { 
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-    paddingBottom: 40,
-    [theme.breakpoints.down('sm')]: {
-      marginTop: 60,
-      paddingTop: 20,
-    },
-    [theme.breakpoints.up('md')]: {
-      marginTop: "100px",
-    },
-    "& label": {
-      fontSize: '12px',
-      fontWeight: '500',
-    },
-  },
-  field: {
-    display: "flex",
-    flexDirection: "column",
-    [theme.breakpoints.down('sm')]: {
-      width: '80%',
-    },
-    [theme.breakpoints.up('md')]: {
-      width: '500px',
-    },
-    marginBottom: "6px",
-    "& input": {
-        padding: "8px 16px",
-        border: "1px solid #ccc",
-        borderRadius: "64px",
-    },
-  },
-  day: {
-    display: "flex",
-    marginBottom: "6px",
-    [theme.breakpoints.down('sm')]: {
-      width: '80%',
-    },
-    [theme.breakpoints.up('md')]: {
-      width: '500px',
-    },
-    justifyContent: 'space-between',
-    label: {
-      fontSize: '12px',
-      fontWeight: '500',
-    }
-  },
-  dayField: {
-    [theme.breakpoints.down('sm')]: {
-      marginRight: 0,
-      display: 'flex',
-      alignItems: 'center',
-      flexDirection: "column",
-      '& label': {
-        fontSize: '12px',
-      }
-    },
-    [theme.breakpoints.up('md')]: {
-      marginRight: "8px",
-      display: 'flex',
-      alignItems: 'center',
-    },
-    
-  },
-  error: {
-    fontSize: "12px",
-    color: "red",
-    marginBottom: "2px",
-  },
-  success: {
-    display: "none",
-    position: "fixed",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    "z-index": "1000",
-        
-  },
-  addressInput: {
-    width: "94%",
-  },
-  submit: {
-    backgroundColor: '#5037EC',
-    color: 'white',
-    border: 'none',
-    borderRadius: '64px',
-    padding: '10px 0px',
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-  },
-  select: {
-    padding: '8px 16px',
-    borderRadius: '64px',
-    border: '1px solid #ccc',
-  },
-}));
-
+import Modal from "components/Modal/Modal"
 function CreateRoom(props) {
   const classes = useStyles();
   const days = [2, 3, 4, 5, 6, 7, 8];
   const history = useHistory();
   const token = useSelector(selectToken);
   const { register, formState: { errors }, handleSubmit } = useForm();
+  const [showFailModal, setShowFailModal] = useState(false);
+  const [showCheckModal, setShowCheckModal] = useState(false);
   const [location, setLocation] = useState({
     province: 0,
     district: 0,
@@ -168,22 +64,21 @@ function CreateRoom(props) {
       "district_code": Number(location.district),
       "ward_code": Number(location.ward),
       "detail_location": data.detailLocation || null,
-      "time_in_one_day": Number(data.hours),
+      "time_in_one_day": Number(data.hours) || 2,
       "money_per_day": Number(data.price) < 1000 ? Number(data.price)*1000 : Number(data.price),
       "type_teacher": getTypeTeacher(data.job),
       "sex_of_teacher": getGender(data.gender),
     };
 
-    
-    try {
-      loadingRef.current.style.display = "flex";
-      await CreateParentRoom({token: token, roomInfo: roomInfor});
-      history.push(`/parentInfo/${id}`)
-    } catch (error){
+    loadingRef.current.style.display = "flex";
+    const response = await CreateParentRoom({token: token, roomInfo: roomInfor});
+    if(response) {
+      setShowCheckModal(true);
+    } else {
+      setShowFailModal(true);
       loadingRef.current.style.display = "none";
-      console.log(error);
     }
-  }
+}
 
   return (
     <div className={classes.root}>
@@ -294,8 +189,115 @@ function CreateRoom(props) {
           <button className={classes.submit} type="submit" variant="contained" color="primary" >Tạo phòng</button>
         </div>
       </form>
+      {showCheckModal && <Modal typeIcon="check" text="Tạo phòng thành công" onAgree={() => history.push(`/parentInfo/${id}`)} />}
+      {showFailModal && <Modal typeIcon="fail" text="Tạo phòng thất bại" onAgree={() => setShowFailModal(false)} />}
     </div>
   );
 }
+
+const useStyles = makeStyles(theme => ({
+  root: { 
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    paddingBottom: 40,
+    [theme.breakpoints.down('sm')]: {
+      marginTop: 60,
+      paddingTop: 20,
+    },
+    [theme.breakpoints.up('md')]: {
+      marginTop: "100px",
+    },
+    "& label": {
+      fontSize: '12px',
+      fontWeight: '500',
+    },
+  },
+  field: {
+    display: "flex",
+    flexDirection: "column",
+    [theme.breakpoints.down('sm')]: {
+      width: '80%',
+    },
+    [theme.breakpoints.up('md')]: {
+      width: '500px',
+    },
+    marginBottom: "6px",
+    "& input": {
+        padding: "8px 16px",
+        border: "1px solid #ccc",
+        borderRadius: "64px",
+    },
+  },
+  day: {
+    display: "flex",
+    marginBottom: "6px",
+    [theme.breakpoints.down('sm')]: {
+      width: '80%',
+    },
+    [theme.breakpoints.up('md')]: {
+      width: '500px',
+    },
+    justifyContent: 'space-between',
+    label: {
+      fontSize: '12px',
+      fontWeight: '500',
+    }
+  },
+  dayField: {
+    [theme.breakpoints.down('sm')]: {
+      marginRight: 0,
+      display: 'flex',
+      alignItems: 'center',
+      flexDirection: "column",
+      '& label': {
+        fontSize: '12px',
+      }
+    },
+    [theme.breakpoints.up('md')]: {
+      marginRight: "8px",
+      display: 'flex',
+      alignItems: 'center',
+    },
+    
+  },
+  error: {
+    fontSize: "12px",
+    color: "red",
+    marginBottom: "2px",
+  },
+  success: {
+    display: "none",
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    "z-index": "1000",
+        
+  },
+  addressInput: {
+    width: "94%",
+  },
+  submit: {
+    backgroundColor: '#5037EC',
+    color: 'white',
+    border: 'none',
+    borderRadius: '64px',
+    padding: '10px 0px',
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  select: {
+    padding: '8px 16px',
+    borderRadius: '64px',
+    border: '1px solid #ccc',
+  },
+}));
 
 export default CreateRoom;

@@ -51,37 +51,12 @@ export const CreateParentRoom = async ({token, roomInfo}) => {
             },
             body: JSON.stringify({query: mutation})
         });
+        return true;
     } catch(error) {
-        console.log("Failed to create parent room");
+        console.log("Failed to create parent room: ",error);
+        return false;
     }
 }
-
-// export const SetTutorApply = async ({token, id}) => {
-//     const mutation = `
-//     {
-//         create_waiting_tutor(input_fields: {
-//           id_parent_room: ${id}
-//         }) 
-//         {
-//             waiting_tutor {
-//                 id
-//             }
-//         }
-//     }
-//     `
-//     try {
-//         await fetch(endpoint, {
-//             method: "POST",
-//             headers: {
-//               "Content-Type": "application/json",
-//               Authorization: `${token_prefix} ${token}`,
-//             },
-//             body: JSON.stringify({query: mutation})
-//         });
-//     } catch(error) {
-//         console.log("Failed to create parent room", error);
-//     }
-// }
 
 export const addToApplyList = async ({token, parentRoomId}) => {
     const mutation = `
@@ -176,5 +151,6 @@ export const addToTeachingList = async ({id, token}) => {
         return responseJSON.data.create_tutor_teaching.tutor_teaching;
     } catch(error) {
         console.log("Failed to apply teaching list", error);
+        return false;
     }
 }

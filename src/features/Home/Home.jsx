@@ -1,5 +1,6 @@
 import { Grid } from "@material-ui/core";
 import Pagination from '@material-ui/lab/Pagination';
+import Modal from "components/Modal/Modal";
 import Room from 'components/Room/Room';
 import SkeletonPage from "components/Skeleton/SkeletonPage";
 import { isSignedIn } from "features/auth/cookies";
@@ -7,7 +8,7 @@ import { GetAllRoom, GetFilterRoom } from "graphql/RoomQueries";
 import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
 import { RiFilter2Line, RiFilterOffLine } from "react-icons/ri";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { addToApplyList } from "../../graphql/mutationGraphQl";
 import {
@@ -30,14 +31,13 @@ function Home() {
     pages: 1,
   }); //bộ lọc
   const [roomList, setRoomList] = useState([]);
-  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const token = useSelector(selectToken);
-
-
-
+  const [showFailModal, setShowFailModal] = useState(false);
+  const [showCheckModal, setShowCheckModal] = useState(false);
   const [pagination, setPagination] = useState(1);
   const [maxPagination, setMaxPagination] = useState(1);
+
   //chưa đăng kí là gia sư hay phụ huynh trả đến trang đăng kí
   if(type_tutor === false && type_parent === false) {
     history.push("/role/chooserole");
@@ -98,9 +98,10 @@ function Home() {
   const handleAddRoom = async (id) => {
     if(isSigned){
       const response = await addToApplyList({token: token, parentRoomId: id});
-      alert("Đã thêm phòng");
+      !response ? setShowFailModal(true) : setShowCheckModal(true);
     } else {
       history.push("/signin");
+
     }
   }
 
@@ -118,7 +119,7 @@ function Home() {
       {loading ? <SkeletonPage /> 
       : <Grid container>{
         roomList?.map((room)=>(
-          <Room room={{...room, roomId: room.id}} typeTutor = {type_tutor} typeParent={type_parent} onCheck={handleAddRoom} type={"home"}/>
+          <Room key={room.id} room={{...room, roomId: room.id}} typeTutor = {type_tutor} typeParent={type_parent} onCheck={handleAddRoom} type={"home"}/>
         ))}
       </Grid>}
 
@@ -132,6 +133,10 @@ function Home() {
       </div>
         {maxPagination > 1 && <Pagination count={maxPagination} color="primary" className="home__pagination" onChange={handleChangePage}/>}
       <div className="home__overlay" ref={homeOverlay} onClick={handleCloseFilterBar}> </div>
+      
+      {showCheckModal && <Modal typeIcon="check" text="Thêm phòng thành công" onAgree={() => setShowCheckModal(false)} />}
+      {showFailModal && <Modal typeIcon="fail" text="Thêm phòng không thành công" onAgree={() => setShowFailModal(false)} />}
+    
     </div>
   );
 }

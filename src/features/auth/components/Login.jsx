@@ -152,7 +152,7 @@ const useStyles = makeStyles(theme => ({
   },
   label: {
     fontSize: '14px',
-    fontWeight: '500',
+    fontWeight: '600',
   },
   registerspan: {
     fontSize: '14px',

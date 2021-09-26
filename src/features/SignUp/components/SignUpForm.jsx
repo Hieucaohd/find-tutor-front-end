@@ -1,8 +1,9 @@
-import { makeStyles, CircularProgress } from '@material-ui/core';
+import { CircularProgress, makeStyles } from '@material-ui/core';
+import Modal from 'components/Modal/Modal';
 import { server_name } from 'namespace';
 import React, { useRef } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { IoClose } from 'react-icons/io5';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { login } from '../../auth/authSlice';
@@ -15,6 +16,8 @@ function SignUpForm() {
     const history = useHistory();
     const dispatch = useDispatch();
     const loadingRef = useRef(null);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const [showFailedModal, setShowFailedModal] = useState(false);
     const registerAccount = async (args) => {
         return await fetch(`${server_name}/auth/register/`, {
           method: "POST",
@@ -32,20 +35,18 @@ function SignUpForm() {
             password: data.password,
         }).then((response) => {
             if(response.ok) {
-                alert("Đăng kí tài khoản thành công");
                 dispatch(login({
                     email: data.email,
                     password: data.password,
                 }));
-                history.push("/");
+                setShowSuccessModal(true);
             } else {
-                alert('Đăng kí tài khoản thất bại');
+                setShowFailedModal(true);
                 loadingRef.current.style.display = "none";
             }
         })
     }
 
-    
     return (
         <div className = {classes.root}>
             <form className ={classes.form} onSubmit={handleSubmit(onSubmit)}> 
@@ -57,7 +58,7 @@ function SignUpForm() {
                             name="username" 
                             type="text"
                             {...register("username", { required: true, minLength: 6})}
-                         />
+                        />
                         {errors.username && errors.username.type === "required" && 
                             <span className ={classes.error}>Cần nhập tên tài khoản</span>}
                         {errors.username && errors.username.type === "minLength" && 
@@ -109,22 +110,14 @@ function SignUpForm() {
             <div ref={loadingRef}  className ={classes.loading}> 
                 <CircularProgress />
              </div>
+            {showSuccessModal && <Modal typeIcon="check" text="Đăng kí tài khoản thành công" onAgree={ () => history.push("/") }/>}
+            {showFailedModal && <Modal typeIcon="fail" text="Đăng kí tài khoản thất bại" onAgree={() => setShowFailedModal(false)}/>}
         </div>
     )
 }
 
 const useStyles = makeStyles(theme => ({
     root: {
-        // width: '100%',
-        // height: '100vh',
-        // display: 'flex',
-        // flexDirection: 'column',
-        // justifyContent: 'center',
-        // alignItems: 'center',
-        // padding: 0,
-        // "& h1": {
-        //     margin: '18px 0px',
-        // }
         [theme.breakpoints.down('sm')]: {
             width: '80%',
           },
@@ -174,7 +167,7 @@ const useStyles = makeStyles(theme => ({
     },
     label: {
         fontSize: '14px',
-        fontWeight: '500',
+        fontWeight: '600',
     },
     loading: {
         display: 'none',

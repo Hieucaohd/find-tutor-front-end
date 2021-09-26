@@ -1,4 +1,5 @@
 import { Grid, makeStyles } from '@material-ui/core';
+import Modal from 'components/Modal/Modal';
 import Room from 'components/Room/Room.jsx';
 import { isSignedIn } from 'features/auth/cookies';
 import { GetAllParentRoom } from 'graphql/RoomQueries';
@@ -16,12 +17,15 @@ function ParentInfor() {
     const typeParent = useSelector(selectType_parent);
     const history = useHistory();
     const [parentRoomList, setParentRoomList] = useState([]);
+    const [alertModal, setAlertModal] = useState(false);
+    const [currentId, setCurrentId] = useState(null);
 
-    const handleDeleteRoom = async (roomId) => {
+    const handleDeleteRoom = async () => {
         let newParentRoomList = [...parentRoomList];
-        newParentRoomList = await newParentRoomList.filter( (room) => Number(room.id) !== Number(roomId));
+        newParentRoomList = await newParentRoomList.filter( (room) => Number(room.id) !== Number(currentId));
         setParentRoomList(newParentRoomList);
-        await deleteRoom({ roomId: roomId, token: token });
+        await deleteRoom({ roomId: currentId, token: token });
+        setAlertModal(false);
     }
     
     useEffect ( ()=> {
@@ -36,14 +40,20 @@ function ParentInfor() {
         history.push("/createroom");
     };
 
+    const handleShowAlertBox = (id) => {
+        setCurrentId(id);
+        setAlertModal(true);
+    }   
+
     return (
         <div>
             {isSignedIn() && typeParent && <button onClick={handleShowCreateRoom} className={classes.addRoom}><FcAddDatabase /></button>}
             <Grid container className={classes.root}>
                 {parentRoomList?.map( (room)=> (
-                    <Room room={{...room, roomId: room.id}} type="userroom" onDelete={handleDeleteRoom}/>
+                    <Room room={{...room, roomId: room.id}} type="userroom" onDelete={handleShowAlertBox}/>
                 ))}
             </Grid>
+            {alertModal && <Modal typeIcon="delete" text="Xóa phòng học này" onAgree={() => handleDeleteRoom()} />}
         </div>
     )
 }

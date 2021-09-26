@@ -13,6 +13,7 @@ import RegisterRole from "./features/RegisterRole/RegisterRole";
 import Search from "./features/Header/components/Search/Search";
 import TutorInfor from "./features/Tutor/TutorInfor";
 import SignUp from "features/SignUp/SignUp";
+import Modal from "components/Modal/Modal";
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
             <Route path="/role" component={RegisterRole} />
             <Route path="/profile" component={Profile} />
             <Route exact path="/search" component={Search} />
-            <Route exact path="/test" component={SkeletonPage} />
+            <Route exact path="/test" component={Modal} />
           </Switch>
         </BrowserRouter>
     </div>
