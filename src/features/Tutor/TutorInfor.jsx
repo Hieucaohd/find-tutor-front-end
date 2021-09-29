@@ -58,18 +58,23 @@ function TutorInfor() {
 
   return (
     <div className={classes.root}>
-        <h5>Danh sách ứng tuyển</h5>
-        <Grid container>
+      <div className={classes.apply}>
+        <h5 className={classes.applyLabel}>Phòng đã ứng tuyển</h5>
+        {applyList?.length ? <Grid container>
         {applyList?.map((room)=> (
              <Room key={room.id} room={{...room.parent_room, id: room.id, roomId: room.parent_room.id}} onDelete={handleDeleteFromApplyList} type="userroom"/>
         ))}
-        </Grid> 
-        <h5>Danh sách dạy học</h5>
-        <Grid container>
+        </Grid> : <h5 className={classes.none}>(Không có phòng nào)</h5>}
+      </div>
+      <div className={classes.teaching}>
+        <h5 className={classes.teachingLabel}>Danh sách dạy học</h5>
+        {teachingList?.length !== 0 ? <Grid container>
         {teachingList?.map((room)=> (
              <Room key={room.id} room={{...room.parent_room, id: room.id, roomId: room.parent_room.id}} onDelete={handleDeleteFromTeachingList} type="userroom"/>
         ))}
-        </Grid>
+        </Grid> : <h5 className={classes.none}>(Không có phòng nào)</h5> }
+      </div>
+        
     </div>
   );
 }
@@ -82,7 +87,47 @@ const useStyles = makeStyles({
       margin: 0,
       marginTop: '32px',
       marginLeft: '24px',
-    }
+    },
+  },
+  label: {
+    
+  },
+  apply: {
+    "background-image": "linear-gradient( 135deg, #3C8CE7 10%, #00EAFF 100%)",
+    borderRadius: 8,
+    marginBottom: 32,
+  },
+  applyLabel: {
+    textAlign: "center",
+    fontSize: 16,
+    margin: 0,
+    color: 'white',
+    padding: 8,
+    marginBottom: 16,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+  },
+  teaching: {
+    "background-image": "linear-gradient( 135deg, #70F570 10%, #49C628 100%)",
+    borderRadius: 8,
+    marginBottom: 32,
+  },
+  teachingLabel: {
+    textAlign: "center",
+    fontSize: 16,
+    margin: 0,
+    color: 'white',
+    padding: 8,
+    marginBottom: 16,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+  },
+  none: {
+    textAlign: 'center',
+    color: 'white',
+    fontWeight: 300,
+    margin: 0,
+    fontStyle: 'italic',
   }
 })
 

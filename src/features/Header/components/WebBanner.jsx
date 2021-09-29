@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
             paddingTop: '20px',
         },
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         "& img": {
             [theme.breakpoints.down('xs')]: {
                 height: '46%',

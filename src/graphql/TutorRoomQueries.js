@@ -48,6 +48,14 @@ export const GetTutorInvitedList =  async (id) => {
                         ward_code
                         subject
                         lop
+                        parent {
+                            user {
+                                id
+                                username
+                                imageprivateusermodel {
+                                    avatar
+                                }
+                        }
                         number_waiting
                         pricemodel_set {
                             money_per_day
@@ -110,6 +118,11 @@ export const GetTutorTeachingList = async (id) => {
                     id
                     parent_room{
                         id
+                        parent {
+                            user {
+                                username
+                            }
+                        }
                         province_code
                         district_code
                         ward_code
@@ -148,6 +161,11 @@ export const getTutorRoomList = async (id) => {
                         ward_code
                         subject
                         lop
+                        parent {
+                            user {
+                                username
+                            }
+                        }
                         number_waiting
                         create_at
                         pricemodel_set {
@@ -167,6 +185,11 @@ export const getTutorRoomList = async (id) => {
                         ward_code
                         subject
                         lop
+                        parent {
+                            user {
+                                username
+                            }
+                        }
                         number_waiting
                         create_at
                         pricemodel_set {

@@ -19,6 +19,7 @@ function ToggleMenu( {onLogOut} ) {
     const [profile, setProfile] = useState({});
     const dropDownRef = useRef(null);
     const overlayRef = useRef(null);
+
     useEffect( () => {
         const getUserInfo = async () => {
             const userInfo = await getUserNameAndAvatar(userId)            
@@ -80,8 +81,8 @@ const useStyles = makeStyles((theme) => ({
         color: "#404165",
         fontSize: "12px",
         fontWeight: "500",
-        backgroundColor: '#c9dcfb',
-        borderRadius: '60px',
+        // backgroundColor: '#c9dcfb',
+        borderLeft: "1px solid #ccc",
         padding: '0px 0px',
         paddingLeft: '12px',
         "& svg": {
@@ -98,9 +99,9 @@ const useStyles = makeStyles((theme) => ({
         },
         "& h4": {
             margin: 0,
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('xs')]: {
                 "&": {
-                    // display: 'none',
+                    display: 'none',
                 }
             },
         }, 

@@ -12,6 +12,10 @@ import MobileNavBar from './components/MobileNavBar/MobileNavBar';
 import SearchBar from './components/SearchBar';
 import ToggleMenu from "./components/ToggleMenu";
 import WebBanner from "./components/WebBanner";
+import { IoIosNotifications } from "react-icons/io5";
+import Notification from './components/Notification';
+import { useState } from 'react';
+
 
 function MainNavigation() {
   const dispatch = useDispatch();
@@ -24,7 +28,9 @@ function MainNavigation() {
   const classes = useStyles();
   const searchRef = useRef(null);
   const location = useLocation();
-  const isSigned = isSignedIn()
+  const isSigned = isSignedIn();
+  const navigationRef = useRef(null);
+
   const handleLogOut = async() => {
     dispatch(logout({
       token: token,
@@ -48,7 +54,11 @@ function MainNavigation() {
     <div>
       {!isSigned && location.pathname === "/" && <WebBanner />}
       {location.pathname !== "/signin" && location.pathname !== "/signup" &&
-      <div className={classes.root}>
+      <div className={classes.root} ref={navigationRef} 
+        style={{
+          backgroundColor: isSigned ? "white" : "transparent",
+          boxShadow: isSigned ? "0 1px 2px #ccc" : "none",
+      }}>
         <div className={classes.item}>
           <Link to="/">
             <h3 className={classes.logo}>
@@ -70,6 +80,7 @@ function MainNavigation() {
         </div>
         <div className={classes.item}>
           <SearchBar onShow={onShowSearchForm}/>
+          <Notification />
           {isSignedIn() && <ToggleMenu onLogOut={handleLogOut} />}
           {!isSignedIn() && <button className={classes.signin} onClick={() => handleShowLogin()}>
             Đăng nhập
@@ -93,9 +104,9 @@ const useStyles = makeStyles((theme) => ({
     "top": "0px",
     "left": "0px",
     "right": "0px",
-    "height": "56px",
-    // "background-color": "white",
-    // borderBottom: '1px solid rgba(0,0,0,0.1)',
+    "height": 56,
+    // backgroundColor: isSignedIn() ? "white" : "transparent",
+    // // borderBottom: '1px solid rgba(0,0,0,0.1)',
     "display": "flex",
     "align-items": "center",
     "justify-content": "space-between",

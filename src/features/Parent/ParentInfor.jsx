@@ -1,5 +1,4 @@
 import { Grid, makeStyles } from '@material-ui/core';
-import Modal from 'components/Modal/Modal';
 import Room from 'components/Room/Room.jsx';
 import { isSignedIn } from 'features/auth/cookies';
 import { GetAllParentRoom } from 'graphql/RoomQueries';

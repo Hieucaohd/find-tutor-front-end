@@ -9,7 +9,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
 import { RiFilter2Line, RiFilterOffLine } from "react-icons/ri";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { addToApplyList } from "../../graphql/mutationGraphQl";
 import {
   selectToken, selectType_parent, selectType_tutor
@@ -26,52 +26,50 @@ function Home() {
   const homeOverlay = useRef(null);
   const cancelFilter = useRef(null);
   const isSigned = isSignedIn();
-  const [filter, setFilter] = useState({
-    filterRoom: {},
-    pages: 1,
-  }); //bộ lọc
+  const location = useLocation();
   const [roomList, setRoomList] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = useSelector(selectToken);
   const [showFailModal, setShowFailModal] = useState(false);
   const [showCheckModal, setShowCheckModal] = useState(false);
-  const [pagination, setPagination] = useState(1);
   const [maxPagination, setMaxPagination] = useState(1);
+
+  const queryString = require('query-string');
 
   //chưa đăng kí là gia sư hay phụ huynh trả đến trang đăng kí
   if(type_tutor === false && type_parent === false) {
     history.push("/role/chooserole");
   }
+
   useEffect( () => {
+    const filter = queryString.parse(location.search)
     const getRoomList = async () => {
       setLoading(true);
-      const list = await GetAllRoom(filter.pages, token); 
+      const pages = await filter.pages || 1;
+      const list = await GetAllRoom(pages, token); 
       setMaxPagination(list?.num_pages);
       setRoomList(list?.result);
       setLoading(false);
     }
-    const getFilterRoomList = async (params) => { 
+    const getFilterRoomList = async () => { 
       setLoading(true);
-      const filterRoomList = await GetFilterRoom({...params, token});
+      const filter = await queryString.parse(location.search);
+      const filterRoomList = await GetFilterRoom({filterRoom: {...filter}, token: token});
       setMaxPagination(filterRoomList?.num_pages);
       setRoomList(filterRoomList?.result);
       setLoading(false);
     }
-    if(Object.keys(filter?.filterRoom).length === 0) {
-      getRoomList(filter?.pages);
+
+    if(!filter?.onFilter) {
+      getRoomList();
     }
+
     else {
-      getFilterRoomList(filter);
+      getFilterRoomList();
     }
     
-  }, [filter]);
+  }, [location, token, queryString]);
 
-  useEffect(()=> {
-    setFilter({
-      ...filter,
-      pages: pagination,
-    })
-  }, [pagination])
 
   const handleShowFilterBar = () => {
     filterBar.current.style.display = "flex";
@@ -84,15 +82,16 @@ function Home() {
   }
 
   const handleCancelFilter = () => {
-    setFilter({filterRoom: {}, pages: 1});
+    history.push("/");
     cancelFilter.current.style.display = "none";
   }
 
   const onSubmitSearch = (newFilter) => {
-    setFilter({filterRoom: newFilter, pages: 1});
     //close filter bar
     handleCloseFilterBar();
-    cancelFilter.current.style.display = "block"
+    cancelFilter.current.style.display = "block";
+    
+    history.push(`/?${queryString.stringify({...newFilter, pages: 1, onFilter: true})}`)
   }
 
   const handleAddRoom = async (id) => {
@@ -101,7 +100,6 @@ function Home() {
       !response ? setShowFailModal(true) : setShowCheckModal(true);
     } else {
       history.push("/signin");
-
     }
   }
 
@@ -110,7 +108,11 @@ function Home() {
   }
 
   const handleChangePage = (event, value) => {
-    setPagination(Number(value));
+    const newSearch = {
+      ...queryString.parse(location.search),
+      pages: value,
+    }
+    history.push(`/?${queryString.stringify(newSearch)}`)
   }
 
   return (

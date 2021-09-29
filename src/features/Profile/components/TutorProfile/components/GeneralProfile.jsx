@@ -8,6 +8,48 @@ GeneralProfile.propTypes = {
     TutorInfo: PropTypes.object,
 };
 
+const getJobName = (str) => {
+    if(!str) return '';
+    if(str === 'sv') return 'Sinh Viên';
+    else if(str === 'gv') return 'Giáo Viên';
+    else return 'Khác';
+}
+
+function GeneralProfile({tutorInfo}) {
+    const classes = useStyles();
+    return (
+        <div className={classes.wallpaper}>
+            <div className={classes.avatarContainer}>
+                <Avatar alt="Travis Howard" variant="square" 
+                    className={classes.avatar} 
+                    src={tutorInfo.imageprivateusermodel?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_3I4Y2ydmFBosgWcdoqVBBCsYZksWAhHtjg&usqp=CAU"} />
+            </div>
+            <div className={classes.info}>
+                <div className={classes.name}>
+                    <h3 className={classes.name}>{tutorInfo.first_name?.toUpperCase()} {tutorInfo.last_name?.toUpperCase()}</h3>
+                    <h5>{getJobName(tutorInfo.profession)}</h5>
+                </div>
+                <p>Dạy học là đam mê</p>
+                <div className={classes.generalInfo}>
+                    <div className={classes.birth}>
+                        <h4>{formatBirthDay(tutorInfo.birthday)}</h4>
+                        <span>NGÀY SINH</span>
+                    </div>
+                    <div className={classes.address}>
+                        <h4>{tutorInfo.address}</h4>
+                        <span>ĐỊA CHỈ</span>
+                    </div>
+                </div>
+                <div className={classes.social}>
+                    <a href="#"><AiOutlineFacebook/></a>
+                    <a href="#"><AiOutlineInstagram/></a>
+                    <a href="#"><AiOutlineLinkedin /></a>
+                </div>
+            </div>
+        </div>
+    );
+}
+
 const useStyles = makeStyles(theme => ({
     wallpaper: {
         flex: 1,
@@ -140,47 +182,5 @@ const useStyles = makeStyles(theme => ({
         }
     }
 }))
-
-const getJobName = (str) => {
-    if(!str) return '';
-    if(str === 'sv') return 'Sinh Viên';
-    else if(str === 'gv') return 'Giáo Viên';
-    else return 'Khác';
-}
-
-function GeneralProfile({tutorInfo}) {
-    const classes = useStyles();
-    return (
-        <div className={classes.wallpaper}>
-            <div className={classes.avatarContainer}>
-                <Avatar alt="Travis Howard" variant="square" 
-                    className={classes.avatar} 
-                    src={tutorInfo.imageprivateusermodel?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_3I4Y2ydmFBosgWcdoqVBBCsYZksWAhHtjg&usqp=CAU"} />
-            </div>
-            <div className={classes.info}>
-                <div className={classes.name}>
-                    <h3 className={classes.name}>{tutorInfo.first_name?.toUpperCase()} {tutorInfo.last_name?.toUpperCase()}</h3>
-                    <h5>{getJobName(tutorInfo.profession)}</h5>
-                </div>
-                <p>Dạy học là đam mê</p>
-                <div className={classes.generalInfo}>
-                    <div className={classes.birth}>
-                        <h4>{formatBirthDay(tutorInfo.birthday)}</h4>
-                        <span>NGÀY SINH</span>
-                    </div>
-                    <div className={classes.address}>
-                        <h4>{tutorInfo.address}</h4>
-                        <span>ĐỊA CHỈ</span>
-                    </div>
-                </div>
-                <div className={classes.social}>
-                    <a><AiOutlineFacebook/></a>
-                    <a><AiOutlineInstagram/></a>
-                    <a><AiOutlineLinkedin /></a>
-                </div>
-            </div>
-        </div>
-    );
-}
 
 export default GeneralProfile;

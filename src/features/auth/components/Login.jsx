@@ -8,8 +8,6 @@ import { Link, useHistory } from "react-router-dom";
 import { login } from "../authSlice";
 import LoginGoogle from "./LoginGoogle";
 
-const selectToken = (state) => state.auth.token;
-
 function Login({onShow}) {
   const classes = useStyles();
   const dispatch = useDispatch();

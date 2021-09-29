@@ -34,8 +34,8 @@ export const GetAllRoom = (pages, token) => {
     return fetchGraphQl("room list", "all_room", query, token);
 }
 
-export const GetFilterRoom = ({filterRoom, pages, token}) => {
-    const {lop, province_code, district_code, ward_code, subject, sex, job, price } = filterRoom;
+export const GetFilterRoom = ({filterRoom, token}) => {
+    const {lop, province_code, district_code, ward_code, subject, sex, job, price, pages } = filterRoom;
     const queryString = `${lop ? `lop: [${lop}],` : ``}
         ${province_code ? `province_code: ${province_code},` : ``}
         ${district_code ? `district_code: ${district_code}` : ``}
@@ -46,6 +46,8 @@ export const GetFilterRoom = ({filterRoom, pages, token}) => {
         ${price ? `price: [${price}],`: ``}
         page: ${pages}, num_in_page: 12
         `;
+    console.log('filterrooom', queryString)
+    
     const query = `{
         search_room (${queryString}) {
             result {

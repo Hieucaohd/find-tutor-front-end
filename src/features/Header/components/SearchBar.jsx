@@ -8,12 +8,12 @@ SearchBar.propTypes = {
 
 const useStyles = makeStyles({
     root: {
-        backgroundColor: "#F0F2F5",
+        // backgroundColor: "#F0F2F5",
         borderRadius: "50%",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        fontSize: "18px",
+        fontSize: "20px",
         padding: "6px",
         "&:hover": {
             cursor: "pointer",
@@ -32,7 +32,6 @@ function SearchBar({onShow}) {
     return (
         <div className={classes.root} onClick={handleShowSearch}>
             <AiOutlineSearch onClick={handleShowSearch}/> 
-            <input className={classes.search} type="text" />
         </div>
     );
 }
