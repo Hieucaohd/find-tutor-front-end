@@ -9,6 +9,14 @@
     }
 }
 
+@keyframes animatefilter {
+    0% {
+    }
+    100% {
+    }
+}
+
+
 .home {
     padding: 24px 52px;
     margin-top: 56px;
@@ -75,6 +83,68 @@
         }
         &__cancel {
             color: #ccc;
+        }
+    }
+
+    &__nav {
+        margin-bottom: 32px;
+    }
+    
+}
+
+.topbutton {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+
+    & button {
+        border: 1px solid #ccc;
+        background-color: white;
+        padding: 8px 8px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        & svg {
+            font-size: 20px;
+            margin-right: 8px;
+        }
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    &__select {
+        width: 140px;
+    }
+    
+}
+
+.filterbar {
+    display: none;
+    animation-name: animatefilter;
+    animation-duration: 4s;
+    
+}
+
+@media (max-width: 769px){
+    .home {
+        padding: 24px 44px;
+        margin-top: 56px;
+    }
+    .topbutton  {
+        margin: 36px 0 24px 0;
+        position: relative;
+        padding: 0px;
+
+        &__select {
+            position: absolute!important;
+            top: -46px;
+        }
+
+        &__filter {
+            position: absolute;
+            top: -46px;
+            right: 0px
         }
     }
 }

@@ -6,10 +6,10 @@ import SkeletonPage from "components/Skeleton/SkeletonPage";
 import { isSignedIn } from "features/auth/cookies";
 import { GetAllRoom, GetFilterRoom } from "graphql/RoomQueries";
 import React, { useEffect, useRef, useState } from "react";
-import { AiOutlineAppstoreAdd } from "react-icons/ai";
-import { RiFilter2Line, RiFilterOffLine } from "react-icons/ri";
+import { RiFilter3Fill } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
+import Select from 'react-select';
 import { addToApplyList } from "../../graphql/mutationGraphQl";
 import {
   selectToken, selectType_parent, selectType_tutor
@@ -22,9 +22,9 @@ function Home() {
   const history = useHistory();
   const type_tutor = useSelector(selectType_tutor); // lấy type_tutor từ authSlice.js
   const type_parent = useSelector(selectType_parent); // lấy type_parent từ authSlice.js
-  const filterBar = useRef(null);
+  
   const homeOverlay = useRef(null);
-  const cancelFilter = useRef(null);
+  const filterRef = useRef(null);
   const isSigned = isSignedIn();
   const location = useLocation();
   const [roomList, setRoomList] = useState([]);
@@ -70,29 +70,37 @@ function Home() {
     
   }, [location, token, queryString]);
 
-
-  const handleShowFilterBar = () => {
-    filterBar.current.style.display = "flex";
-    homeOverlay.current.style.display = "block";
-  }
-
-  const handleCloseFilterBar = () => {
-    filterBar.current.style.display = "none";
-    homeOverlay.current.style.display = "none";
-  }
-
-  const handleCancelFilter = () => {
-    history.push("/");
-    cancelFilter.current.style.display = "none";
-  }
-
-  const onSubmitSearch = (newFilter) => {
-    //close filter bar
-    handleCloseFilterBar();
-    cancelFilter.current.style.display = "block";
+  const showFilterBar = () => {
     
-    history.push(`/?${queryString.stringify({...newFilter, pages: 1, onFilter: true})}`)
+    if(filterRef.current.style.display === "none") {
+      filterRef.current.style.display = "block";
+    } else {
+      filterRef.current.style.display = "none";
+    }
   }
+
+  // const handleShowFilterBar = () => {
+  //   filterBar.current.style.display = "flex";
+  //   homeOverlay.current.style.display = "block";
+  // }
+
+  // const handleCloseFilterBar = () => {
+  //   filterBar.current.style.display = "none";
+  //   homeOverlay.current.style.display = "none";
+  // }
+
+  // const handleCancelFilter = () => {
+  //   history.push("/");
+  //   cancelFilter.current.style.display = "none";
+  // }
+
+  // const onSubmitSearch = (newFilter) => {
+  //   //close filter bar
+  //   handleCloseFilterBar();
+  //   cancelFilter.current.style.display = "block";
+    
+  //   history.push(`/?${queryString.stringify({...newFilter, pages: 1, onFilter: true})}`)
+  // }
 
   const handleAddRoom = async (id) => {
     if(isSigned){
@@ -103,9 +111,9 @@ function Home() {
     }
   }
 
-  const handleShowCreateRoom = () => {
-    history.push("/createroom");
-  }
+  // const handleShowCreateRoom = () => {
+  //   history.push("/createroom");
+  // }
 
   const handleChangePage = (event, value) => {
     const newSearch = {
@@ -115,9 +123,32 @@ function Home() {
     history.push(`/?${queryString.stringify(newSearch)}`)
   }
 
+  const options = [
+    { value: 'new', label: 'Mới nhất ' },
+    { value: 'cheap', label: 'Giá thấp ↑' },
+    { value: 'expensive', label: 'Giá cao ↓' }
+  ]
+
   return (
     <div className = "home">
-      <Categories />
+      <div className="home__nav">
+        <div className="topbutton">
+          <Select className="topbutton__select"
+            options={options} defaultValue={options[0]} />
+
+          <Categories />
+
+          <button
+          className="topbutton__filter" onClick={showFilterBar}>
+            <RiFilter3Fill />
+            Lọc
+          </button>
+        </div>
+        <div className="filterbar" ref={filterRef}>
+          <FilterBar />
+        </div>
+      </div>
+      
       {loading ? <SkeletonPage /> 
       : <Grid container>{
         roomList?.map((room)=>(
@@ -125,16 +156,17 @@ function Home() {
         ))}
       </Grid>}
 
-      <div ref={filterBar} className="home__filter"> 
+      {/* <div ref={filterBar} className="home__filter"> 
         <FilterBar onClose={handleCloseFilterBar} onSubmit={onSubmitSearch}/>
-      </div>
-      <div className="home__buttongroup">
+      </div> */}
+      
+      {/* <div className="home__buttongroup">
         {isSigned && type_parent && <button onClick={handleShowCreateRoom}><AiOutlineAppstoreAdd /></button>}
         {isSigned && <button className="home__toggle__filter" onClick={handleShowFilterBar}> <RiFilter2Line /> </button>}
         <button className="home__toggle__cancel" onClick={handleCancelFilter} ref={cancelFilter} style={{display: "none"}}> <RiFilterOffLine /></button>
-      </div>
+      </div> */}
         {maxPagination > 1 && <Pagination count={maxPagination} color="primary" className="home__pagination" onChange={handleChangePage}/>}
-      <div className="home__overlay" ref={homeOverlay} onClick={handleCloseFilterBar}> </div>
+      {/* <div className="home__overlay" ref={homeOverlay} onClick={handleCloseFilterBar}> </div> */}
       
       {showCheckModal && <Modal typeIcon="check" text="Ứng tuyển thành công" onAgree={() => setShowCheckModal(false)} />}
       {showFailModal && <Modal typeIcon="fail" text="Ứng tuyển không thành công" onAgree={() => setShowFailModal(false)} />}

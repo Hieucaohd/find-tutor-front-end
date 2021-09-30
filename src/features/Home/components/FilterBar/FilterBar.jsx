@@ -1,14 +1,39 @@
-import Location from "components/location/Location.jsx";
-import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import { getProvinceList } from "components/location/getLocation";
+import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
-import { AiFillCloseCircle } from "react-icons/ai";
+import Select from 'react-select';
 import "./styles.scss";
 
-FilterBar.propTypes = {
-    onClose: PropTypes.func,
-    onSubmit: PropTypes.func,
-};
+const sexOptions = [
+    { value: 'male', label: 'Gia sư nam' },
+    { value: 'female', label: 'Gia sư nữ' },
+    { value: 'both', label: 'Tất cả' },
+]
+
+const typeOptions = [
+    { value: 'teacher', label: 'Giáo viên' },
+    { value: 'student', label: 'Sinh viên' },
+    { value: 'both', label: 'Tất cả' },
+]
+
+const priceOptions = [
+    { value: 'teacher', label: '< 150k' },
+    { value: 'student', label: '150k - 300k' },
+    { value: 'both', label: '300k - 500k' },
+    { value: 'both', label: '> 500k' },
+]
+
+const classOptions = [
+    { value: 1, label: 'Cấp 1' },
+    { value: 2, label: 'Cấp 2' },
+    { value: 3, label: 'Cấp 3' },
+    { value: 4, label: 'Đại học' },
+    { value: 0, label: 'Tất cả' },    
+]
+
+
+
+
 
 function FilterBar( {onClose = null, onSubmit = null}) {
     const { register, handleSubmit } = useForm();
@@ -17,6 +42,8 @@ function FilterBar( {onClose = null, onSubmit = null}) {
         district: 0,
         ward: 0
     });
+    const [provinceOptions, setProvinceOptions] = useState([]);
+    
     const handleGetLocation = (data) => {
         setLocation(data);
     }
@@ -80,82 +107,40 @@ function FilterBar( {onClose = null, onSubmit = null}) {
         onSubmit(newFilter);
     }
 
+    useEffect(()=>{
+        const getProvinces = async () => {
+            const list = await getProvinceList();
+            console.log('list', list);
+            const listOptions = await list.map((province) => {
+                return {value: province.code, label: province.name}
+            })
+            setProvinceOptions(listOptions);
+        }
+        getProvinces();
+    }, [])
 
     return (
         <div className = "filter" > 
-            <button className="filter__close" onClick={handleCloseFilterBar}>
-                <AiFillCloseCircle />
-            </button>
-            <form onSubmit={handleSubmit(onSubmitSearch)} className="filter__form"> 
-                <div className="filter__form__control">
-                    <label>Chọn giới tính gia sư</label>
-                    <select name="sex" id="sex" {...register("sex")}>
-                      <option value="both">--Không--</option>
-                      <option value="nam">Nam</option>
-                      <option value="nu">Nữ</option>
-                    </select>
-                </div>
-                <div className="filter__form__control">
-                    <label>Chọn loại gia sư</label>
-                    <select name="job" id="job" {...register("job")}>
-                      <option value="both">--Không--</option>
-                      <option value="gv">Giáo viên</option>
-                      <option value="sv">Sinh viên</option>
-                    </select>
-                </div>
-                <div className="filter__form__control">
-                    <label> Chọn cấp dạy</label>
-                    <div className="filter__form__checkbox">
-                        <div>
-                            <span> Cấp 1 </span>
-                            <input 
-                                type="checkbox"
-                                value="checked"
-                                {...register("cap_1")}
-                            />
-                        </div>
-                        <div>
-                            <span> Cấp 2 </span>
-                            <input 
-                                type="checkbox"
-                                value="checked"
-                                {...register("cap_2")}
-                            />
-                        </div>
-                        <div>
-                            <span> Cấp 3 </span>
-                            <input 
-                                type="checkbox"
-                                value="checked"
-                                {...register("cap_3")}
-                            />
-                        </div>
-                        <div>
-                            <span> Đại học </span>
-                            <input 
-                                type="checkbox"
-                                value="checked"
-                                {...register("cap_4")}
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div> 
-                    <label>Vị trí dạy</label>
-                    <Location onChange={handleGetLocation} />
-                </div>
-                <div className="filter__form__control">
-                    <label>Giá tiền</label>
-                    <div className="filter__form__price">
-                        <input type="number" placeholder="đ từ" {...register("price_from")}/>
-                        <span></span>
-                        <input type="number" placeholder="đ đến" {...register("price_to")}/>
-                    </div>
-                </div>
-               <div> 
-                <button type="submit" variant="contained" color="primary" className="filter__submit"> Áp dụng</button>
-               </div>
-            </form>
+            <div className="filter__field">
+                <label>Giới tính</label>
+                <Select options={sexOptions} isClearable/>
+            </div>
+            <div className="filter__field">
+                <label>Loại gia sư</label>
+                <Select options={typeOptions} isClearable/>
+            </div>
+            <div className="filter__field">
+                <label>Giá phòng</label>
+                <Select options={priceOptions} isClearable/>
+            </div>
+            <div className="filter__field">
+                <label>Cấp dạy </label>
+                <Select options={classOptions} isClearable/>
+            </div>
+            <div className="filter__field">
+                <label>Khu vực </label>
+                <Select options={provinceOptions} isClearable/>
+            </div>
         </div>
     );
 }

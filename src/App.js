@@ -1,4 +1,3 @@
-import Modal from "components/Modal/Modal";
 import NotFound from "features/404NotFound/NotFound";
 import Auth from "features/auth/Auth";
 import Profile from "features/Profile/Profile";
@@ -31,7 +30,7 @@ function App() {
             <Route path="/role" component={RegisterRole} />
             <Route path="/profile" component={Profile} />
             <Route exact path="/search" component={Search} />
-            <Route exact path="/test" component={Modal} />
+            {/* <Route exact path="/test" component={text} /> */}
             <Route exact path="/settings" component={Settings}/>
             <Route path="*" component={NotFound} />
           </Switch>

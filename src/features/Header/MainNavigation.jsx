@@ -79,10 +79,10 @@ function MainNavigation() {
           </div>
         </div>
         <div className={classes.item}>
-          <SearchBar onShow={onShowSearchForm}/>
-          <Notification />
-          {isSignedIn() && <ToggleMenu onLogOut={handleLogOut} />}
-          {!isSignedIn() && <button className={classes.signin} onClick={() => handleShowLogin()}>
+          {isSigned && <SearchBar onShow={onShowSearchForm}/>}
+          {isSigned && <Notification />}
+          {isSigned && <ToggleMenu onLogOut={handleLogOut} />}
+          {!isSigned && <button className={classes.signin} onClick={() => handleShowLogin()}>
             Đăng nhập
           </button>}
         </div>
