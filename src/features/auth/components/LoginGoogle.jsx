@@ -11,8 +11,8 @@ const useStyles = makeStyles({
         
         "& button": {
             boxShadow: 'none!important',
-            borderRadius: '64px!important',
-            border: '1px solid #ccc!important',
+            borderRadius: '8px!important',
+            border: '0.5px solid #0061ff!important',
             justifyContent: 'center!important',
         }
     }

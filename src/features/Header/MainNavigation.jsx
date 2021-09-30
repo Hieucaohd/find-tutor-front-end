@@ -8,8 +8,14 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import {
   logout, selectId_of_user, selectRefreshToken, selectToken, selectType_parent, selectType_tutor
 } from "../auth/authSlice";
+import MobileNavBar from './components/MobileNavBar/MobileNavBar';
 import SearchBar from './components/SearchBar';
 import ToggleMenu from "./components/ToggleMenu";
+import WebBanner from "./components/WebBanner";
+import { IoIosNotifications } from "react-icons/io5";
+import Notification from './components/Notification';
+import { useState } from 'react';
+
 
 function MainNavigation() {
   const dispatch = useDispatch();
@@ -22,6 +28,8 @@ function MainNavigation() {
   const classes = useStyles();
   const searchRef = useRef(null);
   const location = useLocation();
+  const isSigned = isSignedIn();
+  const navigationRef = useRef(null);
 
   const handleLogOut = async() => {
     dispatch(logout({
@@ -41,14 +49,22 @@ function MainNavigation() {
   const handleShowLogin = () => {
     history.push("/signin");
   }
+  
   return (
     <div>
+      {!isSigned && location.pathname === "/" && <WebBanner />}
       {location.pathname !== "/signin" && location.pathname !== "/signup" &&
-      <div className={classes.root}>
+      <div className={classes.root} ref={navigationRef} 
+        style={{
+          backgroundColor: isSigned ? "white" : "transparent",
+          boxShadow: isSigned ? "0 1px 2px #ccc" : "none",
+      }}>
         <div className={classes.item}>
           <Link to="/">
             <h3 className={classes.logo}>
-              LOGO IS HERE
+              {/* <img src="https://cdn-icons-png.flaticon.com/512/4634/4634764.png" />
+               Tìm gia sư */}
+               LOGO IS HERE
             </h3>
           </Link>
           <div className={classes.section}>
@@ -63,9 +79,10 @@ function MainNavigation() {
           </div>
         </div>
         <div className={classes.item}>
-          <SearchBar onShow={onShowSearchForm}/>
-          {isSignedIn() && <ToggleMenu onLogOut={handleLogOut} />}
-          {!isSignedIn() && <button className={classes.signin} onClick={() => handleShowLogin()}>
+          {isSigned && <SearchBar onShow={onShowSearchForm}/>}
+          {isSigned && <Notification />}
+          {isSigned && <ToggleMenu onLogOut={handleLogOut} />}
+          {!isSigned && <button className={classes.signin} onClick={() => handleShowLogin()}>
             Đăng nhập
           </button>}
         </div>
@@ -73,6 +90,9 @@ function MainNavigation() {
         <div ref={searchRef} style={{display: 'none'}} className={classes.searchForm}>
           <Search onClose={onCloseSearchForm}/>
         </div>
+      </div>}
+      {isSigned && <div className={classes.navBar}>
+        <MobileNavBar userId={userId} typeTutor={type_tutor} typeParent={type_parent}/>
       </div>}
     </div>
   );
@@ -84,9 +104,9 @@ const useStyles = makeStyles((theme) => ({
     "top": "0px",
     "left": "0px",
     "right": "0px",
-    "height": "56px",
-    "background-color": "white",
-    borderBottom: '1px solid rgba(0,0,0,0.1)',
+    "height": 56,
+    // backgroundColor: isSignedIn() ? "white" : "transparent",
+    // // borderBottom: '1px solid rgba(0,0,0,0.1)',
     "display": "flex",
     "align-items": "center",
     "justify-content": "space-between",
@@ -117,6 +137,7 @@ const useStyles = makeStyles((theme) => ({
         "border-radius": "50%",
         marginRight: '8px',
         "font-size": "16px",
+        display: 'none',
       },
       [theme.breakpoints.up('md')]: {
         "padding": "4px 12px",
@@ -167,17 +188,26 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
   },
   signin: {
-    backgroundColor: '#5037EC',
+    backgroundColor: '#0061FF',
     color: 'white',
     border: 'none',
     padding: '8px 12px',
-    borderRadius: '52px',
+    borderRadius: '4px',
+    fontWeight: 600,
     opacity: 0.8,
     marginLeft: "16px",
     "&:hover": {
       opacity: 1,
       cursor: 'pointer',
     }
+  },
+  navBar: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'block',
+    },
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
   }
 }));
 

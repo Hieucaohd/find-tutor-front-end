@@ -1,129 +1,134 @@
-import { makeStyles } from "@material-ui/core";
-import SkeletonPage from "components/Skeleton/SkeletonPage";
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Grid, makeStyles } from "@material-ui/core";
+import Room from "components/Room/Room";
+import { deleteFromWaitingList, deleteTutorFromTeachingList } from "features/ParentRoom/parentroom";
+import { getTutorRoomList } from "graphql/TutorRoomQueries";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { selectId_of_user, selectToken } from "../auth/authSlice";
-import InvitedListForTutor from "./components/InvitedListForTutor";
-import TeachingListForTutor from "./components/TeachingListForTutor";
-import TryTeachingListForTutor from "./components/TryTeachingListForTutor";
-import WaitingListForTutor from "./components/WaitingListForTutor";
-import {
-  deleteInvitedListForTutorInfor,
-  fetchInvitedListForTutorInfor,
-  selectInvitedListForTutorInfor
-} from "./invitedListForTutorInforSlice";
-import {
-  addToTeachingTutorInfor,
-  fetchTeachingForTutorInfor,
-  selectTeachingForTutorInfor
-} from "./teachingForTutorInforSlice";
-import {
-  addTryTeachingForTutorInfor,
-  deleteTryTeachingForTutorInfor,
-  fetchTryTeachingForTutorInfor,
-  selectTryTeachingForTutorInfor
-} from "./tryTeachingForTutorInforSlice";
-import {
-  deleteWaitingListForTutorInfor,
-  fetchWaitingListForTutorInfor,
-  selectWaitingListForTutorInfor
-} from "./waitingListForTutorInforSlice";
-
-const useStyles = makeStyles({
-  root: {
-    marginTop: "40px",
-    padding: "42px",
-    "&>h4": {
-      margin: 0,
-      marginTop: '32px',
-      marginLeft: '24px',
-    }
-  }
-})
 
 function TutorInfor() {
-  const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const classes = useStyles();
-  const [loadingRooms, setLoadingRooms] = useState(true);
-  const userId = useSelector(selectId_of_user)
+  const userId = useSelector(selectId_of_user);
+  const [applyList, setApplyList] = useState([]);
+  const [teachingList, setTeachingList] = useState([]);
+  
   useEffect(() => {
     const fetchRoomList = async () => {
-      dispatch(fetchWaitingListForTutorInfor({ id: userId }));
-      dispatch(fetchInvitedListForTutorInfor({ id: userId }));
-      dispatch(fetchTryTeachingForTutorInfor({ id: userId }));
-      await dispatch(fetchTeachingForTutorInfor({ id: userId }));
-      setLoadingRooms(false);
-    }
+      const listRoom = await getTutorRoomList(userId);
+      await setApplyList(listRoom.waitingtutormodel_set);
+      await setTeachingList(listRoom.tutorteachingmodel_set);
+  }
+  
     if (token) {
       // dispatch something here.
       fetchRoomList();
     }
-  }, [token]);
+  }, []);
 
-  //xóa khỏi danh sách chờ
-  const handleDeleteWaiting = async (waitingId) => {
-    await dispatch(
-    deleteWaitingListForTutorInfor({ waitingId: waitingId, token: token })
-    );
-  };  
+  const handleDeleteFromApplyList = async (waitingId) => {
+    try {
+      await deleteFromWaitingList({token: token, waitingId: waitingId});
+      const newList = [];
+      await applyList.forEach((item) => {
+        if(Number(item.id) !== Number(waitingId)) {
+          newList.push(item);
+        }
+      });
+      setApplyList(newList);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-  //đồng ý dạy thử, thêm vào danh sách dạy thử
-  const handleTryTeach = async (invitedId) => {
-    await dispatch(
-      addTryTeachingForTutorInfor({ invitedId: invitedId, token: token })
-    );
-  };
-
-  //không đồng ý dạy thử, xóa khỏi danh sách mời
-  const handleDontTryTeach = async (invitedId) => {
-    await dispatch(
-      deleteInvitedListForTutorInfor({ invitedId: invitedId, token: token })
-    );
-  };
-
-  //đồng ý dạy chính thức
-  const handleTeach = async (tryTeachId) => {
-    await addToTeachingTutorInfor({
-      try_teachingId: tryTeachId,
-      token: token,
-      dispatch: dispatch,
-    });
-  };
-
-  //không đồng ý dạy chính thức, xóa khỏi danh sách dạy thử
-  const handleDontTeach = async (tryTeachId) => {
-    await dispatch(
-      deleteTryTeachingForTutorInfor({
-        try_teachingId: tryTeachId,
-        token: token,
-      })
-    );
-  };
-
-  //get lists
-  const waitingList = useSelector(selectWaitingListForTutorInfor);
-  const invitedList = useSelector(selectInvitedListForTutorInfor);
-  const tryTeaching = useSelector(selectTryTeachingForTutorInfor);
-  const teaching = useSelector(selectTeachingForTutorInfor);
+  const handleDeleteFromTeachingList = async (teachingId) => {
+    try {
+      await deleteTutorFromTeachingList({token: token, teachingId: teachingId});
+      const newList = [];
+      await teachingList.forEach((item) => {
+        if(Number(item.id) !== Number(teachingId)) {
+          newList.push(item);
+        }
+      });
+      setTeachingList(newList);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <div className={classes.root}>
-        <h4>Danh sách chờ</h4>
-        {loadingRooms ? <SkeletonPage number={3} />
-        :<WaitingListForTutor waitingList = {waitingList} onDelete = {handleDeleteWaiting}/>}
-        <h4>Danh sách mời</h4> 
-        {loadingRooms ? <SkeletonPage number={3} /> 
-        :<InvitedListForTutor invitedList = {invitedList} onTryTeach = {handleTryTeach} onDelete = {handleDontTryTeach}/>}
-        <h4>Danh sách dạy thử</h4>
-        {loadingRooms ? <SkeletonPage number={3} /> 
-        :<TryTeachingListForTutor tryTeachingList = {tryTeaching} onTeach = {handleTeach} onDelete = {handleDontTeach}/>}
-        <h4>Danh sách đang dạy</h4>
-        {loadingRooms ? <SkeletonPage number={3} />
-        :<TeachingListForTutor teachingList = {teaching}/>}
+      <div className={classes.apply}>
+        <h5 className={classes.applyLabel}>Phòng đã ứng tuyển</h5>
+        {applyList?.length ? <Grid container>
+        {applyList?.map((room)=> (
+             <Room key={room.id} room={{...room.parent_room, id: room.id, roomId: room.parent_room.id}} onDelete={handleDeleteFromApplyList} type="userroom"/>
+        ))}
+        </Grid> : <h5 className={classes.none}>(Không có phòng nào)</h5>}
+      </div>
+      <div className={classes.teaching}>
+        <h5 className={classes.teachingLabel}>Danh sách dạy học</h5>
+        {teachingList?.length !== 0 ? <Grid container>
+        {teachingList?.map((room)=> (
+             <Room key={room.id} room={{...room.parent_room, id: room.id, roomId: room.parent_room.id}} onDelete={handleDeleteFromTeachingList} type="userroom"/>
+        ))}
+        </Grid> : <h5 className={classes.none}>(Không có phòng nào)</h5> }
+      </div>
+        
     </div>
   );
 }
+
+const useStyles = makeStyles({
+  root: {
+    marginTop: "40px",
+    padding: "52px",
+    "&>h4": {
+      margin: 0,
+      marginTop: '32px',
+      marginLeft: '24px',
+    },
+  },
+  label: {
+    
+  },
+  apply: {
+    "background-image": "linear-gradient( 135deg, #3C8CE7 10%, #00EAFF 100%)",
+    borderRadius: 8,
+    marginBottom: 32,
+  },
+  applyLabel: {
+    textAlign: "center",
+    fontSize: 16,
+    margin: 0,
+    color: 'white',
+    padding: 8,
+    marginBottom: 16,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+  },
+  teaching: {
+    "background-image": "linear-gradient( 135deg, #70F570 10%, #49C628 100%)",
+    borderRadius: 8,
+    marginBottom: 32,
+  },
+  teachingLabel: {
+    textAlign: "center",
+    fontSize: 16,
+    margin: 0,
+    color: 'white',
+    padding: 8,
+    marginBottom: 16,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+  },
+  none: {
+    textAlign: 'center',
+    color: 'white',
+    fontWeight: 300,
+    margin: 0,
+    fontStyle: 'italic',
+  }
+})
 
 export default TutorInfor;

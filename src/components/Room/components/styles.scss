@@ -21,7 +21,11 @@
             background-color: #0061ff;
             border: none;
             color: white;
-            
+        }
+        &__delete {
+            background-color: red;
+            border: none;
+            color: white;
         }
         &__detail {
             border: none;

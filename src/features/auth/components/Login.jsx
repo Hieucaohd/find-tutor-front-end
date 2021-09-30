@@ -1,37 +1,42 @@
 import { makeStyles } from "@material-ui/core";
 import Loading from "components/Loading/Loading";
-import React, { useEffect, useRef } from "react";
+import Modal from "components/Modal/Modal";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 import { login } from "../authSlice";
 import LoginGoogle from "./LoginGoogle";
-
-const selectToken = (state) => state.auth.token;
 
 function Login({onShow}) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
   const { register, formState: { errors }, handleSubmit } = useForm();
-  const token = useSelector(selectToken);
   const loadingRef = useRef(null);
-
-  //token đã tồn tại chuyển sang trang home
-  useEffect(() => {
-    if (token) {
-      history.push("/");
-    }
-  }, [token]);
-
+  const [showFailedModal, setShowFailedModal] = useState(false);
+  // //token đã tồn tại chuyển sang trang home
+  // // useEffect(() => {
+  // //   if (token) {
+  // //     history.push("/");
+  // //   }
+  // // }, [token]);
+  // if (token) {
+  //   //     history.push("/");
+  //   //   }
   const onSubmit = async (data) => {
     const args = {
       email: data.email,
       password: data.password,
     };
     loadingRef.current.style.display = "flex";
-    await dispatch(login(args));
-    loadingRef.current.style.display = "none";
+    const loginDispatch = await dispatch(login(args));
+    if(!loginDispatch.payload) {
+      loadingRef.current.style.display = "none";
+      setShowFailedModal(true);
+    } else {
+      history.push("/");
+    }
   };
 
   const handleShowRegisterForm = () => {
@@ -44,6 +49,7 @@ function Login({onShow}) {
       <div ref={loadingRef} style={{display: 'none'}}>
         <Loading />
       </div>
+          <h2>Đăng nhập</h2>
           <form className ={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <div className={classes.formField}>
               <LoginGoogle />
@@ -65,6 +71,7 @@ function Login({onShow}) {
                 )}/>
                 <span className={classes.error}>{errors.email && "Cần nhập Email"}</span>
             </div>
+            
             <div className={classes.formField}>
               <label className={classes.label}>Mật khẩu*</label>
               <input name="password" 
@@ -79,39 +86,39 @@ function Login({onShow}) {
             <div className={classes.formField}>
               <button type="submit" className={classes.submit}>Sign in</button>
             </div>
-            <div>
+            <div style={{marginTop: "-12px"}}>
               <span className={classes.registerspan}>Chưa có tài khoản?</span>
-              <span onClick={handleShowRegisterForm} className={classes.register}>
+              <Link to="/signup">
+                <span onClick={handleShowRegisterForm} className={classes.register}>
                 Đăng kí tài khoản</span>
+              </Link>
             </div>
           </form> 
+          {showFailedModal && <Modal typeIcon="fail" text="Email hoặc mật khẩu không đúng" onAgree={() => setShowFailedModal(false)}  />}
     </div>              
   );
 }
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '100%',
-    height: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 0,
+    // width: '100%',
+    // height: '100vh',
+    // display: 'flex',
+    // flexDirection: 'column',
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // padding: 0,
+    [theme.breakpoints.down('sm')]: {
+      width: '80%',
+    },
   },
   form: {
     [theme.breakpoints.down('sm')]: {
-      backgroundColor: 'rgba(233,235,238,0.85)',
-      padding: '36px 24px',
-      width: '80%',
+      width: '100%',
     },
-    [theme.breakpoints.up('md')]: {
-      backgroundColor: 'rgba(233,235,238,0.85)',
-      border: '0.5px solid rgba(0,0,0,0.1)',
-      padding: '36px 20px',
-      width: '300px',
+    [theme.breakpoints.up('md')]: { 
+      width: '340px',
     },
-    height: '320px',
     borderRadius: '8px',
     display: 'flex',
     flexDirection: 'column',
@@ -120,12 +127,12 @@ const useStyles = makeStyles(theme => ({
   },
   formField: {
     width: '100%',
-    marginBottom: '8px',
+    marginBottom: '20px',
     display: 'flex',
     flexDirection: 'column',
     '& input': {
       padding: '12px 14px',
-      borderRadius: '64px',
+      borderRadius: '8px',
       border: '0.5px solid #ccc',
       "&:focus-visible": {
         outline: 'none',
@@ -150,19 +157,25 @@ const useStyles = makeStyles(theme => ({
     marginBottom: '2px',
   },
   label: {
-    fontSize: '12px',
-    fontWeight: '500',
+    fontSize: '14px',
+    fontWeight: '600',
   },
   registerspan: {
     fontSize: '14px',
     marginRight: '4px',
   },
   submit: {
-    backgroundColor: '#5037EC',
+    backgroundColor: '#0061ff',
     color: 'white',
     border: 'none',
-    borderRadius: '64px',
+    borderRadius: '8px',
     padding: '10px 0px',
+    opacity: 0.8,
+      "&:hover": {
+        opacity: 1,
+        cursor: 'pointer'
+    }
+    // width: '50%!important',
   },
   lineSpace: {
     display: 'flex',
@@ -182,8 +195,9 @@ const useStyles = makeStyles(theme => ({
   },
   forget: {
     display: 'flex',
-    justifyContent: 'flex-end',
-    marginBottom: '8px',
+    justifyContent: 'flex-start',
+    marginBottom: '20px',
+    marginTop: "-16px",
     '& a': {
       fontSize: '10px',
       color: '#5037EC',

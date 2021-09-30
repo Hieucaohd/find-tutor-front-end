@@ -1,3 +1,11 @@
+
+
+@media (max-width: 739px){
+  .App {
+    /* padding-bottom: 52px; */
+  }
+}
+
 a {
     text-decoration: none;
 }

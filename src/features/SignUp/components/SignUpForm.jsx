@@ -1,102 +1,14 @@
-import { makeStyles, CircularProgress } from '@material-ui/core';
+import { CircularProgress, makeStyles } from '@material-ui/core';
+import Modal from 'components/Modal/Modal';
 import { server_name } from 'namespace';
 import React, { useRef } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { IoClose } from 'react-icons/io5';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { login } from '../authSlice';
+import { login } from '../../auth/authSlice';
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        width: '100%',
-        height: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 0,
-        "& h1": {
-            margin: '18px 0px',
-        }
-    },
-    form: {
-        [theme.breakpoints.down('sm')]: {
-            backgroundColor: 'rgba(233,235,238,0.85)',
-            padding: '28px 24px',
-            width: '80%',
-          },
-          [theme.breakpoints.up('md')]: {
-            backgroundColor: 'rgba(233,235,238,0.85)',
-            border: '0.5px solid rgba(0,0,0,0.1)',
-            padding: '28px 20px',
-            width: '300px',
-          },
-          height: '320px',
-          borderRadius: '8px',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          position: 'relative'
-    },
-    formField: {
-        width: '100%',
-        marginBottom: '8px',
-        display: 'flex',
-        flexDirection: 'column',
-        '& input': {
-            padding: '10px 14px' , 
-            borderRadius: '64px',
-            border: '1px solid #ccc',
-        },
-        '& button': {
-            width: '100%',
-        },
-        '& label': {
-            fontSize: '12px',
-            fontWeight: '500',
-        },
-    },
-    error: {
-        fontSize: '12px',
-        color: 'red',
-    },
-    submit:{
-        backgroundColor: '#5037EC',
-        color: 'white',
-        border: 'none',
-        borderRadius: '64px',
-        padding: '10px 0px',
-    },
-    loading: {
-        display: 'none',
-        position: 'fixed',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        height: '100%', 
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0,0,0,0.5)', /* Black background with opacity */
-        'z-index': 2,
-    },
-    close: {
-        position: 'absolute',
-        top: '32px',
-        right: '20px',
-        backgroundColor: 'transparent',
-        border: 'none',
-        fontSize: '28px',
-        opacity: '0.6',
-        "&:hover": {
-            opacity: 1,
-        }
-    }
-}))
-
-function Register({onClose = null}) {
+function SignUpForm() {
     const classes = useStyles();
     const {register, formState: { errors }, handleSubmit, watch} = useForm();
     const password = useRef({});
@@ -104,6 +16,8 @@ function Register({onClose = null}) {
     const history = useHistory();
     const dispatch = useDispatch();
     const loadingRef = useRef(null);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const [showFailedModal, setShowFailedModal] = useState(false);
     const registerAccount = async (args) => {
         return await fetch(`${server_name}/auth/register/`, {
           method: "POST",
@@ -121,43 +35,37 @@ function Register({onClose = null}) {
             password: data.password,
         }).then((response) => {
             if(response.ok) {
-                alert("Đăng kí tài khoản thành công");
                 dispatch(login({
                     email: data.email,
                     password: data.password,
                 }));
-                history.push("/");
+                setShowSuccessModal(true);
             } else {
-                alert('Đăng kí tài khoản thất bại');
+                setShowFailedModal(true);
                 loadingRef.current.style.display = "none";
             }
         })
     }
 
-    const handleClose = () => {
-        if(!onClose) return;
-        onClose();
-    }
-    
     return (
         <div className = {classes.root}>
             <form className ={classes.form} onSubmit={handleSubmit(onSubmit)}> 
-                <h1>Đăng kí</h1>
-                {onClose && <button onClick={handleClose} className={classes.close}><IoClose /></button>}
+                <h2>Đăng kí tài khoản</h2>
+                
                 <div className ={classes.formField}>
-                        <label>Tên tài khoản</label>
+                        <label className={classes.label}>Tên tài khoản</label>
                         <input
                             name="username" 
                             type="text"
                             {...register("username", { required: true, minLength: 6})}
-                         />
+                        />
                         {errors.username && errors.username.type === "required" && 
                             <span className ={classes.error}>Cần nhập tên tài khoản</span>}
                         {errors.username && errors.username.type === "minLength" && 
                             <span className ={classes.error}>Tên tài khoản cần ít nhất 6 kí tự</span>}
                     </div>
                     <div className ={classes.formField}> 
-                        <label>Email</label>
+                        <label className={classes.label}>Email</label>
                         <input 
                             name="email" 
                             type="email"
@@ -171,7 +79,7 @@ function Register({onClose = null}) {
                             <span className ={classes.error}>Nhập đúng email của bạn</span>}
                     </div>
                     <div className ={classes.formField}> 
-                        <label>Mật khẩu</label>
+                        <label className={classes.label}>Mật khẩu</label>
                         <input 
                             name="password" 
                             type="password"
@@ -183,7 +91,7 @@ function Register({onClose = null}) {
                             <span className ={classes.error}>Mật khẩu cần ít nhất 6 kí tự</span>}
                     </div>
                     <div className ={classes.formField}> 
-                        <label>Nhập lại mật khẩu</label>
+                        <label className={classes.label}>Nhập lại mật khẩu</label>
                         <input 
                             name="repassword" 
                             type="password"
@@ -202,8 +110,80 @@ function Register({onClose = null}) {
             <div ref={loadingRef}  className ={classes.loading}> 
                 <CircularProgress />
              </div>
+            {showSuccessModal && <Modal typeIcon="check" text="Đăng kí tài khoản thành công" onAgree={ () => history.push("/") }/>}
+            {showFailedModal && <Modal typeIcon="fail" text="Đăng kí tài khoản thất bại" onAgree={() => setShowFailedModal(false)}/>}
         </div>
     )
 }
 
-export default Register;
+const useStyles = makeStyles(theme => ({
+    root: {
+        [theme.breakpoints.down('sm')]: {
+            width: '80%',
+          },
+    },
+    form: {
+        [theme.breakpoints.down('sm')]: {
+            width: '100%',
+          },
+          [theme.breakpoints.up('md')]: { 
+            width: '340px',
+          },
+          borderRadius: '8px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          position: 'relative'
+    },
+    formField: {
+        width: '100%',
+        marginBottom: '16px',
+        display: 'flex',
+        flexDirection: 'column',
+        '& input': {
+        padding: '12px 14px',
+        borderRadius: '8px',
+        border: '0.5px solid #ccc',
+    },
+    '& button': {
+      width: '100%',
+    },
+    },
+    error: {
+        fontSize: '12px',
+        color: 'red',
+    },
+    submit:{
+        backgroundColor: '#0061ff',
+        color: 'white',
+        border: 'none',
+        borderRadius: '8px',
+        padding: '10px 0px',
+        opacity: 0.8,
+        "&:hover": {
+            opacity: 1,
+            cursor: 'pointer'
+        }
+    },
+    label: {
+        fontSize: '14px',
+        fontWeight: '600',
+    },
+    loading: {
+        display: 'none',
+        position: 'fixed',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        height: '100%', 
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0,0,0,0.5)', /* Black background with opacity */
+        'z-index': 2,
+    },
+}))
+
+
+export default SignUpForm;

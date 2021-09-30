@@ -1,14 +1,16 @@
 $cWidth: 240px;
-$cHeight: $cWidth;
+$cHeight: 252px;
 
 .item__room {
     width: $cWidth;
     height: $cHeight;
-    border: 1px solid rgba(0,0,0,0.1);
-    border-radius: 4px;
+    // border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 8px;
     position: relative;
     padding: 16px;
-    
+    background-color: white;
+    // box-shadow: 0 2px 4px 0 rgb(184 184 184 / 50%);
+    box-shadow: 0 2px 4px 0 #ccc;
     & p {
         text-align: center;
         color: black;
@@ -20,7 +22,9 @@ $cHeight: $cWidth;
         display: flex;
         align-items: center;
         font-size: 12px;
-        font-style: italic;
+        & svg {
+            margin-right: 4px;
+        }
     }
     &__thumbnail {
         display: flex;
@@ -62,7 +66,6 @@ $cHeight: $cWidth;
         display: flex;
         font-size: 12px;
         align-items: center;
-        font-style: italic;
         & .MuiAvatar-root {
             width: 20px;
             height: 20px;
@@ -75,4 +78,36 @@ $cHeight: $cWidth;
         font-size: 12px;
         bottom: 48px;
     }
+}
+
+
+@media (max-width: 769px){
+    .item__room {
+        width: 280px;
+        height: 280px;
+        &__thumbnail {
+            & img {
+                width: 66px;
+            }
+            & h3 {
+                font-size: 24px;
+            }
+            & h5 {
+                font-size: 16px;
+            }
+        }
+        &__info {
+            margin-top: 24px;
+            & div {
+                display: flex;
+                align-items: center;
+                font-size: 16px;
+                & svg {
+                    margin-right: 8px;
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+
 }

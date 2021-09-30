@@ -1,0 +1,7 @@
+.currentActive {
+    background-color: white;
+    border: 1px solid #ccc;
+    & h5 {
+        color: #000!important;
+    }
+}

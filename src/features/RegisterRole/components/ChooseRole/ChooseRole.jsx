@@ -1,8 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import { isSignedIn } from 'features/auth/cookies';
 import React from 'react';
-import { GiTeacher } from "react-icons/gi";
-import { RiParentFill } from "react-icons/ri";
 import { useHistory } from 'react-router-dom';
 
 RegisterRole.propTypes = {
@@ -20,13 +18,17 @@ const useStyles = makeStyles(theme =>({
         [theme.breakpoints.down('xs')]: {
             flexDirection: 'column',
         },
+        "& img": {
+            width: 100,
+            height: 100,
+        }
     },
     tutor: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#0AC97F',
+        backgroundColor: '#CFC7E3',
         [theme.breakpoints.down('xs')]: {
             width: '200px',
             height: '200px'
@@ -36,9 +38,10 @@ const useStyles = makeStyles(theme =>({
             height: '250px',
         },
         margin: '32px',
-        color: 'white',
-        borderRadius: '44px',
+        color: 'black',
+        borderRadius: '16px',
         opacity: '0.7',
+        boxShadow: '0 1px 4px #ccc',
         '& span': {
             [theme.breakpoints.down('xs')]: {
                 fontSize: '80px',
@@ -65,10 +68,11 @@ const useStyles = makeStyles(theme =>({
             width: '250px',
             height: '250px',
         },
-        backgroundColor: '#9D56F7',
+        backgroundColor: '#83D8E2',
         margin: '32px',
-        color: 'white',
-        borderRadius: '44px',
+        color: 'black',
+        borderRadius: '16px',
+        boxShadow: '0 1px 4px #ccc',
         opacity: '0.7',
         '& span': {
             [theme.breakpoints.down('xs')]: {
@@ -101,15 +105,16 @@ function RegisterRole(props) {
         history.push("/role/tutor");
     }
 
+
     return (
         <div className={classes.root}>
             <div onClick={handleChooseTutor} className={classes.tutor}>
-                <span><GiTeacher /></span>
+                <img src="https://i.ibb.co/5xJH98b/teacher.webp" alt="teacher" border="0"/>
                 <h4>Đăng kí làm gia sư</h4>
             </div>
         
             <div onClick={handleChooseParent} className={classes.parent}>
-                <span><RiParentFill /></span>
+                <img src="https://i.ibb.co/M2ypJj9/parents.webp" alt="parents" border="0"/>
                 <h4>Đăng kí làm phụ huynh</h4>
             </div>
         </div>

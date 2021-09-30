@@ -1,18 +1,17 @@
 import { Avatar, makeStyles } from '@material-ui/core';
 import { subject } from 'components/Room/picture';
+import { handleTime } from 'containers/date';
+import { isOnList } from 'features/ParentRoom/parentroom';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { AiOutlineComment } from 'react-icons/ai';
-import { FcDocument, FcHome, FcPlanner } from "react-icons/fc";
-import { GiTeacher } from 'react-icons/gi';
-import { IoMaleFemaleOutline } from 'react-icons/io5';
+import { FaBorderAll, FaCalendarDay, FaTransgender } from "react-icons/fa";
+import { MdAccessTime, MdAttachMoney, MdLocationOn, MdPerson, MdToday } from "react-icons/md";
 import { useHistory } from 'react-router-dom';
-
 RoomInfo.propTypes = {
     roomDetail: PropTypes.object,
 };
 
-function RoomInfo( {roomDetail, onClose} ) {
+function RoomInfo( {room, applyList, userId, addToApplyList, typeParent} ) {
     const classes = useStyles();
     const history = useHistory();
     const renderDay = (daysStr) => {
@@ -32,10 +31,25 @@ function RoomInfo( {roomDetail, onClose} ) {
             </ul>
         )
     }
+    const formatPriceString = (price) => {
+        if(!price) return;
+        const priceString = price.toString();
+        let ans = "";
+        const len = priceString.length;
+        let count = 0;
+        for(let i = len - 1; i >= 0; i--) {
+          count++;
+          ans = priceString[i] + ans;
+          if(count % 3 ===0 && count !== len) {
+            ans = "." + ans
+          }
+        }
+        return ans;
+    }
     const typeTutorString = (type) => {
         if(!type) return;
         if(type === "Giao Vien, Sinh Vien") {
-            return "Giáo viên, Sinh viên";
+            return null;
         } else if (type === "Giao Vien") {
             return "Giáo viên";
         } else if (type === "Sinh Vien") {
@@ -45,7 +59,7 @@ function RoomInfo( {roomDetail, onClose} ) {
     const sexTutorString = (sex) => {
         if(!sex) return;
         if(sex === "NU, NAM") {
-            return "Gia sư nam, Gia sư nữ";
+            return null;
         } else if (sex === "NAM") {
             return "Gia sư nam";
         } else if (sex === "NU") {
@@ -55,184 +69,236 @@ function RoomInfo( {roomDetail, onClose} ) {
     const handleShowParentProfile = (id) => {
         history.push(`/profile/parent/${id}`)
     }
+    const handleAddToApplyList = () => {
+        addToApplyList();
+    }
     return (
         <div className={classes.root}>
-            <div className={classes.comment} onClick={()=> onClose()}><AiOutlineComment />bình luận</div>
-            <div className={classes.parent} onClick={() => handleShowParentProfile(roomDetail.parent.id)}>
-                <Avatar src={roomDetail.parent.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_3I4Y2ydmFBosgWcdoqVBBCsYZksWAhHtjg&usqp=CAU"}/>
-            </div>
-            <div className={classes.item}>
-                <div className={classes.main}>
-                    <img className={classes.img} 
-                        src={subject[roomDetail.subject] || subject["Mặc Định"]} 
-                        alt="môn học" 
-                    />
-                    <div className={classes.subject}>
-                        <h1>{roomDetail.subject} <span>{roomDetail.lop}</span></h1>
-                        <h5>{roomDetail.pricemodel_set} đồng / buổi - {roomDetail.timeoneday} giờ</h5>
+            <div className={classes.room}>
+            <div className={classes.header}>
+                <img src={subject[room?.subject] || subject["Mặc Định"]} alt="mon hoc"/>
+                <div className={classes.info}>
+                    <h3>{room?.subject} {room?.lop}</h3>
+                    <h4>{room?.address}</h4>
+                    <div className={classes.infoField}>
+                        <MdAttachMoney />
+                        <span>{formatPriceString(room?.pricemodel_set)} đ/buổi</span>
+                    </div>
+                    {sexTutorString(room?.sexteacher) && <div className={classes.infoField}>
+                        <FaTransgender />
+                        <span>{sexTutorString(room?.sexteacher)}</span>
+                    </div>}
+                    {typeTutorString(room?.typeteacher) && <div className={classes.infoField}>
+                        <MdPerson />
+                        <span>{typeTutorString(room?.typeteacher)}</span>
+                    </div>}
+                    <div className={classes.infoField}>
+                        <MdToday />
+                        <span>{room?.timeoneday} tiếng/buổi</span>
+                    </div>
+                    <div className={classes.time}>
+                        <MdAccessTime /> Được đăng {handleTime(room?.create_at)}
+                    </div>
+                    <div>
+                        {!isOnList(userId, applyList) && !typeParent && <button className={classes.apply} onClick={handleAddToApplyList}>Ứng tuyển</button>}
                     </div>
                 </div>
             </div>
-            <div className={classes.item}>
-                <div className={classes.detail}>
-                    <div>
-                        <span>
-                            <FcHome />
-                        </span> 
-                        <h4>{roomDetail.address}</h4>
-                    </div>
-                    <div>
-                        <span>
-                            <GiTeacher />
-                        </span> 
-                        <h4>{typeTutorString(roomDetail.typeteacher)}</h4>
-                    </div>
-                    <div>
-                        <span>
-                            <IoMaleFemaleOutline />
-                        </span> 
-                        <h4>{sexTutorString(roomDetail.sexteacher)}</h4>
-                    </div>
-                    <div>
-                        <span>
-                            <FcPlanner />
-                        </span>
-                        <div> 
-                            {renderDay(roomDetail.day_can_teach)} 
-                        </div>   
-                    </div>
-                    <div>
-                        <span>
-                            <FcDocument />
-                        </span> 
-                        <h4>2 năm kinh nghiệm trở lên</h4> 
-                    </div>
-                </div>    
+            <div>
+                <h4>Yêu cầu khác</h4>
+                <p>{room?.other_require === "" ? "Không" : room?.other_require }</p>
             </div>
+            </div>
+            <div className={classes.parentInfo}>
+                <div className={classes.parent}>
+                    <h4>Chủ phòng</h4>
+                    <div className={classes.parentHeader}>
+                        <Avatar src={room?.parent?.avatar || null}/>
+                        <div>
+                            <h5>{room?.parent?.first_name} {room?.parent?.last_name}</h5>
+                            <span>{room?.parent?.username}</span>
+                        </div>
+                    </div>
+                    
+                    <div className={classes.infoField}>
+                        <MdLocationOn />
+                        <span>{room?.parent?.address}</span>
+                    </div>
+                    <div className={classes.infoField}>
+                        <FaCalendarDay />
+                        <span>{room?.parent?.birthday.slice(0,4)}</span>
+                    </div>
+                    <div className={classes.infoField}>
+                        <FaBorderAll />
+                        <span>Đã tạo 3 phòng</span>
+                    </div>
+                    <h5 className={classes.parentTime}>Tham gia 3 tháng trước</h5>
+                    <button onClick={() => handleShowParentProfile(room.parent.id)}>Xem chi tiết</button>
+                </div>
+            </div>
+            
         </div>
     );
 }
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     root: {
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-        height: "100%",
-        position: 'relative',
-    },
-    item: {
-        padding: "8px 0px",
-        marginTop: '12px',
-        paddingBottom: '12px',
-    },
-    main: {
-        height: "100%",
-        borderRadius: "4px",
         display: 'flex',
-        alignItems: 'center',
-        "& h1": {
-            fontSize: '46px',
-            fontWeight: '600',
-            margin: 0,
-            "& span": {
-                fontSize: '56px',
-            }
+        justifyContent: 'space-between',
+        [theme.breakpoints.down('xs')]: {
+            flexDirection: 'column',
+            alignItems: 'center',
+            marginBottom: 32,
         },
-        '& h5': {
+        borderBottom: '1px solid #ccc',
+    },
+    header: {
+        display: 'flex',
+        marginBottom: 16,
+        marginTop: 20,
+        [theme.breakpoints.down('xs')]: {
+            alignItems: 'flex-start',
+        },
+        [theme.breakpoints.up('sm')]: {
+            alignItems: 'center',
+        },
+        flex: 3,
+        "& img": {
+            marginTop: 8,
+            [theme.breakpoints.down('xs')]: {
+                width: 40,
+                height: 40,
+                marginRight: 12,
+              },
+              [theme.breakpoints.up('sm')]: {
+                width: 140,
+                height: 140,
+                marginRight: 28,
+              },
+        },
+        "& h1": {
             margin: 0,
-            marginLeft: '8px',
-            fontSize: '20px',
-            fontWeight: 200,
+        },
+        "& h2": {
+            margin: 0,
         }
     },
-    img: {
-        width: '120px',
-        marginLeft: "36px",
-        marginRight: "24px",
+    // room: {
+    //     flex: 3,
+    // },
+    parentInfo: {
+        marginBottom: 30,
+        marginTop: 20,
     },
-    subject: {
-        height: '120px',
+    info: {
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-around'
-    },
-    detail: {
-        marginLeft: '48px',
-        lineHeight: 1.5,
-        "& div" : {
-            display: 'flex',
-            alignItems: 'center',
-            marginBottom: "8px",
-            "& h4": {
-                margin: 0,
-                flex: 12,
-                fontWeight: 500,
-            },
-            "& div": {
-                flex: 12,
-            },
-            "& span": {
-                flex: 1,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'flex-end',
-                marginRight: '20px',
-                "& svg": {
-                    marginRight: '4px',
-                    color: '#F76E5F',
-                },
-                "& h5": {
-                    margin: 0,
-                    fontWeight: 400,
-                    color: 'black',
-                }
-                
-            }
+        "& h3": {
+            margin: 0,
+            fontSize: 28,
+            fontWeight: 500,
+            marginLeft: 4,
+        },
+        "& h4": {
+            margin: 0,
+            fontWeight: 400,
+            marginLeft: 4,
+            marginBottom: 16,
         }
     },
-    days: {
+    infoField: {
         display: 'flex',
-        padding: 0,
-        margin: 0,
-        "& li": {
-            'list-style-type': 'none',
-            width: '24px',
-            height: '24px',
-            marginRight: '4px',
-            backgroundColor: '#F44336',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'white',
-            borderRadius: '50%',
+        alignItems: 'center',
+        marginBottom: 4,
+        fontSize: 16,
+        fontWeight: 400,
+        "& svg": {
+            marginRight: 8,
+            color: "#777777",
         }
     },
-    parent: {
-        position: 'absolute',
-        top: '4px',
-        right: '8px',
-        opacity: '0.6',
+    time: {
+        marginTop: 20,
+        marginBottom: 16,
+        display: 'flex',
+        alignItems: 'center',
+        color: "#777777",
+        fontSize: 14,
+        "& svg": {
+            marginRight: 4,
+            color: "#777777",
+        }
+    },
+    apply: {
+        border: 'none',
+        backgroundColor: '#0061FF',
+        color: 'white',
+        fontWeight: 600,
+        padding: '8px 16px',
+        fontSize: 16,
+        borderRadius: 4,
+        opacity: '0.8',
         "&:hover": {
             opacity: 1,
             cursor: 'pointer',
         }
     },
-    comment: {
-        position: 'absolute',
-        bottom: 4,
-        right: 4,
+    parent: {
+
+        width: 220,
+        padding: "12px 20px 56px 20px",
+        height: 240,  
+        flex: 2,
+        boxShadow: '0 1px 4px 0 #ccc',
+        borderRadius: 4,
+        backgroundColor: 'white',
+        "& h4": {
+            textAlign: 'center',
+            margin: 16,
+            fontSize: 16,
+            borderBottom: '1px solid #ccc',
+        },
+        "& button": {
+            border: 'none',
+            backgroundColor: '#d7d5d5',
+            borderRadius: 4,
+            width: "100%", 
+            padding: 8,
+            fontSize: 16,
+            fontWeight: 600,
+            opacity: 0.8,
+            "&:hover": {
+                opacity: 1,
+                cursor: 'pointer',
+            }
+        }
+    },
+    parentHeader: {
         display: 'flex',
         alignItems: 'center',
-        backgroundColor: '#C3C8E8',
-        padding: '4px',
-        borderRadius: '24px',
-        fontSize: '12px',
-        opacity: 0.8,
-        "&:hover": {
-            opacity: 1,
-            cursor: "pointer",
-        }
+        marginBottom: 16,
+        "& .MuiAvatar-root": {
+            width: 60,
+            height: 60,
+            marginRight: 8,
+        },
+        "&>div": {
+            "& h5": {
+                margin: 0,
+                fontSize: 16,
+                fontWeight: 500,
+                marginBottom: 4,
+            },
+            "& span": {
+                fontSize: 14,
+            }
+        },
+    },
+    parentTime: {
+        fontSize: 14,
+        color: '#777777',
+        fontWeight: 400,
+        margin: "12px 0px",
     }
-})
+}))
 
 export default RoomInfo;

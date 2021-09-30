@@ -23,9 +23,9 @@ function SkeletonPage( {number = 12}) {
     return (
         <Grid container spacing={2}>
             {numberArr.map( () => (
-                <Grid item xs={12} sm={6} md={3} lg={3}>
+                <Grid item xs={12} sm={6} md={4} lg={3}>
                     <Box mb={4} display="flex" justifyContent="center" alignItems="center" >
-                        <Skeleton variant="rect" width={250} height={250*1.35} className={classes.skeleton}/>
+                        <Skeleton variant="rect" width={280} height={280} className={classes.skeleton}/>
                     </Box>
                 </Grid>
             ))}

@@ -1,86 +1,12 @@
 import { CircularProgress, makeStyles } from '@material-ui/core';
 import Location from "components/location/Location.jsx";
+import Modal from 'components/Modal/Modal';
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { selectToken } from '../../../auth/authSlice';
-import { registerParentInfor } from '../../registerAccount';
-
-const useStyles = makeStyles(theme => ({
-    root: {
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 0,
-        marginTop: '56px',
-    },
-    form: {
-        [theme.breakpoints.down('sm')]: {
-            backgroundColor: 'transparent',
-            padding: '0',
-            width: '80%',
-        },
-        [theme.breakpoints.up('md')]: {
-            backgroundColor: 'white',
-            padding: '80px',
-            width: '500px',
-        },
-        borderRadius: '8px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        '& > p': {
-            fontSize: '18px',
-        }
-    },
-    formField: {
-        width: '100%',
-        marginBottom: '8px',
-        display: 'flex',
-        flexDirection: 'column',
-        '& input': {
-            padding: '8px 8px',
-            borderRadius: '64px',
-            border: '1px solid #ccc',
-        },
-        '& button': {
-            width: '100%',
-        },
-        '& label': {
-            fontSize: '12px',
-            fontWeight: 500,
-        }
-    },
-    error: {
-        fontSize: '12px',
-        color: 'red',
-    },
-    submit: {
-        backgroundColor: '#5037EC',
-        color: 'white',
-        border: 'none',
-        borderRadius: '64px',
-        padding: '10px 0px',
-    },
-    loading: {
-        display: 'none',
-        position: 'fixed',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        height: '100%',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0,0,0,0.5)', /* Black background with opacity */
-        'z-index': 2,
-    }
-}));
+import { registerImage, registerParentInfor } from '../../registerAccount';
 
 function RegisterParent(props) {
     const classes = useStyles();
@@ -91,6 +17,8 @@ function RegisterParent(props) {
     const token = useSelector(selectToken);
     const history = useHistory();
     const loadingRef = useRef(null);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const [showFailedModal, setShowFailedModal] = useState(false);
     const [location, setLocation] = useState({
         province: 0,
         district: 0,
@@ -127,17 +55,21 @@ function RegisterParent(props) {
         }
         
         
-        const parentId = await registerParentInfor({
+        const registerReponse = await registerParentInfor({
             token: token,
             parentInfor: parentInfor,
             dispatch: dispatch,
         });
-        if(parentId){
-            alert('Bạn đã đăng kí làm phụ huynh thành công');
+        const file = new FormData()
+        file.append('avatar', data.avatar[0]);
+        const imageResponse = registerReponse ? await registerImage({token, file}) : false ;
+        if(imageResponse){
+            loadingRef.current.style.display = "none";
+            setShowSuccessModal(true);
             history.push("/");
         }else {
             loadingRef.current.style.display = "none";
-            alert("Có lỗi xảy ra, bạn hiện tại chưa thể đăng kí làm phụ huynh, vui lòng thử lại sau.");
+            setShowFailedModal(true);
         }
     }
 
@@ -176,6 +108,10 @@ function RegisterParent(props) {
                         <span className={classes.error}>Cần nhập ngày sinh</span>}
                 </div>
                 <div className={classes.formField}>
+                    <label>Ảnh đại diện</label>
+                    <input type="file" name="avatar" {...register("avatar")}/>
+                </div>
+                <div className={classes.formField}>
                     <label>Địa chỉ</label>
                     <Location onChange={handleGetLocation} />
                 </div>
@@ -202,8 +138,86 @@ function RegisterParent(props) {
             <div ref={loadingRef} className={classes.loading}> 
                 <CircularProgress />
              </div>
+            {showSuccessModal && <Modal typeIcon="check" text="Đăng kí làm gia sư thành công" onAgree={() => history.push("/") }/>}
+            {showFailedModal && <Modal typeIcon="fail" text="Đăng kí làm gia sư không thành công" onAgree={() => setShowFailedModal(false)} />}
         </div>
     );
 }
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 0,
+        marginTop: '56px',
+        marginBottom: 56,
+    },
+    form: {
+        [theme.breakpoints.down('sm')]: {
+            backgroundColor: 'transparent',
+            padding: '0',
+            width: '80%',
+        },
+        [theme.breakpoints.up('md')]: {
+            // backgroundColor: 'white',
+            // padding: '80px',
+            width: '500px',
+        },
+        borderRadius: '8px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        '& > p': {
+            fontSize: '18px',
+        }
+    },
+    formField: {
+        width: '100%',
+        marginBottom: '8px',
+        display: 'flex',
+        flexDirection: 'column',
+        '& input': {
+            padding: '8px 16px',
+            borderRadius: '8px',
+            border: '0.5px solid #ccc',
+        },
+        '& button': {
+            width: '100%',
+        },
+        '& label': {
+            fontSize: '12px',
+            fontWeight: 500,
+        }
+    },
+    error: {
+        fontSize: '12px',
+        color: 'red',
+    },
+    submit: {
+        backgroundColor: '#5037EC',
+        color: 'white',
+        border: 'none',
+        borderRadius: '64px',
+        padding: '10px 0px',
+    },
+    loading: {
+        display: 'none',
+        position: 'fixed',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        height: '100%',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0,0,0,0.5)', /* Black background with opacity */
+        'z-index': 2,
+    }
+}));
 
 export default RegisterParent;

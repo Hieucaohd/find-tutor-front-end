@@ -19,6 +19,7 @@ function ToggleMenu( {onLogOut} ) {
     const [profile, setProfile] = useState({});
     const dropDownRef = useRef(null);
     const overlayRef = useRef(null);
+
     useEffect( () => {
         const getUserInfo = async () => {
             const userInfo = await getUserNameAndAvatar(userId)            
@@ -29,9 +30,11 @@ function ToggleMenu( {onLogOut} ) {
         }
         getUserInfo();
     }, []);
+
     const handleLogout = () => {
         onLogOut();
     }
+
     const handleShowDropDown = () => {
         if(dropDownRef.current.style.display === "none"){
             dropDownRef.current.style.display = "block";
@@ -49,7 +52,6 @@ function ToggleMenu( {onLogOut} ) {
           {typeParent || typeTutor 
           ? <div className={classes.root}> 
                 <div className={classes.user} onClick={handleShowDropDown}>
-                    <span className={classes.line}></span>
                     <BsFillCaretDownFill />
                     <h4>{profile.userName}</h4>
                     <Avatar src={profile.avatar}/>
@@ -79,6 +81,10 @@ const useStyles = makeStyles((theme) => ({
         color: "#404165",
         fontSize: "12px",
         fontWeight: "500",
+        // backgroundColor: '#c9dcfb',
+        borderLeft: "1px solid #ccc",
+        padding: '0px 0px',
+        paddingLeft: '12px',
         "& svg": {
             marginRight: "4px",
         },
@@ -93,7 +99,7 @@ const useStyles = makeStyles((theme) => ({
         },
         "& h4": {
             margin: 0,
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('xs')]: {
                 "&": {
                     display: 'none',
                 }
@@ -110,7 +116,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: "20%",
     },
     dropdown: {
-        marginTop: "11px",
+        marginTop: "4px",
         display: "none",
         position: "absolute",
         [theme.breakpoints.down('xs')]: {

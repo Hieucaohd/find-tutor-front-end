@@ -35,7 +35,7 @@ export const login = createAsyncThunk("auth/authLogin", async (args) => {
     if (response.ok) {
       return response.json();
     } else {
-      alert("Ten dang nhat hoac mat khau khong dung.");
+      // alert("Ten dang nhat hoac mat khau khong dung.");
     }
   });
 });
@@ -127,8 +127,11 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(login.pending, (state, action) => {
+      .addCase(login.pending, (state) => {
         state.status = "loading";
+      })
+      .addCase(login.rejected, (state) => {
+        state.status = "error";
       })
       .addCase(login.fulfilled, (state, action) => {
         state.status = "idle";
@@ -154,7 +157,9 @@ const authSlice = createSlice({
           state.id = id;
           state.type_tutor = type_tutor;
           state.type_parent = type_parent;
-          setUserInfoCookies(action.payload);
+          if(token) {
+            setUserInfoCookies(action.payload);
+          }
         }
       })
       .addCase(loginWithFacebook.pending, (state, action) => {
@@ -169,7 +174,7 @@ const authSlice = createSlice({
           state.id = id;
           state.type_tutor = type_tutor;
           state.type_parent = type_parent;
-          setUserInfoCookies(action.payload);
+          // setUserInfoCookies(action.payload);
         }
       })
       .addCase(logout.pending, (state) => {

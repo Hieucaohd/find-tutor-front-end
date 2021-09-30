@@ -3,6 +3,7 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 export const setUserInfoCookies = (info) => {
+    removeUserCookies();
     const {token, id, refresh_token, type_parent, type_tutor} = info;
     cookies.set('userToken', token, { secure: true, sameSite: true, maxAge: 59*60});
     cookies.set('userRefreshToken', refresh_token, { secure: true, sameSite: true, maxAge: 59*60});
@@ -13,10 +14,12 @@ export const setUserInfoCookies = (info) => {
 }
 
 export const setParentCookieTrue = () => {
+    cookies.remove('userTypeParent');
     cookies.set('userTypeParent', true, { secure: true, sameSite: true, maxAge: 59*60});
 }
 
 export const setTutorCookieTrue = () => {
+    cookies.remove('userTypeTutor');
     cookies.set('userTypeTutor', true, { secure: true, sameSite: true, maxAge: 59*60});
 }
 

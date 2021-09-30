@@ -17,11 +17,11 @@ function ParentInfor() {
     const history = useHistory();
     const [parentRoomList, setParentRoomList] = useState([]);
 
-    const handleDeleteRoom = async (roomId) => {
+    const handleDeleteRoom = async (id) => {
         let newParentRoomList = [...parentRoomList];
-        newParentRoomList = await newParentRoomList.filter( (room) => Number(room.id) !== Number(roomId));
+        newParentRoomList = await newParentRoomList.filter( (room) => Number(room.id) !== Number(id));
         setParentRoomList(newParentRoomList);
-        await deleteRoom({ roomId: roomId, token: token });
+        await deleteRoom({ roomId: id, token: token });
     }
     
     useEffect ( ()=> {
@@ -35,34 +35,40 @@ function ParentInfor() {
     const handleShowCreateRoom = () => {
         history.push("/createroom");
     };
+ 
 
     return (
-        <div>
+        <div className={classes.root}>
             {isSignedIn() && typeParent && <button onClick={handleShowCreateRoom} className={classes.addRoom}><FcAddDatabase /></button>}
-            <Grid container spacing={2} className={classes.root}>
-                {parentRoomList.map( (room)=> (
-                    <Room room={{...room, roomId: room.id}} onDelete={handleDeleteRoom}/>
+            {parentRoomList.length !== 0 ? <Grid container className={classes.root}>
+                {parentRoomList?.map( (room)=> (
+                    <Room room={{...room, roomId: room.id}} type="userroom" onDelete={handleDeleteRoom}/>
                 ))}
-            </Grid>
+            </Grid> : <span className={classes.none}>Bạn chưa tạo phòng nào</span>}
         </div>
     )
 }
 
 const useStyles = makeStyles({
     root: {
-        marginTop: '28px',
-        padding: "40px",
+        padding: '48px 28px',
     },
     addRoom: {
         position: 'fixed',
         top: '40%',
-        left: '16px',
+        left: '8px',
         backgroundColor: 'transparent',
         border: 'none',
         fontSize: '32px',
         "&:hover": {
             cursor: 'pointer',
         }
+    },
+    none: {
+        fontStyle: 'italic',
+        position: 'fixed',
+        top: 100,
+        left: 72,
     }
 })
 

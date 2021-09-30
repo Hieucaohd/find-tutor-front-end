@@ -18,7 +18,7 @@ function ParentRoomProfile({parentRoom}) {
         <div className={classes.root}>
             <Grid container spacing={2}>
                 {parentRoom.map( (room)=> (
-                    <Room room={{...room, roomId: room.id}}/>
+                    <Room room={{...room, roomId: room.id}} type="info"/>
                 ))}
             </Grid>
         </div>

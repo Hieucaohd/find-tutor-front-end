@@ -9,11 +9,19 @@
     }
 }
 
+@keyframes animatefilter {
+    0% {
+    }
+    100% {
+    }
+}
+
+
 .home {
     padding: 24px 52px;
     margin-top: 56px;
     &__overlay {
-        z-index: 698;
+        z-index: 800;
         position: fixed;
         top: 0px;
         left: 0;
@@ -33,17 +41,18 @@
     &__filter {
         position: fixed;
         left: 0px;
-        top: 57px;
+        top: 0px;
         bottom: 0px;
         width: 220px;
         background-color: white;
-        z-index: 699;
+        z-index: 801;
         animation: animateleft 0.4s;
         padding: 25px;
         display: none;
         flex-direction: column;
         justify-content: center;
         align-self: center;
+        
     }
 
     &__buttongroup {
@@ -65,6 +74,77 @@
     &__pagination {
         ul {
             justify-content: center;
+        }
+    }
+
+    &__toggle {
+        &__filter {
+            color: #0061ff;
+        }
+        &__cancel {
+            color: #ccc;
+        }
+    }
+
+    &__nav {
+        margin-bottom: 32px;
+    }
+    
+}
+
+.topbutton {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+
+    & button {
+        border: 1px solid #ccc;
+        background-color: white;
+        padding: 8px 8px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        & svg {
+            font-size: 20px;
+            margin-right: 8px;
+        }
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    &__select {
+        width: 140px;
+    }
+    
+}
+
+.filterbar {
+    display: none;
+    animation-name: animatefilter;
+    animation-duration: 4s;
+    
+}
+
+@media (max-width: 769px){
+    .home {
+        padding: 24px 44px;
+        margin-top: 56px;
+    }
+    .topbutton  {
+        margin: 36px 0 24px 0;
+        position: relative;
+        padding: 0px;
+
+        &__select {
+            position: absolute!important;
+            top: -46px;
+        }
+
+        &__filter {
+            position: absolute;
+            top: -46px;
+            right: 0px
         }
     }
 }
