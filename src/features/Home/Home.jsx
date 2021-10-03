@@ -4,18 +4,15 @@ import Modal from "components/Modal/Modal";
 import Room from 'components/Room/Room';
 import SkeletonPage from "components/Skeleton/SkeletonPage";
 import { isSignedIn } from "features/auth/cookies";
-import { GetAllRoom, GetFilterRoom } from "graphql/RoomQueries";
-import React, { useEffect, useRef, useState } from "react";
-import { RiFilter3Fill } from "react-icons/ri";
+import { GetFilterRoom } from "graphql/RoomQueries";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
-import Select from 'react-select';
 import { addToApplyList } from "../../graphql/mutationGraphQl";
 import {
   selectToken, selectType_parent, selectType_tutor
 } from "../auth/authSlice";
-import Categories from "./components/Categories";
-import FilterBar from "./components/FilterBar/FilterBar";
+import HomeBar from "./components/HomeBar/HomeBar";
 import "./styles.scss";
 
 function Home() {
@@ -23,8 +20,6 @@ function Home() {
   const type_tutor = useSelector(selectType_tutor); // lấy type_tutor từ authSlice.js
   const type_parent = useSelector(selectType_parent); // lấy type_parent từ authSlice.js
   
-  const homeOverlay = useRef(null);
-  const filterRef = useRef(null);
   const isSigned = isSignedIn();
   const location = useLocation();
   const [roomList, setRoomList] = useState([]);
@@ -42,15 +37,7 @@ function Home() {
   }
 
   useEffect( () => {
-    const filter = queryString.parse(location.search)
-    const getRoomList = async () => {
-      setLoading(true);
-      const pages = await filter.pages || 1;
-      const list = await GetAllRoom(pages, token); 
-      setMaxPagination(list?.num_pages);
-      setRoomList(list?.result);
-      setLoading(false);
-    }
+    
     const getFilterRoomList = async () => { 
       setLoading(true);
       const filter = await queryString.parse(location.search);
@@ -60,47 +47,10 @@ function Home() {
       setLoading(false);
     }
 
-    if(!filter?.onFilter) {
-      getRoomList();
-    }
-
-    else {
-      getFilterRoomList();
-    }
+    getFilterRoomList();
     
   }, [location, token, queryString]);
 
-  const showFilterBar = () => {
-    
-    if(filterRef.current.style.display === "none") {
-      filterRef.current.style.display = "block";
-    } else {
-      filterRef.current.style.display = "none";
-    }
-  }
-
-  // const handleShowFilterBar = () => {
-  //   filterBar.current.style.display = "flex";
-  //   homeOverlay.current.style.display = "block";
-  // }
-
-  // const handleCloseFilterBar = () => {
-  //   filterBar.current.style.display = "none";
-  //   homeOverlay.current.style.display = "none";
-  // }
-
-  // const handleCancelFilter = () => {
-  //   history.push("/");
-  //   cancelFilter.current.style.display = "none";
-  // }
-
-  // const onSubmitSearch = (newFilter) => {
-  //   //close filter bar
-  //   handleCloseFilterBar();
-  //   cancelFilter.current.style.display = "block";
-    
-  //   history.push(`/?${queryString.stringify({...newFilter, pages: 1, onFilter: true})}`)
-  // }
 
   const handleAddRoom = async (id) => {
     if(isSigned){
@@ -122,32 +72,11 @@ function Home() {
     }
     history.push(`/?${queryString.stringify(newSearch)}`)
   }
-
-  const options = [
-    { value: 'new', label: 'Mới nhất ' },
-    { value: 'cheap', label: 'Giá thấp ↑' },
-    { value: 'expensive', label: 'Giá cao ↓' }
-  ]
+  
 
   return (
     <div className = "home">
-      <div className="home__nav">
-        <div className="topbutton">
-          <Select className="topbutton__select"
-            options={options} defaultValue={options[0]} />
-
-          <Categories />
-
-          <button
-          className="topbutton__filter" onClick={showFilterBar}>
-            <RiFilter3Fill />
-            Lọc
-          </button>
-        </div>
-        <div className="filterbar" ref={filterRef}>
-          <FilterBar />
-        </div>
-      </div>
+      <HomeBar />
       
       {loading ? <SkeletonPage /> 
       : <Grid container>{
@@ -156,19 +85,8 @@ function Home() {
         ))}
       </Grid>}
 
-      {/* <div ref={filterBar} className="home__filter"> 
-        <FilterBar onClose={handleCloseFilterBar} onSubmit={onSubmitSearch}/>
-      </div> */}
-      
-      {/* <div className="home__buttongroup">
-        {isSigned && type_parent && <button onClick={handleShowCreateRoom}><AiOutlineAppstoreAdd /></button>}
-        {isSigned && <button className="home__toggle__filter" onClick={handleShowFilterBar}> <RiFilter2Line /> </button>}
-        <button className="home__toggle__cancel" onClick={handleCancelFilter} ref={cancelFilter} style={{display: "none"}}> <RiFilterOffLine /></button>
-      </div> */}
-        {maxPagination > 1 && <Pagination count={maxPagination} color="primary" className="home__pagination" onChange={handleChangePage}/>}
-      {/* <div className="home__overlay" ref={homeOverlay} onClick={handleCloseFilterBar}> </div> */}
-      
-      {showCheckModal && <Modal typeIcon="check" text="Ứng tuyển thành công" onAgree={() => setShowCheckModal(false)} />}
+      {maxPagination > 1 && <Pagination count={maxPagination} color="primary" className="home__pagination" onChange={handleChangePage}/>}      
+      {showCheckModal && <Modal typeIcon="check" text="Ứng tuyển thành công" onAgree={() => setShowCheckModal(false)}/>}
       {showFailModal && <Modal typeIcon="fail" text="Ứng tuyển không thành công" onAgree={() => setShowFailModal(false)} />}
     
     </div>

@@ -1,0 +1,55 @@
+.homebar {
+    margin-bottom: 32px;
+    &__top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 12px;
+
+        & button {
+            border: 1px solid #ccc;
+            background-color: white;
+            padding: 8px 8px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            & svg {
+                font-size: 20px;
+                margin-right: 8px;
+            }
+            &:hover {
+                cursor: pointer;
+            }
+        }
+        &__select {
+            width: 140px;
+        }
+    }
+
+    &__filterbar {
+        display: none;
+        // animation-name: animatefilter;
+        // animation-duration: 4s;
+    }
+}
+
+@media (max-width: 769px){
+    .homebar {
+        &__top  {
+            margin: 36px 0 24px 0;
+            position: relative;
+            padding: 0px;
+    
+            &__select {
+                position: absolute!important;
+                top: -46px;
+            }
+    
+            &__filter {
+                position: absolute;
+                top: -46px;
+                right: 0px
+            }
+        }
+    }
+}

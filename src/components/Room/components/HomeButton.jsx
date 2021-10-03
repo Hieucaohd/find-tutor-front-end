@@ -8,7 +8,8 @@ function HomeButton({onCheck, onShow, typeParent}) {
     const checkRef = useRef(null);
     const handleCheck = () => {
         onCheck();
-        checkRef.current.style.backgroundColor = "#AAAAAA";
+        checkRef.current.style.backgroundColor = "#2DC66D";
+        checkRef.current.innerHTML = "Đã ứng tuyển";
     }
     return (
         <div className="button">

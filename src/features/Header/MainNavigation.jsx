@@ -188,7 +188,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
   },
   signin: {
-    backgroundColor: '#0061FF',
+    backgroundColor: '#5472EA',
     color: 'white',
     border: 'none',
     padding: '8px 12px',

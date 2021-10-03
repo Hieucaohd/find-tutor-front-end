@@ -60,9 +60,9 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, 
     }
 
     const formatPriceString = (price) => {
-        const priceString = price.toString();
+        const priceString = price?.toString();
         let ans = "";
-        const len = priceString.length;
+        const len = priceString?.length;
         let count = 0;
         for(let i = len - 1; i >= 0; i--) {
           count++;
@@ -106,17 +106,17 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, 
                     </div>
                 </div>
                 <div className="item__room__info">
-                    {getSexOfTeacher(room.pricemodel_set[0].sex_of_teacher) && <div>
-                        <IoMaleFemaleOutline /> {getSexOfTeacher(room.pricemodel_set[0].sex_of_teacher)}
+                    {getSexOfTeacher(room?.pricemodel_set[0]?.sex_of_teacher) && <div>
+                        <IoMaleFemaleOutline /> {getSexOfTeacher(room?.pricemodel_set[0]?.sex_of_teacher)}
                     </div>}
-                    { getTypeTutorString(room.pricemodel_set[0].type_teacher) && <div>
-                        <IoSchoolOutline /> {getTypeTutorString(room.pricemodel_set[0].type_teacher)}
+                    { getTypeTutorString(room?.pricemodel_set[0]?.type_teacher) && <div>
+                        <IoSchoolOutline /> {getTypeTutorString(room?.pricemodel_set[0]?.type_teacher)}
                     </div>}
                     <div>
                         <IoLocationOutline /> {address}
                     </div>
                     <div>
-                        <IoTimerOutline /> {room.pricemodel_set[0].time_in_one_day} tiếng/buổi
+                        <IoTimerOutline /> {room?.pricemodel_set[0]?.time_in_one_day} tiếng/buổi
                     </div>
                 </div>
                 <span className="item__room__current">Có {room.number_waiting} gia sư đang ứng tuyển</span>
