@@ -1,6 +1,7 @@
 import { fetchGraphQl } from "./graphQl"
 
 export const GetAllRoom = (pages, token) => {
+
     const query = `{
         all_room(page: ${pages}, num_in_page: 12){
             result {
@@ -35,7 +36,7 @@ export const GetAllRoom = (pages, token) => {
 }
 
 export const GetFilterRoom = ({filterRoom, token}) => {
-    const {lop, province_code, district_code, ward_code, subject, sex, job, price, pages } = filterRoom;
+    const {lop, province_code, district_code, ward_code, subject, sex, job, price, sort="create_at", pages = 1 } = filterRoom;
     const queryString = `${lop ? `lop: [${lop}],` : ``}
         ${province_code ? `province_code: ${province_code},` : ``}
         ${district_code ? `district_code: ${district_code}` : ``}
@@ -44,9 +45,9 @@ export const GetFilterRoom = ({filterRoom, token}) => {
         ${sex ? `sex_of_teacher: "${sex}",` : ``}
         ${job ? `type_teacher: "${job}",` : ``}
         ${price ? `price: [${price}],`: ``}
+        order_by: "${sort}",
         page: ${pages}, num_in_page: 12
         `;
-    console.log('filterrooom', queryString)
     
     const query = `{
         search_room (${queryString}) {

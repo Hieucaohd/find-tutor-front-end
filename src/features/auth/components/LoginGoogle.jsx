@@ -12,7 +12,7 @@ const useStyles = makeStyles({
         "& button": {
             boxShadow: 'none!important',
             borderRadius: '8px!important',
-            border: '0.5px solid #0061ff!important',
+            border: '0.5px solid #1C9CD6!important',
             justifyContent: 'center!important',
         }
     }

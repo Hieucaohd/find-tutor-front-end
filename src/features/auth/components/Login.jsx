@@ -144,11 +144,12 @@ const useStyles = makeStyles(theme => ({
   },
   register: {
     fontSize: '14px',
-    color: '#5037EC',
+    color: '#5472EA',
+    opacity: 0.8,
     textDecoration: 'none',
     '&:hover': {
       cursor: 'pointer',
-      color: '#303F9F',
+      opacity: 1, 
     }
   },
   error: {
@@ -165,7 +166,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: '4px',
   },
   submit: {
-    backgroundColor: '#0061ff',
+    backgroundColor: '#5472EA',
     color: 'white',
     border: 'none',
     borderRadius: '8px',
@@ -200,7 +201,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: "-16px",
     '& a': {
       fontSize: '10px',
-      color: '#5037EC',
+      color: '#5472EA',
       fontWeight: '500',
       textDecoration: 'none',
     }
