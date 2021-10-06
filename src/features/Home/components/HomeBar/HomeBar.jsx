@@ -35,13 +35,12 @@ function HomeBar(props) {
         history.push(`/?${queryString.stringify(newLocation)}`)
     }
     const currentFilter = queryString.parse(location.search);
-    console.log(currentFilter);
     return (
         <div className="homebar">
             <div className="homebar__top">
                 <Select className="homebar__top__select" 
                     options={options} 
-                    defaultValue={options.find((item) => item.value === currentFilter.sort)} 
+                    defaultValue={currentFilter.sort ? options.find((item) => item.value === currentFilter.sort) : options[0]} 
                     onChange={handleChangeSort}
                 />
                 <Categories />

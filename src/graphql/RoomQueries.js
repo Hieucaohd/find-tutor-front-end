@@ -53,6 +53,12 @@ export const GetFilterRoom = ({filterRoom, token}) => {
         search_room (${queryString}) {
             result {
                 id
+                parent {
+                    user {
+                        id
+                        username
+                    }  
+                }
                 province_code
                 district_code
                 ward_code

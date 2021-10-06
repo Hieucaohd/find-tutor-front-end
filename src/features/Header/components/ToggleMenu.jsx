@@ -60,6 +60,7 @@ function ToggleMenu( {onLogOut} ) {
                     {typeParent && <Link to={'/createroom'}>Tạo phòng</Link>}
                     {typeTutor && <Link to={`/profile/tutor/${userId}`}>Thông tin gia sư</Link>}
                     {typeParent && <Link to={`/profile/parent/${userId}`}>Thông tin phụ huynh</Link>}
+                    {(typeTutor || typeParent) && <Link to={`/settings`}>Cài đặt tài khoản</Link>}
                     <Link to={"/signin"} onClick={handleLogout}>Đăng xuất</Link>
                 </div>
             </div>

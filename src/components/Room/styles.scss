@@ -17,13 +17,13 @@ $cHeight: 252px;
     }
     &__clock {
         position: absolute;
-        top: 4px;
+        top: 6px;
         right: 8px;
         display: flex;
         align-items: center;
-        font-size: 12px;
+        font-size: 10px;
         & svg {
-            margin-right: 4px;
+            margin-right: 2px;
         }
     }
     &__thumbnail {
@@ -56,15 +56,16 @@ $cHeight: 252px;
             & svg {
                 margin-right: 8px;
                 color: #5472EA;
+                font-size: 16px;
             }
         }
     }
     &__avatar {
         position: absolute;
-        top: 2px;
-        left: 8px;
+        top: 6px;
+        left: 12px;
         display: flex;
-        font-size: 12px;
+        font-size: 10px;
         align-items: center;
         & .MuiAvatar-root {
             width: 20px;
@@ -90,10 +91,10 @@ $cHeight: 252px;
                 width: 66px;
             }
             & h3 {
-                font-size: 24px;
+                font-size: 20px;
             }
             & h5 {
-                font-size: 16px;
+                font-size: 14px;
             }
         }
         &__info {
@@ -101,7 +102,7 @@ $cHeight: 252px;
             & div {
                 display: flex;
                 align-items: center;
-                font-size: 16px;
+                font-size: 14px;
                 & svg {
                     margin-right: 8px;
                     font-size: 20px;

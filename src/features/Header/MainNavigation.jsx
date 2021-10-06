@@ -9,12 +9,10 @@ import {
   logout, selectId_of_user, selectRefreshToken, selectToken, selectType_parent, selectType_tutor
 } from "../auth/authSlice";
 import MobileNavBar from './components/MobileNavBar/MobileNavBar';
+import Notification from './components/Notification/Notification';
 import SearchBar from './components/SearchBar';
 import ToggleMenu from "./components/ToggleMenu";
 import WebBanner from "./components/WebBanner";
-import { IoIosNotifications } from "react-icons/io5";
-import Notification from './components/Notification';
-import { useState } from 'react';
 
 
 function MainNavigation() {

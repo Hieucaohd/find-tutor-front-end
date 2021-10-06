@@ -1,10 +1,29 @@
 import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';
-import { useState } from 'react';
+import { selectToken } from 'features/auth/authSlice';
+import { notification_socket } from 'namespace';
+import React, { useEffect, useState } from 'react';
 import { IoNotificationsOutline } from "react-icons/io5";
-Notification.propTypes = {
+import { useSelector } from 'react-redux';
+
+function Notification({typeTutor, typeParent}) {
+    const classes = useStyles();
     
-};
+    const [showDropDown, setShowDropDown] = useState(false);
+    return (
+        <div className={classes.root}>
+            <IoNotificationsOutline onClick={() => setShowDropDown(!showDropDown)}/>
+            {showDropDown && <ul className={classes.dropdown}>
+                <li>abc vừa thêm bạn</li>
+                <li>abc vừa thêm bạn</li>
+                <li>abc vừa thêm bạn</li>
+                <li>abc vừa thêm bạn</li>
+                
+                
+            </ul>}
+            {showDropDown && <div className={classes.overlay} onClick={() => setShowDropDown(false)}></div>}
+        </div>
+    );
+}
 
 const useStyles = makeStyles({
     root: {
@@ -21,7 +40,7 @@ const useStyles = makeStyles({
     },
     dropdown: {
         position: 'absolute',
-        bottom: -124,
+        top: 32,
         right: -100,
         margin: 0,
         minWidth: 200,
@@ -47,21 +66,5 @@ const useStyles = makeStyles({
         "z-index": "100",
     }
 })
-
-function Notification(props) {
-    const classes = useStyles();
-    const [showDropDown, setShowDropDown] = useState(false);
-    return (
-        <div className={classes.root}>
-            <IoNotificationsOutline onClick={() => setShowDropDown(!showDropDown)}/>
-            {showDropDown && <ul className={classes.dropdown}>
-                <li>abc vừa mời bạn</li>
-                <li>xyz vừa đồng ý bạn</li>
-                <li>fff vừa xóa bạn</li>
-            </ul>}
-            {showDropDown && <div className={classes.overlay} onClick={() => setShowDropDown(false)}></div>}
-        </div>
-    );
-}
 
 export default Notification;
