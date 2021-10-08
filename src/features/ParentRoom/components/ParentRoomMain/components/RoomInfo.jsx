@@ -100,7 +100,7 @@ function RoomInfo( {room, applyList, userId, addToApplyList, typeParent, teachin
                         <MdAccessTime /> Được đăng {handleTime(room?.create_at)}
                     </div>
                     <div>
-                        { (!isOnList(userId, applyList) && !teaching && !typeParent) && <button className={classes.apply} onClick={handleAddToApplyList}>Ứng tuyển</button>}
+                        {(!isOnList(userId, applyList) && !teaching && !typeParent) && <button className={classes.apply} onClick={handleAddToApplyList}>Ứng tuyển</button>}
                     </div>
                 </div>
             </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import "./styles.scss";
 
 InfoButton.propTypes = {
@@ -6,11 +7,11 @@ InfoButton.propTypes = {
 };
 
 
-function InfoButton({onShow}) {
+function InfoButton({roomAddress}) {
     
     return (
         <div className="button">
-            <button className="button__detail" onClick={()=>onShow()}>Xem chi tiết</button>
+            <Link to={roomAddress} className="button__detail" >Xem chi tiết</Link>
         </div>
     );
 }

@@ -1,10 +1,11 @@
 import React from 'react';
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import "./styles.scss";
 
 
 
-function HomeButton({onCheck, onShow, typeParent}) {
+function HomeButton({onCheck, roomAddress, typeParent}) {
     const checkRef = useRef(null);
     const handleCheck = () => {
         onCheck();
@@ -15,7 +16,7 @@ function HomeButton({onCheck, onShow, typeParent}) {
         <div className="button">
             {!typeParent && <button ref={checkRef} className="button__apply" onClick={handleCheck}>Ứng tuyển</button>}
             
-            <button className="button__detail" onClick={()=>onShow()}>Xem chi tiết</button>
+            <Link to={roomAddress} className="button__detail">Xem chi tiết</Link>
         </div>
     );
 }

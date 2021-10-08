@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
-import Room from 'components/Room/Room';
+import Room from 'components/Room/RoomContainer';
 
 TryTeachingListForTutor.propTypes = {
     tryTeachingList: PropTypes.array,

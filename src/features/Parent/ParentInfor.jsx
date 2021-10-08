@@ -1,5 +1,5 @@
 import { Grid, makeStyles } from '@material-ui/core';
-import Room from 'components/Room/Room.jsx';
+import Room from 'components/Room/Room';
 import { isSignedIn } from 'features/auth/cookies';
 import { GetAllParentRoom } from 'graphql/RoomQueries';
 import React, { useEffect, useState } from 'react';

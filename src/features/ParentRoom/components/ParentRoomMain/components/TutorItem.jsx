@@ -3,6 +3,7 @@ import Modal from 'components/Modal/Modal';
 import React from 'react';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import NumberPhone from './NumberPhone';
 
 
 function TutorItem( {tutorInfo = {}, isOwner = false, onAdd = null, userId = 0, isTeaching = false, onDelete=null} ) {
@@ -11,7 +12,7 @@ function TutorItem( {tutorInfo = {}, isOwner = false, onAdd = null, userId = 0, 
     const {id, tutor} = tutorInfo;
     const [showCheckModal, setShowCheckModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-    
+    const [showNumberPhone, setShowNumberPhone] = useState(false);
     const handleDelete = () => {
         if(!onDelete) return;
         onDelete(id);
@@ -55,8 +56,9 @@ function TutorItem( {tutorInfo = {}, isOwner = false, onAdd = null, userId = 0, 
             <div className={classes.button}>
                 { (isOwner && !isTeaching) && <button className={classes.agree} onClick={() => setShowCheckModal(true)}>Đồng ý</button>}
                 { (isOwner || isThisTutor) && <button className={classes.delete} onClick={() => setShowDeleteModal(true)}>Xóa</button>}
-                {isOwner && <button className={classes.call}>Liên hệ</button>}
+                {isOwner && <button className={classes.call} onClick={() => setShowNumberPhone(true)}>Liên hệ</button>}
             </div>
+            {showNumberPhone && <NumberPhone numberPhone={tutor?.number_phone} onClose={() => setShowNumberPhone(false)}/>}
             {showCheckModal && <Modal typeIcon="check" text="Đồng ý gia sư này dạy học ?" onAgree={handleCheck} onDisagree={() => setShowCheckModal(false)}/>}
             {showDeleteModal && <Modal typeIcon="delete" text={handleShowText()} onAgree={handleDelete} onDisagree={() => setShowDeleteModal(false)}/>}
         </div>

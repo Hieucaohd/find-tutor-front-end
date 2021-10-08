@@ -79,10 +79,15 @@ function TutorInfor() {
   );
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles( theme => ({
   root: {
     marginTop: "40px",
-    padding: "52px",
+    [theme.breakpoints.down('xs')]: {
+      padding: "52px 24px",
+    },
+    [theme.breakpoints.up('sm')]: {
+      padding: "52px",
+    },
     "&>h4": {
       margin: 0,
       marginTop: '32px',
@@ -129,6 +134,6 @@ const useStyles = makeStyles({
     margin: 0,
     fontStyle: 'italic',
   }
-})
+}))
 
 export default TutorInfor;

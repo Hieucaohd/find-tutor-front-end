@@ -85,7 +85,7 @@ function ParentRoom(props) {
 
   useEffect(()=> {
     const getRoomDetail = async () => {
-      const newRoomDetail = await GetParentRoomDetail(roomId);
+      const newRoomDetail = await GetParentRoomDetail(roomId, token);
       const provinceName = await getProvinceName(newRoomDetail?.province_code || 0);
       const districtName = await getDistrictName({
         provinceCode: newRoomDetail?.province_code || 0,

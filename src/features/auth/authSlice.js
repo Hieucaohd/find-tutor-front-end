@@ -12,6 +12,7 @@ const initialState = cookies.get('userToken') ? {
   id: cookies.get('userId'),
   type_tutor: cookies.get('userTypeTutor') === "false" ? false : true,
   type_parent: cookies.get('userTypeParent') === "false" ? false : true,
+  isSignedIn: cookies.get('isSignedIn') === 'true' ? true : false,
 } : {
   status: "idle",
   token: "",
@@ -19,6 +20,7 @@ const initialState = cookies.get('userToken') ? {
   id: "",
   type_tutor: "",
   type_parent: "",
+  isSignedIn: false,
 };
 
 
@@ -142,6 +144,7 @@ const authSlice = createSlice({
           state.id = id;
           state.type_tutor = type_tutor ;
           state.type_parent = type_parent ;
+          state.isSignedIn = true;
           setUserInfoCookies(action.payload);
         }
       })
@@ -157,6 +160,7 @@ const authSlice = createSlice({
           state.id = id;
           state.type_tutor = type_tutor;
           state.type_parent = type_parent;
+          state.isSignedIn = true;
           if(token) {
             setUserInfoCookies(action.payload);
           }
@@ -174,6 +178,7 @@ const authSlice = createSlice({
           state.id = id;
           state.type_tutor = type_tutor;
           state.type_parent = type_parent;
+          state.isSignedIn = true;
           // setUserInfoCookies(action.payload);
         }
       })
@@ -184,6 +189,7 @@ const authSlice = createSlice({
         state.id = "";
         state.type_tutor = "";
         state.type_parent = "";
+        state.isSignedIn = false;
         removeUserCookies();
       })
       .addCase(logout.fulfilled, (state) => {
@@ -214,6 +220,7 @@ export const selectRefreshToken = (state) => state.auth.refresh_token;
 export const selectId_of_user = (state) => state.auth.id;
 export const selectType_tutor = (state) => state.auth.type_tutor;
 export const selectType_parent = (state) => state.auth.type_parent;
+export const selectIsSignedIn = (state) => state.auth.isSignedIn;
 export const getToken = (dispatch) => {
   const refreshToken = getRefreshTokenCookie();
   setInterval( ()=> {

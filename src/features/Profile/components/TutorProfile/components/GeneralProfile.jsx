@@ -2,7 +2,8 @@ import { Avatar, makeStyles } from '@material-ui/core';
 import { formatBirthDay } from 'features/Profile/profile';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { AiOutlineFacebook, AiOutlineInstagram, AiOutlineLinkedin } from 'react-icons/ai';
+import { AiFillCamera, AiOutlineFacebook, AiOutlineInstagram, AiOutlineLinkedin, AiTwotoneEdit } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 
 GeneralProfile.propTypes = {
     TutorInfo: PropTypes.object,
@@ -15,11 +16,14 @@ const getJobName = (str) => {
     else return 'Khác';
 }
 
-function GeneralProfile({tutorInfo}) {
+function GeneralProfile({tutorInfo, isUser = false, type}) {
     const classes = useStyles();
+
     return (
         <div className={classes.wallpaper}>
+            {isUser && <Link to={`/settings/profile/${type}`}><AiTwotoneEdit  className={classes.fix}/> </Link>}
             <div className={classes.avatarContainer}>
+            {isUser && <button  className={classes.camera}><AiFillCamera /></button>}
                 <Avatar alt="Travis Howard" variant="square" 
                     className={classes.avatar} 
                     src={tutorInfo.imageprivateusermodel?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_3I4Y2ydmFBosgWcdoqVBBCsYZksWAhHtjg&usqp=CAU"} />
@@ -29,7 +33,6 @@ function GeneralProfile({tutorInfo}) {
                     <h3 className={classes.name}>{tutorInfo.first_name?.toUpperCase()} {tutorInfo.last_name?.toUpperCase()}</h3>
                     <h5>{getJobName(tutorInfo.profession)}</h5>
                 </div>
-                <p>Dạy học là đam mê</p>
                 <div className={classes.generalInfo}>
                     <div className={classes.birth}>
                         <h4>{formatBirthDay(tutorInfo.birthday)}</h4>
@@ -41,9 +44,9 @@ function GeneralProfile({tutorInfo}) {
                     </div>
                 </div>
                 <div className={classes.social}>
-                    <a href="#"><AiOutlineFacebook/></a>
-                    <a href="#"><AiOutlineInstagram/></a>
-                    <a href="#"><AiOutlineLinkedin /></a>
+                    <Link to="#"><AiOutlineFacebook/></Link>
+                    <Link to="#"><AiOutlineInstagram/></Link>
+                    <Link to="#"><AiOutlineLinkedin /></Link>
                 </div>
             </div>
         </div>
@@ -57,6 +60,7 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: '#E9E8EB',
         border: '0.5px solid rgba(0, 0, 0, 0.1)',
         borderRadius: '12px',
+        position: 'relative',
         "& h5": {
             margin: 0,
         },
@@ -76,7 +80,20 @@ const useStyles = makeStyles(theme => ({
             padding: '24px 16px',
         },
     },
-    
+    fix: {
+        color: 'white',
+        borderRadius: '50%',
+        position: 'absolute',
+        zindex: 2,
+        backgroundColor: '#7f98fa',
+        top: 8,
+        right: 8,
+        padding: 8,
+        "&:hover" : {
+            cursor: 'pointer',
+            backgroundColor: '#5472EA',
+        }
+    },
     name: {
         "& h3": {
             fontWeight: 600,
@@ -96,12 +113,33 @@ const useStyles = makeStyles(theme => ({
         flex: 1,
         display: 'flex',
         justifyContent: 'flex-end',
+        position: 'relative',
         [theme.breakpoints.down('xs')]: {
             marginRight: '12px',
         },
         [theme.breakpoints.up('sm')]: {
             marginRight: '56px',
         },
+    },
+    camera: {
+        position: 'absolute',
+        zIndex: 2,
+        bottom: -8,
+        right: -8,
+        backgroundColor: '#ee6464',
+        color: 'white',
+        border: 'none',
+        borderRadius: '50%',
+        fontSize: 16,
+        width: 32,
+        height: 32,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        "&:hover": {
+            backgroundColor: "#ff0000",
+            cursor: "pointer",
+        }
     },
     avatar: {
         [theme.breakpoints.down('xs')]: {

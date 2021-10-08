@@ -33,7 +33,6 @@ function FilterBar({currentFilter}) {
     const history = useHistory();
     const [provinceOptions, setProvinceOptions] = useState([]);
     
-    
 
     useEffect(()=>{
         const getProvinces = async () => {

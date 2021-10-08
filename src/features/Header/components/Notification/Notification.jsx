@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { selectToken } from 'features/auth/authSlice';
 import { notification_socket } from 'namespace';
 import React, { useEffect, useState } from 'react';
-import { IoNotificationsOutline } from "react-icons/io5";
+import { IoNotifications } from "react-icons/io5";
 import { useSelector } from 'react-redux';
 
 function Notification({typeTutor, typeParent}) {
@@ -11,7 +11,7 @@ function Notification({typeTutor, typeParent}) {
     const [showDropDown, setShowDropDown] = useState(false);
     return (
         <div className={classes.root}>
-            <IoNotificationsOutline onClick={() => setShowDropDown(!showDropDown)}/>
+            <IoNotifications onClick={() => setShowDropDown(!showDropDown)}/>
             {showDropDown && <ul className={classes.dropdown}>
                 <li>abc vừa thêm bạn</li>
                 <li>abc vừa thêm bạn</li>
@@ -32,8 +32,9 @@ const useStyles = makeStyles({
         margin: "0 12px",
         position: 'relative',
         "& svg": {
+            color: "#797575",
             "&:hover": {
-                color: "#0061FF",
+                color: "#5472EA",
                 cursor: "pointer",
             }
         }

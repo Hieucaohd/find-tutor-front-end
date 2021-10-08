@@ -1,5 +1,4 @@
-import React from 'react';
-import { useRef } from 'react';
+import React, { useState } from 'react';
 import { RiFilter3Fill } from 'react-icons/ri';
 import { useHistory, useLocation } from 'react-router';
 import Select from 'react-select';
@@ -15,17 +14,20 @@ const options = [
 ]
 
 function HomeBar(props) {
-    const filterRef = useRef();
     const location = useLocation();
     const history = useHistory();
     const queryString = require('query-string');
+    const currentFilter = queryString.parse(location.search);
+
+    const [isShowFilter, setIsShowFilter] = useState(( 
+        "lop" in currentFilter )
+        || ("sex" in currentFilter )
+        || ("price" in currentFilter)
+        || ("job" in currentFilter)
+        || ("province_code" in currentFilter));
     const showFilterBar = () => {
-        if(filterRef.current.style.display === "none") {
-          filterRef.current.style.display = "block";
-        } else {
-          filterRef.current.style.display = "none";
-        }
-      }
+        setIsShowFilter(!isShowFilter);
+    }
     const handleChangeSort = (value) => {
         const currentLocation = queryString.parse(location.search);
         const newLocation = {
@@ -34,7 +36,6 @@ function HomeBar(props) {
         }
         history.push(`/?${queryString.stringify(newLocation)}`)
     }
-    const currentFilter = queryString.parse(location.search);
     return (
         <div className="homebar">
             <div className="homebar__top">
@@ -50,9 +51,9 @@ function HomeBar(props) {
                     Lọc
                 </button>
             </div>
-            <div className="homebar__filterbar" ref={filterRef}>
+            {isShowFilter && <div className="homebar__filterbar">
                 <FilterBar currentFilter={currentFilter}/>
-            </div>
+            </div>}
       </div>
     );
 }

@@ -1,12 +1,13 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { catchDistrictName, catchProvinceName, catchWardName, getDistrictName, getProvinceName, getWardName } from 'components/location/getLocation';
+import { selectId_of_user } from 'features/auth/authSlice';
 import { GetTutorProfile } from 'graphql/ProfileQueries';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router-dom';
 import GeneralProfile from './components/GeneralProfile';
 import MoreInfoProfile from './components/MoreInfoProfile';
 import ProfileSkeleton from './components/ProfileSkeleton';
-
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
@@ -24,6 +25,7 @@ const useStyles = makeStyles(theme => ({
 function TutorProfile(props) {
     const match = useRouteMatch("/profile/tutor/:tutorId");
     const tutorId = Number(match.params.tutorId);
+    const userId = useSelector(selectId_of_user); 
     const classes = useStyles();
     const [tutorInfo, setTutorInfo] = useState({});
     const [loading, setLoading] = useState(true);
@@ -41,10 +43,10 @@ function TutorProfile(props) {
     }, []);
 
     return (
-        <div className={classes.root}> 
+        <div className={classes.root}>
             {loading ? <ProfileSkeleton /> 
             :  <div>
-                <GeneralProfile tutorInfo={tutorInfo} />
+                <GeneralProfile tutorInfo={tutorInfo} isUser={Number(tutorId) === Number(userId)} type="tutor"/>
                 <MoreInfoProfile tutorInfo={tutorInfo}/> 
             </div>
         }

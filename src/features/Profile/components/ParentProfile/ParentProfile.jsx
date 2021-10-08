@@ -1,8 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { catchDistrictName, catchProvinceName, catchWardName, getDistrictName, getProvinceName, getWardName } from "components/location/getLocation";
+import { selectId_of_user } from 'features/auth/authSlice';
 import { GetParentProfile } from 'graphql/ProfileQueries';
 import { GetAllParentRoom } from 'graphql/RoomQueries';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router-dom';
 import GeneralProfile from '../TutorProfile/components/GeneralProfile';
 import ParentRoomProfile from './components/ParentRoomProfile';
@@ -28,6 +30,7 @@ const useStyles = makeStyles(theme => ({
 function ParentProfile(props) {
     const match = useRouteMatch("/profile/parent/:parentId");
     const parentId = Number(match.params.parentId);
+    const userId = useSelector(selectId_of_user);  
     const classes = useStyles();
     const [parentInfo, setParentInfo] = useState({});
     const [parentRoom, setParentRoom] = useState([]);
@@ -52,7 +55,7 @@ function ParentProfile(props) {
     }, [])
     return (
         <div className={classes.root}>
-            <GeneralProfile tutorInfo={parentInfo} />
+            <GeneralProfile tutorInfo={parentInfo} isUser={Number(parentId) === Number(userId)} type="parent"/>
             {parentRoom.length !== 0 ? <ParentRoomProfile parentRoom={parentRoom}/> : <h5 className={classes.empty}>(Phụ huynh chưa có phòng) </h5>}
         </div>
     );
