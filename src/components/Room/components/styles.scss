@@ -31,4 +31,19 @@
             border: none;
             background-color: #F0F0F0;
         }
+        & a {
+            flex: 1;
+            margin: 8px;
+            padding: 8px 4px;
+            border-radius: 4px;
+            font-weight: 600;
+            opacity: 0.8;
+            color: black;
+            &:hover {
+                opacity: 1;
+                cursor: pointer;
+            }
+            text-align:center;
+            font-size: 13.33333px;
+        }
 }

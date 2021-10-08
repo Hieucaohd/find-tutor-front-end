@@ -1,20 +1,17 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { isSignedIn } from 'features/auth/cookies';
 import Search from 'features/Header/components/Search/Search';
 import React, { useRef } from "react";
 import { IoPeopleOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import {
-  logout, selectId_of_user, selectRefreshToken, selectToken, selectType_parent, selectType_tutor
+  logout, selectId_of_user, selectIsSignedIn, selectRefreshToken, selectToken, selectType_parent, selectType_tutor
 } from "../auth/authSlice";
 import MobileNavBar from './components/MobileNavBar/MobileNavBar';
-import SearchBar from './components/SearchBar';
+import Notification from './components/Notification/Notification';
+import SearchBar from './components/Search/SearchBar';
 import ToggleMenu from "./components/ToggleMenu";
 import WebBanner from "./components/WebBanner";
-import { IoIosNotifications } from "react-icons/io5";
-import Notification from './components/Notification';
-import { useState } from 'react';
 
 
 function MainNavigation() {
@@ -28,7 +25,7 @@ function MainNavigation() {
   const classes = useStyles();
   const searchRef = useRef(null);
   const location = useLocation();
-  const isSigned = isSignedIn();
+  const isSigned = useSelector(selectIsSignedIn);
   const navigationRef = useRef(null);
 
   const handleLogOut = async() => {

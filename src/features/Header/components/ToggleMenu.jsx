@@ -17,9 +17,8 @@ function ToggleMenu( {onLogOut} ) {
     const typeParent = useSelector(selectType_parent);
     const userId = useSelector(selectId_of_user);
     const [profile, setProfile] = useState({});
-    const dropDownRef = useRef(null);
-    const overlayRef = useRef(null);
-
+    const [isLoading, setIsLoading] = useState(false);
+    const [isShowDropDown, setIsShowDropDown] = useState(false);
     useEffect( () => {
         const getUserInfo = async () => {
             const userInfo = await getUserNameAndAvatar(userId)            
@@ -36,17 +35,13 @@ function ToggleMenu( {onLogOut} ) {
     }
 
     const handleShowDropDown = () => {
-        if(dropDownRef.current.style.display === "none"){
-            dropDownRef.current.style.display = "block";
-            overlayRef.current.style.display = "block";
-        } else {
-            handleDontShowDropDown();
-        }
+        setIsShowDropDown(!isShowDropDown);
+        setIsLoading(!isLoading);
     }
-    const handleDontShowDropDown = () => {
-        dropDownRef.current.style.display = "none";
-        overlayRef.current.style.display = "none";
-    }
+    // // const handleDontShowDropDown = () => {
+    //     dropDownRef.current.style.display = "none";
+    //     overlayRef.current.style.display = "none";
+    // }
     return (
         <div>
           {typeParent || typeTutor 
@@ -56,16 +51,18 @@ function ToggleMenu( {onLogOut} ) {
                     <h4>{profile.userName}</h4>
                     <Avatar src={profile.avatar}/>
                 </div>
-                <div class={classes.dropdown} onClick={handleDontShowDropDown} ref={dropDownRef}>
+                {isShowDropDown && <div class={classes.dropdown} onClick={handleShowDropDown}>
                     {typeParent && <Link to={'/createroom'}>Tạo phòng</Link>}
                     {typeTutor && <Link to={`/profile/tutor/${userId}`}>Thông tin gia sư</Link>}
                     {typeParent && <Link to={`/profile/parent/${userId}`}>Thông tin phụ huynh</Link>}
+                    {(typeTutor || typeParent) && <Link to={`/settings/account`}>Cài đặt tài khoản</Link>}
                     <Link to={"/signin"} onClick={handleLogout}>Đăng xuất</Link>
-                </div>
+                </div>}
             </div>
+
             :<Link to={"/signin"} onClick={handleLogout}> Đăng xuất </Link>
             }
-            <div className={classes.overlay} ref={overlayRef} onClick={handleDontShowDropDown}></div>
+            {isLoading && <div className={classes.overlay} onClick={handleShowDropDown}></div>}
         </div>
     );
 }
@@ -78,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     user: {
         display: "flex",
         alignItems: "center",
-        color: "#404165",
+        color: "#797575",
         fontSize: "12px",
         fontWeight: "500",
         // backgroundColor: '#c9dcfb',
@@ -95,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
         },
         "&:hover": {
             cursor: "pointer",
-            opacity: "0.6",
+            opacity: 0.8,
         },
         "& h4": {
             margin: 0,
@@ -117,7 +114,6 @@ const useStyles = makeStyles((theme) => ({
     },
     dropdown: {
         marginTop: "4px",
-        display: "none",
         position: "absolute",
         [theme.breakpoints.down('xs')]: {
             right: "-12px",
@@ -144,7 +140,6 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     overlay: {
-        display: "none",
         position: "fixed",
         top: "40px",
         left: "0px",

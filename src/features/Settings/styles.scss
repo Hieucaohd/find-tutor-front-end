@@ -1,0 +1,225 @@
+
+@media (min-width: 740px){
+    .settings {
+        &__nav {
+            position: fixed;
+            left: 0;
+            top: 56px;
+            bottom: 0;
+            background-color: #e9e9e9;
+            display: flex;
+            flex-direction: column;
+            width: 280px;
+            justify-content: flex-start;
+            padding: 36px 0px;
+            & a {
+                padding: 12px 0px 12px 70px;
+                color: black;
+            }
+            .active {
+                background-color: #7891f3;
+                font-weight: 600;
+                color: white!important;
+            }
+        }
+        &__account {
+            margin-left: 280px;
+            padding: 100px 0px;
+            padding-right: 70px;
+        }
+    
+        &__parent {
+            margin-left: 280px;
+            padding: 40px 0px;
+            padding-right: 80px;
+        }
+    
+        &__tutor {
+            margin-left: 280px;
+            padding: 40px 0px;
+            padding-right: 80px;
+        }
+    
+        &__field {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            label {
+                flex: 1;
+                text-align: end;
+                margin-right: 12px;
+            }
+            input {
+                flex: 4;
+                padding: 8px 12px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+                background-color: #fff;
+            }
+            button {
+                flex: 4;
+                padding: 8px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+            }
+            select {
+                flex: 4;
+                padding: 8px 12px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+                background-color: white;
+            }
+            textarea {
+                flex: 4;
+                padding: 4px 8px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+                background-color: white;
+            }
+        } 
+    } 
+}
+
+/* Tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+    .settings {
+        &__nav {
+            position: fixed;
+            left: 0;
+            top: 56px;
+            bottom: 0;
+            background-color: #e9e9e9;
+            display: flex;
+            flex-direction: column;
+            width: 220px;
+            justify-content: flex-start;
+            padding: 36px 0px;
+            & a {
+                padding: 12px 0px 12px 24px;
+                color: black;
+            }
+            .active {
+                background-color: #7891f3;
+                font-weight: 600;
+                color: white!important;
+            }
+        }
+        &__account {
+            margin-left: 220px;
+            padding: 100px 0px;
+            padding-right: 28px;
+        }
+    
+        &__parent {
+            margin-left: 220px;
+            padding: 40px 0px;
+            padding-right: 28px;
+        }
+    
+        &__tutor {
+            margin-left: 220px;
+            padding: 40px 0px;
+            padding-right: 28px;
+        }
+    
+        &__field {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            label {
+                flex: 1;
+                text-align: end;
+                margin-right: 12px;
+            }
+            input {
+                flex: 4;
+                padding: 8px 12px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+                background-color: #fff;
+            }
+            button {
+                flex: 4;
+                padding: 8px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+            }
+            select {
+                flex: 4;
+                padding: 8px 12px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+                background-color: white;
+            }
+            textarea {
+                flex: 4;
+                padding: 4px 8px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+                background-color: white;
+            }
+        } 
+    } 
+    
+}
+
+/* Mobile */
+@media (max-width: 739px){
+    .settings {
+        &__nav {
+            padding: 16px;
+            border-bottom: 0.5px solid #5472EA;
+            a {
+                color: #6e6d7a;
+                padding: 0px 8px;
+            }
+            .active {
+                color: black;
+                font-weight: 600;
+            }
+        }
+
+        &__account {
+            padding: 20px;
+        }
+
+        &__field {
+            display: flex;
+            flex-direction: column;
+            margin: 12px 0px;
+            label {
+                font-size: 12px;
+                font-weight: 600;
+                margin-bottom: 2px;
+            }
+            input {
+                padding: 8px 12px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+                background-color: white;   
+            }
+            button {
+                padding: 8px 12px;
+                border: none;
+                border-radius: 4px;
+                background-color: #8c9fec;
+                color: white;
+                &:hover {
+                    cursor: pointer;
+                    background-color: #5472EA;
+                }
+            }
+        }
+
+        &__parent {
+            padding: 20px;
+        }
+
+        &__tutor {
+            padding: 20px;
+        }
+    }
+}
+

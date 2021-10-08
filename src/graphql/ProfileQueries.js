@@ -1,6 +1,6 @@
 import { fetchGraphQl } from "./graphQl"
 
-export const GetTutorProfile = async (id) => {
+export const GetTutorProfile = async (id, token) => {
     const query = `{
         user_by_id(id: ${id}) {
             username
@@ -20,10 +20,11 @@ export const GetTutorProfile = async (id) => {
                 university
                 achievement
                 lop_day
+                number_phone
             }
   	    }    
     }`
-    const tutorprofile = await fetchGraphQl("tutor profile", "user_by_id", query);
+    const tutorprofile = await fetchGraphQl("tutor profile", "user_by_id", query, token);
     return { 
         ...tutorprofile?.tutormodel,
         username: tutorprofile?.username,
@@ -31,7 +32,7 @@ export const GetTutorProfile = async (id) => {
     };
 }
 
-export const GetParentProfile = async (id) => {
+export const GetParentProfile = async (id, token) => {
     const query = `
     {
 		user_by_id(id: ${id}) {
@@ -41,7 +42,6 @@ export const GetParentProfile = async (id) => {
             }
     	    parentmodel {
                 number_phone
-                number_of_identity_card
                 first_name
                 last_name
                 birthday
@@ -52,7 +52,7 @@ export const GetParentProfile = async (id) => {
   	    }
     }
     `
-    const parentprofile = await fetchGraphQl("parent profile", "user_by_id", query);
+    const parentprofile = await fetchGraphQl("parent profile", "user_by_id", query, token);
     return {
         ...parentprofile?.parentmodel,
         username: parentprofile?.username,

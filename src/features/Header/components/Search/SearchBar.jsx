@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
-import { AiOutlineSearch } from 'react-icons/ai';
+import { IoSearchSharp } from 'react-icons/io5';
 
 SearchBar.propTypes = {
     
@@ -15,8 +15,10 @@ const useStyles = makeStyles({
         justifyContent: "center",
         fontSize: "20px",
         padding: "6px",
+        color: "#797575",
         "&:hover": {
             cursor: "pointer",
+            color: "#5472EA",
         }
     },
     search: {
@@ -31,7 +33,7 @@ function SearchBar({onShow}) {
     }
     return (
         <div className={classes.root} onClick={handleShowSearch}>
-            <AiOutlineSearch onClick={handleShowSearch}/> 
+            <IoSearchSharp onClick={handleShowSearch}/> 
         </div>
     );
 }

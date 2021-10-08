@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { IoLocationOutline, IoMaleFemaleOutline, IoSchoolOutline, IoTimerOutline } from "react-icons/io5";
-import { useHistory } from 'react-router-dom';
 import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName } from '../location/getLocation';
 import HomeButton from './components/HomeButton';
 import InfoButton from './components/InfoButton';
 import UserRoomButton from './components/UserRoomButton';
 import { subject } from "./picture";
+import { formatPriceString, getSexOfTeacher, getStringId, getTypeTutorString } from './room.js';
 import "./styles.scss";
 
 Room.propTypes = {
@@ -22,13 +22,8 @@ Room.propTypes = {
     typeTutor: PropTypes.bool,
 };
 
-function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, typeParent=false, type} ) {
-    const history = useHistory();
+function Room( {room, getIdString, onDelete, onCheck, onWait, onHome=false, typeTutor=false, typeParent=false, type} ) {
     const [address, setAddress] = useState("");
-    const handleShowDetailRoom = () => {
-        //navigate to detail room
-        history.push(`/room/${room.roomId}`);
-    }
 
     const handleDelete = () => {
         onDelete(room.id);
@@ -38,41 +33,6 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, 
         onCheck(room.id);
     }
 
-    const getTypeTutorString = (typeTeacher) => {
-        if(!typeTeacher) return ;
-        if(typeTeacher === "Giao Vien, Sinh Vien") {
-            return false;
-        } else if (typeTeacher === "Giao Vien") {
-            return "Giáo viên";
-        } else if (typeTeacher === "Sinh Vien") {
-            return "Sinh viên"
-        }
-    }
-
-    const getSexOfTeacher = (sex)=> {
-        if(!sex) return "";
-        if (sex === "NAM") {
-            return "Gia sư nam";
-        } else if (sex === "NU") {
-            return"Gia sư nữ";
-        }
-        return false;
-    }
-
-    const formatPriceString = (price) => {
-        const priceString = price?.toString();
-        let ans = "";
-        const len = priceString?.length;
-        let count = 0;
-        for(let i = len - 1; i >= 0; i--) {
-          count++;
-          ans = priceString[i] + ans;
-          if(count %3 ===0 && count !== len) {
-            ans = "." + ans
-          }
-        }
-        return ans;
-    }
 
     useEffect( () => {
         const getAddress = async () => {
@@ -95,9 +55,9 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, 
                     {/* <Avatar 
                         src = {room?.parent?.user?.imageprivateusermodel?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_3I4Y2ydmFBosgWcdoqVBBCsYZksWAhHtjg&usqp=CAU"}
                     /> */}
-                
-                {room?.parent?.user?.username}</div>
-                <span className="item__room__clock"><AiOutlineClockCircle/> {handleTime(room?.create_at)}</span>
+                ID{getStringId(room.roomId)} · {room?.parent?.user?.username}
+                </div>
+                <span className="item__room__clock"><AiOutlineClockCircle/>{handleTime(room?.create_at)}</span>
                 <div className="item__room__thumbnail">
                     <img src={subject[room.subject.trim()] || subject["Mặc Định"]} alt="mon hoc"/>
                     <div>
@@ -120,10 +80,12 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, 
                     </div>
                 </div>
                 <span className="item__room__current">Có {room.number_waiting} gia sư đang ứng tuyển</span>
-                {type==="home" && <HomeButton onCheck={handleCheck} id={room.roomId} onShow={handleShowDetailRoom} typeParent={typeParent}/>}
-                {type==="userroom" && <UserRoomButton onDelete={handleDelete} onShow={handleShowDetailRoom}/>}
-                {type==="info" && <InfoButton onShow={handleShowDetailRoom}/>}
+                {type==="home" && <HomeButton onCheck={handleCheck} id={room.roomId} roomAddress={`/room/${room.roomId}`} typeParent={typeParent}/>}
+                {type==="userroom" && <UserRoomButton onDelete={handleDelete} roomAddress={`/room/${room.roomId}`}/>}
+                {type==="info" && <InfoButton roomAddress={`/room/${room.roomId}`}/>}
+
             </div>
+
         </Box>
         </Grid>
     );

@@ -1,0 +1,48 @@
+
+@media (min-width: 740px){
+    .location {
+        &__field {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            label {
+                flex: 1;
+                text-align: end;
+                margin-right: 8px;
+            }
+            select {
+                flex: 4;
+                padding: 8px 12px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+                background-color: white;
+            }
+            
+        }
+    
+    }
+}
+
+@media (max-width: 739px){
+    .location {
+        &__field {
+            display: flex;
+            flex-direction: column;
+            margin: 12px 0px;
+            select {
+                padding: 8px 12px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+                background-color: white;
+            }
+            label {
+                font-size: 12px;
+                font-weight: 600;
+                margin-bottom: 2px;
+            }
+        }
+
+    }   
+
+}

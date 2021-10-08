@@ -138,8 +138,7 @@ function Search({onClose}) {
         } else {
             getList(searchTerm);
         }
-        console.log(searchTerm);
-    }, [searchTerm]);
+    }, [searchTerm, token]);
     const handleClose = () => {
         onClose();
     }

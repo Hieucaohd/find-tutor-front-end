@@ -95,8 +95,8 @@ function Location( {onChange = null}) {
     }
 
     return (
-        <div class={classes.root}>
-            <select class={classes.field} name="province" onChange={handleOnChangeProvinces} ref={selectProvince}> 
+        <div className={classes.root}>
+            <select className={classes.field} name="province" onChange={handleOnChangeProvinces} ref={selectProvince}> 
                     <option key={0} value={0}>
                         --Tỉnh, thành phố--
                     </option>
@@ -106,7 +106,7 @@ function Location( {onChange = null}) {
                     </option>
                 ))}
             </select>
-            <select class={classes.field} name="district" onChange={handleOnChangeDistricts} ref={selectDistrict}> 
+            <select className={classes.field} name="district" onChange={handleOnChangeDistricts} ref={selectDistrict}> 
                     <option key={0} value={0}>
                         --Quận, huyện--
                     </option>
@@ -116,7 +116,7 @@ function Location( {onChange = null}) {
                     </option>
                 ))}
             </select>
-            <select class={classes.field} name="ward" onChange={handleOnChangeWard} ref={selectWard}> 
+            <select className={classes.field} name="ward" onChange={handleOnChangeWard} ref={selectWard}> 
                 <option key={0} value={0}>
                         --Xã Phường--
                 </option>

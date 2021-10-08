@@ -53,6 +53,12 @@ export const GetFilterRoom = ({filterRoom, token}) => {
         search_room (${queryString}) {
             result {
                 id
+                parent {
+                    user {
+                        id
+                        username
+                    }  
+                }
                 province_code
                 district_code
                 ward_code
@@ -94,7 +100,7 @@ export const GetUserParentRoom = async (id) => {
     return parentModel.parentmodel.parentroommodel_set;
 }
 
-export const GetParentRoomDetail = async(id) => {
+export const GetParentRoomDetail = async(id, token) => {
     const query = `
     {
         room_by_id(id: ${id}) {
@@ -138,6 +144,7 @@ export const GetParentRoomDetail = async(id) => {
                             avatar
                         } 
                     }
+                    number_phone
                     first_name
                     last_name 
                     province_code
@@ -160,6 +167,7 @@ export const GetParentRoomDetail = async(id) => {
                             avatar
                         } 
                     }
+                    number_phone
                     first_name
                     last_name 
                     province_code
@@ -173,7 +181,7 @@ export const GetParentRoomDetail = async(id) => {
             }
         }
     }`;
-    const roomModel = await fetchGraphQl("parent room detail", "room_by_id", query);
+    const roomModel = await fetchGraphQl("parent room detail", "room_by_id", query, token);
     return roomModel;
 }
 

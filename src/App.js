@@ -1,5 +1,6 @@
 import NotFound from "features/404NotFound/NotFound";
 import Auth from "features/auth/Auth";
+import NumberPhone from "features/ParentRoom/components/ParentRoomMain/components/NumberPhone";
 import Profile from "features/Profile/Profile";
 import Settings from "features/Settings/Settings";
 import SignUp from "features/SignUp/SignUp";
@@ -31,7 +32,8 @@ function App() {
             <Route path="/profile" component={Profile} />
             <Route exact path="/search" component={Search} />
             {/* <Route exact path="/test" component={text} /> */}
-            <Route exact path="/settings" component={Settings}/>
+            <Route path="/settings" component={Settings}/>
+            <Route path="/test" component={NumberPhone} />
             <Route path="*" component={NotFound} />
           </Switch>
         </BrowserRouter>
