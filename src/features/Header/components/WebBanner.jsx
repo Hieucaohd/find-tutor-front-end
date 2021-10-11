@@ -9,34 +9,38 @@ Banner.propTypes = {
 
 const useStyles = makeStyles(theme => ({
     root: {
-        height: 400,
         backgroundColor: '#E1EEFE',
         display: 'flex',
         marginBottom: '-40px',
         position: 'relative',
+
         [theme.breakpoints.down('xs')]: {
-            paddingTop: '60px',
+            paddingBottom: '20px',
             flexDirection: 'column',
-            justifyContent: 'space-between',
-          },
-          [theme.breakpoints.up('sm')]: {
-            paddingTop: '20px',
+            height: 220,
+            paddingTop: 56,
+
+        },
+        [theme.breakpoints.up('sm')]: {
+            padding: '0px 20px',
+            paddingTop: 16,
+            height: 400,
         },
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         "& img": {
             [theme.breakpoints.down('xs')]: {
-                height: '46%',
-                
+                position: 'absolute',
+                right: 32,
+                bottom: 28,
+                height: 140,
               },
               [theme.breakpoints.up('sm')]: {
-                height: '76%',
-                right: '48px',
+                height: '110%',
             },
             [theme.breakpoints.up('md')]: {
-                right: '48px',
             },
-            position: 'absolute',
+            // position: 'absolute',
             
             bottom: 0,
         },
@@ -60,7 +64,6 @@ const useStyles = makeStyles(theme => ({
         },
         "& a": {
         },
-        padding: '0px 20px',
         "& button": {
             border: 'none',
             backgroundColor: 'white',
@@ -78,7 +81,7 @@ const useStyles = makeStyles(theme => ({
     },
     slogan: {
         [theme.breakpoints.up('md')]: {
-            position: 'absolute',
+            // position: 'absolute',
             left: 48
         },
     },
@@ -89,6 +92,8 @@ function Banner(props) {
     const classes = useStyles(isSignedIn());
     return (
         <div className={classes.root}>
+            <img src="https://i.ibb.co/Swh8GTQ/Pngtree-hand-drawn-cartoon-teachers-day-3848650.png" alt="banner" />
+
             <div className={classes.slogan}>
                 <h3>Bạn muốn kiếm <span>công việc gia sư</span> 
                 <br/>
@@ -101,9 +106,8 @@ function Banner(props) {
                         Đăng kí tài khoản
                     </button>
                 </Link>
-                
             </div>
-            <img src="https://i.ibb.co/d4TqFW2/homeschooling-hero.webp" alt="banner" />
+            
         </div>
     );
 }

@@ -7,6 +7,7 @@ import { addToApplyList, addToTeachingList } from "graphql/mutationGraphQl";
 import { GetParentRoomDetail } from "graphql/RoomQueries";
 import { room_socket } from "namespace";
 import React, { useEffect, useState } from "react";
+import { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { useRouteMatch } from "react-router-dom";
@@ -39,7 +40,8 @@ function ParentRoom(props) {
   const typeParent = useSelector(selectType_parent);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleMessage = ({result, type_action, type_of_list}) => {
+  const handleMessage = useCallback((message) => {
+    const {result, type_action, type_of_list} = message;
     if(type_action === "DELETE") {
       if(type_of_list === "waiting_list") {
         const newList = applyList.filter((item) => Number(item.id) !== Number(result.id) );
@@ -49,7 +51,12 @@ function ParentRoom(props) {
       }
     } else if (type_action === "CREATE") {
       if(type_of_list === "waiting_list") {
+
         setApplyList([
+          ...applyList,
+          result,
+        ])
+        console.log('testlist', [
           ...applyList,
           result,
         ])
@@ -60,8 +67,7 @@ function ParentRoom(props) {
         setTeaching(result);
       }
     }
-  }
-
+  }, [applyList])
 
   useEffect(() => {
     if(token.length !== 0) {
@@ -73,15 +79,15 @@ function ParentRoom(props) {
         ws.onmessage = e => {
           setIsLoading(false);
           const message = JSON.parse(e.data);
-          console.log('e', message);
-          handleMessage(message);
+          handleMessage(message)
         };
-
         return () => {
           ws.close();
         }
     }
-  }, [token, roomId]);
+  }, [token, roomId, handleMessage]);
+
+  
 
   useEffect(()=> {
     const getRoomDetail = async () => {

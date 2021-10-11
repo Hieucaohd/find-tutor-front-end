@@ -58,7 +58,7 @@ function Location( {onChange = null}) {
             const list = await getWardList(districtCode);
             setWardList(list.wards);
         }
-        (provinceCode!==0 && districtCode!==0) && getWards();
+        districtCode!==0 && getWards();
     }, [districtCode])
 
     const handleOnChangeProvinces = () => {

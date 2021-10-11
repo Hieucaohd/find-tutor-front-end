@@ -1,7 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useRouteMatch } from 'react-router-dom';
 import { selectId_of_user } from '../../../auth/authSlice';
 import RoomInfo from './components/RoomInfo';
 import TutorItem from './components/TutorItem';
@@ -10,9 +9,9 @@ import "./styles.scss";
 
 function ParentRoomMain( {roomDetail = {}, typeParent, applyList, teaching, addToTeaching, deleteFromApplyList, deleteFromTeachingList, addToApplyList} ) {
     const userId = useSelector(selectId_of_user);
-    const {
-      params: {roomId}
-    } = useRouteMatch();
+    // const {
+    //   params: {roomId}
+    // } = useRouteMatch();
     const classes = useStyles();
     const isOwner = Number(userId) === Number(roomDetail?.parent?.id);
 

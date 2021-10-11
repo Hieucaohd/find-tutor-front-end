@@ -24,7 +24,7 @@ function TutorInfor() {
       // dispatch something here.
       fetchRoomList();
     }
-  }, []);
+  }, [token, userId]);
 
   const handleDeleteFromApplyList = async (waitingId) => {
     try {

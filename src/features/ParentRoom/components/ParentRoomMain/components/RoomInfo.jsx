@@ -3,7 +3,7 @@ import { subject } from 'components/Room/picture';
 import { handleTime } from 'containers/date';
 import { isOnList } from 'features/ParentRoom/parentroom';
 import React from 'react';
-import { FaBorderAll, FaCalendarDay, FaRegCalendarAlt, FaRegClock, FaTransgender } from "react-icons/fa";
+import { FaBorderAll, FaCalendarDay, FaRegClock, FaTransgender } from "react-icons/fa";
 import { MdAccessTime, MdAttachMoney, MdLocationOn, MdPerson, MdToday } from "react-icons/md";
 import { useHistory } from 'react-router-dom';
 
