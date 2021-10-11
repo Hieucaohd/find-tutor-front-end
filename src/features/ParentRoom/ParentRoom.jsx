@@ -126,7 +126,7 @@ function ParentRoom(props) {
       setLoading(false);
     }
     getRoomDetail();
-  }, [roomId]);
+  }, [roomId, token]);
 
   const handleAddToTeachingList = async (waitingId) => {
     setIsLoading(true);

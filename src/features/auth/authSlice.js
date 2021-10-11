@@ -13,6 +13,8 @@ const initialState = cookies.get('userToken') ? {
   type_tutor: cookies.get('userTypeTutor') === "false" ? false : true,
   type_parent: cookies.get('userTypeParent') === "false" ? false : true,
   isSignedIn: cookies.get('isSignedIn') === 'true' ? true : false,
+  email: cookies.get('userEmail'),
+  userName: cookies.get('userName'),
 } : {
   status: "idle",
   token: "",
@@ -21,6 +23,8 @@ const initialState = cookies.get('userToken') ? {
   type_tutor: "",
   type_parent: "",
   isSignedIn: false,
+  email: '',
+  userName: '',
 };
 
 
@@ -138,13 +142,15 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.status = "idle";
         if(action.payload){
-          const { token, refresh_token, id, type_tutor, type_parent } = action.payload;
+          const { token, refresh_token, id, type_tutor, type_parent, email, username } = action.payload;
           state.token = token;
           state.refresh_token = refresh_token;
           state.id = id;
           state.type_tutor = type_tutor ;
           state.type_parent = type_parent ;
           state.isSignedIn = true;
+          state.email = email;
+          state.userName = username;
           setUserInfoCookies(action.payload);
         }
       })
@@ -154,13 +160,15 @@ const authSlice = createSlice({
       .addCase(loginWithGoogle.fulfilled, (state, action) => {
         state.status = "idle";
         if(action.payload){
-          const { token, refresh_token, id, type_tutor, type_parent } = action.payload;
+          const { token, refresh_token, id, type_tutor, type_parent, email, username } = action.payload;
           state.token = token;
           state.refresh_token = refresh_token;
           state.id = id;
           state.type_tutor = type_tutor;
           state.type_parent = type_parent;
           state.isSignedIn = true;
+          state.email = email;
+          state.userName = username;
           if(token) {
             setUserInfoCookies(action.payload);
           }
@@ -172,13 +180,15 @@ const authSlice = createSlice({
       .addCase(loginWithFacebook.fulfilled, (state, action) => {
         state.status = "idle";
         if(action.payload){
-          const { token, refresh_token, id, type_tutor, type_parent } = action.payload;
+          const { token, refresh_token, id, type_tutor, type_parent, email, username } = action.payload;
           state.token = token;
           state.refresh_token = refresh_token;
           state.id = id;
           state.type_tutor = type_tutor;
           state.type_parent = type_parent;
           state.isSignedIn = true;
+          state.email = email;
+          state.userName = username;
           // setUserInfoCookies(action.payload);
         }
       })
@@ -190,6 +200,7 @@ const authSlice = createSlice({
         state.type_tutor = "";
         state.type_parent = "";
         state.isSignedIn = false;
+        state.email = "";
         removeUserCookies();
       })
       .addCase(logout.fulfilled, (state) => {
@@ -221,6 +232,8 @@ export const selectId_of_user = (state) => state.auth.id;
 export const selectType_tutor = (state) => state.auth.type_tutor;
 export const selectType_parent = (state) => state.auth.type_parent;
 export const selectIsSignedIn = (state) => state.auth.isSignedIn;
+export const selectEmail = (state) => state.auth.email;
+export const selectUsername = (state) => state.auth.userName
 export const getToken = (dispatch) => {
   const refreshToken = getRefreshTokenCookie();
   setInterval( ()=> {

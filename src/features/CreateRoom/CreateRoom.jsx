@@ -201,13 +201,13 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
-    paddingBottom: 40,
+    paddingBottom: 52,
     [theme.breakpoints.down('sm')]: {
-      marginTop: 60,
+      marginTop: 56,
       paddingTop: 20,
     },
     [theme.breakpoints.up('md')]: {
-      marginTop: "100px",
+      marginTop: 76,
     },
     "& label": {
       fontSize: '12px',
@@ -227,7 +227,8 @@ const useStyles = makeStyles(theme => ({
     "& input": {
         padding: "8px 16px",
         border: "1px solid #ccc",
-        borderRadius: "64px",
+        borderRadius: "8px",
+        backgroundColor: "white",
     },
   },
   day: {
@@ -283,8 +284,13 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#5037EC',
     color: 'white',
     border: 'none',
-    borderRadius: '64px',
+    borderRadius: '8px',
     padding: '10px 0px',
+    opacity: 0.8,
+    "&:hover": {
+      cursor: 'pointer',
+      opacity: 1,
+    }
   },
   form: {
     display: 'flex',
@@ -292,11 +298,13 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
+    
   },
   select: {
     padding: '8px 16px',
-    borderRadius: '64px',
+    borderRadius: '8px',
     border: '1px solid #ccc',
+    backgroundColor: 'white',
   },
 }));
 

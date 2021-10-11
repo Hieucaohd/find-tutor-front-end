@@ -9,6 +9,36 @@ Modal.propTypes = {
     onDisagree: PropTypes.func,
 };
 
+function Modal({typeIcon, text, onAgree = null, onDisagree = null}) {
+    const classes = useStyles();
+    const handleAgree = () => {
+        onAgree();
+    }
+    const handleDisagree = () => {
+        onDisagree();
+    }
+    return (
+        <div className={classes.root}>
+            <div className={classes.modal}>
+                {typeIcon === 'delete' && <TiDeleteOutline className={classes.delete}/>}
+                {typeIcon === 'check' && <TiInputChecked className={classes.check}/>}
+                {typeIcon === 'fail' && <TiInfoOutline className={classes.delete}/>}
+                <p className={classes.text}>
+                    {text}
+                </p>
+                <div className={classes.buttonGroup}>
+                    {onAgree && <button className={classes.agree} onClick={handleAgree}>
+                        Tiếp tục
+                    </button>}
+                    {onDisagree && <button className={classes.disagree} onClick={handleDisagree}>
+                        Hủy
+                    </button>}
+                </div>
+            </div>
+        </div>
+    );
+}
+
 const useStyles = makeStyles({
     root: {
         position: "fixed",
@@ -75,35 +105,5 @@ const useStyles = makeStyles({
         backgroundColor: '#AAAAAA',
     }
 })
-
-function Modal({typeIcon, text, onAgree = null, onDisagree = null}) {
-    const classes = useStyles();
-    const handleAgree = () => {
-        onAgree();
-    }
-    const handleDisagree = () => {
-        onDisagree();
-    }
-    return (
-        <div className={classes.root}>
-            <div className={classes.modal}>
-                {typeIcon === 'delete' && <TiDeleteOutline className={classes.delete}/>}
-                {typeIcon === 'check' && <TiInputChecked className={classes.check}/>}
-                {typeIcon === 'fail' && <TiInfoOutline className={classes.delete}/>}
-                <p className={classes.text}>
-                    {text}
-                </p>
-                <div className={classes.buttonGroup}>
-                    {onAgree && <button className={classes.agree} onClick={handleAgree}>
-                        Tiếp tục
-                    </button>}
-                    {onDisagree && <button className={classes.disagree} onClick={handleDisagree}>
-                        Hủy
-                    </button>}
-                </div>
-            </div>
-        </div>
-    );
-}
 
 export default Modal;

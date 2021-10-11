@@ -27,7 +27,6 @@ function Settings(props) {
                 <Route exact path="/settings/profile/parent" component={SettingsParent} />
                 <Route exact path="/settings/profile/tutor" component={SettingsTutor} />
             </div>
-
         </div>
     );
 };

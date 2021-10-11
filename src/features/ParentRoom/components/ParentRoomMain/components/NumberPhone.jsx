@@ -1,13 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
-import { IoCopy, IoCloseCircleSharp } from 'react-icons/io5';
 import Tooltip from "@material-ui/core/Tooltip";
-import { useState } from 'react';
-
-NumberPhone.propTypes = {
-    
-};
+import React, { useState } from 'react';
+import { IoCloseCircleSharp, IoCopy, IoCall } from 'react-icons/io5';
 
 function NumberPhone({numberPhone = "***********", onClose = null}) {
     const classes = useStyles();
@@ -17,6 +11,7 @@ function NumberPhone({numberPhone = "***********", onClose = null}) {
             <div className={classes.overlay} onClick={() => onClose()}></div>
             <div className={classes.phone}>
                 <div style={{display: 'flex', alignItems: 'center'}}>
+                    <IoCall />
                     <span>
                         {numberPhone}
                     </span>
@@ -56,6 +51,7 @@ const useStyles = makeStyles({
         width: 220,
         height: 60,
         borderRadius: 4,
+        padding: "0 8px",
         backgroundColor: 'white',
         zIndex: 2,
         display: 'flex',

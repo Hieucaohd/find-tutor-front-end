@@ -1,3 +1,77 @@
+.settings {
+    &__save {
+        background-color: #7891f3;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        color: white;
+        &:hover {
+            background-color: #5472EA;
+            cursor: pointer;
+        }
+    }
+    &__password {
+        &__main {
+            background-color: #fff;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 4px;
+            &>label {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                padding-top: 12px;
+                padding-bottom: 8px;
+                border-bottom: 1px solid #ccc;
+                & svg {
+                    margin-left: 4px;
+                }
+            }
+            & button {
+                width: 100%;
+                padding: 8px;
+                border: none;
+                border-radius: 4px;
+                background-color: #768ff6;
+                color: white;
+                margin-bottom: 8px;
+                &:hover {
+                    cursor: pointer;
+                    background-color: #5472EA;
+                }
+            }
+        }
+    }
+    &__overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 2;
+    }
+    &__close {
+        position: absolute;
+        top: 9px;
+        right: 12px;
+        color: red;
+        font-size: 24px;
+        opacity: 0.6;
+        &:hover{
+            cursor: pointer;
+            opacity: 0.8;
+        }
+    }
+}
+
 
 @media (min-width: 740px){
     .settings {
@@ -24,34 +98,36 @@
         }
         &__account {
             margin-left: 280px;
-            padding: 100px 0px;
-            padding-right: 70px;
+            padding: 100px 80px;
         }
     
         &__parent {
             margin-left: 280px;
-            padding: 40px 0px;
-            padding-right: 80px;
+            padding: 40px 80px;
         }
     
         &__tutor {
             margin-left: 280px;
-            padding: 40px 0px;
-            padding-right: 80px;
+            padding: 40px 80px;            
         }
     
         &__field {
+            // display: flex;
+            // align-items: center;
+            // justify-content: center;
+            // margin-bottom: 20px;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
+            flex-direction: column;
+            margin: 12px 0px;
             label {
-                flex: 1;
-                text-align: end;
+                // flex: 1;
+                // text-align: end;
                 margin-right: 12px;
+                font-size: 14px;
+                font-weight: 600;
             }
             input {
-                flex: 4;
+                // flex: 4;
                 padding: 8px 12px;
                 border-radius: 4px;
                 border: 1px solid #ccc;
@@ -59,9 +135,15 @@
             }
             button {
                 flex: 4;
-                padding: 8px;
+                padding: 8px 12px;
+                border: none;
                 border-radius: 4px;
-                border: 1px solid #ccc;
+                background-color: #768ff6;
+                color: white;
+                &:hover {
+                    cursor: pointer;
+                    background-color: #5472EA;
+                }
             }
             select {
                 flex: 4;
@@ -77,7 +159,12 @@
                 border: 1px solid #ccc;
                 background-color: white;
             }
+            &__error {
+                color: red;
+                font-size: 12px;
+            }
         } 
+
     } 
 }
 
@@ -107,30 +194,28 @@
         }
         &__account {
             margin-left: 220px;
-            padding: 100px 0px;
-            padding-right: 28px;
+            padding: 100px 28px;
         }
     
         &__parent {
             margin-left: 220px;
-            padding: 40px 0px;
-            padding-right: 28px;
+            padding: 40px 28px;
+            margin-bottom: 20px;
         }
     
         &__tutor {
             margin-left: 220px;
-            padding: 40px 0px;
-            padding-right: 28px;
+            padding: 40px 28px;
+            margin-bottom: 20px;
         }
     
         &__field {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
+            flex-direction: column;
+            margin: 12px 0px;
             label {
-                flex: 1;
-                text-align: end;
+                // flex: 1;
+                // text-align: end;
                 margin-right: 12px;
             }
             input {
@@ -142,9 +227,15 @@
             }
             button {
                 flex: 4;
-                padding: 8px;
+                padding: 8px 12px;
+                border: none;
                 border-radius: 4px;
-                border: 1px solid #ccc;
+                background-color: #8c9fec;
+                color: white;
+                &:hover {
+                    cursor: pointer;
+                    background-color: #5472EA;
+                }
             }
             select {
                 flex: 4;
@@ -162,12 +253,12 @@
             }
         } 
     } 
-    
 }
 
 /* Mobile */
 @media (max-width: 739px){
     .settings {
+        margin-bottom: 32px;
         &__nav {
             padding: 16px;
             border-bottom: 0.5px solid #5472EA;
@@ -200,11 +291,17 @@
                 border: 1px solid #ccc;
                 background-color: white;   
             }
+            select {
+                padding: 8px 12px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+                background-color: white;
+            }
             button {
                 padding: 8px 12px;
                 border: none;
                 border-radius: 4px;
-                background-color: #8c9fec;
+                background-color: #768ff6;
                 color: white;
                 &:hover {
                     cursor: pointer;
@@ -215,10 +312,12 @@
 
         &__parent {
             padding: 20px;
+            margin-bottom: 20px;
         }
 
         &__tutor {
             padding: 20px;
+            margin-bottom: 20px;
         }
     }
 }

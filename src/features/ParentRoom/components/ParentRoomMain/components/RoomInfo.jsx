@@ -2,34 +2,22 @@ import { Avatar, makeStyles } from '@material-ui/core';
 import { subject } from 'components/Room/picture';
 import { handleTime } from 'containers/date';
 import { isOnList } from 'features/ParentRoom/parentroom';
-import PropTypes from 'prop-types';
 import React from 'react';
-import { FaBorderAll, FaCalendarDay, FaTransgender } from "react-icons/fa";
+import { FaBorderAll, FaCalendarDay, FaRegCalendarAlt, FaRegClock, FaTransgender } from "react-icons/fa";
 import { MdAccessTime, MdAttachMoney, MdLocationOn, MdPerson, MdToday } from "react-icons/md";
 import { useHistory } from 'react-router-dom';
-RoomInfo.propTypes = {
-    roomDetail: PropTypes.object,
-};
 
 function RoomInfo( {room, applyList, userId, addToApplyList, typeParent, teaching} ) {
     const classes = useStyles();
     const history = useHistory();
-    const renderDay = (daysStr) => {
+
+    const getDayString = (daysStr) => {
         if(!daysStr || daysStr === "") return ;
-        let days = [];
+        let days = "Thứ ";
         for(let i = 0; i<daysStr.length; i++) {
-        const number = Number(daysStr[i]);
-            if(number >=2 && number <= 8) {
-                days.push(number);
-            }
+            days = days + daysStr[i] + ' ';
         }
-        return (
-            <ul className={classes.days}>
-                {days.map((day)=> (
-                   <li>{day}</li> 
-                ))}
-            </ul>
-        )
+        return days
     }
     const formatPriceString = (price) => {
         if(!price) return;
@@ -93,8 +81,12 @@ function RoomInfo( {room, applyList, userId, addToApplyList, typeParent, teachin
                         <span>{typeTutorString(room?.typeteacher)}</span>
                     </div>}
                     <div className={classes.infoField}>
-                        <MdToday />
+                        <FaRegClock />
                         <span>{room?.timeoneday} tiếng/buổi</span>
+                    </div>
+                    <div className={classes.infoField}>
+                        <MdToday />
+                        <span>{getDayString(room?.day_can_teach)}</span>
                     </div>
                     <div className={classes.time}>
                         <MdAccessTime /> Được đăng {handleTime(room?.create_at)}
@@ -226,6 +218,7 @@ const useStyles = makeStyles(theme => ({
         "& svg": {
             marginRight: 4,
             color: "#777777",
+            fontSize: 16,
         }
     },
     apply: {

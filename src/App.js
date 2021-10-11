@@ -1,3 +1,4 @@
+import UploadImage from "components/UploadImage/UploadImage";
 import NotFound from "features/404NotFound/NotFound";
 import Auth from "features/auth/Auth";
 import NumberPhone from "features/ParentRoom/components/ParentRoomMain/components/NumberPhone";
@@ -33,7 +34,7 @@ function App() {
             <Route exact path="/search" component={Search} />
             {/* <Route exact path="/test" component={text} /> */}
             <Route path="/settings" component={Settings}/>
-            <Route path="/test" component={NumberPhone} />
+            <Route path="/test" component={UploadImage} />
             <Route path="*" component={NotFound} />
           </Switch>
         </BrowserRouter>

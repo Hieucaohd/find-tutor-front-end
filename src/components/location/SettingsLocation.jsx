@@ -6,14 +6,13 @@ SettingsLocation.propTypes = {
     
 };
 
-function SettingsLocation({defaultLocation}) {
+function SettingsLocation({defaultLocation, onChange}) {
     const {province, district, ward} = defaultLocation;
     const [provinceList, setProvinceList] = useState([]);
     const [provinceCode, setProvinceCode] = useState(province);
     const [districtList, setDistrictList] = useState([]);
     const [districtCode, setDistrictCode] = useState(district);
     const [wardList, setWardList] = useState([]);
-
     useEffect(()=>{
         const getProvinces = async () => {
             const list = await getProvinceList();
@@ -53,16 +52,35 @@ function SettingsLocation({defaultLocation}) {
         })
     }
 
-    const handleChangeProvince = (value) => {
+    const handleChangeProvince = (e) => {
         setWardList([]);
-        setProvinceCode(value.target.value);
+        setProvinceCode(e.target.value);
+        onChange({
+            province_code: e.target.value,
+        })
+    }
+
+    const handleChangeDistrict = (e) => {
+        setDistrictCode(e.target.value);
+        onChange({
+            province_code: provinceCode,
+            district_code: districtCode,
+        })
+    }
+
+    const handleChangeWard = (e) => {
+        onChange({
+            province_code: provinceCode,
+            district_code: districtCode,
+            ward_code: e.target.value,
+        })
     }
 
     return (
         <div className="location">
             <div className="location__field">
                 <label>Tỉnh thành phố</label>
-                <select name="province" onChange={handleChangeProvince} >
+                <select name="province" onChange={handleChangeProvince}>
                     <option key={0} value={0}>
                         --Lựa chọn--
                     </option>
@@ -71,7 +89,7 @@ function SettingsLocation({defaultLocation}) {
             </div>
             <div className="location__field">
                 <label>Quận, huyện</label>
-                <select name="district" onChange={value => setDistrictCode(value.target.value)}> 
+                <select name="district" onChange={handleChangeDistrict}> 
                     <option key={0} value={0}>
                         --Lựa chọn--
                     </option>
@@ -80,7 +98,7 @@ function SettingsLocation({defaultLocation}) {
             </div>
             <div className="location__field">
                 <label>Xã phường</label>
-                <select name="ward"> 
+                <select name="ward" onChange={handleChangeWard}> 
                     <option key={0} value={0}>
                         --Lựa chọn--
                     </option>
