@@ -2,7 +2,6 @@ import { makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { AiFillExperiment } from 'react-icons/ai';
-import { GiBookCover } from 'react-icons/gi';
 import { IoMdSchool } from 'react-icons/io';
 import { IoLocation } from 'react-icons/io5';
 import { RiMedalFill } from 'react-icons/ri';

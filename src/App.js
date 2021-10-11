@@ -1,7 +1,6 @@
 import UploadImage from "components/UploadImage/UploadImage";
 import NotFound from "features/404NotFound/NotFound";
 import Auth from "features/auth/Auth";
-import NumberPhone from "features/ParentRoom/components/ParentRoomMain/components/NumberPhone";
 import Profile from "features/Profile/Profile";
 import Settings from "features/Settings/Settings";
 import SignUp from "features/SignUp/SignUp";

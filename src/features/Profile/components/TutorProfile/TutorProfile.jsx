@@ -41,7 +41,7 @@ function TutorProfile(props) {
             setLoading(false);
         }
         getUserInfo();
-    }, []);
+    }, [tutorId]);
 
     return (
         <div className={classes.root}>

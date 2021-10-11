@@ -1,9 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { selectToken } from 'features/auth/authSlice';
-import { notification_socket } from 'namespace';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { IoNotifications } from "react-icons/io5";
-import { useSelector } from 'react-redux';
 
 function Notification({typeTutor, typeParent}) {
     const classes = useStyles();

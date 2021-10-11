@@ -44,7 +44,7 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, 
             setAddress(`${catchDistrictName(districtName)}, ${catchProvinceName(provinceName)}`)
         }
         getAddress();
-    }, []);
+    }, [room.province_code, room.district_code]);
     
     return (
         <Grid item key={room.id} className="room" xs={12} sm={6} md={4} lg={3} >

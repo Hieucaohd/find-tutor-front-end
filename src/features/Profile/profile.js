@@ -41,7 +41,7 @@ export const updateAvatar = async ({typeCurrent, token, file}) => {
   const data = file;
   if(typeCurrent) {
     try {
-      const response = await axios({
+      await axios({
         method: "PUT",
         url: `${server_name}/findTutor/imagePrivateUserDetail/`,
         headers: {
@@ -57,7 +57,7 @@ export const updateAvatar = async ({typeCurrent, token, file}) => {
     }
   } else {
     try {
-      const response = await axios({
+      await axios({
         method: "POST",
         url: `${server_name}/findTutor/imagePrivateUserList/`,
         headers: {

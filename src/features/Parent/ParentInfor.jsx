@@ -30,7 +30,7 @@ function ParentInfor() {
             setParentRoomList(parentRooms);
         }
         getList();
-    }, [])
+    }, [parentId])
 
     const handleShowCreateRoom = () => {
         history.push("/createroom");

@@ -34,7 +34,7 @@ function SettingsLocation({defaultLocation, onChange}) {
             const list = await getWardList(districtCode);
             setWardList(list.wards);
         }
-        (provinceCode!==0 && districtCode!==0) && getWards();
+        (districtCode!==0) && getWards();
     }, [districtCode])
 
     const renderList = (list, code) => {
