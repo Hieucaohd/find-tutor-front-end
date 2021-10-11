@@ -26,6 +26,7 @@ function RegisterTutor(props) {
     });
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [showFailedModal, setShowFailedModal] = useState(false);
+
     //cắt lấy firstname và lastname 
     const getName = (name) => {
         return {
@@ -74,6 +75,20 @@ function RegisterTutor(props) {
             "district_code": Number(location.district),
             "ward_code": Number(location.ward),
             "detail_location": data.detailLocation || null,
+            "link": [
+                { 
+                    "name": 'facebook',
+                    "url": data.facebook.replace(/^\s+|\s+$/g,"") ? data.facebook : "",
+                },
+                { 
+                    "name": 'instagram',
+                    "url": data.instagram.replace(/^\s+|\s+$/g,"") ? data.instagram : "",
+                },
+                { 
+                    "name": 'linkedln',
+                    "url": data.linkedln.replace(/^\s+|\s+$/g,"") ? data.linkedln : "",
+                }
+            ]
         }
 
         const resgisterTutor = await registerTutorInfor({
@@ -86,11 +101,11 @@ function RegisterTutor(props) {
         file.append('identity_card', data.cccd[0]);
         file.append('student_card', data.thesv[0]);
         const imageReponse = resgisterTutor ? await registerImage({token: token, file: file}) : false;
-        if(imageReponse ){
+        if(imageReponse){
             loadingRef.current.style.display = "none";
             setShowSuccessModal(true);
             history.push("/");
-        }else {
+        } else {
             loadingRef.current.style.display = "none";
             setShowFailedModal(true);
         }
@@ -228,18 +243,52 @@ function RegisterTutor(props) {
                 </div>
                 <div className={classes.formField}>
                     <label>Kinh nghiệm </label>
-                    <input 
+                    <textarea 
                         name="experience" 
                         type="text"
+                        rows={3}
                         {...register("experience")}
                     />
                 </div>
                 <div className={classes.formField}>
                     <label>Thành tích nổi bật </label>
-                    <input 
+                    <textarea 
                         name="achievement" 
                         type="text"
+                        rows={3}
                         {...register("achievement")}
+                    />
+                </div>
+                <div className={classes.formField}>
+                    <label>Mô tả thêm bản thân </label>
+                    <textarea 
+                        name="moreinfo" 
+                        type="text"
+                        rows={3} 
+                    />
+                </div>
+                <div className={classes.formField}>
+                    <label>Link Facebook (nếu có)</label>
+                    <input  
+                        type="text" 
+                        name="facebook"
+                        {...register("facebook")}
+                    />
+                </div>
+                <div className={classes.formField}>
+                    <label>Link Instagram (nếu có)</label>
+                    <input  
+                        type="text" 
+                        name="instagram"
+                        {...register("instagram")}
+                    />
+                </div>
+                <div className={classes.formField}>
+                    <label>Link Linkedln (nếu có)</label>
+                    <input  
+                        type="text" 
+                        name="linkedln"  
+                        {...register("linkedln")}
                     />
                 </div>
                 <div className={classes.formField}> 
@@ -296,6 +345,13 @@ const useStyles = makeStyles(theme => ({
             padding: '8px 16px',
             borderRadius: '8px',
             border: '0.5px solid #ccc',
+            backgroundColor: 'white',
+        },
+        "& textarea": {
+            padding: '4px 8px',
+            borderRadius: '8px',
+            border: '0.5px solid #ccc',
+            backgroundColor: 'white',
         },
         '& button': {
             width: '100%',
@@ -311,7 +367,8 @@ const useStyles = makeStyles(theme => ({
     profession: {
         padding: '8px 8px',
         border: '1px solid #ccc',
-        borderRadius: '64px',
+        borderRadius: '8px',
+        backgroundColor: 'white',
         marginTop: '2px',
     },
     choose: {
@@ -335,8 +392,13 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: '#5037EC',
         color: 'white',
         border: 'none',
-        borderRadius: '64px',
+        borderRadius: '8px',
         padding: '10px 0px',
+        opacity: 0.8, 
+        "&:hover": {
+            cursor: "pointer",
+            opacity: 1,
+        }
     },
     loading: {
         display: 'none',

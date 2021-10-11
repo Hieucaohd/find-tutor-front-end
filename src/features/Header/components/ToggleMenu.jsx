@@ -1,7 +1,7 @@
 import { Avatar, makeStyles } from '@material-ui/core';
 import { getUserNameAndAvatar } from 'graphql/ProfileQueries';
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsFillCaretDownFill } from "react-icons/bs";
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -28,7 +28,7 @@ function ToggleMenu( {onLogOut} ) {
             })
         }
         getUserInfo();
-    }, []);
+    }, [userId]);
 
     const handleLogout = () => {
         onLogOut();
@@ -126,6 +126,7 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: "0px 8px 16px 0px rgba(0,0,0,0.2)",
         "z-index": "1001",
         borderRadius: "4px",
+        overflow: "hidden",
         "& > a": {
             color: "black",
             padding: '8px 12px',
@@ -133,9 +134,10 @@ const useStyles = makeStyles((theme) => ({
             fontSize: '14px',
             textDecoration: "none",
             display: "block",
-            borderRadius: "4px",
+            
             "&:hover": {
-                color: "#ADB5E8",
+                color: '#fff',
+                backgroundColor: '#5472EA',
             }
         }
     },

@@ -1,0 +1,81 @@
+.uploadimage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    flex-direction: column;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    &__drop {
+        // width: 320px;
+        // height: 420px;
+        border: 1px dashed #ccc;
+        padding: 4px 32px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        & svg {
+            font-size: 40px;
+        }
+        & span {
+            font-size: 12px;
+            font-style: italic;
+        }
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &__content {
+        position: relative;
+        padding: 24px;
+        background-color: white;
+    }
+
+    &__close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: red;
+        opacity: 0.6;
+        font-size: 20px;
+        &:hover {
+            cursor: pointer;
+            opacity: 1;
+        }
+    }
+
+    &__overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color:rgba(0,0,0,0.5);
+    
+    }
+
+    &__preview {
+        width: 240px!important;
+        height: 240px!important;
+        margin: 16px 0px;
+    }
+
+    &__submit {
+        width: 100%;
+        border: none;
+        background-color: #5472EA;
+        color: white;
+        padding: 8px 0px;
+        border-radius: 4px;
+        opacity: 0.6;
+        &:hover {
+            opacity: 1;
+            cursor: pointer
+        }
+    }
+}

@@ -4,13 +4,15 @@ const cookies = new Cookies();
 
 export const setUserInfoCookies = (info) => {
     removeUserCookies();
-    const {token, id, refresh_token, type_parent, type_tutor} = info;
+    const {token, id, refresh_token, type_parent, type_tutor, email, username} = info;
     cookies.set('userToken', token, { secure: true, sameSite: true, maxAge: 59*60});
     cookies.set('userRefreshToken', refresh_token, { secure: true, sameSite: true, maxAge: 59*60});
     cookies.set('userId', id, { secure: true, sameSite: true, maxAge: 59*60});
     cookies.set('userTypeParent', type_parent, { secure: true, sameSite: true, maxAge: 59*60});
     cookies.set('userTypeTutor', type_tutor, { secure: true, sameSite: true, maxAge: 59*60});
     cookies.set('isSignedIn', true, { secure: true, sameSite: true, maxAge: 59*60});
+    cookies.set('userEmail', email, { secure: true, sameSite: true, maxAge: 59*60});
+    cookies.set('userName', username, { secure: true, sameSite: true, maxAge: 59*60})
 }
 
 export const setParentCookieTrue = () => {
@@ -52,6 +54,8 @@ export const removeUserCookies = () => {
     cookies.remove('userTypeParent');
     cookies.remove('userTypeTutor');
     cookies.remove('isSignedIn');
+    cookies.remove('userEmail');
+    cookies.remove('userName')
 }
 
 export const isSignedIn = () => {

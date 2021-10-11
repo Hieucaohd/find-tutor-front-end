@@ -16,6 +16,7 @@ const useStyles = makeStyles(theme => ({
         marginTop: '80px',
         [theme.breakpoints.down('sm')]: {
             padding: '0px 12px',
+            marginBottom: 40,
         },
         [theme.breakpoints.up('md')]: {
             padding: '0px 120px',
@@ -44,7 +45,7 @@ function ParentProfile(props) {
             setParentInfo(info);
         }
         getParentInfo();
-    }, []);
+    }, [parentId]);
 
     useEffect (()=> {
         const getParentRoom = async (id) => {
@@ -52,7 +53,8 @@ function ParentProfile(props) {
             setParentRoom(listRoom);
         }
         getParentRoom(parentId);
-    }, [])
+    }, [parentId]);
+    
     return (
         <div className={classes.root}>
             <GeneralProfile tutorInfo={parentInfo} isUser={Number(parentId) === Number(userId)} type="parent"/>

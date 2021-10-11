@@ -1,9 +1,16 @@
 import { Avatar, makeStyles } from '@material-ui/core';
-import { formatBirthDay } from 'features/Profile/profile';
+import UploadImage from 'components/UploadImage/UploadImage';
+import { selectToken } from 'features/auth/authSlice';
+import { formatBirthDay, updateAvatar } from 'features/Profile/profile';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useState } from 'react';
 import { AiFillCamera, AiOutlineFacebook, AiOutlineInstagram, AiOutlineLinkedin, AiTwotoneEdit } from 'react-icons/ai';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import FormData from 'form-data';
+import Modal from "components/Modal/Modal";
+import Loading from "components/Loading/Loading";
 
 GeneralProfile.propTypes = {
     TutorInfo: PropTypes.object,
@@ -18,12 +25,34 @@ const getJobName = (str) => {
 
 function GeneralProfile({tutorInfo, isUser = false, type}) {
     const classes = useStyles();
+    const [showChangeAvatar, setShowChangeAvatar] = useState(false);
+    const token = useSelector(selectToken);
+    const [showFailedModal, setShowFailedModal] = useState(false);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const [showLoading, setShowLoading] = useState(false);
+    const handleChangeAvatar = async (image) => {
+        setShowLoading(true);
+        const file = new FormData();
+        file.append('avatar', image);
+        const response = await updateAvatar({
+            typeCurrent: tutorInfo.imageprivateusermodel?.avatar ? true : false,
+            token: token,
+            file: file})
+    
+        if(response) {
+            setShowLoading(false);
+            setShowSuccessModal(true);
+        } else {
+            setShowFailedModal(true);
+            setShowLoading(false);
+        }
+    }
 
     return (
         <div className={classes.wallpaper}>
             {isUser && <Link to={`/settings/profile/${type}`}><AiTwotoneEdit  className={classes.fix}/> </Link>}
             <div className={classes.avatarContainer}>
-            {isUser && <button  className={classes.camera}><AiFillCamera /></button>}
+            {isUser && <button className={classes.camera} onClick={() => setShowChangeAvatar(true)}><AiFillCamera /></button>}
                 <Avatar alt="Travis Howard" variant="square" 
                     className={classes.avatar} 
                     src={tutorInfo.imageprivateusermodel?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_3I4Y2ydmFBosgWcdoqVBBCsYZksWAhHtjg&usqp=CAU"} />
@@ -44,11 +73,15 @@ function GeneralProfile({tutorInfo, isUser = false, type}) {
                     </div>
                 </div>
                 <div className={classes.social}>
-                    <Link to="#"><AiOutlineFacebook/></Link>
-                    <Link to="#"><AiOutlineInstagram/></Link>
-                    <Link to="#"><AiOutlineLinkedin /></Link>
+                    <a href={tutorInfo?.linkmodel_set?.find(item => item?.name === 'facebook')?.url || "#"}><AiOutlineFacebook/></a>
+                    <a href={tutorInfo?.linkmodel_set?.find(item => item?.name === 'instagram')?.url || "#"}><AiOutlineInstagram/></a>
+                    <a href={tutorInfo?.linkmodel_set?.find(item => item?.name === 'linkedln')?.url || "#"}><AiOutlineLinkedin /></a>
                 </div>
             </div>
+            {showChangeAvatar && <UploadImage onClose={() => setShowChangeAvatar(false)} onSubmit={handleChangeAvatar}/>}
+            {showFailedModal && <Modal typeIcon="fail" text="Thay Avatar không thành công" onAgree={() => setShowFailedModal(false)} />}
+            {showSuccessModal && <Modal typeIcon="check" text="Thay Avatar thành công" onAgree={() => window.location.reload()} />}
+            {showLoading && <Loading />}
         </div>
     );
 }
@@ -206,6 +239,7 @@ const useStyles = makeStyles(theme => ({
     social: {
         "& a": {
             opacity: '0.6',
+            color: 'black',
             [theme.breakpoints.down('xs')]: {
                 fontSize: '24px',
             },

@@ -16,7 +16,7 @@ const useStyles = makeStyles({
         right: 0,
         bottom: 0,
         backgroundColor: 'rgba(0,0,0,0.5)',
-        'z-index': 2,
+        'z-index': 4,
     }
 })
 

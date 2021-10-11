@@ -7,6 +7,11 @@ export const GetTutorProfile = async (id, token) => {
             imageprivateusermodel {
                 avatar
             }
+            linkmodel_set {
+                id
+                url
+                name
+            }
         	tutormodel {
                 first_name
                 last_name
@@ -19,7 +24,7 @@ export const GetTutorProfile = async (id, token) => {
                 experience
                 university
                 achievement
-                lop_day
+                lop_day  
                 number_phone
             }
   	    }    
@@ -28,6 +33,7 @@ export const GetTutorProfile = async (id, token) => {
     return { 
         ...tutorprofile?.tutormodel,
         username: tutorprofile?.username,
+        linkmodel_set: tutorprofile?.linkmodel_set,
         imageprivateusermodel: tutorprofile?.imageprivateusermodel,
     };
 }
@@ -39,6 +45,11 @@ export const GetParentProfile = async (id, token) => {
             username
             imageprivateusermodel {
                 avatar
+            }
+            linkmodel_set {
+                id
+                url
+                name
             }
     	    parentmodel {
                 number_phone
@@ -57,6 +68,7 @@ export const GetParentProfile = async (id, token) => {
         ...parentprofile?.parentmodel,
         username: parentprofile?.username,
         imageprivateusermodel: parentprofile?.imageprivateusermodel,
+        linkmodel_set: parentprofile?.linkmodel_set,
     };
 }
 

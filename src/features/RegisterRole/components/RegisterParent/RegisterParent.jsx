@@ -52,8 +52,21 @@ function RegisterParent(props) {
             "district_code": Number(location.district),
             "ward_code": Number(location.ward),
             "detail_location": data.detailLocation || null,
+            "link": [
+                { 
+                    "name": 'facebook',
+                    "url": data.facebook.replace(/^\s+|\s+$/g,"") ? data.facebook : "",
+                },
+                { 
+                    "name": 'instagram',
+                    "url": data.instagram.replace(/^\s+|\s+$/g,"") ? data.instagram : "",
+                },
+                { 
+                    "name": 'linkedln',
+                    "url": data.linkedln.replace(/^\s+|\s+$/g,"") ? data.linkedln : "",
+                }
+            ]
         }
-        
         
         const registerReponse = await registerParentInfor({
             token: token,
@@ -131,6 +144,30 @@ function RegisterParent(props) {
                         {...register("identitycard")}
                     />
                 </div>
+                <div className={classes.formField}>
+                    <label>Link Facebook (nếu có)</label>
+                    <input  
+                        type="text" 
+                        name="facebook"
+                        {...register("facebook")}
+                    />
+                </div>
+                <div className={classes.formField}>
+                    <label>Link Instagram (nếu có)</label>
+                    <input  
+                        type="text" 
+                        name="instagram"
+                        {...register("instagram")}
+                    />
+                </div>
+                <div className={classes.formField}>
+                    <label>Link Linkedln (nếu có)</label>
+                    <input  
+                        type="text" 
+                        name="linkedln"  
+                        {...register("linkedln")}
+                    />
+                </div>
                 <div className={classes.formField}> 
                     <button className={classes.submit} variant="contained" color="primary" type="submit">Đăng kí</button>
                 </div>
@@ -184,6 +221,7 @@ const useStyles = makeStyles(theme => ({
             padding: '8px 16px',
             borderRadius: '8px',
             border: '0.5px solid #ccc',
+            backgroundColor: 'white',
         },
         '& button': {
             width: '100%',
@@ -201,8 +239,13 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: '#5037EC',
         color: 'white',
         border: 'none',
-        borderRadius: '64px',
+        borderRadius: '8px',
         padding: '10px 0px',
+        opacity: 0.8, 
+        "&:hover": {
+            cursor: "pointer",
+            opacity: 1,
+        }
     },
     loading: {
         display: 'none',

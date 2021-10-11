@@ -22,7 +22,7 @@ Room.propTypes = {
     typeTutor: PropTypes.bool,
 };
 
-function Room( {room, getIdString, onDelete, onCheck, onWait, onHome=false, typeTutor=false, typeParent=false, type} ) {
+function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, typeParent=false, type} ) {
     const [address, setAddress] = useState("");
 
     const handleDelete = () => {

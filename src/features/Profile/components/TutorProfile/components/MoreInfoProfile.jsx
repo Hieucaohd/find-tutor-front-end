@@ -91,10 +91,10 @@ function MoreInfoProfile({tutorInfo}) {
                 <h4><IoLocation /></h4>
                 <p> <span>Dạy học tại</span> {tutorInfo.khu_vuc_day}</p>
             </div>
-            <div className={classes.field}>
+            {/* <div className={classes.field}>
                 <h4><GiBookCover /></h4>
                 <p><span>Dạy môn </span>Toán, Hóa</p>
-            </div>
+            </div> */}
         </div>
     );
 }

@@ -19,9 +19,10 @@ const useStyles = makeStyles({
     },
     field: {
         padding: "8px 2px",
+        backgroundColor: "#fff",
         border: "1px solid #ccc",
         marginBottom: "2px",
-        borderRadius: "64px",
+        borderRadius: "8px",
     }
 })
 
