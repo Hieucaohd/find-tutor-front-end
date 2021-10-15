@@ -3,8 +3,6 @@ import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import "./styles.scss";
 
-
-
 function HomeButton({onCheck, roomAddress, typeParent}) {
     const checkRef = useRef(null);
     const handleCheck = () => {
@@ -16,7 +14,8 @@ function HomeButton({onCheck, roomAddress, typeParent}) {
         <div className="button">
             {!typeParent && <button ref={checkRef} className="button__apply" onClick={handleCheck}>Ứng tuyển</button>}
             
-            <Link to={roomAddress} className="button__detail">Xem chi tiết</Link>
+            <button style={{border: 'none'}} > <Link to={roomAddress} className="button__detail">Xem chi tiết</Link> </button>
+            
         </div>
     );
 }

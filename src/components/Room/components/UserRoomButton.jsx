@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import "./styles.scss";
 
-
 function UserRoomButton({onDelete, roomAddress, typeParent}) {
     const [showModal, setShowModal] = useState(false);
     const handleDelete = () => {
@@ -14,8 +13,8 @@ function UserRoomButton({onDelete, roomAddress, typeParent}) {
     }
     return (
         <div className="button">
-            <button className="button__delete" onClick={()=> setShowModal(true)}>Xóa</button>
-            <Link to={roomAddress} className="button__detail" >Xem chi tiết</Link>
+            <button  className="button__delete" onClick={()=> setShowModal(true)}>Xóa</button>
+            <button style={{border: 'none'}} ><Link to={roomAddress} className="button__detail" >Xem chi tiết</Link></button>
             {showModal && <Modal typeIcon="delete" text="Xóa phòng này khỏi danh sách ?" onAgree={handleDelete} onDisagree={() => setShowModal(false)}/>}
         </div>
     );

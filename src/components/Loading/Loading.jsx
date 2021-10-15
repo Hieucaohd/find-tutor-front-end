@@ -15,15 +15,14 @@ const useStyles = makeStyles({
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(0,0,0,0.5)',
         'z-index': 4,
     }
 })
 
-function Loading(props) {
+function Loading({whiteBkg = false}) {
     const classes = useStyles();
     return (
-        <div className={classes.root}>
+        <div className={classes.root} style={{backgroundColor: whiteBkg ? '#F4F4F4' : 'rgba(0,0,0,0.5)'}}>
             <CircularProgress />
         </div>
     );

@@ -3,10 +3,6 @@ import { isSignedIn } from 'features/auth/cookies';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-Banner.propTypes = {
-    
-};
-
 const useStyles = makeStyles(theme => ({
     root: {
         backgroundColor: '#E1EEFE',
@@ -92,7 +88,7 @@ function Banner(props) {
     const classes = useStyles(isSignedIn());
     return (
         <div className={classes.root}>
-            <img src="https://i.ibb.co/Swh8GTQ/Pngtree-hand-drawn-cartoon-teachers-day-3848650.png" alt="banner" />
+            <img src="https://i.ibb.co/m86MLng/Pngtree-hand-drawn-cartoon-teachers-day-3848650-1-1.webp" alt="banner" />
 
             <div className={classes.slogan}>
                 <h3>Bạn muốn kiếm <span>công việc gia sư</span> 

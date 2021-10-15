@@ -5,12 +5,14 @@ import React, { useEffect, useState } from 'react';
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { IoLocationOutline, IoMaleFemaleOutline, IoSchoolOutline, IoTimerOutline } from "react-icons/io5";
 import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName } from '../location/getLocation';
-import HomeButton from './components/HomeButton';
-import InfoButton from './components/InfoButton';
-import UserRoomButton from './components/UserRoomButton';
 import { subject } from "./picture";
 import { formatPriceString, getSexOfTeacher, getStringId, getTypeTutorString } from './room.js';
 import "./styles.scss";
+import loadable from '@loadable/component'
+
+const UserRoomButton = loadable(() => import('./components/UserRoomButton'))
+const HomeButton = loadable(() => import('./components/HomeButton'))
+const InfoButton = loadable(() => import('./components/InfoButton'))
 
 Room.propTypes = {
     room: PropTypes.object.isRequired,

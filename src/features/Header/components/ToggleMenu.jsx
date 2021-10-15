@@ -1,4 +1,5 @@
 import { Avatar, makeStyles } from '@material-ui/core';
+import { AnimatePresence, motion } from 'framer-motion';
 import { getUserNameAndAvatar } from 'graphql/ProfileQueries';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
@@ -51,13 +52,35 @@ function ToggleMenu( {onLogOut} ) {
                     <h4>{profile.userName}</h4>
                     <Avatar src={profile.avatar}/>
                 </div>
-                {isShowDropDown && <div class={classes.dropdown} onClick={handleShowDropDown}>
+                <AnimatePresence initial={false}>
+                {isShowDropDown && (
+                <motion.section
+                    key="content"
+                    initial="collapsed"
+                    animate="open"
+                    exit="collapsed"
+                    variants={{
+                      open: { opacity: 1, height: "auto" },
+                      collapsed: { opacity: 0, height: 0 }
+                    }}
+                    transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
+                     >
+                    <div class={classes.dropdown} onClick={handleShowDropDown}>
+                    {typeParent && <Link to={'/createroom'}>Tạo phòng</Link>}
+                    {typeTutor && <Link to={`/profile/tutor/${userId}`}>Thông tin gia sư</Link>}
+                    {typeParent && <Link to={`/profile/parent/${userId}`}>Thông tin phụ huynh</Link>}
+                    {(typeTutor || typeParent) && <Link to={`/settings/account`}>Cài đặt tài khoản</Link>}
+                    <Link to={"/signin"} onClick={handleLogout}>Đăng xuất</Link> </div>
+                </motion.section>
+                )}
+            </AnimatePresence>
+                {/* {isShowDropDown && <div class={classes.dropdown} onClick={handleShowDropDown}>
                     {typeParent && <Link to={'/createroom'}>Tạo phòng</Link>}
                     {typeTutor && <Link to={`/profile/tutor/${userId}`}>Thông tin gia sư</Link>}
                     {typeParent && <Link to={`/profile/parent/${userId}`}>Thông tin phụ huynh</Link>}
                     {(typeTutor || typeParent) && <Link to={`/settings/account`}>Cài đặt tài khoản</Link>}
                     <Link to={"/signin"} onClick={handleLogout}>Đăng xuất</Link>
-                </div>}
+                </div>} */}
             </div>
 
             :<Link to={"/signin"} onClick={handleLogout}> Đăng xuất </Link>

@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { selectId_of_user, selectToken } from 'features/auth/authSlice';
 import { GetParentProfile } from 'graphql/ProfileQueries';
 import { Fragment } from 'react';
-import { getName, updateParentProfile } from '../settings';
+import { getName, updateLink, updateParentProfile } from '../settings';
 import { useForm } from 'react-hook-form';
 import Loading from 'components/Loading/Loading';
 import Modal from 'components/Modal/Modal';
@@ -35,6 +35,34 @@ function SettingsParent(props) {
         getData();
     }, [token, userId])
     
+    const handleChangeLink = (data) => {
+        let linkArr = [];
+        const currentFbLink = parentData?.linkmodel_set?.find(item => item?.name === 'facebook');
+        const currentInsLink = parentData?.linkmodel_set?.find(item => item?.name === 'instagram');
+        const currentLinkedLink = parentData?.linkmodel_set?.find(item => item?.name === 'linkedln');
+        if(data.facebook !== currentFbLink?.url) {
+            linkArr.push({
+                ...currentFbLink,
+                url: data.facebook,
+            })
+        }
+
+        if(data.instagram !== currentInsLink?.url) {
+            linkArr.push({
+                ...currentInsLink,
+                url: data.instagram,
+            })
+        }
+
+        if(data.linkedln !== currentLinkedLink?.url) {
+            linkArr.push({
+                ...currentLinkedLink,
+                url: data.linkedln,
+            })
+        }
+        return linkArr;
+    }
+
     const handleOnChangeProfile = (e, type) => {
         setOnShowSave(true);
         const target = e.target.value;
@@ -63,13 +91,19 @@ function SettingsParent(props) {
         }) 
     }
 
-    const onSubmit = async () => {
+    const onSubmit = async (data) => {
         setShowLoading(true);
-        const response = await updateParentProfile({
+        let response = await updateParentProfile({
             newTutorInfo: newParentProfile,
             token: token,
             id: userId,
         });
+
+        const newLink = await handleChangeLink(data);
+        if(newLink.length!==0) {
+            response = await updateLink({newLink: newLink, token: token});
+        }
+
         setShowLoading(false);
         if(response) {
             setShowSuccessModal(true);
@@ -118,6 +152,8 @@ function SettingsParent(props) {
                 <input 
                     type="text"
                     defaultValue={parentData?.linkmodel_set?.find(item => item?.name === 'facebook')?.url || ""}
+                    {...register("facebook")}
+                    onChange={(e) => setOnShowSave(true)}
                 />
             </div>
             <div className="settings__field">
@@ -125,6 +161,8 @@ function SettingsParent(props) {
                 <input 
                     type="text"
                     defaultValue={parentData?.linkmodel_set?.find(item => item?.name === 'instagram')?.url || ""}
+                    {...register("instagram")}
+                    onChange={(e) => setOnShowSave(true)}
                 />
             </div>
             <div className="settings__field">
@@ -132,6 +170,8 @@ function SettingsParent(props) {
                 <input 
                     type="text"
                     defaultValue={parentData?.linkmodel_set?.find(item => item?.name === 'linkedln')?.url || ""}
+                    {...register("linkedln")}
+                    onChange={(e) => setOnShowSave(true)}
                 />
             </div>
             {onShowSave && <div style={{display: 'flex', justifyContent: 'center'}}>
