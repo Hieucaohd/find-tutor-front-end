@@ -5,6 +5,7 @@ import Select from 'react-select';
 import Categories from './components/Catergories/Categories';
 import FilterBar from './components/FilterBar/FilterBar';
 import "./styles.scss";
+import { motion, AnimatePresence } from "framer-motion"
 
 
 const options = [
@@ -12,6 +13,7 @@ const options = [
     { value: 'price_asc', label: 'Giá thấp ↑' },
     { value: 'price_desc', label: 'Giá cao ↓' }
 ]
+
 
 function HomeBar(props) {
     const location = useLocation();
@@ -51,9 +53,26 @@ function HomeBar(props) {
                     Lọc
                 </button>
             </div>
-            {isShowFilter && <div className="homebar__filterbar">
+            {/* {isShowFilter && <div className="homebar__filterbar">
                 <FilterBar currentFilter={currentFilter}/>
-            </div>}
+            </div>} */}
+            <AnimatePresence initial={false}>
+                {isShowFilter && (
+                <motion.section
+                    key="content"
+                    initial="collapsed"
+                    animate="open"
+                    exit="collapsed"
+                    variants={{
+                      open: { opacity: 1, height: "auto" },
+                      collapsed: { opacity: 0, height: 0 }
+                    }}
+                    transition={{ duration: 0.2, ease: [0.04, 0.62, 0.23, 0.98] }}
+                     >
+                    <FilterBar currentFilter={currentFilter}/>
+                </motion.section>
+                )}
+            </AnimatePresence>
       </div>
     );
 }

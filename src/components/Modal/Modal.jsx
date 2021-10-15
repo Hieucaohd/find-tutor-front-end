@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { TiDeleteOutline, TiInfoOutline, TiInputChecked } from "react-icons/ti";
+import { motion } from "framer-motion";
 
 Modal.propTypes = {
     text: PropTypes.string,
@@ -19,7 +20,8 @@ function Modal({typeIcon, text, onAgree = null, onDisagree = null}) {
     }
     return (
         <div className={classes.root}>
-            <div className={classes.modal}>
+            <motion.div animate={{ scale: 1.1 }}
+    transition={{ duration: 0.1 }} className={classes.modal}>
                 {typeIcon === 'delete' && <TiDeleteOutline className={classes.delete}/>}
                 {typeIcon === 'check' && <TiInputChecked className={classes.check}/>}
                 {typeIcon === 'fail' && <TiInfoOutline className={classes.delete}/>}
@@ -34,7 +36,7 @@ function Modal({typeIcon, text, onAgree = null, onDisagree = null}) {
                         Hủy
                     </button>}
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 }

@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core/styles";
-import Loading from "components/Loading/Loading";
 import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName, getWardName } from "components/location/getLocation";
 import { selectToken, selectType_parent } from "features/auth/authSlice";
 import { isSignedIn } from "features/auth/cookies";
@@ -11,8 +10,9 @@ import { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { useRouteMatch } from "react-router-dom";
-import ParentRoomMain from "./components/ParentRoomMain/ParentRoomMain";
 import { deleteFromWaitingList, deleteTutorFromTeachingList } from "./parentroom";
+import ParentRoomMain from "./components/ParentRoomMain/ParentRoomMain";
+import Loading from "components/Loading/Loading";
 
 const useStyles = makeStyles(theme=>({
     root: {
@@ -36,9 +36,10 @@ function ParentRoom(props) {
   // const [parentInvitedList, setParentInvitedList] = useState([]);
   const [teaching, setTeaching] = useState(null);
   const [roomDetail, setRoomDetail] = useState({});
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const typeParent = useSelector(selectType_parent);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFirstLoading, setIsFirstLoading] = useState(true);
 
   const handleMessage = useCallback((message) => {
     const {result, type_action, type_of_list} = message;
@@ -51,12 +52,7 @@ function ParentRoom(props) {
       }
     } else if (type_action === "CREATE") {
       if(type_of_list === "waiting_list") {
-
         setApplyList([
-          ...applyList,
-          result,
-        ])
-        console.log('testlist', [
           ...applyList,
           result,
         ])
@@ -79,6 +75,7 @@ function ParentRoom(props) {
         ws.onmessage = e => {
           setIsLoading(false);
           const message = JSON.parse(e.data);
+          console.log(message)
           handleMessage(message)
         };
         return () => {
@@ -128,8 +125,7 @@ function ParentRoom(props) {
         typeteacher: newRoomDetail.pricemodel_set[0].type_teacher,
         address: `${wardName}, ${catchDistrictName(districtName)}, ${catchProvinceName(provinceName)}`
       });
-
-      setLoading(false);
+      setIsFirstLoading(false);
     }
     getRoomDetail();
   }, [roomId, token]);
@@ -137,6 +133,7 @@ function ParentRoom(props) {
   const handleAddToTeachingList = async (waitingId) => {
     setIsLoading(true);
     await addToTeachingList({id: waitingId, token:token});
+    setIsLoading(false);
     // const newList = [];
     // await applyList.forEach((item) => {
     //   if(Number(item.id) !== Number(waitingId)){
@@ -160,6 +157,7 @@ function ParentRoom(props) {
       //   })
       //   await setApplyList(newList);
       // }
+      setIsLoading(false);
     } catch (error) {
 
     }
@@ -172,6 +170,7 @@ function ParentRoom(props) {
       // if(response) {
       //   await setTeaching(null);
       // }
+      setIsLoading(false);
     } catch (error) {
 
     }
@@ -186,6 +185,7 @@ function ParentRoom(props) {
       //   ...applyList,
       //   response,
       // ])
+      setIsLoading(false);
     }
     catch (error) {
 
@@ -194,10 +194,10 @@ function ParentRoom(props) {
 
   return (
     <div className={classes.root}>
-      <ParentRoomMain 
+      {!isFirstLoading ? <ParentRoomMain 
         roomDetail={roomDetail} 
         className={classes.main} 
-        isLoading={loading}
+        // isLoading={loading}
         applyList={applyList} 
         // parentInvitedList={parentInvitedList}
         teaching={teaching}
@@ -206,7 +206,7 @@ function ParentRoom(props) {
         deleteFromTeachingList = {handleDelFromTeachingList}
         addToApplyList = {handleAddToApplyList}
         typeParent={typeParent}
-      />
+      /> : <Loading whiteBkg={true} />}
       {isLoading && <Loading />}
     </div>
   );

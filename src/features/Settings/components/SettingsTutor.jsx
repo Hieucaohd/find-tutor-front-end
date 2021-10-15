@@ -124,7 +124,6 @@ function SettingsTutor(props) {
         });
         
         const newLink = await handleChangeLink(data);
-        console.log(newLink)
         if(newLink.length!==0) {
             response = await updateLink({newLink: newLink, token: token});
         }

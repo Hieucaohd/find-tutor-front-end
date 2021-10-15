@@ -2,10 +2,13 @@ import { selectIsSignedIn, selectType_parent, selectType_tutor } from 'features/
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink, Route, useHistory } from 'react-router-dom';
-import SettingsAccount from './components/SettingsAccount';
-import SettingsParent from './components/SettingsParent';
-import SettingsTutor from './components/SettingsTutor';
 import "./styles.scss";
+
+import loadable from '@loadable/component'
+
+const SettingsParent = loadable(() => import('./components/SettingsParent'))
+const SettingsAccount = loadable(() => import('./components/SettingsAccount'))
+const SettingsTutor = loadable(() => import('./components/SettingsTutor'))
 
 function Settings(props) {
     const isSigned = useSelector(selectIsSignedIn);
