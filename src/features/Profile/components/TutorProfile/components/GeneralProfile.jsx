@@ -73,9 +73,9 @@ function GeneralProfile({tutorInfo, isUser = false, type}) {
                     </div>
                 </div>
                 <div className={classes.social}>
-                    <a href={tutorInfo?.linkmodel_set?.find(item => item?.name === 'facebook')?.url || "#"}><AiOutlineFacebook/></a>
-                    <a href={tutorInfo?.linkmodel_set?.find(item => item?.name === 'instagram')?.url || "#"}><AiOutlineInstagram/></a>
-                    <a href={tutorInfo?.linkmodel_set?.find(item => item?.name === 'linkedln')?.url || "#"}><AiOutlineLinkedin /></a>
+                    {tutorInfo?.linkmodel_set?.find(item => item?.name === 'facebook')?.url && <a href={tutorInfo?.linkmodel_set?.find(item => item?.name === 'facebook')?.url}><AiOutlineFacebook/></a>}
+                    {tutorInfo?.linkmodel_set?.find(item => item?.name === 'instagram')?.url && <a href={tutorInfo?.linkmodel_set?.find(item => item?.name === 'instagram')?.url}><AiOutlineInstagram/></a>}
+                    {tutorInfo?.linkmodel_set?.find(item => item?.name === 'linkedln')?.url && <a href={tutorInfo?.linkmodel_set?.find(item => item?.name === 'linkedln')?.url}><AiOutlineLinkedin /></a>}
                 </div>
             </div>
             {showChangeAvatar && <UploadImage onClose={() => setShowChangeAvatar(false)} onSubmit={handleChangeAvatar}/>}

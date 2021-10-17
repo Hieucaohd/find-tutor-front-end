@@ -29,10 +29,10 @@ const useStyles = makeStyles(theme => ({
                 position: 'absolute',
                 right: 32,
                 bottom: 28,
-                height: 140,
+                width: 140,
               },
               [theme.breakpoints.up('sm')]: {
-                height: '110%',
+                width: '32%',
             },
             [theme.breakpoints.up('md')]: {
             },
@@ -81,7 +81,6 @@ const useStyles = makeStyles(theme => ({
             left: 48
         },
     },
-    
 }))
 
 function Banner(props) {
@@ -89,7 +88,7 @@ function Banner(props) {
     return (
         <div className={classes.root}>
             <img src="https://i.ibb.co/m86MLng/Pngtree-hand-drawn-cartoon-teachers-day-3848650-1-1.webp" alt="banner" />
-
+            
             <div className={classes.slogan}>
                 <h3>Bạn muốn kiếm <span>công việc gia sư</span> 
                 <br/>
