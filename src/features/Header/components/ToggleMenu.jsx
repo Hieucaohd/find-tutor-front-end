@@ -20,6 +20,7 @@ function ToggleMenu( {onLogOut} ) {
     const [profile, setProfile] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [isShowDropDown, setIsShowDropDown] = useState(false);
+    
     useEffect( () => {
         const getUserInfo = async () => {
             const userInfo = await getUserNameAndAvatar(userId)            

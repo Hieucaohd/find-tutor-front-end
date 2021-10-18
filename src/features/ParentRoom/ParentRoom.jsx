@@ -78,8 +78,6 @@ function ParentRoom(props) {
       }
   }, [ roomId, applyList]);
 
-  
-
   useEffect(()=> {
     const getRoomDetail = async () => {
       const newRoomDetail = await GetParentRoomDetail(roomId, token);

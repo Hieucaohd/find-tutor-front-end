@@ -1,9 +1,9 @@
+import loadable from '@loadable/component';
+import Loading from "components/Loading/Loading";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import MainNavigation from "./features/Header/MainNavigation";
 import Home from "./features/Home/Home";
-import loadable from '@loadable/component';
-import Loading from "components/Loading/Loading";
 
 const TutorInfor = loadable(() => import('./features/Tutor/TutorInfor'), {
   fallback: <Loading whiteBkg={true} />
