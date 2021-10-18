@@ -55,7 +55,7 @@ function GeneralProfile({tutorInfo, isUser = false, type}) {
             {isUser && <button className={classes.camera} onClick={() => setShowChangeAvatar(true)}><AiFillCamera /></button>}
                 <Avatar alt="Travis Howard" variant="square" 
                     className={classes.avatar} 
-                    src={tutorInfo.imageprivateusermodel?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_3I4Y2ydmFBosgWcdoqVBBCsYZksWAhHtjg&usqp=CAU"} />
+                    src={tutorInfo.imageprivateusermodel?.avatar || require("../../../../../assets/image/user.webp")} />
             </div>
             <div className={classes.info}>
                 <div className={classes.name}>

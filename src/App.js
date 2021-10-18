@@ -3,7 +3,10 @@ import Loading from "components/Loading/Loading";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import MainNavigation from "./features/Header/MainNavigation";
-import Home from "./features/Home/Home";
+
+const Home = loadable(() => import('./features/Home/Home'), {
+  fallback: <Loading whiteBkg={true} />
+});
 
 const TutorInfor = loadable(() => import('./features/Tutor/TutorInfor'), {
   fallback: <Loading whiteBkg={true} />

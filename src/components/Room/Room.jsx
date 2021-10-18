@@ -61,7 +61,8 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, 
                 </div>
                 <span className="item__room__clock"><AiOutlineClockCircle/>{handleTime(room?.create_at)}</span>
                 <div className="item__room__thumbnail">
-                    <img src={subject[room.subject.trim()] || subject["Mặc Định"]} alt="mon hoc"/>
+                    {/* <img src={subject[room.subject.trim()] || subject["Mặc Định"]} alt="mon hoc"/> */}
+                    <img src={subject[room.subject.trim()].default || subject["Mặc Định"].default} alt="imagehehe"/>
                     <div>
                         <h3>{room.subject} <span>{room.lop}</span></h3>
                         <h5>{formatPriceString(room?.pricemodel_set[0]?.money_per_day)} đ/buổi</h5>

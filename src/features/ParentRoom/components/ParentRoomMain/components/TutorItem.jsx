@@ -39,7 +39,7 @@ function TutorItem( {tutorInfo = {}, isOwner = false, onAdd = null, userId = 0, 
         <div className={classes.root}>
             <div className={classes.info}>
                 <div className={classes.user}>
-                    <Avatar className={classes.avatar} src={tutor?.user.imageprivateusermodel?.avatar || null}/>
+                    <Avatar className={classes.avatar} src={tutor?.user.imageprivateusermodel?.avatar || require("../../../../../assets/image/user.webp").default } />
                     <button className={classes.detail} onClick={handleShowTutorInfo}>Chi tiết</button>
                 </div>
                 

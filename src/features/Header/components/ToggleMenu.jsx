@@ -1,5 +1,4 @@
 import { Avatar, makeStyles } from '@material-ui/core';
-import { AnimatePresence, motion } from 'framer-motion';
 import { getUserNameAndAvatar } from 'graphql/ProfileQueries';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
@@ -25,7 +24,7 @@ function ToggleMenu( {onLogOut} ) {
         const getUserInfo = async () => {
             const userInfo = await getUserNameAndAvatar(userId)            
             setProfile({
-                avatar: userInfo?.imageprivateusermodel?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_3I4Y2ydmFBosgWcdoqVBBCsYZksWAhHtjg&usqp=CAU",
+                avatar: userInfo?.imageprivateusermodel?.avatar,
                 userName: userInfo?.username,
             })
         }
@@ -40,10 +39,7 @@ function ToggleMenu( {onLogOut} ) {
         setIsShowDropDown(!isShowDropDown);
         setIsLoading(!isLoading);
     }
-    // // const handleDontShowDropDown = () => {
-    //     dropDownRef.current.style.display = "none";
-    //     overlayRef.current.style.display = "none";
-    // }
+
     return (
         <div>
           {typeParent || typeTutor 
@@ -51,37 +47,15 @@ function ToggleMenu( {onLogOut} ) {
                 <div className={classes.user} onClick={handleShowDropDown}>
                     <BsFillCaretDownFill />
                     <h4>{profile.userName}</h4>
-                    <Avatar src={profile.avatar}/>
-                </div>
-                <AnimatePresence initial={false}>
-                {isShowDropDown && (
-                <motion.section
-                    key="content"
-                    initial="collapsed"
-                    animate="open"
-                    exit="collapsed"
-                    variants={{
-                      open: { opacity: 1, height: "auto" },
-                      collapsed: { opacity: 0, height: 0 }
-                    }}
-                    transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
-                     >
-                    <div class={classes.dropdown} onClick={handleShowDropDown}>
-                    {typeParent && <Link to={'/createroom'}>Tạo phòng</Link>}
-                    {typeTutor && <Link to={`/profile/tutor/${userId}`}>Thông tin gia sư</Link>}
-                    {typeParent && <Link to={`/profile/parent/${userId}`}>Thông tin phụ huynh</Link>}
-                    {(typeTutor || typeParent) && <Link to={`/settings/account`}>Cài đặt tài khoản</Link>}
-                    <Link to={"/signin"} onClick={handleLogout}>Đăng xuất</Link> </div>
-                </motion.section>
-                )}
-            </AnimatePresence>
-                {/* {isShowDropDown && <div class={classes.dropdown} onClick={handleShowDropDown}>
+                    <Avatar src={profile.avatar || require("../../../assets/image/user.webp").default}/>
+                </div> 
+                    {isShowDropDown && <div class={classes.dropdown} onClick={handleShowDropDown}>
                     {typeParent && <Link to={'/createroom'}>Tạo phòng</Link>}
                     {typeTutor && <Link to={`/profile/tutor/${userId}`}>Thông tin gia sư</Link>}
                     {typeParent && <Link to={`/profile/parent/${userId}`}>Thông tin phụ huynh</Link>}
                     {(typeTutor || typeParent) && <Link to={`/settings/account`}>Cài đặt tài khoản</Link>}
                     <Link to={"/signin"} onClick={handleLogout}>Đăng xuất</Link>
-                </div>} */}
+                </div>}
             </div>
 
             :<Link to={"/signin"} onClick={handleLogout}> Đăng xuất </Link>
