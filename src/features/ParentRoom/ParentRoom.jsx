@@ -1,18 +1,17 @@
 import { makeStyles } from "@material-ui/core/styles";
+import Loading from "components/Loading/Loading";
 import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName, getWardName } from "components/location/getLocation";
-import { selectId_of_user, selectToken, selectType_parent } from "features/auth/authSlice";
+import { selectToken, selectType_parent } from "features/auth/authSlice";
 import { isSignedIn } from "features/auth/cookies";
 import { addToApplyList, addToTeachingList } from "graphql/mutationGraphQl";
 import { GetParentRoomDetail } from "graphql/RoomQueries";
 import { room_socket } from "namespace";
 import React, { useEffect, useState } from "react";
-import { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { useRouteMatch } from "react-router-dom";
-import { deleteFromWaitingList, deleteTutorFromTeachingList } from "./parentroom";
 import ParentRoomMain from "./components/ParentRoomMain/ParentRoomMain";
-import Loading from "components/Loading/Loading";
+import { deleteFromWaitingList, deleteTutorFromTeachingList } from "./parentroom";
 
 
 const useStyles = makeStyles(theme=>({
@@ -42,30 +41,7 @@ function ParentRoom(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [isFirstLoading, setIsFirstLoading] = useState(true);
 
-  const handleMessage = useCallback((message) => {
-    if(!message) return;
-    const {result, type_action, type_of_list} = message;
-    if(type_action === "DELETE") {
-      if(type_of_list === "waiting_list") {
-        const newList = applyList.filter((item) => Number(item.id) !== Number(result.id) );
-        setApplyList(newList);
-      } else if(type_of_list === "tutor_teaching") {
-        setTeaching(null);
-      }
-    } else if (type_action === "CREATE") {
-      if(type_of_list === "waiting_list") {
-        setApplyList([
-          ...applyList,
-          result,
-        ])
-      }
-      if(type_of_list === "tutor_teaching") {
-        const newList = applyList.filter((item) => Number(item.tutor.id) !== Number(result.tutor.id) );
-        setApplyList(newList);
-        setTeaching(result);
-      }
-    }
-  }, [applyList])
+
 
   useEffect(() => {
     // if(token.length !== 0) {
@@ -76,12 +52,31 @@ function ParentRoom(props) {
       ws.onmessage = e => {
         setIsLoading(false);
         const message = JSON.parse(e.data);
-        handleMessage(message);
-      };
+        const {result, type_action, type_of_list} = message;
+        if(type_action === "DELETE") {
+          if(type_of_list === "waiting_list") {
+            const newList = applyList.filter((item) => Number(item.id) !== Number(result.id) );
+            setApplyList(newList);
+          } else if(type_of_list === "tutor_teaching") {
+            setTeaching(null);
+          }
+        } else if (type_action === "CREATE") {
+            if(type_of_list === "waiting_list") {  
+            setApplyList([
+              ...applyList,
+              result,
+            ])
+        }
+        if(type_of_list === "tutor_teaching") {
+          const newList = applyList.filter((item) => Number(item.tutor.id) !== Number(result.tutor.id) );
+          setApplyList(newList);
+          setTeaching(result);
+        }
+      }};
       return () => {
         ws.close();
       }
-  }, []);
+  }, [ roomId, applyList]);
 
   
 
@@ -136,7 +131,6 @@ function ParentRoom(props) {
     const newList = await applyList.filter((item) => Number(item.id) !== Number(waitingId));
     await setApplyList(newList);
     await setTeaching(response);
-    
     setIsLoading(false);
   }
 
@@ -168,6 +162,7 @@ function ParentRoom(props) {
   }
 
   const handleAddToApplyList = async () => {
+
     if(!isSignedIn()) history.push("/signin");
     try {
       setIsLoading(true);
@@ -176,6 +171,7 @@ function ParentRoom(props) {
         ...applyList,
         response,
       ])
+
       setIsLoading(false);
     }
     catch (error) {
