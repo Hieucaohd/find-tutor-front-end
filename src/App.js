@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-import UploadImage from "components/UploadImage/UploadImage";
-import NotFound from "features/404NotFound/NotFound";
-import Auth from "features/auth/Auth";
-import Profile from "features/Profile/Profile";
-import Settings from "features/Settings/Settings";
-import SignUp from "features/SignUp/SignUp";
-=======
->>>>>>> main
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import MainNavigation from "./features/Header/MainNavigation";

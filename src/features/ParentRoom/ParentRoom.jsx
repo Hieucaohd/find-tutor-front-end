@@ -54,12 +54,7 @@ function ParentRoom(props) {
       }
     } else if (type_action === "CREATE") {
       if(type_of_list === "waiting_list") {
-
         setApplyList([
-          ...applyList,
-          result,
-        ])
-        console.log('testlist', [
           ...applyList,
           result,
         ])
@@ -87,6 +82,7 @@ function ParentRoom(props) {
         ws.close();
       }
   }, []);
+
   
 
   useEffect(()=> {
