@@ -39,7 +39,6 @@ export const formatBirthDay = (birthday) => {
 
 export const updateAvatar = async ({typeCurrent, token, file}) => {
   const data = file;
-  if(typeCurrent) {
     try {
       await axios({
         method: "PUT",
@@ -55,6 +54,7 @@ export const updateAvatar = async ({typeCurrent, token, file}) => {
       console.log('Failed to update image ', error);
       return false;
     }
+<<<<<<< HEAD
   } else {
     try {
       await axios({
@@ -72,4 +72,6 @@ export const updateAvatar = async ({typeCurrent, token, file}) => {
       return false;
     }
   }
+=======
+>>>>>>> main
 }

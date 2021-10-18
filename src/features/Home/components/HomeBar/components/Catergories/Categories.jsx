@@ -80,11 +80,15 @@ const useStyles = makeStyles(theme => ({
             height: 32,
             marginRight: 2,
             // boxShadow: '0 1px 4px 0 #ccc',
-            opacity: '0.7',
+            // opacity: '0.7',
             // backgroundColor: 'white',
             "&:hover": {
                 opacity: "1",
                 cursor: 'pointer',
+                fontWeight: 500,
+                "& h5" : {
+                    color: "#5472EA",
+                }
             }
         },
         "& img": {
@@ -95,7 +99,8 @@ const useStyles = makeStyles(theme => ({
         "& h5": {
             margin: 0,
             fontSize: 13,
-            color: "#535353",
+            color: "black",
+            fontWeight: 400,
         }
     },
     

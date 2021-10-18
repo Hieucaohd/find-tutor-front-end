@@ -1,7 +1,6 @@
 import { Avatar, makeStyles } from '@material-ui/core';
 import Modal from 'components/Modal/Modal';
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import NumberPhone from './NumberPhone';
 

@@ -3,10 +3,6 @@ import { isSignedIn } from 'features/auth/cookies';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-Banner.propTypes = {
-    
-};
-
 const useStyles = makeStyles(theme => ({
     root: {
         backgroundColor: '#E1EEFE',
@@ -33,10 +29,17 @@ const useStyles = makeStyles(theme => ({
                 position: 'absolute',
                 right: 32,
                 bottom: 28,
+<<<<<<< HEAD
                 height: 140,
               },
               [theme.breakpoints.up('sm')]: {
                 height: '110%',
+=======
+                width: 140,
+              },
+              [theme.breakpoints.up('sm')]: {
+                width: '32%',
+>>>>>>> main
             },
             [theme.breakpoints.up('md')]: {
             },
@@ -85,15 +88,19 @@ const useStyles = makeStyles(theme => ({
             left: 48
         },
     },
-    
 }))
 
 function Banner(props) {
     const classes = useStyles(isSignedIn());
     return (
         <div className={classes.root}>
+<<<<<<< HEAD
             <img src="https://i.ibb.co/Swh8GTQ/Pngtree-hand-drawn-cartoon-teachers-day-3848650.png" alt="banner" />
 
+=======
+            <img src="https://i.ibb.co/m86MLng/Pngtree-hand-drawn-cartoon-teachers-day-3848650-1-1.webp" alt="banner" />
+            
+>>>>>>> main
             <div className={classes.slogan}>
                 <h3>Bạn muốn kiếm <span>công việc gia sư</span> 
                 <br/>

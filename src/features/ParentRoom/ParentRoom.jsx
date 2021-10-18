@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
-import Loading from "components/Loading/Loading";
 import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName, getWardName } from "components/location/getLocation";
-import { selectToken, selectType_parent } from "features/auth/authSlice";
+import { selectId_of_user, selectToken, selectType_parent } from "features/auth/authSlice";
 import { isSignedIn } from "features/auth/cookies";
 import { addToApplyList, addToTeachingList } from "graphql/mutationGraphQl";
 import { GetParentRoomDetail } from "graphql/RoomQueries";
@@ -11,8 +10,10 @@ import { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { useRouteMatch } from "react-router-dom";
-import ParentRoomMain from "./components/ParentRoomMain/ParentRoomMain";
 import { deleteFromWaitingList, deleteTutorFromTeachingList } from "./parentroom";
+import ParentRoomMain from "./components/ParentRoomMain/ParentRoomMain";
+import Loading from "components/Loading/Loading";
+
 
 const useStyles = makeStyles(theme=>({
     root: {
@@ -36,11 +37,13 @@ function ParentRoom(props) {
   // const [parentInvitedList, setParentInvitedList] = useState([]);
   const [teaching, setTeaching] = useState(null);
   const [roomDetail, setRoomDetail] = useState({});
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const typeParent = useSelector(selectType_parent);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFirstLoading, setIsFirstLoading] = useState(true);
 
   const handleMessage = useCallback((message) => {
+    if(!message) return;
     const {result, type_action, type_of_list} = message;
     if(type_action === "DELETE") {
       if(type_of_list === "waiting_list") {
@@ -70,23 +73,20 @@ function ParentRoom(props) {
   }, [applyList])
 
   useEffect(() => {
-    if(token.length !== 0) {
-        let ws = new WebSocket(`${room_socket}${roomId}/`)
-
-        ws.onopen = () => console.log('Websocket opened');
-        ws.onclose = () => console.log('Websocket closed');
-
-        ws.onmessage = e => {
-          setIsLoading(false);
-          const message = JSON.parse(e.data);
-          handleMessage(message)
-        };
-        return () => {
-          ws.close();
-        }
-    }
-  }, [token, roomId, handleMessage]);
-
+    // if(token.length !== 0) {
+      let ws = new WebSocket(`${room_socket}${roomId}/`)
+      
+      ws.onopen = () => console.log('Websocket opened');
+      ws.onclose = () => console.log('Websocket closed');
+      ws.onmessage = e => {
+        setIsLoading(false);
+        const message = JSON.parse(e.data);
+        handleMessage(message);
+      };
+      return () => {
+        ws.close();
+      }
+  }, []);
   
 
   useEffect(()=> {
@@ -128,38 +128,31 @@ function ParentRoom(props) {
         typeteacher: newRoomDetail.pricemodel_set[0].type_teacher,
         address: `${wardName}, ${catchDistrictName(districtName)}, ${catchProvinceName(provinceName)}`
       });
-
-      setLoading(false);
+      setIsFirstLoading(false);
     }
     getRoomDetail();
   }, [roomId, token]);
 
   const handleAddToTeachingList = async (waitingId) => {
     setIsLoading(true);
-    await addToTeachingList({id: waitingId, token:token});
-    // const newList = [];
-    // await applyList.forEach((item) => {
-    //   if(Number(item.id) !== Number(waitingId)){
-    //     newList.push(item);
-    //   }
-    // })
-    // await setApplyList(newList);
-    // await setTeaching(response);
+    const response = await addToTeachingList({id: waitingId, token:token});
+    
+    const newList = await applyList.filter((item) => Number(item.id) !== Number(waitingId));
+    await setApplyList(newList);
+    await setTeaching(response);
+    
+    setIsLoading(false);
   }
 
   const handleDelFromApplyList = async (waitingId) => {
-    setIsLoading(true);
     try {
-      await deleteFromWaitingList({waitingId: waitingId, token: token});
-      // if(response) {
-      //   const newList = [];
-      //   await applyList.forEach((item) => {
-      //     if(Number(item.id) !== Number(waitingId)){
-      //       newList.push(item);
-      //     }
-      //   })
-      //   await setApplyList(newList);
-      // }
+      setIsLoading(true);
+      const response = await deleteFromWaitingList({waitingId: waitingId, token: token});
+      if(response) {
+        const newList = await applyList.filter((item) => Number(item.id) !== Number(waitingId));
+        await setApplyList(newList);
+      }
+      setIsLoading(false);
     } catch (error) {
 
     }
@@ -168,10 +161,11 @@ function ParentRoom(props) {
   const handleDelFromTeachingList = async (teachingId) => {
     setIsLoading(true);
     try {
-      await deleteTutorFromTeachingList({teachingId: teachingId, token: token});
-      // if(response) {
-      //   await setTeaching(null);
-      // }
+      const response = await deleteTutorFromTeachingList({teachingId: teachingId, token: token});
+      if(response) {
+        await setTeaching(null);
+      }
+      setIsLoading(false);
     } catch (error) {
 
     }
@@ -181,11 +175,12 @@ function ParentRoom(props) {
     if(!isSignedIn()) history.push("/signin");
     try {
       setIsLoading(true);
-      await addToApplyList({token: token, parentRoomId: roomId});
-      // setApplyList([
-      //   ...applyList,
-      //   response,
-      // ])
+      const response = await addToApplyList({token: token, parentRoomId: roomId});
+      setApplyList([
+        ...applyList,
+        response,
+      ])
+      setIsLoading(false);
     }
     catch (error) {
 
@@ -194,10 +189,10 @@ function ParentRoom(props) {
 
   return (
     <div className={classes.root}>
-      <ParentRoomMain 
+      {!isFirstLoading ? <ParentRoomMain 
         roomDetail={roomDetail} 
         className={classes.main} 
-        isLoading={loading}
+        // isLoading={loading}
         applyList={applyList} 
         // parentInvitedList={parentInvitedList}
         teaching={teaching}
@@ -206,7 +201,7 @@ function ParentRoom(props) {
         deleteFromTeachingList = {handleDelFromTeachingList}
         addToApplyList = {handleAddToApplyList}
         typeParent={typeParent}
-      />
+      /> : <Loading whiteBkg={true} />}
       {isLoading && <Loading />}
     </div>
   );

@@ -1,7 +1,5 @@
 import { Grid } from "@material-ui/core";
 import Pagination from '@material-ui/lab/Pagination';
-import Modal from "components/Modal/Modal";
-import Room from 'components/Room/Room';
 import SkeletonPage from "components/Skeleton/SkeletonPage";
 import { isSignedIn } from "features/auth/cookies";
 import { GetFilterRoom } from "graphql/RoomQueries";
@@ -12,8 +10,10 @@ import { addToApplyList } from "../../graphql/mutationGraphQl";
 import {
   selectToken, selectType_parent, selectType_tutor
 } from "../auth/authSlice";
-import HomeBar from "./components/HomeBar/HomeBar";
 import "./styles.scss";
+import Room from "components/Room/Room";
+import HomeBar from "./components/HomeBar/HomeBar";
+import Modal from "components/Modal/Modal";
 
 function Home() {
   const history = useHistory();

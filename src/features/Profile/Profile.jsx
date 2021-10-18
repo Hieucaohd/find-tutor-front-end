@@ -1,11 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import ParentProfile from './components/ParentProfile/ParentProfile';
-import TutorProfile from './components/TutorProfile/TutorProfile';
+import loadable from '@loadable/component'
 
-Profile.propTypes = {
-    
-};
+const TutorProfile = loadable(() => import('./components/TutorProfile/TutorProfile'))
+const ParentProfile = loadable(() => import('./components/ParentProfile/ParentProfile'))
+
 
 function Profile() {
     return (

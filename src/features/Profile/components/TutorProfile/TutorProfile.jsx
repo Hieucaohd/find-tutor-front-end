@@ -8,6 +8,7 @@ import { useRouteMatch } from 'react-router-dom';
 import GeneralProfile from './components/GeneralProfile';
 import MoreInfoProfile from './components/MoreInfoProfile';
 import ProfileSkeleton from './components/ProfileSkeleton';
+
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',

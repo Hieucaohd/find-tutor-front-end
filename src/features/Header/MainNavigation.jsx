@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core/styles';
-import Search from 'features/Header/components/Search/Search';
 import React, { useRef } from "react";
 import { IoPeopleOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,11 +6,14 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import {
   logout, selectId_of_user, selectIsSignedIn, selectRefreshToken, selectToken, selectType_parent, selectType_tutor
 } from "../auth/authSlice";
-import MobileNavBar from './components/MobileNavBar/MobileNavBar';
-import Notification from './components/Notification/Notification';
+import loadable from '@loadable/component'
+import ToggleMenu from './components/ToggleMenu';
+import Search from './components/Search/Search';
 import SearchBar from './components/Search/SearchBar';
-import ToggleMenu from "./components/ToggleMenu";
-import WebBanner from "./components/WebBanner";
+import Notification from './components/Notification/Notification';
+
+const MobileNavBar = loadable(() => import('./components/MobileNavBar/MobileNavBar'))
+const WebBanner = loadable(() => import('./components/WebBanner'))
 
 
 function MainNavigation() {

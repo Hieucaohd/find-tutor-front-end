@@ -1,14 +1,12 @@
 import React from 'react';
 import { Route, Switch } from "react-router-dom";
-import RegisterParent from './components/RegisterParent/RegisterParent';
-import RegisterTutor from './components/RegisterTutor/RegisterTutor';
-import ChooseRole from './components/ChooseRole/ChooseRole';
+import loadable from '@loadable/component'
 
-RegisterRole.propTypes = {
-    
-};
+const RegisterParent = loadable(() => import('./components/RegisterParent/RegisterParent'))
+const RegisterTutor = loadable(() => import('./components/RegisterTutor/RegisterTutor'))
+const ChooseRole = loadable(() => import('./components/ChooseRole/ChooseRole'))
 
-function RegisterRole(props) {
+function RegisterRole() {
     return (
         <div>
             <Switch>
