@@ -64,7 +64,7 @@ function RoomInfo( {room, applyList, userId, addToApplyList, typeParent, teachin
         <div className={classes.root}>
             <div className={classes.room}>
             <div className={classes.header}>
-                <img src={subject[room?.subject] || subject["Mặc Định"]} alt="mon hoc"/>
+                <img src={subject[room.subject.trim()].default || subject["Mặc Định"].default} alt="mon hoc"/>
                 <div className={classes.info}>
                     <h3>{room?.subject} {room?.lop}</h3>
                     <h4>{room?.address}</h4>
