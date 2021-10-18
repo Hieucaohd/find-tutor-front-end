@@ -35,7 +35,7 @@ function GeneralProfile({tutorInfo, isUser = false, type}) {
         const file = new FormData();
         file.append('avatar', image);
         const response = await updateAvatar({
-            typeCurrent: tutorInfo.imageprivateusermodel?.avatar ? true : false,
+            // typeCurrent: tutorInfo.imageprivateusermodel?.avatar ? true : false,
             token: token,
             file: file})
     

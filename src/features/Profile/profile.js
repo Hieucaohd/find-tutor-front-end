@@ -39,7 +39,6 @@ export const formatBirthDay = (birthday) => {
 
 export const updateAvatar = async ({typeCurrent, token, file}) => {
   const data = file;
-  if(typeCurrent) {
     try {
       await axios({
         method: "PUT",
@@ -55,21 +54,4 @@ export const updateAvatar = async ({typeCurrent, token, file}) => {
       console.log('Failed to update image ', error);
       return false;
     }
-  } else {
-    try {
-      await axios({
-        method: "POST",
-        url: `${server_name}/findTutor/imagePrivateUserList/`,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${token_prefix} ${token}`
-        },
-        data
-      })
-      return true;
-    } catch(error) {
-      console.log('Failed to update image ', error);
-      return false;
-    }
-  }
 }
