@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /build
-    destination: /home/ubuntu/findTutorFrontEnd/build_finish
+    destination: /home/ubuntu/findTutorFrontEnd/build
 hooks:
   AfterInstall:
     - location: scripts/after_install.sh
