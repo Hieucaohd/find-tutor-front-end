@@ -115,7 +115,7 @@ function ParentRoom(props) {
         timeoneday: newRoomDetail.pricemodel_set[0].time_in_one_day,
         sexteacher: newRoomDetail.pricemodel_set[0].sex_of_teacher,
         typeteacher: newRoomDetail.pricemodel_set[0].type_teacher,
-        address: `${wardName}, ${catchDistrictName(districtName)}, ${catchProvinceName(provinceName)}`
+        address: `${wardName ? `${wardName},` : ""} ${districtName ? `${catchDistrictName(districtName)},` : ""} ${ provinceName ? `${catchProvinceName(provinceName)}` : "" } `
       });
       setIsFirstLoading(false);
     }

@@ -43,7 +43,7 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, 
                 provinceCode: room.province_code,
                 districtCode: room.district_code,
             });
-            setAddress(`${catchDistrictName(districtName)}, ${catchProvinceName(provinceName)}`)
+            setAddress(`${districtName ? `${catchDistrictName(districtName)},` : ""} ${ provinceName ? `${catchProvinceName(provinceName)}` : "" }`)
         }
         getAddress();
     }, [room.province_code, room.district_code]);

@@ -73,7 +73,6 @@ function Home() {
     history.push(`/?${queryString.stringify(newSearch)}`)
   }
   
-
   return (
     <div className = "home">
       <HomeBar />
