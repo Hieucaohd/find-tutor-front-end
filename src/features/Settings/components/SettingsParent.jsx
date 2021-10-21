@@ -1,15 +1,13 @@
-import React from 'react';
+import Loading from 'components/Loading/Loading';
 import SettingsLocation from 'components/location/SettingsLocation';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import Modal from 'components/Modal/Modal';
 import { selectId_of_user, selectToken } from 'features/auth/authSlice';
 import { GetParentProfile } from 'graphql/ProfileQueries';
-import { Fragment } from 'react';
-import { getName, updateLink, updateParentProfile } from '../settings';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Loading from 'components/Loading/Loading';
-import Modal from 'components/Modal/Modal';
+import { useSelector } from 'react-redux';
+import { getName, updateLink, updateParentProfile } from '../settings';
+import LoadingField from './LoadingField';
 
 SettingsParent.propTypes = {
     
@@ -114,7 +112,7 @@ function SettingsParent(props) {
 
     return (
         <Fragment>
-        {parentData && <form onSubmit={handleSubmit(onSubmit)} className="settings__parent">
+        {parentData ? <form onSubmit={handleSubmit(onSubmit)} className="settings__parent">
             <div className="settings__field">
                 <label>Họ và tên</label>
                 <input 
@@ -177,7 +175,7 @@ function SettingsParent(props) {
             {onShowSave && <div style={{display: 'flex', justifyContent: 'center'}}>
                 <button type="submit" className="settings__save">Lưu</button>
             </div>}
-        </form>}
+        </form> : <LoadingField />}
         {showLoading && <Loading />}
         {showSuccessModal && <Modal typeIcon="check" text="Thay đổi thông tin thành công" onAgree={() => setShowSuccessModal(false)}/>}
         {showFailedModal && <Modal typeIcon="fail" text="Thay đổi thông tin thất bại" onAgree={() => setShowFailedModal(false)}/>}

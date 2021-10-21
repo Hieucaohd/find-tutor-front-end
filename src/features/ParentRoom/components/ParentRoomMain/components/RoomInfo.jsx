@@ -1,4 +1,5 @@
 import { Avatar, makeStyles } from '@material-ui/core';
+import { catchDistrictName, catchProvinceName } from 'components/location/getLocation';
 import { subject } from 'components/Room/picture';
 import { handleTime } from 'containers/date';
 import { isOnList } from 'features/ParentRoom/parentroom';
@@ -10,7 +11,7 @@ import { useHistory } from 'react-router-dom';
 function RoomInfo( {room, applyList, userId, addToApplyList, typeParent, teaching} ) {
     const classes = useStyles();
     const history = useHistory();
-
+    const {provinceName, districtName, wardName} = room?.address;
     const getDayString = (daysStr) => {
         if(!daysStr || daysStr === "") return ;
         let days = "Thứ ";
@@ -67,7 +68,7 @@ function RoomInfo( {room, applyList, userId, addToApplyList, typeParent, teachin
                 <img src={subject[room.subject.trim()].default || subject["Mặc Định"].default} alt="mon hoc"/>
                 <div className={classes.info}>
                     <h3>{room?.subject} {room?.lop}</h3>
-                    <h4>{room?.address}</h4>
+                    <h4>{`${wardName ? `${wardName},` : ""} ${districtName ? `${catchDistrictName(districtName)},` : ""} ${ provinceName ? `${catchProvinceName(provinceName)}` : "" }`}</h4>
                     <div className={classes.infoField}>
                         <MdAttachMoney />
                         <span>{formatPriceString(room?.pricemodel_set)} đ/buổi</span>

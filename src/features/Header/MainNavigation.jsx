@@ -109,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
     "display": "flex",
     "align-items": "center",
     "justify-content": "space-between",
-    "z-index": "700",
+    "z-index": "900",
     [theme.breakpoints.down('sm')]: {
       "padding": "0px 24px",
     },

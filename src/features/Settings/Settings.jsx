@@ -5,10 +5,17 @@ import { NavLink, Route, useHistory } from 'react-router-dom';
 import "./styles.scss";
 
 import loadable from '@loadable/component'
+import Loading from 'components/Loading/Loading';
 
-const SettingsParent = loadable(() => import('./components/SettingsParent'))
-const SettingsAccount = loadable(() => import('./components/SettingsAccount'))
-const SettingsTutor = loadable(() => import('./components/SettingsTutor'))
+const SettingsParent = loadable(() => import('./components/SettingsParent'), {
+    fallback: <Loading whiteBkg={true} />
+  })
+const SettingsAccount = loadable(() => import('./components/SettingsAccount'), {
+    fallback: <Loading whiteBkg={true} />
+  })
+const SettingsTutor = loadable(() => import('./components/SettingsTutor'), {
+    fallback: <Loading whiteBkg={true} />
+  })
 
 function Settings(props) {
     const isSigned = useSelector(selectIsSignedIn);

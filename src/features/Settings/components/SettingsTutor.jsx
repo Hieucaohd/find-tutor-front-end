@@ -3,13 +3,11 @@ import SettingsLocation from 'components/location/SettingsLocation';
 import Modal from 'components/Modal/Modal';
 import { selectId_of_user, selectToken } from 'features/auth/authSlice';
 import { GetTutorProfile } from 'graphql/ProfileQueries';
-import React from 'react';
-import { useEffect } from 'react';
-import { Fragment } from 'react';
-import { useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { getName, updateLink, updateTutorProfile } from '../settings';
+import LoadingField from './LoadingField';
 
 
 function SettingsTutor(props) {
@@ -139,7 +137,7 @@ function SettingsTutor(props) {
 
     return (
         <Fragment>
-        {tutorData && <form className="settings__tutor" onSubmit={handleSubmit(onSubmit)}>
+        {tutorData ? <form className="settings__tutor" onSubmit={handleSubmit(onSubmit)}>
             <div className="settings__field">
                 <label>Họ và tên</label>
                 <input type="text" 
@@ -246,8 +244,8 @@ function SettingsTutor(props) {
             {onShowSave && <div style={{display: 'flex', justifyContent: 'center'}}>
                 <button type="submit" className="settings__save">Lưu</button>
             </div>}
-        </form>}
-        {showLoading && <Loading />}
+        </form> : <LoadingField /> }
+        {showLoading && <Loading/>}
         {showSuccessModal && <Modal typeIcon="check" text="Thay đổi thông tin thành công" onAgree={() => setShowSuccessModal(false)}/>}
         {showFailedModal && <Modal typeIcon="fail" text="Thay đổi thông tin thất bại" onAgree={() => setShowFailedModal(false)}/>}
         </Fragment>

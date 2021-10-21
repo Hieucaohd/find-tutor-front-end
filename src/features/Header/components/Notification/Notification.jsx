@@ -14,8 +14,6 @@ function Notification({typeTutor, typeParent}) {
                 <li>abc vừa thêm bạn</li>
                 <li>abc vừa thêm bạn</li>
                 <li>abc vừa thêm bạn</li>
-                
-                
             </ul>}
             {showDropDown && <div className={classes.overlay} onClick={() => setShowDropDown(false)}></div>}
         </div>
