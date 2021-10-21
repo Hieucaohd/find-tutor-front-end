@@ -80,13 +80,15 @@ const useStyles = makeStyles(theme => ({
   },
   tutor: {
     flex: 7,
-    marginRight: 24,
+    [theme.breakpoints.up('md')]: {
+      marginRight: 24,
+    },
   },
   map: {
     flex: 3,
     marginTop: 24,
     [theme.breakpoints.down('sm')]: {
-      margin: '0 12px',
+      margin: '0 16x',
       marginTop: 36,
     },
   }
