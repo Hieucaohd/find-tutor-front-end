@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down('xs')]: {
             paddingBottom: '20px',
             flexDirection: 'column',
-            height: 400,
+            height: 440,
             paddingTop: 56,
 
         },
@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center',
         "& img": {
             [theme.breakpoints.down('xs')]: {
-                width: "80%",
+                width: "316px",
               },
               [theme.breakpoints.up('sm')]: {
                 width: '40%',
