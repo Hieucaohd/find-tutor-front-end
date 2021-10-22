@@ -55,7 +55,7 @@ function GeneralProfile({tutorInfo, isUser = false, type}) {
             {isUser && <button className={classes.camera} onClick={() => setShowChangeAvatar(true)}><AiFillCamera /></button>}
                 <Avatar alt="Travis Howard" variant="square" 
                     className={classes.avatar} 
-                    src={tutorInfo.imageprivateusermodel?.avatar || require("../../../../../assets/image/user.webp")} />
+                    src={tutorInfo.imageprivateusermodel?.avatar || require("../../../../../assets/image/user.webp").default} />
             </div>
             <div className={classes.info}>
                 <div className={classes.name}>
@@ -90,10 +90,14 @@ const useStyles = makeStyles(theme => ({
     wallpaper: {
         flex: 1,
         display: 'flex',
-        backgroundColor: '#E9E8EB',
-        border: '0.5px solid rgba(0, 0, 0, 0.1)',
-        borderRadius: '12px',
+        // backgroundColor: '#E9E8EB',
+        // border: '0.5px solid rgba(0, 0, 0, 0.1)',
+        boxShadow: '0 2px 4px 0 #ccc',
+        backgroundColor: 'white',
+        borderRadius: 8,
+        // borderRadius: '12px',
         position: 'relative',
+        marginBottom: 16,
         "& h5": {
             margin: 0,
         },
@@ -131,7 +135,7 @@ const useStyles = makeStyles(theme => ({
         "& h3": {
             fontWeight: 600,
             [theme.breakpoints.down('xs')]: {
-                fontSize: '20px',
+                fontSize: '16px',
                 margin: 0,
             },
             [theme.breakpoints.up('sm')]: {
@@ -183,6 +187,7 @@ const useStyles = makeStyles(theme => ({
             width: '160px',
             height: '200px',
         },
+        borderRadius: 8,
     },
     info: {
         flex: 4,

@@ -1,6 +1,6 @@
+import loadable from '@loadable/component';
 import { Box, Grid } from '@material-ui/core';
 import { handleTime } from 'containers/date';
-import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { IoLocationOutline, IoMaleFemaleOutline, IoSchoolOutline, IoTimerOutline } from "react-icons/io5";
@@ -8,21 +8,11 @@ import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName 
 import { subject } from "./picture";
 import { formatPriceString, getSexOfTeacher, getStringId, getTypeTutorString } from './room.js';
 import "./styles.scss";
-import loadable from '@loadable/component'
 
 const UserRoomButton = loadable(() => import('./components/UserRoomButton'))
 const HomeButton = loadable(() => import('./components/HomeButton'))
 const InfoButton = loadable(() => import('./components/InfoButton'))
 
-Room.propTypes = {
-    room: PropTypes.object.isRequired,
-    onDelete: PropTypes.func,
-    onCheck: PropTypes.func,
-    onWait: PropTypes.bool,
-    color: PropTypes.string,
-    onHome: PropTypes.string,
-    typeTutor: PropTypes.bool,
-};
 
 function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, typeParent=false, type} ) {
     const [address, setAddress] = useState("");

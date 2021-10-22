@@ -14,13 +14,16 @@ const useStyles = makeStyles(theme => ({
     root: {
         "& span": {
             fontWeight: 300,
-        }
+        },
+        boxShadow: '0 2px 4px 0 #ccc',
+        backgroundColor: 'white',
+        borderRadius: 8,
     },
     field: {
         display: 'flex',
         alignItems: 'center',
-        backgroundColor: '#E9E8EB',
-        border: '0.5px solid rgba(0, 0, 0, 0.1)',
+        // backgroundColor: '#E9E8EB',
+        // border: '0.5px solid rgba(0, 0, 0, 0.1)',
         margin: '12px 0px',
         borderRadius: '12px',
         "& h4": {
@@ -36,7 +39,7 @@ const useStyles = makeStyles(theme => ({
             },
             [theme.breakpoints.up('sm')]: {
                 flex: 1,
-                marginRight: '56px',
+                marginRight: '24px',
                 fontSize: '12px',
             },
             "& svg": {

@@ -59,7 +59,7 @@ function TutorInfor() {
   return (
     <div className={classes.root}>
       <div className={classes.apply}>
-        <h5 className={classes.applyLabel}>Phòng đã ứng tuyển</h5>
+        <h5 className={classes.label}>Phòng đã ứng tuyển</h5>
         {applyList?.length ? <Grid container>
         {applyList?.map((room)=> (
              <Room key={room.id} room={{...room.parent_room, id: room.id, roomId: room.parent_room.id}} onDelete={handleDeleteFromApplyList} type="userroom"/>
@@ -67,7 +67,7 @@ function TutorInfor() {
         </Grid> : <h5 className={classes.none}>(Không có phòng nào)</h5>}
       </div>
       <div className={classes.teaching}>
-        <h5 className={classes.teachingLabel}>Danh sách dạy học</h5>
+        <h5 className={classes.label}>Danh sách dạy học</h5>
         {teachingList?.length !== 0 ? <Grid container>
         {teachingList?.map((room)=> (
              <Room key={room.id} room={{...room.parent_room, id: room.id, roomId: room.parent_room.id}} onDelete={handleDeleteFromTeachingList} type="userroom"/>
@@ -94,42 +94,41 @@ const useStyles = makeStyles( theme => ({
       marginLeft: '24px',
     },
   },
-  label: {
-    
-  },
+  
   apply: {
-    "background-image": "linear-gradient( 135deg, #3C8CE7 10%, #00EAFF 100%)",
+    // "background-image": "linear-gradient( 135deg, #3C8CE7 10%, #00EAFF 100%)",
+    boxShadow: '0 2px 4px 0 #ccc',
+    backgroundColor: 'white',
     borderRadius: 8,
     marginBottom: 32,
   },
-  applyLabel: {
+  label: {
     textAlign: "center",
     fontSize: 16,
     margin: 0,
-    color: 'white',
     padding: 8,
     marginBottom: 16,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
   },
   teaching: {
-    "background-image": "linear-gradient( 135deg, #70F570 10%, #49C628 100%)",
+    // "background-image": "linear-gradient( 135deg, #70F570 10%, #49C628 100%)",
+    boxShadow: '0 2px 4px 0 #ccc',
+    backgroundColor: 'white',
     borderRadius: 8,
     marginBottom: 32,
   },
-  teachingLabel: {
-    textAlign: "center",
-    fontSize: 16,
-    margin: 0,
-    color: 'white',
-    padding: 8,
-    marginBottom: 16,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-  },
+  // teachingLabel: {
+  //   textAlign: "center",
+  //   fontSize: 16,
+  //   margin: 0,
+  //   padding: 8,
+  //   marginBottom: 16,
+  //   borderTopLeftRadius: 8,
+  //   borderTopRightRadius: 8,
+  // },
   none: {
     textAlign: 'center',
-    color: 'white',
     fontWeight: 300,
     margin: 0,
     fontStyle: 'italic',

@@ -49,7 +49,7 @@ function ToggleMenu( {onLogOut} ) {
                     <h4>{profile.userName}</h4>
                     <Avatar src={profile.avatar || require("../../../assets/image/user.webp").default}/>
                 </div> 
-                    {isShowDropDown && <div class={classes.dropdown} onClick={handleShowDropDown}>
+                    {isShowDropDown && <div className={classes.dropdown} onClick={handleShowDropDown}>
                     {typeParent && <Link to={'/createroom'}>Tạo phòng</Link>}
                     {typeTutor && <Link to={`/profile/tutor/${userId}`}>Thông tin gia sư</Link>}
                     {typeParent && <Link to={`/profile/parent/${userId}`}>Thông tin phụ huynh</Link>}

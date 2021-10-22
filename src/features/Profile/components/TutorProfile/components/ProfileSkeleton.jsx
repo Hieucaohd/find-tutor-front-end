@@ -30,11 +30,11 @@ const useStyles = makeStyles(theme => ({
     skeleton: {
         [theme.breakpoints.down('xs')]: {
             width: '90%',
-            height: '48px',
+            height: '300px',
         },
         [theme.breakpoints.up('sm')]: {
             width: '820px',
-            height: '58px',
+            height: '400px',
         },
         marginBottom: '12px',
         borderRadius: '12px',
@@ -46,12 +46,6 @@ function ProfileSkeleton(props) {
     return (
         <div className={classes.root}>
             <Skeleton variant="rect" className={classes.skeletonTop} />
-            <Skeleton variant="rect" className={classes.skeleton} />
-            <Skeleton variant="rect" className={classes.skeleton} />
-            <Skeleton variant="rect" className={classes.skeleton} />
-            <Skeleton variant="rect" className={classes.skeleton} />
-            <Skeleton variant="rect" className={classes.skeleton} />
-            <Skeleton variant="rect" className={classes.skeleton} />
             <Skeleton variant="rect" className={classes.skeleton} />
         </div>
     );
