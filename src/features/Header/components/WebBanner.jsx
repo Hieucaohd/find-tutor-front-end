@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down('xs')]: {
             paddingBottom: '20px',
             flexDirection: 'column',
-            height: 220,
+            height: 400,
             paddingTop: 56,
 
         },
@@ -26,13 +26,11 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center',
         "& img": {
             [theme.breakpoints.down('xs')]: {
-                position: 'absolute',
-                right: 32,
-                bottom: 28,
-                width: 140,
+                width: "80%",
               },
               [theme.breakpoints.up('sm')]: {
-                width: '32%',
+                width: '40%',
+                marginRight: 24,
             },
             [theme.breakpoints.up('md')]: {
             },
@@ -87,7 +85,7 @@ function Banner(props) {
     const classes = useStyles(isSignedIn());
     return (
         <div className={classes.root}>
-            <img src="https://i.ibb.co/m86MLng/Pngtree-hand-drawn-cartoon-teachers-day-3848650-1-1.webp" alt="banner" />
+            <img src={require("../../../assets/image/banner1.webp").default} alt="banner" />
             
             <div className={classes.slogan}>
                 <h3>Bạn muốn kiếm <span>công việc gia sư</span> 

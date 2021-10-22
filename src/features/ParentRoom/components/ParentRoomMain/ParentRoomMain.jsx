@@ -63,7 +63,12 @@ function ParentRoomMain( {roomDetail = {}, typeParent, applyList, teaching, addT
 
 const useStyles = makeStyles(theme => ({
   root: {
-    
+    backgroundColor: 'white',
+    boxShadow: '0 2px 4px 0 #ccc',
+    borderRadius: 8,
+    [theme.breakpoints.down('sm')]: {
+      padding: '0 12px', 
+    },
     [theme.breakpoints.up('md')]: {
       padding: "12px 48px", 
     },

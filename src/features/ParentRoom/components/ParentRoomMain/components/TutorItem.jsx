@@ -44,7 +44,7 @@ function TutorItem( {tutorInfo = {}, isOwner = false, onAdd = null, userId = 0, 
                 </div>
                 
                 <div>
-                    <h4>{tutor?.first_name} {tutor?.last_name} <span>({tutor?.user.username})</span></h4>
+                    <h4>{tutor?.first_name} {tutor?.last_name} <span></span></h4>
                     <h5>{tutor?.profession === "gv" && "Giáo Viên"}</h5>
                     <h5>{tutor?.profession === "sv" && "Sinh Viên"}</h5>
                     <h5><span>Sinh năm</span> {tutor?.birthday.slice(0,4)}</h5>

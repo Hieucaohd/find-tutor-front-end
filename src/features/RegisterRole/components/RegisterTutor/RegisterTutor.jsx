@@ -180,7 +180,7 @@ function RegisterTutor(props) {
                         <option value="khac">Khác</option>
                     </select>
                 </div>
-                <div className={classes.formField} >
+                {/* <div className={classes.formField} >
                     <label>Cấp dạy</label>
                     <div className={classes.choose}>
                     <div>
@@ -220,28 +220,28 @@ function RegisterTutor(props) {
                             />
                         </div>
                     </div>
-                </div>
-                <div className={classes.formField}>
+                </div> */}
+                {/* <div className={classes.formField}>
                     <label>Khu vực dạy (không bắt buộc)</label>
                     <input 
                         name="teachlocation" 
                         type="text"
                         {...register("teachLocation")}
                     />
-                </div>
-                <div className={classes.formField}>
+                </div> */}
+                {/* <div className={classes.formField}>
                     <label>Trường Đại Học/Cao Đẳng </label>
                     <input  
                         type="text" 
                         name="university"
                         {...register("university")}
                     />
-                </div>
+                </div> */}
                 <div className={classes.formField}>
                     <label>Ảnh thẻ sinh viên</label>
                     <input type="file" name="avatar" {...register("thesv")}/>
                 </div>
-                <div className={classes.formField}>
+                {/* <div className={classes.formField}>
                     <label>Kinh nghiệm </label>
                     <textarea 
                         name="experience" 
@@ -249,25 +249,16 @@ function RegisterTutor(props) {
                         rows={3}
                         {...register("experience")}
                     />
-                </div>
-                <div className={classes.formField}>
-                    <label>Thành tích nổi bật </label>
-                    <textarea 
-                        name="achievement" 
-                        type="text"
-                        rows={3}
-                        {...register("achievement")}
-                    />
-                </div>
-                <div className={classes.formField}>
+                </div> */}
+                {/* <div className={classes.formField}>
                     <label>Mô tả thêm bản thân </label>
                     <textarea 
                         name="moreinfo" 
                         type="text"
                         rows={3} 
                     />
-                </div>
-                <div className={classes.formField}>
+                </div> */}
+                 {/* <div className={classes.formField}>
                     <label>Link Facebook (nếu có)</label>
                     <input  
                         type="text" 
@@ -290,7 +281,8 @@ function RegisterTutor(props) {
                         name="linkedln"  
                         {...register("linkedln")}
                     />
-                </div>
+                </div> */}
+                
                 <div className={classes.formField}> 
                     <button className={classes.submit} variant="contained" color="primary" type="submit">Đăng kí</button>
                 </div>

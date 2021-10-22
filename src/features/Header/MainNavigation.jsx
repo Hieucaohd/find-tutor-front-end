@@ -61,9 +61,7 @@ function MainNavigation() {
         <div className={classes.item}>
           <Link to="/">
             <h3 className={classes.logo}>
-              {/* <img src="https://cdn-icons-png.flaticon.com/512/4634/4634764.png" />
-               Tìm gia sư */}
-               LOGO IS HERE
+              <img src={require("../../assets/image/tutor.webp").default} alt="gia su"/>
             </h3>
           </Link>
           <div className={classes.section}>
@@ -172,6 +170,9 @@ const useStyles = makeStyles((theme) => ({
     "& svg" : {
       "display": "flex",
       "margin-right": "4px",
+    },
+    "& img": {
+      width: 36,
     },
     [theme.breakpoints.down('sm')]: {
       "font-size": "16px",
