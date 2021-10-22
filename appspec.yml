@@ -1,8 +1,8 @@
 version: 0.0
 os: linux
 files:
-  - source: /
-    destination: /home/ubuntu/findTutorFrontEnd/
+  - source: /build
+    destination: /home/ubuntu/findTutorFrontEnd/build
 hooks:
   BeforeInstall:
     - location: scripts/before_install.sh
