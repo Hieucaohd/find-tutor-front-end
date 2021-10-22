@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
             paddingBottom: '20px',
             flexDirection: 'column',
             height: 440,
-            paddingTop: 56,
+            paddingTop: 40,
 
         },
         [theme.breakpoints.up('sm')]: {
