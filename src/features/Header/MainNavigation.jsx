@@ -188,13 +188,13 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
   },
   signin: {
-    backgroundColor: '#5472EA',
+    backgroundColor: '#0095FF',
     color: 'white',
     border: 'none',
     padding: '8px 12px',
     borderRadius: '4px',
     fontWeight: 600,
-    opacity: 0.8,
+    opacity: 0.9,
     marginLeft: "16px",
     "&:hover": {
       opacity: 1,

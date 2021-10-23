@@ -144,7 +144,7 @@ const useStyles = makeStyles(theme => ({
   },
   register: {
     fontSize: '14px',
-    color: '#5472EA',
+    color: '#006EFF',
     opacity: 0.8,
     textDecoration: 'none',
     '&:hover': {
@@ -166,7 +166,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: '4px',
   },
   submit: {
-    backgroundColor: '#5472EA',
+    backgroundColor: '#006EFF',
     color: 'white',
     border: 'none',
     borderRadius: '8px',
@@ -201,7 +201,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: "-16px",
     '& a': {
       fontSize: '10px',
-      color: '#5472EA',
+      color: '#006EFF',
       fontWeight: '500',
       textDecoration: 'none',
     }

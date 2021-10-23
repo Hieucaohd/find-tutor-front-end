@@ -53,7 +53,7 @@ function GeneralProfile({tutorInfo, isUser = false, type}) {
             {isUser && <Link to={`/settings/profile/${type}`}><AiTwotoneEdit  className={classes.fix}/> </Link>}
             <div className={classes.avatarContainer}>
             {isUser && <button className={classes.camera} onClick={() => setShowChangeAvatar(true)}><AiFillCamera /></button>}
-                <Avatar alt="Travis Howard" variant="square" 
+                <Avatar alt="gia sư" variant="square" 
                     className={classes.avatar} 
                     src={tutorInfo.imageprivateusermodel?.avatar || require("../../../../../assets/image/user.webp").default} />
             </div>

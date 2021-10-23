@@ -87,7 +87,7 @@ const useStyles = makeStyles(theme => ({
                 cursor: 'pointer',
                 fontWeight: 500,
                 "& h5" : {
-                    color: "#5472EA",
+                    color: "#0095FF",
                 }
             }
         },

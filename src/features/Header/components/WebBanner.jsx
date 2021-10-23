@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
                 fontSize: '32px',
             },
             "& span": {
-                color: "#5472EA",
+                color: "#0095FF",
             },
             margin: "16px 0",
         },
@@ -66,7 +66,7 @@ const useStyles = makeStyles(theme => ({
             fontSize: '16px',
             borderRadius: '4px',
             opacity: 0.8,
-            color: '#5472EA',
+            color: '#0095FF',
             "&:hover": {
                 cursor: "pointer",
                 opacity: 1,

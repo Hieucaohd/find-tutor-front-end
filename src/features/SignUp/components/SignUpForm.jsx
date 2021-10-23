@@ -154,7 +154,7 @@ const useStyles = makeStyles(theme => ({
         color: 'red',
     },
     submit:{
-        backgroundColor: '#5472EA',
+        backgroundColor: '#006EFF',
         color: 'white',
         border: 'none',
         borderRadius: '8px',
