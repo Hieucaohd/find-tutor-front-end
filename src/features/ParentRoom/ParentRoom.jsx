@@ -62,17 +62,17 @@ function ParentRoom(props) {
           }
         } else if (type_action === "CREATE") {
             if(type_of_list === "waiting_list") {  
-            setApplyList([
-              ...applyList,
-              result,
-            ])
-        }
-        if(type_of_list === "tutor_teaching") {
-          const newList = applyList.filter((item) => Number(item.tutor.id) !== Number(result.tutor.id) );
-          setApplyList(newList);
-          setTeaching(result);
-        }
-      }};
+              setApplyList([
+                ...applyList,
+                result,
+              ])
+            }
+            if(type_of_list === "tutor_teaching") {
+              // const newList = applyList.filter((item) => Number(item.tutor.id) !== Number(result.tutor.id) );
+              // setApplyList(newList);
+              setTeaching(result);
+            }
+        }};
       return () => {
         ws.close();
       }

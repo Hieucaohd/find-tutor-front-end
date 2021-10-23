@@ -47,7 +47,7 @@ function ToggleMenu( {onLogOut} ) {
                 <div className={classes.user} onClick={handleShowDropDown}>
                     <BsFillCaretDownFill />
                     <h4>{profile.userName}</h4>
-                    <Avatar src={profile.avatar || require("../../../assets/image/user.webp").default}/>
+                    <Avatar src={profile.avatar || null}/>
                 </div> 
                     {isShowDropDown && <div className={classes.dropdown} onClick={handleShowDropDown}>
                     {typeParent && <Link to={'/createroom'}>Tạo phòng</Link>}
@@ -135,7 +135,7 @@ const useStyles = makeStyles((theme) => ({
             
             "&:hover": {
                 color: '#fff',
-                backgroundColor: '#5472EA',
+                backgroundColor: '#0095FF',
             }
         }
     },
