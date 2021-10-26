@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { IoLocationOutline, IoMaleFemaleOutline, IoSchoolOutline, IoTimerOutline } from "react-icons/io5";
 import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName } from '../location/getLocation';
-import { subject } from "./picture";
+import { smallerSubject } from "./picture";
 import { formatPriceString, getSexOfTeacher, getStringId, getTypeTutorString } from './room.js';
 import "./styles.scss";
 
@@ -52,7 +52,7 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, 
                 <span className="item__room__clock"><AiOutlineClockCircle/>{handleTime(room?.create_at)}</span>
                 <div className="item__room__thumbnail">
                     {/* <img src={subject[room.subject.trim()] || subject["Mặc Định"]} alt="mon hoc"/> */}
-                    <img src={subject[room.subject.trim()].default || subject["Mặc Định"].default} alt={room.subject}/>
+                    <img src={smallerSubject[room.subject.trim()].default || smallerSubject["Mặc Định"].default} alt={room.subject}/>
                     <div>
                         <h3>{room.subject} <span>{room.lop}</span></h3>
                         <h5>{formatPriceString(room?.pricemodel_set[0]?.money_per_day)} đ/buổi</h5>

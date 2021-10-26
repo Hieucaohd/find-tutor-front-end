@@ -1,5 +1,5 @@
 import { Avatar } from '@material-ui/core';
-import { subject } from 'components/Room/picture';
+import { smallerSubject } from 'components/Room/picture';
 import { getStringId } from 'components/Room/room';
 import { handleTime } from 'containers/date';
 import React from 'react';
@@ -36,7 +36,7 @@ function RoomNotification({noti, onClose}) {
                 return {
                     link: `/room/${room?.id}`,
                     textNotification: (<p><strong style={{color: "#33AF33"}}>Chúc mừng</strong> bạn đã được dạy học lớp <strong>{room?.subject} {room?.lop} ID{getStringId(room?.id)}</strong></p>),
-                    image: subject[room?.subject.trim()].default,
+                    image: smallerSubject[room?.subject.trim()].default,
                 }
             // case "12.1":
             //     return {
@@ -48,13 +48,13 @@ function RoomNotification({noti, onClose}) {
                 return {
                     link: `/room/${room?.id}`,
                     textNotification: (<p >Bạn đã bị xóa khỏi danh sách ứng tuyển lớp <strong>{room?.subject} {room?.lop} ID{getStringId(room?.id)}</strong></p>),
-                    image: subject[room?.subject.trim()].default,
+                    image: smallerSubject[room?.subject.trim()].default,
                 }
             case "9.1": 
                 return {
                     link: `/room/${room?.id}`,
                     textNotification: (<p >Bạn không còn là gia sư dạy học lớp <strong>{room?.subject} {room?.lop} ID{getStringId(room?.id)}</strong> </p>),
-                    image: subject[room?.subject.trim()].default,
+                    image: smallerSubject[room?.subject.trim()].default,
                 }
             case "10.1": 
                 return {

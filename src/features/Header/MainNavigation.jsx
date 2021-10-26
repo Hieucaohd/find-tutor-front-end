@@ -56,7 +56,7 @@ function MainNavigation() {
       <div className={classes.root} ref={navigationRef} 
         style={{
           backgroundColor: isSigned ? "white" : "transparent",
-          boxShadow: isSigned ? "0 1px 2px #ccc" : "none",
+          borderBottom: isSigned ? "0.5px solid #ccc" : "none",
       }}>
         <div className={classes.item}>
           <Link to="/">

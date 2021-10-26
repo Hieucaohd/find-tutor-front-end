@@ -1,6 +1,6 @@
 import { Avatar, makeStyles } from '@material-ui/core';
 import { catchDistrictName, catchProvinceName } from 'components/location/getLocation';
-import { subject } from 'components/Room/picture';
+import { largerSubject } from 'components/Room/picture';
 import { handleTime } from 'containers/date';
 import { isOnList } from 'features/ParentRoom/parentroom';
 import React from 'react';
@@ -65,7 +65,7 @@ function RoomInfo( {room, applyList, userId, addToApplyList, typeParent, teachin
         <div className={classes.root}>
             <div className={classes.room}>
             <div className={classes.header}>
-                <img src={subject[room.subject.trim()].default || subject["Mặc Định"].default} alt="mon hoc"/>
+                <img src={largerSubject[room.subject.trim()].default || largerSubject["Mặc Định"].default} alt="mon hoc"/>
                 <div className={classes.info}>
                     <h3>{room?.subject} {room?.lop}</h3>
                     <h4>{`${wardName ? `${wardName},` : ""} ${districtName ? `${catchDistrictName(districtName)},` : ""} ${ provinceName ? `${catchProvinceName(provinceName)}` : "" }`}</h4>

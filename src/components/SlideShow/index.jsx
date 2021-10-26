@@ -29,7 +29,7 @@ function SlideShow({imageList}) {
     
 
     return (
-        <div className="slideshow">
+    <div className="slideshow">
       <div
         className="slideshowSlider"
         style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
@@ -38,7 +38,6 @@ function SlideShow({imageList}) {
           <div
             className="slide"
             key={index}
-            // style={{ backgroundColor }}
           >
               <img src={src} alt="banner" style={{width: "100%"}}/>
           </div>
