@@ -20,6 +20,7 @@
 .home {
     padding: 24px 52px;
     margin-top: 56px;
+    margin-bottom: 40px;
     &__overlay {
         z-index: 800;
         position: fixed;
@@ -75,6 +76,7 @@
         ul {
             justify-content: center;
         }
+        
     }
 
     &__toggle {

@@ -13,6 +13,8 @@ function InfoButton({roomAddress}) {
         <div className="button">
             <Link to={roomAddress} className="button__detail" >Xem chi tiết</Link>
         </div>
+        
+        
     );
 }
 
