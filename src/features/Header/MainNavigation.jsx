@@ -10,7 +10,7 @@ import loadable from '@loadable/component'
 import ToggleMenu from './components/ToggleMenu';
 import Search from './components/Search/Search';
 import SearchBar from './components/Search/SearchBar';
-import Notification from './components/Notification/Notification';
+import Notification from '../Notification/Notification';
 
 const MobileNavBar = loadable(() => import('./components/MobileNavBar/MobileNavBar'))
 const WebBanner = loadable(() => import('./components/WebBanner'))

@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 
 const Map = ({address}) => {
-    console.log(address);
     const {provinceName, districtName, wardName} = address;
     const [position, setPosition] = useState(null);
     const mapBoxToken = "pk.eyJ1IjoiaGllcGRlcHRyYWkiLCJhIjoiY2t2MG56eDIxN25weDJ3bnoxMHh4aXdxMCJ9.x6FrG6gMFxo4hCqVgsKNQw";
@@ -15,15 +14,12 @@ const Map = ({address}) => {
             const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${wardName},${districtName},${provinceName},.json?access_token=${mapBoxToken}`)
 
             const responseJSON = await response.json();
-            console.log(responseJSON)
             const newPosition = [responseJSON?.features[0]?.center[1], responseJSON?.features[0]?.center[0]];
-            console.log('currentpossition', newPosition)
             setPosition(newPosition);
           }
           getMap();
         }
     }, [provinceName, districtName, wardName])
-    console.log('new position', position)
     return (
       <Fragment>
       {position && <MapContainer style={{height: 400, width: '100%', zIndex: 1}} center={position} zoom={13} scrollWheelZoom={false}>

@@ -103,21 +103,31 @@ export const getTutorInfoForRoom = (id) => {
 }
 
 
-export const getNotification = async (token) => {
+export const getNotification = async ({token, num, page}) => {
     const query = `
     {
-        all_room_notification(number_notifications: 10) {
+        all_room_notification(num_in_page: ${num}, page: ${page}, token:"${token}") {
             _id
-            text
-            create_at
             room {
-                id
+                id 
                 subject
+                lop
             }
-            is_seen 
+            text {
+                id
+                user_send {
+                    id
+                    username
+                    imageprivateusermodel {
+                        avatar
+                    }
+                }
+            }
+            is_seen
+            create_at 
         } 
     }
     `
-    const allNotification = await fetchGraphQl("user's notification", "all_room_notification", query, token);
+    const allNotification = await fetchGraphQl("user's notification", "all_room_notification", query);
     return allNotification;
 }

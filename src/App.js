@@ -1,5 +1,6 @@
 import loadable from '@loadable/component';
 import Loading from "components/Loading/Loading";
+import SlideShow from 'components/SlideShow';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import MainNavigation from "./features/Header/MainNavigation";
@@ -37,6 +38,10 @@ const Settings = loadable(() => import('features/Settings/Settings'), {
   fallback: <Loading whiteBkg={true} />
 });
 
+
+ 
+           
+
 function App() {
   return (
     <div className="App">
@@ -53,7 +58,7 @@ function App() {
             <Route path="/role" component={RegisterRole} />
             <Route path="/profile" component={Profile} />
             {/* <Route exact path="/search" component={Search} /> */}
-            {/* <Route exact path="/test" component={text} /> */}
+            <Route exact path="/test" component={SlideShow} />
             <Route path="/settings" component={Settings}/>
             <Route path="*" component={NotFound} />
           </Switch>

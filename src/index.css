@@ -11,6 +11,7 @@ body {
   html {
     background-color: #F4F6FB;
     -webkit-font-smoothing: antialiased;
+    font-family: 'Nunito Sans', sans-serif;
   }
   
   code {
@@ -20,6 +21,11 @@ body {
 
   button:hover {
     transform: scale(1.05);
+    /* font-family: 'Nunito Sans', sans-serif; */
+  }
+
+  div, a, button, span {
+    font-family: 'Nunito Sans', sans-serif;
   }
 
   

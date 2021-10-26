@@ -1,20 +1,14 @@
 import { Avatar, makeStyles } from '@material-ui/core';
+import Loading from "components/Loading/Loading";
+import Modal from "components/Modal/Modal";
 import UploadImage from 'components/UploadImage/UploadImage';
 import { selectToken } from 'features/auth/authSlice';
 import { formatBirthDay, updateAvatar } from 'features/Profile/profile';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { useState } from 'react';
+import FormData from 'form-data';
+import React, { useState } from 'react';
 import { AiFillCamera, AiOutlineFacebook, AiOutlineInstagram, AiOutlineLinkedin, AiTwotoneEdit } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import FormData from 'form-data';
-import Modal from "components/Modal/Modal";
-import Loading from "components/Loading/Loading";
-
-GeneralProfile.propTypes = {
-    TutorInfo: PropTypes.object,
-};
 
 const getJobName = (str) => {
     if(!str) return '';

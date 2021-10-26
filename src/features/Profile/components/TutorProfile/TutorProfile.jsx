@@ -34,12 +34,14 @@ function TutorProfile(props) {
     useEffect( () => {
         const getUserInfo = async () => {
             const info = await GetTutorProfile(tutorId);
+            info["address"] = "";
+            setTutorInfo(info);
+            setLoading(false);
             const provinceName = await getProvinceName(info.province_code) || "";
             const districtName = await getDistrictName({provinceCode: info.province_code, districtCode: info.district_code}) || "";
             const wardName = await getWardName({districtCode: info.district_code, wardCode: info.ward_code});
             info["address"] = `${catchWardName(wardName)}, ${catchDistrictName(districtName)}, ${catchProvinceName(provinceName)}`;
-            setTutorInfo(info);
-            setLoading(false);
+            setTutorInfo({...info});
         }
         getUserInfo();
     }, [tutorId]);

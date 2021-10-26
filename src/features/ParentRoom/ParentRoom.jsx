@@ -81,6 +81,34 @@ function ParentRoom(props) {
   useEffect(()=> {
     const getRoomDetail = async () => {
       const newRoomDetail = await GetParentRoomDetail(roomId, token);
+      
+      setApplyList(newRoomDetail?.waitingtutormodel_set || []);
+      setTeaching(newRoomDetail?.tutorteachingmodel);
+
+      const roomDetail = {
+        ...newRoomDetail,
+        parent: {
+          id: newRoomDetail?.parent.user.id,
+          username: newRoomDetail?.parent.user.username,
+          first_name: newRoomDetail?.parent.first_name,
+          last_name: newRoomDetail?.parent.last_name,
+          avatar: newRoomDetail?.parent.user.imageprivateusermodel?.avatar,
+          birthday: newRoomDetail?.parent.birthday,
+          address: "",
+        },
+        pricemodel_set: newRoomDetail?.pricemodel_set[0].money_per_day,
+        timeoneday: newRoomDetail?.pricemodel_set[0].time_in_one_day,
+        sexteacher: newRoomDetail?.pricemodel_set[0].sex_of_teacher,
+        typeteacher: newRoomDetail?.pricemodel_set[0].type_teacher,
+        address: {
+          wardName: "",
+          districtName: "",
+          provinceName: "",
+        }
+      }
+      setRoomDetail(roomDetail);
+      setIsFirstLoading(false);
+
       const provinceName = await getProvinceName(newRoomDetail?.province_code || 0);
       const districtName = await getDistrictName({
         provinceCode: newRoomDetail?.province_code || 0,
@@ -96,33 +124,15 @@ function ParentRoom(props) {
         districtCode: newRoomDetail?.parent?.district_code || 0,
       })
 
-      setApplyList(newRoomDetail?.waitingtutormodel_set || []);
-      // setParentInvitedList(newRoomDetail?.tryteachingmodel_set || []);
-      setTeaching(newRoomDetail?.tutorteachingmodel);
-
+      roomDetail.parent.address = `${catchDistrictName(parentDistrictName)}, ${catchProvinceName(parentProvinceName)}`;
       setRoomDetail({
-        ...newRoomDetail,
-        parent: {
-          id: newRoomDetail?.parent.user.id,
-          username: newRoomDetail?.parent.user.username,
-          first_name: newRoomDetail?.parent.first_name,
-          last_name: newRoomDetail?.parent.last_name,
-          avatar: newRoomDetail?.parent.user.imageprivateusermodel?.avatar,
-          birthday: newRoomDetail?.parent.birthday,
-          address: `${catchDistrictName(parentDistrictName)}, ${catchProvinceName(parentProvinceName)}`,
-        },
-        pricemodel_set: newRoomDetail?.pricemodel_set[0].money_per_day,
-        timeoneday: newRoomDetail?.pricemodel_set[0].time_in_one_day,
-        sexteacher: newRoomDetail?.pricemodel_set[0].sex_of_teacher,
-        typeteacher: newRoomDetail?.pricemodel_set[0].type_teacher,
+        ...roomDetail,
         address: {
           wardName: wardName,
           districtName: districtName,
           provinceName: provinceName,
         }
-        
-      });
-      setIsFirstLoading(false);
+      })
     }
     getRoomDetail();
   }, [roomId, token]);

@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import SlideShow from 'components/SlideShow';
 import { isSignedIn } from 'features/auth/cookies';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -24,20 +25,20 @@ const useStyles = makeStyles(theme => ({
         },
         alignItems: 'center',
         justifyContent: 'center',
-        "& img": {
-            [theme.breakpoints.down('xs')]: {
-                width: "316px",
-              },
-              [theme.breakpoints.up('sm')]: {
-                width: '40%',
-                marginRight: 24,
-            },
-            [theme.breakpoints.up('md')]: {
-            },
-            // position: 'absolute',
+        // "& img": {
+        //     [theme.breakpoints.down('xs')]: {
+        //         width: "316px",
+        //       },
+        //       [theme.breakpoints.up('sm')]: {
+        //         width: '40%',
+        //         marginRight: 24,
+        //     },
+        //     [theme.breakpoints.up('md')]: {
+        //     },
+        //     // position: 'absolute',
             
-            bottom: 0,
-        },
+        //     bottom: 0,
+        // },
         "& h3": {
             [theme.breakpoints.down('sm')]: {
                 fontSize: '20px',
@@ -85,8 +86,14 @@ function Banner(props) {
     const classes = useStyles(isSignedIn());
     return (
         <div className={classes.root}>
-            <img src={require("../../../assets/image/banner1.webp").default} alt="banner" />
-            
+            {/* <img src={require("../../../assets/image/banner1.webp").default} alt="banner" /> */}
+            <SlideShow 
+               imageList={[
+                    require("assets/image/banner1.webp").default,
+                    require("assets/image/banner2.webp").default,
+                    require("assets/image/banner3.webp").default,
+               ]}
+            />
             <div className={classes.slogan}>
                 <h3>Bạn muốn kiếm <span>công việc gia sư</span> 
                 <br/>
