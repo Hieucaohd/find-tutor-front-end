@@ -1,8 +1,10 @@
 #notfound {
     position: relative;
     height: 100vh;
-    background: url('../../assets/image/404.png');
-
+    background-image: url('../../assets/image/404.png');
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
   }
   
   #notfound .notfound {
@@ -16,9 +18,9 @@
   
   .notfound {
     max-width: 767px;
-    width: 100%;
+    width: 90%;
     line-height: 1.4;
-    padding: 0px 15px;
+    // padding: 0px 15px;
   }
   
   .notfound .notfound-404 {
@@ -29,7 +31,6 @@
   }
   
   .notfound .notfound-404 h1 {
-    font-family: 'Titillium Web', sans-serif;
     font-size: 186px;
     font-weight: 900;
     margin: 0px;
@@ -40,14 +41,12 @@
   }
   
   .notfound h2 {
-    font-family: 'Titillium Web', sans-serif;
     font-size: 26px;
     font-weight: 700;
     margin: 0;
   }
   
   .notfound p {
-    font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     font-weight: 500;
     margin-bottom: 0px;
@@ -55,7 +54,6 @@
   }
   
   .notfound a {
-    font-family: 'Titillium Web', sans-serif;
     display: inline-block;
     text-transform: uppercase;
     color: #fff;
@@ -75,7 +73,7 @@
     opacity: 0.8;
   }
   
-  @media only screen and (max-width: 767px) {
+  @media(max-width: 767px) {
     .notfound .notfound-404 {
       height: 110px;
       line-height: 110px;
