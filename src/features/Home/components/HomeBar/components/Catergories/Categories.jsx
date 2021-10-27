@@ -1,17 +1,14 @@
-import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import "./styles.scss";
 
 function Categories(props) {
-    const classes = useStyles();
     const [currentActive, setCurrentActive] = useState(1);
     const handleOnClick = (num) => {
         setCurrentActive(num);
     }
     return (
-        <div className={classes.root}>
-            <div className={classes.list}>
+        <div className="categories">
+            <div className="categories__list">
                 <div className={currentActive === 1 ? "currentActive" : ""} onClick={() => handleOnClick(1)}> 
                     {/* <img src="https://i.ibb.co/7YyVn6m/all.png" alt="all"/> */}
                     <h5>Tất cả</h5>
@@ -57,53 +54,6 @@ function Categories(props) {
     );
 }
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        // width: "100%",
-        overflow: "auto",
-    },
-    list: {
-        display: "flex",
-        [theme.breakpoints.down('sm')]: {
-            width: "760px",
-          },
-        [theme.breakpoints.up('md')]: {
-        },
-        "& div": {
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: 4,
-            width: 80,
-            margin: "4px 0px",
-            height: 32,
-            marginRight: 2,
-            // boxShadow: '0 1px 4px 0 #ccc',
-            // opacity: '0.7',
-            // backgroundColor: 'white',
-            "&:hover": {
-                opacity: "1",
-                cursor: 'pointer',
-                fontWeight: 500,
-                "& h5" : {
-                    color: "#0095FF",
-                }
-            }
-        },
-        "& img": {
-            width: '24px',
-            height: '24px',
-            marginBottom: 8,
-        },
-        "& h5": {
-            margin: 0,
-            fontSize: 13,
-            color: "black",
-            fontWeight: 400,
-        }
-    },
-    
-}))
+
 
 export default Categories;

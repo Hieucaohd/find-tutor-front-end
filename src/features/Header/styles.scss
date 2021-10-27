@@ -35,6 +35,17 @@
     &__item {
         display: flex;
         align-items: center;
+        &__mess {
+            color: #797575;
+            font-size: 20px;
+            padding: 8px;
+            border-radius: 50%;
+            &:hover {
+                cursor: pointer;
+                background-color: #F0F0F0;
+            }
+            display: flex;
+        }
     }
 
     &__section {

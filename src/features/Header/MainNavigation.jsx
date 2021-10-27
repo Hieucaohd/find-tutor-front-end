@@ -1,5 +1,6 @@
 import loadable from '@loadable/component';
 import React, { Fragment, useRef } from "react";
+import { RiMessage3Fill } from 'react-icons/ri';
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import {
@@ -76,6 +77,7 @@ function MainNavigation() {
         </div>
         <div className="navigation__item">
           {isSigned && <SearchBar onShow={onShowSearchForm}/>}
+          {isSigned && <Link to="/message" className="navigation__item__mess"> <RiMessage3Fill/></Link>}
           {isSigned && <Notification />}
           {isSigned && <ToggleMenu onLogOut={handleLogOut} />}
           {!isSigned && <button className="navigation__signin" onClick={() => handleShowLogin()}>
