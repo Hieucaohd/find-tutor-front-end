@@ -1,19 +1,19 @@
 ## MỤC LỤC
 
-- [Tổng quan về trang web] (#tổng-quan-về-trang-web)
-  - [Mục đích để tạo ra trang web] (#mục-đích-để-tạo-ra-trang-web)
-  - [Cơ chế hoạt động của trang web] (#cơ-chế-hoạt-động-của-trang-web)
-  - [Công nghệ] (#công-nghệ)
-- [Bố cục của Code] (#bố-cục-của-code)
-  - [auth] (#auth)
-  - [header] (#header)
-  - [home] (#home)
-  - [CreateRoom] (#CreateRoom)
-  - [parent_room] (#parent_room)
-  - [parent] (#parent)
-  - [tutor] (#tutor)
-  - [profile] (#profile)
-  - [register] (#register)
+- [Tổng quan về trang web](#tổng-quan-về-trang-web)
+  - [Mục đích để tạo ra trang web](#mục-đích-để-tạo-ra-trang-web)
+  - [Cơ chế hoạt động của trang web](#cơ-chế-hoạt-động-của-trang-web)
+  - [Công nghệ](#công-nghệ)
+- [Bố cục của Code](#bố-cục-của-code)
+  - [auth](#auth)
+  - [header](#header)
+  - [home](#home)
+  - [CreateRoom](#CreateRoom)
+  - [parent_room](#parent_room)
+  - [parent](#parent)
+  - [tutor](#tutor)
+  - [profile](#profile)
+  - [register](#register)
 
 ## Tổng quan về trang web
 
