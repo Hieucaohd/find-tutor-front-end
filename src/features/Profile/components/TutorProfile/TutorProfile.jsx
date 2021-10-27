@@ -10,7 +10,7 @@ import MoreInfoProfile from './components/MoreInfoProfile';
 import ProfileSkeleton from './components/ProfileSkeleton';
 
 const useStyles = makeStyles(theme => ({
-    root: {
+    root1: {
         display: 'flex',
         flexDirection: 'column',
         marginTop: '80px',
@@ -22,11 +22,25 @@ const useStyles = makeStyles(theme => ({
             padding: '0px 220px',
         },
     }, 
+    root2: {
+        display: 'flex',
+        flexDirection: 'column',
+        padding: "0px 16px",
+        paddingTop: 48,
+        paddingBottom: 24,
+        // [theme.breakpoints.down('sm')]: {
+            
+        // },
+        // [theme.breakpoints.up('md')]: {
+        //     padding: "48px 24px",
+        // },
+    }
 }));
 
-function TutorProfile(props) {
+function TutorProfile({currentId}) {
+
     const match = useRouteMatch("/profile/tutor/:tutorId");
-    const tutorId = Number(match.params.tutorId);
+    const tutorId = currentId || Number(match.params.tutorId);
     const userId = useSelector(selectId_of_user); 
     const classes = useStyles();
     const [tutorInfo, setTutorInfo] = useState({});
@@ -47,7 +61,7 @@ function TutorProfile(props) {
     }, [tutorId]);
 
     return (
-        <div className={classes.root}>
+        <div className={currentId ? classes.root2 : classes.root1}>
             {loading ? <ProfileSkeleton /> 
             :  <div>
                 <GeneralProfile tutorInfo={tutorInfo} isUser={Number(tutorId) === Number(userId)} type="tutor"/>

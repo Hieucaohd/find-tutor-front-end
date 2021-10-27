@@ -1,24 +1,26 @@
 import { Avatar, makeStyles } from '@material-ui/core';
 import Modal from 'components/Modal/Modal';
+import TutorProfile from 'features/Profile/components/TutorProfile/TutorProfile';
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { AiOutlineClose } from 'react-icons/ai';
 import NumberPhone from './NumberPhone';
-
 
 function TutorItem( {tutorInfo = {}, isOwner = false, onAdd = null, userId = 0, isTeaching = false, onDelete=null} ) {
     const classes = useStyles();
-    const history = useHistory();
+    // const history = useHistory();
     const {id, tutor} = tutorInfo;
     const [showCheckModal, setShowCheckModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showNumberPhone, setShowNumberPhone] = useState(false);
+    const [onShowProfile, setOnShowProfile] = useState(false);
     const handleDelete = () => {
         if(!onDelete) return;
         onDelete(id);
         setShowDeleteModal(false);
     }
     const handleShowTutorInfo = () => {
-        history.push(`/profile/tutor/${tutor.user.id}`)
+        // history.push(`/profile/tutor/${tutor.user.id}`)
+        setOnShowProfile(true);
     }
 
     const handleCheck = () => {
@@ -60,6 +62,13 @@ function TutorItem( {tutorInfo = {}, isOwner = false, onAdd = null, userId = 0, 
             {showNumberPhone && <NumberPhone numberPhone={tutor?.number_phone} onClose={() => setShowNumberPhone(false)}/>}
             {showCheckModal && <Modal typeIcon="check" text="Đồng ý gia sư này dạy học ?" onAgree={handleCheck} onDisagree={() => setShowCheckModal(false)}/>}
             {showDeleteModal && <Modal typeIcon="delete" text={handleShowText()} onAgree={handleDelete} onDisagree={() => setShowDeleteModal(false)}/>}
+            {onShowProfile && <div> 
+                 <div className={classes.profile}>
+                    <AiOutlineClose className={classes.close} onClick={() => setOnShowProfile(false)}/>
+                    <TutorProfile currentId={tutor?.user.id}/>
+                </div>
+                <div className={classes.overlay} onClick={() => setOnShowProfile(false)}></div>
+            </div>}
         </div>
     )
 
@@ -76,6 +85,7 @@ const useStyles = makeStyles(theme => ({
         marginBottom: 16,
         boxShadow: '0 1px 4px 0 #ccc',
         backgroundColor: 'white',
+        
         "& h4": {
             margin: 0,
         },
@@ -155,6 +165,52 @@ const useStyles = makeStyles(theme => ({
     },
     call: {
         backgroundColor: '#2fbc5e',
+    },
+    profile: {
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        overflow: 'auto',
+        backgroundColor: '#F4F6FB',
+        zIndex: 3,
+        borderRadius: 8,
+        
+        [theme.breakpoints.down('xs')]: {
+            "&::-webkit-scrollbar" : { 
+                display: 'none',
+            },
+            width: "96vw",
+            maxHeight: "80vh",
+
+        },
+        [theme.breakpoints.up('sm')]: {
+            width: 720,
+            maxHeight: "80vh",
+            marginTop: 12,
+        },
+    },
+    overlay: {
+        position: 'fixed',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,  
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        zIndex: 2,  
+    },
+    close: {
+        position: 'absolute',
+        top: 8,
+        right: 16,
+        padding: 8,
+        backgroundColor: "#ccc",
+        borderRadius: "50%",
+        opacity: 0.8,
+        "&:hover": {
+            cursor: 'pointer',
+            opacity: 1,
+        }
     }
 }));
 

@@ -59,7 +59,7 @@ function App() {
             <Route exact path="/test" component={SlideShow} />
             <Route path="/settings" component={Settings}/>
             <Route path="*" component={NotFound} />
-          </Switch>
+            </Switch>
         </BrowserRouter>
     </div>
   );

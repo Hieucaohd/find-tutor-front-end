@@ -41,7 +41,10 @@ function ParentRoom (props) {
   const [isLoading, setIsLoading] = useState(false);
   const [isFirstLoading, setIsFirstLoading] = useState(true);
 
-
+  // window.scrollTo({
+  //   top: 100,
+  //   behavior: 'smooth'
+  // });
   useEffect(() => {
     // if(token.length !== 0) {
       let ws = new WebSocket(`${room_socket}${roomId}/`)
@@ -78,7 +81,6 @@ function ParentRoom (props) {
   }, [roomId, applyList]);
 
   useEffect(()=> {
-    let isSetDetail = true;
     const getRoomDetail = async () => {
       const newRoomDetail = await GetParentRoomDetail(roomId, token);
 
@@ -107,11 +109,8 @@ function ParentRoom (props) {
         }
       }
       
-      
-      if(isSetDetail) {
-        setRoomDetail(roomDetail);
-        setIsFirstLoading(false);
-      }
+      setRoomDetail(roomDetail);
+      setIsFirstLoading(false);
       
       const provinceName = await getProvinceName(newRoomDetail?.province_code || 0);
       const districtName = await getDistrictName({
@@ -139,16 +138,14 @@ function ParentRoom (props) {
       })
     }
 
-    
-
-    if(window.sessionStorage.getItem(`room${roomId}`)) {
-      const {roomDetail, applyList, teaching} = JSON.parse(window.sessionStorage.getItem(`room${roomId}`));
-      setRoomDetail(JSON.parse(roomDetail));
-      setApplyList(JSON.parse(applyList));
-      setTeaching(JSON.parse(teaching));
-      setIsFirstLoading(false);
-      isSetDetail = false;
-    } 
+    // if(window.sessionStorage.getItem(`room${roomId}`)) {
+    //   const {roomDetail, applyList, teaching} = JSON.parse(window.sessionStorage.getItem(`room${roomId}`));
+    //   setRoomDetail(JSON.parse(roomDetail));
+    //   setApplyList(JSON.parse(applyList));
+    //   setTeaching(JSON.parse(teaching));
+    //   setIsFirstLoading(false);
+    //   isSetDetail = false;
+    // } 
       
     getRoomDetail();
    
@@ -156,18 +153,18 @@ function ParentRoom (props) {
 
 
   //set data to session storage
-  useEffect(() => {
-    if(roomDetail !== undefined && applyList !== undefined && teaching !== undefined) {
-      window.sessionStorage.removeItem(`room${roomId}`);
-      const newData = {
-        roomDetail: JSON.stringify(roomDetail),
-        applyList: JSON.stringify(applyList),
-        teaching: JSON.stringify(teaching),
-      }
-      window.sessionStorage.setItem(`room${roomId}`, JSON.stringify(newData))
-    }
+  // useEffect(() => {
+  //   if(roomDetail !== undefined && applyList !== undefined && teaching !== undefined) {
+  //     window.sessionStorage.removeItem(`room${roomId}`);
+  //     const newData = {
+  //       roomDetail: JSON.stringify(roomDetail),
+  //       applyList: JSON.stringify(applyList),
+  //       teaching: JSON.stringify(teaching),
+  //     }
+  //     window.sessionStorage.setItem(`room${roomId}`, JSON.stringify(newData))
+  //   }
     
-  }, [roomDetail, applyList, teaching, roomId])
+  // }, [roomDetail, applyList, teaching, roomId])
 
   const handleAddToTeachingList = async (waitingId) => {
     setIsLoading(true);
