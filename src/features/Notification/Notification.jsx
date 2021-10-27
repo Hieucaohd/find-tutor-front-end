@@ -12,7 +12,6 @@ function Notification(props) {
     const classes = useStyles();
     const token = useSelector(selectToken);
     const [count, setCount] = useState(0);
-
     const handleIncrement = () => {
         setCount(count => count + 1);
     };
@@ -24,13 +23,20 @@ function Notification(props) {
 
     useEffect(() => {
         if(!token) return;
-        let ws = new WebSocket(notification_socket, ["Token", token])
+        
+        let ws = new WebSocket(notification_socket, ["Token", token]);
+        
         ws.onopen = () => console.log('Notification Websocket opened');
-        ws.onclose = () => console.log('Notification Websocket Websocket closed');
+        ws.onclose = () => console.log('Notification Websocket closed');
+        
         ws.onmessage = e => {
             handleIncrement();
             playNotificationSound();
         }
+        // setTimeout(() => {
+        //     ws.close();
+        // }, [10000])
+    
         return () => {
             ws.close();
         }

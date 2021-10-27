@@ -25,22 +25,21 @@ const useStyles = makeStyles(theme=>({
     }
 }));
 
-function ParentRoom(props) {
+function ParentRoom (props) {
   const classes = useStyles();
   const token = useSelector(selectToken);
   const history = useHistory();
   const {
     params: {roomId}
   } = useRouteMatch();
-  const [applyList, setApplyList] = useState([]);
+  const [applyList, setApplyList] = useState(undefined);
   // const [parentInvitedList, setParentInvitedList] = useState([]);
-  const [teaching, setTeaching] = useState(null);
-  const [roomDetail, setRoomDetail] = useState({});
+  const [teaching, setTeaching] = useState(undefined);
+  const [roomDetail, setRoomDetail] = useState(undefined);
   // const [loading, setLoading] = useState(true);
   const typeParent = useSelector(selectType_parent);
   const [isLoading, setIsLoading] = useState(false);
   const [isFirstLoading, setIsFirstLoading] = useState(true);
-
 
 
   useEffect(() => {
@@ -76,12 +75,13 @@ function ParentRoom(props) {
       return () => {
         ws.close();
       }
-  }, [ roomId, applyList]);
+  }, [roomId, applyList]);
 
   useEffect(()=> {
+    let isSetDetail = true;
     const getRoomDetail = async () => {
       const newRoomDetail = await GetParentRoomDetail(roomId, token);
-      
+
       setApplyList(newRoomDetail?.waitingtutormodel_set || []);
       setTeaching(newRoomDetail?.tutorteachingmodel);
 
@@ -106,9 +106,13 @@ function ParentRoom(props) {
           provinceName: "",
         }
       }
-      setRoomDetail(roomDetail);
-      setIsFirstLoading(false);
-
+      
+      
+      if(isSetDetail) {
+        setRoomDetail(roomDetail);
+        setIsFirstLoading(false);
+      }
+      
       const provinceName = await getProvinceName(newRoomDetail?.province_code || 0);
       const districtName = await getDistrictName({
         provinceCode: newRoomDetail?.province_code || 0,
@@ -134,8 +138,36 @@ function ParentRoom(props) {
         }
       })
     }
+
+    
+
+    if(window.sessionStorage.getItem(`room${roomId}`)) {
+      const {roomDetail, applyList, teaching} = JSON.parse(window.sessionStorage.getItem(`room${roomId}`));
+      setRoomDetail(JSON.parse(roomDetail));
+      setApplyList(JSON.parse(applyList));
+      setTeaching(JSON.parse(teaching));
+      setIsFirstLoading(false);
+      isSetDetail = false;
+    } 
+      
     getRoomDetail();
+   
   }, [roomId, token]);
+
+
+  //set data to session storage
+  useEffect(() => {
+    if(roomDetail !== undefined && applyList !== undefined && teaching !== undefined) {
+      window.sessionStorage.removeItem(`room${roomId}`);
+      const newData = {
+        roomDetail: JSON.stringify(roomDetail),
+        applyList: JSON.stringify(applyList),
+        teaching: JSON.stringify(teaching),
+      }
+      window.sessionStorage.setItem(`room${roomId}`, JSON.stringify(newData))
+    }
+    
+  }, [roomDetail, applyList, teaching, roomId])
 
   const handleAddToTeachingList = async (waitingId) => {
     setIsLoading(true);

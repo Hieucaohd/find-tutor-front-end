@@ -40,8 +40,6 @@ const Settings = loadable(() => import('features/Settings/Settings'), {
 
 
  
-           
-
 function App() {
   return (
     <div className="App">
