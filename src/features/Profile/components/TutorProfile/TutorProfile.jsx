@@ -25,9 +25,10 @@ const useStyles = makeStyles(theme => ({
     root2: {
         display: 'flex',
         flexDirection: 'column',
-        padding: "0px 16px",
-        paddingTop: 48,
-        paddingBottom: 24,
+        padding: "8px 12px",
+        position: 'relative'
+        // paddingTop: 48,
+        // paddingBottom: 24,
         // [theme.breakpoints.down('sm')]: {
             
         // },
@@ -62,7 +63,7 @@ function TutorProfile({currentId}) {
 
     return (
         <div className={currentId ? classes.root2 : classes.root1}>
-            {loading ? <ProfileSkeleton /> 
+            {loading ? <ProfileSkeleton isParentRoom={currentId ? true : false}/>
             :  <div>
                 <GeneralProfile tutorInfo={tutorInfo} isUser={Number(tutorId) === Number(userId)} type="tutor"/>
                 <MoreInfoProfile tutorInfo={tutorInfo}/> 

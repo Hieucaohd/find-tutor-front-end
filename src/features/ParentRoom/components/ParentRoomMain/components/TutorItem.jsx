@@ -175,13 +175,13 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: '#F4F6FB',
         zIndex: 3,
         borderRadius: 8,
-        
+        padding: 8,
         [theme.breakpoints.down('xs')]: {
             "&::-webkit-scrollbar" : { 
                 display: 'none',
             },
             width: "96vw",
-            maxHeight: "80vh",
+            maxHeight: "60vh",
 
         },
         [theme.breakpoints.up('sm')]: {
@@ -200,17 +200,25 @@ const useStyles = makeStyles(theme => ({
         zIndex: 2,  
     },
     close: {
-        position: 'absolute',
-        top: 8,
-        right: 16,
+        // position: "-webkit-sticky",
+        position: 'sticky',
+        
         padding: 8,
-        backgroundColor: "#ccc",
+        backgroundColor: "#dbdada",
         borderRadius: "50%",
-        opacity: 0.8,
+        zIndex: 10,
         "&:hover": {
             cursor: 'pointer',
-            opacity: 1,
-        }
+            backgroundColor: "#ccc",
+        },
+        [theme.breakpoints.down('xs')]: {
+            top: 4,
+            left: 4,
+        },
+        [theme.breakpoints.up('sm')]: {
+            top: 10,
+            left: 10,
+        },
     }
 }));
 
