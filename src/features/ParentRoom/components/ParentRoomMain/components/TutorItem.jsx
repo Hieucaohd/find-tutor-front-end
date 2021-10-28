@@ -21,6 +21,12 @@ function TutorItem( {tutorInfo = {}, isOwner = false, onAdd = null, userId = 0, 
     const handleShowTutorInfo = () => {
         // history.push(`/profile/tutor/${tutor.user.id}`)
         setOnShowProfile(true);
+        document.body.style["overflow-y"] = "hidden";
+    }
+
+    const handleDontShowTutorInfo = () => {
+        setOnShowProfile(false);
+        document.body.style["overflow-y"] = "auto";
     }
 
     const handleCheck = () => {
@@ -28,6 +34,7 @@ function TutorItem( {tutorInfo = {}, isOwner = false, onAdd = null, userId = 0, 
         onAdd(id);
         setShowCheckModal(false);
     }
+
 
     const handleShowText = () => {
         if(isOwner) return "Xóa gia sư này khỏi danh sách ?";
@@ -64,15 +71,17 @@ function TutorItem( {tutorInfo = {}, isOwner = false, onAdd = null, userId = 0, 
             {showDeleteModal && <Modal typeIcon="delete" text={handleShowText()} onAgree={handleDelete} onDisagree={() => setShowDeleteModal(false)}/>}
             {onShowProfile && <div> 
                  <div className={classes.profile}>
-                    <AiOutlineClose className={classes.close} onClick={() => setOnShowProfile(false)}/>
+                    <AiOutlineClose className={classes.close} onClick={handleDontShowTutorInfo}/>
                     <TutorProfile currentId={tutor?.user.id}/>
                 </div>
-                <div className={classes.overlay} onClick={() => setOnShowProfile(false)}></div>
+                <div className={classes.overlay} onClick={handleDontShowTutorInfo}></div>
             </div>}
         </div>
     )
 
 }
+
+
 
 const useStyles = makeStyles(theme => ({
     root: {
