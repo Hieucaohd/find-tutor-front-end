@@ -60,3 +60,22 @@
         └─ Message: tính năng nhắn tin
         └─ CreateRoom: tạo phòng học
 
+# đọc biểu đồ graphQL:
+
+## link diagram: https://drive.google.com/file/d/1X963zE-qAiYTSULvq8bAS9IiedaGeXnF/view?usp=sharing
+
+## Sự liên quan giữa các bảng:
+- các bảng được liên kết với nhau bằng các đường thẳng có mũi tên:
+  - mũi tên một chiều: quan hệ one-to-many. Vd: một parent sẽ có nhiều paren-room
+  - mũi tên 2 chiều: quan hệ one-to-one. Vd: mỗi user chỉ có một parent
+- link test: 
+  - Graphiql: https://findtutorapp.website/graphql/ (nhấn ctrl+space để xem các gợi ý)
+  - Hoặc postman.
+
+# document:
+
+## link google doc: https://docs.google.com/document/d/1teGtkQkd7LnRMjg1-a-D2sICdsuvy2n5BWPyU0K5JvU/edit?usp=sharing
+
+# Rest API:
+- link API: https://findtutorapp.website/
+- Hoac postman
