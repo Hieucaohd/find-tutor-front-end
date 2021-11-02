@@ -90,6 +90,7 @@ const useStyles = makeStyles({
     notiIcon: {
         display: 'flex',
         position: 'relative',
+        fontSize: 35,
     },
     dot: {
         width: 7,

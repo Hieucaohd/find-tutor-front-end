@@ -21,12 +21,12 @@ function TutorItem( {tutorInfo = {}, isOwner = false, onAdd = null, userId = 0, 
     const handleShowTutorInfo = () => {
         // history.push(`/profile/tutor/${tutor.user.id}`)
         setOnShowProfile(true);
-        document.body.style["overflow-y"] = "hidden";
+        // document.body.style["overflow-y"] = "hidden";
     }
 
     const handleDontShowTutorInfo = () => {
         setOnShowProfile(false);
-        document.body.style["overflow-y"] = "auto";
+        // document.body.style["overflow-y"] = "auto";
     }
 
     const handleCheck = () => {
@@ -58,7 +58,7 @@ function TutorItem( {tutorInfo = {}, isOwner = false, onAdd = null, userId = 0, 
                     <h5>{tutor?.profession === "sv" && "Sinh Viên"}</h5>
                     <h5><span>Sinh năm</span> {tutor?.birthday.slice(0,4)}</h5>
                     <h5><span>Đã dạy</span> {tutor?.number_teaching} lớp</h5>
-                    <h5> {tutor?.university}</h5>
+                    {/* <h5> {tutor?.university}</h5> */}
                 </div>
             </div>
             <div className={classes.button}>
@@ -71,7 +71,8 @@ function TutorItem( {tutorInfo = {}, isOwner = false, onAdd = null, userId = 0, 
             {showDeleteModal && <Modal typeIcon="delete" text={handleShowText()} onAgree={handleDelete} onDisagree={() => setShowDeleteModal(false)}/>}
             {onShowProfile && <div> 
                  <div className={classes.profile}>
-                    <AiOutlineClose className={classes.close} onClick={handleDontShowTutorInfo}/>
+                     <AiOutlineClose className={classes.close} onClick={handleDontShowTutorInfo}/>
+                      
                     <TutorProfile currentId={tutor?.user.id}/>
                 </div>
                 <div className={classes.overlay} onClick={handleDontShowTutorInfo}></div>
@@ -80,7 +81,6 @@ function TutorItem( {tutorInfo = {}, isOwner = false, onAdd = null, userId = 0, 
     )
 
 }
-
 
 
 const useStyles = makeStyles(theme => ({
@@ -184,7 +184,6 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: '#F4F6FB',
         zIndex: 3,
         borderRadius: 8,
-        padding: 8,
         [theme.breakpoints.down('xs')]: {
             "&::-webkit-scrollbar" : { 
                 display: 'none',
@@ -211,7 +210,6 @@ const useStyles = makeStyles(theme => ({
     close: {
         // position: "-webkit-sticky",
         position: 'sticky',
-        
         padding: 8,
         backgroundColor: "#dbdada",
         borderRadius: "50%",
@@ -228,7 +226,19 @@ const useStyles = makeStyles(theme => ({
             top: 10,
             left: 10,
         },
-    }
+    },
+    // profileBar: {
+    //     position: 'sticky',
+    //     backgroundColor: "#dbdada",
+    //     top: 0,
+    //     right: 0,
+    //     left: 0,
+    //     height: 40,
+    //     zIndex: 5,
+    //     display: "flex",
+    //     alignItems: "center",
+    //     justifyContent: "center",
+    // }
 }));
 
 export default TutorItem;

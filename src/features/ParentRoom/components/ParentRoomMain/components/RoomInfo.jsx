@@ -1,6 +1,6 @@
 import { Avatar, makeStyles } from '@material-ui/core';
 import { catchDistrictName, catchProvinceName } from 'components/location/getLocation';
-import { largerSubject } from 'components/Room/picture';
+import { largerSubject } from 'containers/picture';
 import { handleTime } from 'containers/date';
 import { isOnList } from 'features/ParentRoom/parentroom';
 import React from 'react';
@@ -237,10 +237,9 @@ const useStyles = makeStyles(theme => ({
         }
     },
     parent: {
-
-        width: 220,
-        padding: "12px 20px 56px 20px",
-        height: 240,  
+        width: 270,
+        height: 331,
+        padding: "6px 20px 56px 20px",
         flex: 2,
         boxShadow: '0 1px 4px 0 #ccc',
         borderRadius: 4,

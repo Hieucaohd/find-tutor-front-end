@@ -84,6 +84,7 @@ const useStyles = makeStyles(theme => ({
     
   },
   tutor: {
+    marginTop: 20,
     flex: 7,
     [theme.breakpoints.up('md')]: {
       marginRight: 24,

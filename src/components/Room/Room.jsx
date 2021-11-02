@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { IoLocationOutline, IoMaleFemaleOutline, IoSchoolOutline, IoTimerOutline } from "react-icons/io5";
 import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName } from '../location/getLocation';
-import { smallerSubject } from "./picture";
+import { smallerSubject } from "../../containers/picture";
 import { formatPriceString, getSexOfTeacher, getStringId, getTypeTutorString } from './room.js';
 import "./styles.scss";
 
@@ -23,8 +23,10 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, 
 
     const handleCheck = () => {
         onCheck(room.id);
+        setNumberWaiting(room.number_waiting + 1);
     }
 
+    const [numberWaiting, setNumberWaiting] = useState(room.number_waiting);
 
     useEffect( () => {
         const getAddress = async () => {
@@ -72,7 +74,7 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, 
                         <IoTimerOutline /> {room?.pricemodel_set[0]?.time_in_one_day} tiếng/buổi
                     </div>
                 </div>
-                <span className="item__room__current">Có {room.number_waiting} gia sư đang ứng tuyển</span>
+                <span className="item__room__current">Có {numberWaiting} gia sư đang ứng tuyển</span>
                 {type==="home" && <HomeButton onCheck={handleCheck} id={room.roomId} roomAddress={`/room/${room.roomId}`} typeParent={typeParent}/>}
                 {type==="userroom" && <UserRoomButton onDelete={handleDelete} roomAddress={`/room/${room.roomId}`}/>}
                 {type==="info" && <InfoButton roomAddress={`/room/${room.roomId}`}/>}

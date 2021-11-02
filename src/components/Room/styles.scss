@@ -1,5 +1,5 @@
-$cWidth: 240px;
-$cHeight: 252px;
+$cWidth: 272px;
+$cHeight: 292px;
 
 .item__room {
     width: $cWidth;
@@ -37,11 +37,13 @@ $cHeight: 252px;
         & h3 {
             font-size: 20px;
             margin: 0;
+            font-weight: 600;
             margin-bottom: 4px;
             letter-spacing: 2px;
         }
         & h5 {
             margin: 0;
+            font-size: 14px;
             font-weight: 400;
         }
     }

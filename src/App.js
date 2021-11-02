@@ -1,8 +1,7 @@
 import loadable from '@loadable/component';
 import Loading from "components/Loading/Loading";
-import SlideShow from 'components/SlideShow';
+import Message from 'features/Message';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import "./App.css";
 import MainNavigation from "./features/Header/MainNavigation";
 
 const Home = loadable(() => import('./features/Home/Home'), {
@@ -56,7 +55,7 @@ function App() {
             <Route path="/role" component={RegisterRole} />
             <Route path="/profile" component={Profile} />
             {/* <Route exact path="/search" component={Search} /> */}
-            <Route exact path="/test" component={SlideShow} />
+            <Route exact path="/test" component={Message} />
             <Route path="/settings" component={Settings}/>
             <Route path="*" component={NotFound} />
             </Switch>

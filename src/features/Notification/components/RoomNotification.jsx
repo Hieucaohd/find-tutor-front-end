@@ -1,5 +1,5 @@
 import { Avatar } from '@material-ui/core';
-import { smallerSubject } from 'components/Room/picture';
+import { smallerSubject } from 'containers/picture';
 import { getStringId } from 'components/Room/room';
 import { handleTime } from 'containers/date';
 import React from 'react';
