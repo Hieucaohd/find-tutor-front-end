@@ -111,6 +111,11 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('sm')]: {
       width: '80%',
     },
+    "& h2": {
+      fontSize: 24,
+      marginBottom: 20,
+      fontWeight: 600,
+    }
   },
   form: {
     [theme.breakpoints.down('sm')]: {
@@ -123,7 +128,8 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    position: 'relative'
+    position: 'relative',
+    
   },
   formField: {
     width: '100%',

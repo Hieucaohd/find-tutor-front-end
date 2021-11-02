@@ -133,7 +133,12 @@ const useStyles = makeStyles(theme => ({
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          position: 'relative'
+          position: 'relative',
+          "& h2": {
+            fontSize: 24,
+            marginBottom: 20,
+            fontWeight: 600,
+          }
     },
     formField: {
         width: '100%',
