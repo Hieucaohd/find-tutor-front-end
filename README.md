@@ -26,8 +26,6 @@
 - Giao tiếp giữa back-end và front-end: thông qua restful API, GraphQl.
 
 ## Bố cục của Code
-
-(front-end):
   # Tổ chức thư mục
     src
       ├─ styles: chứa styles chung
