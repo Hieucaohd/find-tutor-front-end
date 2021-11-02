@@ -97,8 +97,8 @@ const useStyles = makeStyles( theme => ({
   
   apply: {
     // "background-image": "linear-gradient( 135deg, #3C8CE7 10%, #00EAFF 100%)",
-    boxShadow: '0 2px 4px 0 #ccc',
-    backgroundColor: 'white',
+    // boxShadow: '0 2px 4px 0 #ccc',
+    // backgroundColor: 'white',
     borderRadius: 8,
     marginBottom: 32,
   },
@@ -113,8 +113,8 @@ const useStyles = makeStyles( theme => ({
   },
   teaching: {
     // "background-image": "linear-gradient( 135deg, #70F570 10%, #49C628 100%)",
-    boxShadow: '0 2px 4px 0 #ccc',
-    backgroundColor: 'white',
+    // boxShadow: '0 2px 4px 0 #ccc',
+    // backgroundColor: 'white',
     borderRadius: 8,
     marginBottom: 32,
   },

@@ -146,7 +146,7 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         flexDirection: 'column',
         '& input': {
-        padding: '12px 14px',
+        padding: '8px 12px',
         borderRadius: '8px',
         border: '0.5px solid #ccc',
     },
@@ -163,7 +163,7 @@ const useStyles = makeStyles(theme => ({
         color: 'white',
         border: 'none',
         borderRadius: '8px',
-        padding: '10px 0px',
+        padding: '8px 0px',
         opacity: 0.8,
         "&:hover": {
             opacity: 1,

@@ -90,6 +90,7 @@
         padding: 8px 12px;
         border-radius: 4px;
         font-weight: 600;
+        font-size: 16px;
         opacity: 0.9;
         margin-left: 16px;
         &:hover {
@@ -185,6 +186,7 @@
                 color: #0095FF;
             }
             margin: 16px 0;
+            font-weight: 600;
         }
         & h4 {
             margin: 0;
@@ -195,7 +197,7 @@
         & button {
             border: none;
             background-color: white;
-            padding: 15px;
+            padding: 12px;
             font-weight: 800;
             font-size: 16px;
             border-radius: 4px;
