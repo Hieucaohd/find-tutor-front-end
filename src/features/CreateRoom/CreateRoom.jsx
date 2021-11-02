@@ -7,7 +7,8 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { selectId_of_user, selectToken } from "../auth/authSlice";
-import Modal from "components/Modal/Modal"
+import Modal from "components/Modal/Modal";
+
 function CreateRoom(props) {
   const classes = useStyles();
   const days = [2, 3, 4, 5, 6, 7, 8];

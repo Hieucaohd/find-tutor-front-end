@@ -1,5 +1,5 @@
-$cWidth: 240px;
-$cHeight: 252px;
+$cWidth: 272px;
+$cHeight: 292px;
 
 .item__room {
     width: $cWidth;
@@ -37,11 +37,13 @@ $cHeight: 252px;
         & h3 {
             font-size: 20px;
             margin: 0;
+            font-weight: 600;
             margin-bottom: 4px;
             letter-spacing: 2px;
         }
         & h5 {
             margin: 0;
+            font-size: 14px;
             font-weight: 400;
         }
     }
@@ -55,7 +57,7 @@ $cHeight: 252px;
             margin-bottom: 4px;
             & svg {
                 margin-right: 8px;
-                color: #5472EA;
+                color: #0095FF;
                 font-size: 16px;
             }
         }
@@ -74,7 +76,7 @@ $cHeight: 252px;
         }
     }
     &__current {
-        color: #5472EA;
+        color: #0095FF;
         position: absolute;
         font-size: 12px;
         bottom: 48px;
@@ -85,7 +87,7 @@ $cHeight: 252px;
 @media (max-width: 769px){
     .item__room {
         width: 280px;
-        height: 280px;
+        height: 300px;
         &__thumbnail {
             & img {
                 width: 66px;

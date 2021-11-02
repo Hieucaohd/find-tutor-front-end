@@ -73,7 +73,6 @@ function Home() {
     history.push(`/?${queryString.stringify(newSearch)}`)
   }
   
-
   return (
     <div className = "home">
       <HomeBar />
@@ -85,10 +84,9 @@ function Home() {
         ))}
       </Grid>}
 
-      {maxPagination > 1 && <Pagination count={maxPagination} color="primary" className="home__pagination" onChange={handleChangePage}/>}      
+      {maxPagination > 1 && <Pagination count={maxPagination} variant="outlined" color="primary" className="home__pagination" onChange={handleChangePage}/>}      
       {showCheckModal && <Modal typeIcon="check" text="Ứng tuyển thành công" onAgree={() => setShowCheckModal(false)}/>}
       {showFailModal && <Modal typeIcon="fail" text="Ứng tuyển không thành công" onAgree={() => setShowFailModal(false)} />}
-    
     </div>
   );
 }

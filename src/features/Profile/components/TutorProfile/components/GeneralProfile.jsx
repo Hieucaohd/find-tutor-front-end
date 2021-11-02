@@ -1,20 +1,14 @@
 import { Avatar, makeStyles } from '@material-ui/core';
+import Loading from "components/Loading/Loading";
+import Modal from "components/Modal/Modal";
 import UploadImage from 'components/UploadImage/UploadImage';
 import { selectToken } from 'features/auth/authSlice';
 import { formatBirthDay, updateAvatar } from 'features/Profile/profile';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { useState } from 'react';
+import FormData from 'form-data';
+import React, { useState } from 'react';
 import { AiFillCamera, AiOutlineFacebook, AiOutlineInstagram, AiOutlineLinkedin, AiTwotoneEdit } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import FormData from 'form-data';
-import Modal from "components/Modal/Modal";
-import Loading from "components/Loading/Loading";
-
-GeneralProfile.propTypes = {
-    TutorInfo: PropTypes.object,
-};
 
 const getJobName = (str) => {
     if(!str) return '';
@@ -53,9 +47,9 @@ function GeneralProfile({tutorInfo, isUser = false, type}) {
             {isUser && <Link to={`/settings/profile/${type}`}><AiTwotoneEdit  className={classes.fix}/> </Link>}
             <div className={classes.avatarContainer}>
             {isUser && <button className={classes.camera} onClick={() => setShowChangeAvatar(true)}><AiFillCamera /></button>}
-                <Avatar alt="Travis Howard" variant="square" 
+                <Avatar alt="gia sư" variant="square" 
                     className={classes.avatar} 
-                    src={tutorInfo.imageprivateusermodel?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_3I4Y2ydmFBosgWcdoqVBBCsYZksWAhHtjg&usqp=CAU"} />
+                    src={tutorInfo.imageprivateusermodel?.avatar || require("../../../../../assets/image/user.webp").default} />
             </div>
             <div className={classes.info}>
                 <div className={classes.name}>
@@ -90,10 +84,14 @@ const useStyles = makeStyles(theme => ({
     wallpaper: {
         flex: 1,
         display: 'flex',
-        backgroundColor: '#E9E8EB',
-        border: '0.5px solid rgba(0, 0, 0, 0.1)',
-        borderRadius: '12px',
+        // backgroundColor: '#E9E8EB',
+        // border: '0.5px solid rgba(0, 0, 0, 0.1)',
+        boxShadow: '0 2px 4px 0 #ccc',
+        backgroundColor: 'white',
+        borderRadius: 8,
+        // borderRadius: '12px',
         position: 'relative',
+        marginBottom: 16,
         "& h5": {
             margin: 0,
         },
@@ -131,7 +129,7 @@ const useStyles = makeStyles(theme => ({
         "& h3": {
             fontWeight: 600,
             [theme.breakpoints.down('xs')]: {
-                fontSize: '20px',
+                fontSize: '16px',
                 margin: 0,
             },
             [theme.breakpoints.up('sm')]: {
@@ -183,6 +181,7 @@ const useStyles = makeStyles(theme => ({
             width: '160px',
             height: '200px',
         },
+        borderRadius: 8,
     },
     info: {
         flex: 4,

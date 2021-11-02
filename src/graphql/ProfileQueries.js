@@ -101,3 +101,33 @@ export const getTutorInfoForRoom = (id) => {
     }`;
     return fetchGraphQl("tutor info for room", "user_by_id", query);
 }
+
+
+export const getNotification = async ({token, num, page}) => {
+    const query = `
+    {
+        all_room_notification(num_in_page: ${num}, page: ${page}, token:"${token}") {
+            _id
+            room {
+                id 
+                subject
+                lop
+            }
+            text {
+                id
+                user_send {
+                    id
+                    username
+                    imageprivateusermodel {
+                        avatar
+                    }
+                }
+            }
+            is_seen
+            create_at 
+        } 
+    }
+    `
+    const allNotification = await fetchGraphQl("user's notification", "all_room_notification", query);
+    return allNotification;
+}

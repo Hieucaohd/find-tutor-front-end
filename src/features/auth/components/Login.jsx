@@ -111,6 +111,11 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('sm')]: {
       width: '80%',
     },
+    "& h2": {
+      fontSize: 24,
+      marginBottom: 20,
+      fontWeight: 600,
+    }
   },
   form: {
     [theme.breakpoints.down('sm')]: {
@@ -123,7 +128,8 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    position: 'relative'
+    position: 'relative',
+    
   },
   formField: {
     width: '100%',
@@ -131,7 +137,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     '& input': {
-      padding: '12px 14px',
+      padding: '8px 12px',
       borderRadius: '8px',
       border: '0.5px solid #ccc',
       "&:focus-visible": {
@@ -144,7 +150,7 @@ const useStyles = makeStyles(theme => ({
   },
   register: {
     fontSize: '14px',
-    color: '#5472EA',
+    color: '#006EFF',
     opacity: 0.8,
     textDecoration: 'none',
     '&:hover': {
@@ -166,11 +172,11 @@ const useStyles = makeStyles(theme => ({
     marginRight: '4px',
   },
   submit: {
-    backgroundColor: '#5472EA',
+    backgroundColor: '#006EFF',
     color: 'white',
     border: 'none',
     borderRadius: '8px',
-    padding: '10px 0px',
+    padding: '8px 0px',
     opacity: 0.8,
       "&:hover": {
         opacity: 1,
@@ -201,7 +207,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: "-16px",
     '& a': {
       fontSize: '10px',
-      color: '#5472EA',
+      color: '#006EFF',
       fontWeight: '500',
       textDecoration: 'none',
     }

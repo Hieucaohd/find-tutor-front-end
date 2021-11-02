@@ -1,10 +1,9 @@
+import loadable from '@loadable/component';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import loadable from '@loadable/component'
 
 const TutorProfile = loadable(() => import('./components/TutorProfile/TutorProfile'))
 const ParentProfile = loadable(() => import('./components/ParentProfile/ParentProfile'))
-
 
 function Profile() {
     return (

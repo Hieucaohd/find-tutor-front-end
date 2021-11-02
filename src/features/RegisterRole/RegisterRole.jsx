@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch } from "react-router-dom";
 import loadable from '@loadable/component'
+import "./styles.scss";
 
 const RegisterParent = loadable(() => import('./components/RegisterParent/RegisterParent'))
 const RegisterTutor = loadable(() => import('./components/RegisterTutor/RegisterTutor'))

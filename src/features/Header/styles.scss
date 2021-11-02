@@ -1,0 +1,284 @@
+.navigation {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 56px;
+    // backgroundColor: isSignedIn() ? "white" : "transparent",
+    // // borderBottom: '1px solid rgba(0,0,0,0.1)',
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 900;
+
+    &__logo {
+        color: black;
+        margin: 0px;
+        margin-right: 12px;
+        display: flex;
+        align-items: center;
+        & svg {
+          display: flex;
+          margin-right: 4px;
+        }
+        & img {
+          width: 36px;
+        }
+        // [theme.breakpoints.down('sm')]: {
+        //   "font-size": "16px",
+        // },
+        // [theme.breakpoints.up('md')]: {
+        //   "font-size": "24px",
+        // },
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        &__mess {
+            color: #797575;
+            font-size: 20px;
+            padding: 8px;
+            border-radius: 50%;
+            &:hover {
+                cursor: pointer;
+                background-color: #F0F0F0;
+            }
+            display: flex;
+        }
+    }
+
+    &__section {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        & a {
+          color: #404165;
+          font-weight : 600;
+          text-decoration: none;
+          letter-spacing: 0.252291px;
+          
+          &:hover {
+              cursor: pointer;
+              border: 1px solid #9EA7E6;
+          }
+          & h4 {
+            margin: 0;
+            // [theme.breakpoints.down('sm')]: {
+            //   display: none;
+            // },
+          }
+          & span {
+            // [theme.breakpoints.up('md')]: {
+            //   display: 'none',
+            // },
+            & svg {
+              display: flex,
+            }
+          }
+        }
+    }
+
+    &__search {
+        position: fixed;
+    }
+
+    &__signin {
+        background-color: #0095FF;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 16px;
+        opacity: 0.9;
+        margin-left: 16px;
+        &:hover {
+          opacity: 1;
+          cursor: pointer;
+        }
+    }
+
+    // &__home {
+    //     margin: 0;
+    //     background-color: #24a1fa;
+    //     color: white;
+    //     padding: 6px 12px;
+    //     border-radius: 68px;
+    //     &:hover {
+    //         background-color: #0095FF;
+    //     }
+    // }
+
+    &__toggle {
+        position: relative;
+        display: inline-block;
+        &__user {
+            display: flex;
+            align-items: center;
+            color: #797575;
+            font-size: 12px;
+            font-weight: 600;
+            // backgroundColor: '#c9dcfb',
+            border-left: 1px solid #ccc;
+            padding: 0px 0px;
+            padding-left: 12px;
+            & svg {
+                margin-right: 4px;
+            }
+            & > div {
+                margin-left: 8px;
+                width: 36px;
+                height: 36px;
+            }
+            &:hover {
+                cursor: pointer;
+                opacity: 0.8;
+            }
+            & h4 {
+                margin: 0,
+            }
+        }
+
+        &__overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0px;
+            background:rgba(0,0,0,0);
+            z-index: 100;
+        }
+
+        &__dropdown {
+            margin-top: 4px;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1001;
+            border-radius: 4px;
+            overflow: hidden;
+            & > a {
+                color: black;
+                padding: 8px 12px;
+                font-weight: 400;
+                font-size: 14px;
+                text-decoration: none;
+                display: block;
+
+                &:hover {
+                    color: #fff;
+                    background-color: #0095FF;
+                }
+            }
+        }
+    }
+    &__banner {
+        background-color: #E1EEFE;
+        display: flex;
+        margin-bottom: -40px;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        & h3 {
+            & span {
+                color: #0095FF;
+            }
+            margin: 16px 0;
+            font-weight: 600;
+        }
+        & h4 {
+            margin: 0;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+        
+        & button {
+            border: none;
+            background-color: white;
+            padding: 12px;
+            font-weight: 800;
+            font-size: 16px;
+            border-radius: 4px;
+            opacity: 0.8;
+            color: #0095FF;
+            &:hover {
+                cursor: pointer;
+                opacity: 1;
+            }
+        }
+    }
+}
+
+
+
+@media (min-width: 600px){
+    .navigation {
+        padding: 0px 70px;
+        &__section {
+            & a {
+                padding: 4px 12px;
+                border-radius: 12px;
+                font-size: 13px;
+            }
+        }
+        &__bottom {
+            display: none;
+        }
+
+        &__toggle {
+
+            &__dropdown {
+                right: 4px;
+            }
+        }
+        &__banner {
+            padding: 0px 20px;
+            padding-top: 16px;
+            height: 400px;
+            & h3 {
+                font-size: 32px;
+            }
+            &__slogan {
+                left: 48px;
+            }
+        }
+    }
+}
+
+@media (max-width: 599px){
+    .navigation {
+        padding: 0px 24px;
+        &__section {
+            & a {
+                display: none;
+            }
+        }
+
+        &__bottom {
+            display: block;
+        }
+
+        &__toggle {
+            &__user {
+                & h4 {
+                    display: none;
+                }
+            }
+
+            &__dropdown {
+                right: -12px;
+            }
+        }
+        &__banner {
+            padding-bottom: 20px;
+            flex-direction: column;
+            height: 440px;
+            padding-top: 40px;
+            & h3 {
+                font-size: 20px;
+            }
+        }
+    }
+}

@@ -14,7 +14,7 @@ function UserRoomButton({onDelete, roomAddress, typeParent}) {
     return (
         <div className="button">
             <button  className="button__delete" onClick={()=> setShowModal(true)}>Xóa</button>
-            <button style={{border: 'none'}} ><Link to={roomAddress} className="button__detail" >Xem chi tiết</Link></button>
+            <Link to={roomAddress} className="button__detail" >Xem chi tiết</Link>
             {showModal && <Modal typeIcon="delete" text="Xóa phòng này khỏi danh sách ?" onAgree={handleDelete} onDisagree={() => setShowModal(false)}/>}
         </div>
     );

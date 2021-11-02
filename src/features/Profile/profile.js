@@ -38,7 +38,7 @@ export const formatBirthDay = (birthday) => {
 }
 
 export const updateAvatar = async ({typeCurrent, token, file}) => {
-  const data = file;
+    const data = file
     try {
       await axios({
         method: "PUT",

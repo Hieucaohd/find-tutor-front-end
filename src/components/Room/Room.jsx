@@ -1,28 +1,18 @@
+import loadable from '@loadable/component';
 import { Box, Grid } from '@material-ui/core';
 import { handleTime } from 'containers/date';
-import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { IoLocationOutline, IoMaleFemaleOutline, IoSchoolOutline, IoTimerOutline } from "react-icons/io5";
 import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName } from '../location/getLocation';
-import { subject } from "./picture";
+import { smallerSubject } from "../../containers/picture";
 import { formatPriceString, getSexOfTeacher, getStringId, getTypeTutorString } from './room.js';
 import "./styles.scss";
-import loadable from '@loadable/component'
 
 const UserRoomButton = loadable(() => import('./components/UserRoomButton'))
 const HomeButton = loadable(() => import('./components/HomeButton'))
 const InfoButton = loadable(() => import('./components/InfoButton'))
 
-Room.propTypes = {
-    room: PropTypes.object.isRequired,
-    onDelete: PropTypes.func,
-    onCheck: PropTypes.func,
-    onWait: PropTypes.bool,
-    color: PropTypes.string,
-    onHome: PropTypes.string,
-    typeTutor: PropTypes.bool,
-};
 
 function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, typeParent=false, type} ) {
     const [address, setAddress] = useState("");
@@ -33,8 +23,10 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, 
 
     const handleCheck = () => {
         onCheck(room.id);
+        setNumberWaiting(room.number_waiting + 1);
     }
 
+    const [numberWaiting, setNumberWaiting] = useState(room.number_waiting);
 
     useEffect( () => {
         const getAddress = async () => {
@@ -43,7 +35,7 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, 
                 provinceCode: room.province_code,
                 districtCode: room.district_code,
             });
-            setAddress(`${catchDistrictName(districtName)}, ${catchProvinceName(provinceName)}`)
+            setAddress(`${districtName ? `${catchDistrictName(districtName)},` : ""} ${ provinceName ? `${catchProvinceName(provinceName)}` : "" }`)
         }
         getAddress();
     }, [room.province_code, room.district_code]);
@@ -61,7 +53,8 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, 
                 </div>
                 <span className="item__room__clock"><AiOutlineClockCircle/>{handleTime(room?.create_at)}</span>
                 <div className="item__room__thumbnail">
-                    <img src={subject[room.subject.trim()] || subject["Mặc Định"]} alt="mon hoc"/>
+                    {/* <img src={subject[room.subject.trim()] || subject["Mặc Định"]} alt="mon hoc"/> */}
+                    <img src={smallerSubject[room.subject.trim()].default || smallerSubject["Mặc Định"].default} alt={room.subject}/>
                     <div>
                         <h3>{room.subject} <span>{room.lop}</span></h3>
                         <h5>{formatPriceString(room?.pricemodel_set[0]?.money_per_day)} đ/buổi</h5>
@@ -81,7 +74,7 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, 
                         <IoTimerOutline /> {room?.pricemodel_set[0]?.time_in_one_day} tiếng/buổi
                     </div>
                 </div>
-                <span className="item__room__current">Có {room.number_waiting} gia sư đang ứng tuyển</span>
+                <span className="item__room__current">Có {numberWaiting} gia sư đang ứng tuyển</span>
                 {type==="home" && <HomeButton onCheck={handleCheck} id={room.roomId} roomAddress={`/room/${room.roomId}`} typeParent={typeParent}/>}
                 {type==="userroom" && <UserRoomButton onDelete={handleDelete} roomAddress={`/room/${room.roomId}`}/>}
                 {type==="info" && <InfoButton roomAddress={`/room/${room.roomId}`}/>}

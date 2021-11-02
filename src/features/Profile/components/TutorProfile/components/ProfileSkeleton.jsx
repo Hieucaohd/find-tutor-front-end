@@ -2,9 +2,6 @@ import { makeStyles } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import React from 'react';
 
-ProfileSkeleton.propTypes = {
-    
-};
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -14,12 +11,11 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
     },
     skeletonTop: {
-        width: '820px',
-        [theme.breakpoints.down('xs')]: {
-            width: '90%',
+        [theme.breakpoints.down('sm')]: {
+            width: '100%',
             height: '180px',
         },
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             width: '820px',
             height: '240px',
         },
@@ -28,31 +24,26 @@ const useStyles = makeStyles(theme => ({
         borderRadius: '12px',
     },
     skeleton: {
-        [theme.breakpoints.down('xs')]: {
-            width: '90%',
-            height: '48px',
+        [theme.breakpoints.down('sm')]: {
+            width: '100%',
+            height: '300px',
         },
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             width: '820px',
-            height: '58px',
+            height: '320px',
         },
         marginBottom: '12px',
         borderRadius: '12px',
-    }
+    },
+
 }));
 
-function ProfileSkeleton(props) {
+function ProfileSkeleton({isParentRoom}) {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <Skeleton variant="rect" className={classes.skeletonTop} />
-            <Skeleton variant="rect" className={classes.skeleton} />
-            <Skeleton variant="rect" className={classes.skeleton} />
-            <Skeleton variant="rect" className={classes.skeleton} />
-            <Skeleton variant="rect" className={classes.skeleton} />
-            <Skeleton variant="rect" className={classes.skeleton} />
-            <Skeleton variant="rect" className={classes.skeleton} />
-            <Skeleton variant="rect" className={classes.skeleton} />
+            <Skeleton variant="rect" className={classes.skeletonTop} style={{width: isParentRoom && "95%"}} />
+            <Skeleton variant="rect" className={classes.skeleton} style={{width: isParentRoom && "95%"}}/>
         </div>
     );
 }

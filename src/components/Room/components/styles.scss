@@ -8,17 +8,17 @@
         & button {
             flex: 1;
             margin: 8px;
-            padding: 8px 4px;
+            padding: 4px;
             border-radius: 4px;
             font-weight: 600;
-            opacity: 0.8;
+            opacity: 0.9;
             &:hover {
                 opacity: 1;
                 cursor: pointer;
             }
         }
         &__apply {
-            background-color: #5472EA;
+            background-color: #0095FF;
             border: none;
             color: white;
         }
@@ -34,11 +34,12 @@
         & a {
             flex: 1;
             margin: 8px;
-            padding: 8px 4px;
+            padding: 6px 4px;
             border-radius: 4px;
             font-weight: 600;
-            opacity: 0.8;
+            opacity: 0.9;
             color: black;
+            background-color: #F0F0F0;
             &:hover {
                 opacity: 1;
                 cursor: pointer;

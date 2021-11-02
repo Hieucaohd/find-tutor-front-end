@@ -1,17 +1,21 @@
-const server_main = 'findtutorapp.website'
 
-const server_django_api = `${server_main}/api`
-const server_nodejs_api = `${server_main}/api-chat`
+// Django
+const server_django_http = "https://www.findtutorapp.website";
 
-export const server_name = `https://${server_django_api}`;
-export const endpoint = `https://${server_django_api}/graphql/`;
-export const server_websocket = `wss://${server_main}/ws`;
+export const server_name = server_django_http;
+export const endpoint = `${server_django_http}/graphql/`;
 
-export const notification_socket = `${server_websocket}/notification/`;
-export const room_socket = `${server_websocket}/room/`;
+const server_django_websocket = "wss://www.findtutorapp.website/ws";
+
+export const notification_socket = `${server_django_websocket}/notification/`;
+export const room_socket = `${server_django_websocket}/room/`;
 
 
-export const server_name_chat_app = `https://${server_nodejs_api}`;
-export const endpoint_chat_app = `https://${server_nodejs_api}/graphql`;
+// Nodejs
+const server_nodejs_http = "https://www.chatapp.findtutorapp.website";
 
+export const server_name_chat_app = server_nodejs_http;
+export const endpoint_chat_app = `${server_nodejs_http}/graphql`;
+
+// Token
 export const token_prefix = 'Bearer';

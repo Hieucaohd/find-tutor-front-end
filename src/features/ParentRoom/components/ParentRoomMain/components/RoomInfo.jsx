@@ -1,5 +1,6 @@
 import { Avatar, makeStyles } from '@material-ui/core';
-import { subject } from 'components/Room/picture';
+import { catchDistrictName, catchProvinceName } from 'components/location/getLocation';
+import { largerSubject } from 'containers/picture';
 import { handleTime } from 'containers/date';
 import { isOnList } from 'features/ParentRoom/parentroom';
 import React from 'react';
@@ -10,7 +11,7 @@ import { useHistory } from 'react-router-dom';
 function RoomInfo( {room, applyList, userId, addToApplyList, typeParent, teaching} ) {
     const classes = useStyles();
     const history = useHistory();
-
+    const {provinceName, districtName, wardName} = room?.address;
     const getDayString = (daysStr) => {
         if(!daysStr || daysStr === "") return ;
         let days = "Thứ ";
@@ -64,10 +65,10 @@ function RoomInfo( {room, applyList, userId, addToApplyList, typeParent, teachin
         <div className={classes.root}>
             <div className={classes.room}>
             <div className={classes.header}>
-                <img src={subject[room?.subject] || subject["Mặc Định"]} alt="mon hoc"/>
+                <img src={largerSubject[room.subject.trim()].default || largerSubject["Mặc Định"].default} alt="mon hoc"/>
                 <div className={classes.info}>
                     <h3>{room?.subject} {room?.lop}</h3>
-                    <h4>{room?.address}</h4>
+                    <h4>{`${wardName ? `${wardName},` : ""} ${districtName ? `${catchDistrictName(districtName)},` : ""} ${ provinceName ? `${catchProvinceName(provinceName)}` : "" }`}</h4>
                     <div className={classes.infoField}>
                         <MdAttachMoney />
                         <span>{formatPriceString(room?.pricemodel_set)} đ/buổi</span>
@@ -236,10 +237,9 @@ const useStyles = makeStyles(theme => ({
         }
     },
     parent: {
-
-        width: 220,
-        padding: "12px 20px 56px 20px",
-        height: 240,  
+        width: 270,
+        height: 331,
+        padding: "6px 20px 56px 20px",
         flex: 2,
         boxShadow: '0 1px 4px 0 #ccc',
         borderRadius: 4,

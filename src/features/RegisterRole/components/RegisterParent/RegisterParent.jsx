@@ -1,4 +1,4 @@
-import { CircularProgress, makeStyles } from '@material-ui/core';
+import Loading from 'components/Loading/Loading';
 import Location from "components/location/Location.jsx";
 import Modal from 'components/Modal/Modal';
 import React, { useRef, useState } from 'react';
@@ -9,14 +9,13 @@ import { selectToken } from '../../../auth/authSlice';
 import { registerImage, registerParentInfor } from '../../registerAccount';
 
 function RegisterParent(props) {
-    const classes = useStyles();
+    const [loading, setLoading] = useState(false);
     const {register, formState: { errors }, handleSubmit, watch} = useForm();
     const password = useRef({});
     password.current = watch("password", "");
     const dispatch = useDispatch();
     const token = useSelector(selectToken);
     const history = useHistory();
-    const loadingRef = useRef(null);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [showFailedModal, setShowFailedModal] = useState(false);
     const [location, setLocation] = useState({
@@ -38,7 +37,7 @@ function RegisterParent(props) {
     }
 
     const onSubmit = async(data) => {
-        loadingRef.current.style.display = "flex";
+        setLoading(true);
         const parentInfor = {
             "avatar": null,
             "identity_card": null,
@@ -76,21 +75,20 @@ function RegisterParent(props) {
         const file = new FormData()
         file.append('avatar', data.avatar[0]);
         const imageResponse = registerReponse ? await registerImage({token, file}) : false ;
+        setLoading(false);
         if(imageResponse){
-            loadingRef.current.style.display = "none";
             setShowSuccessModal(true);
             history.push("/");
         }else {
-            loadingRef.current.style.display = "none";
             setShowFailedModal(true);
         }
     }
 
     return (
-        <div className={classes.root}>
-            <form className={classes.form} onSubmit={handleSubmit(onSubmit)}> 
+        <div className="role">
+            <form className="role__form" onSubmit={handleSubmit(onSubmit)}> 
                 <p>Đăng kí làm phụ huynh</p>
-                <div className={classes.formField} > 
+                <div className="role__form__field" > 
                     <label>Họ và Tên</label>
                     <input 
                         name="text" 
@@ -98,9 +96,9 @@ function RegisterParent(props) {
                         {...register("name", { required: true})}
                     />             
                     {errors.name && 
-                        <span className={classes.error}>Nhập đúng tên của bạn</span>}
+                        <span className="role__form__error">Nhập đúng tên của bạn</span>}
                 </div>
-                <div className={classes.formField}>
+                <div className="role__form__field">
                     <label>Số điện thoại</label>
                     <input 
                         name="telephone" 
@@ -108,9 +106,9 @@ function RegisterParent(props) {
                         {...register("telephone", { required: true, minLength: 8})}
                     />
                     {errors.telephone && 
-                        <span className={classes.error}>Cần nhập đúng số điện thoại</span>}
+                        <span className="role__form__error">Cần nhập đúng số điện thoại</span>}
                 </div>
-                <div className={classes.formField}>
+                <div className="role__form__field">
                     <label>Ngày sinh</label>
                     <input 
                         name="birthday" 
@@ -118,17 +116,17 @@ function RegisterParent(props) {
                         {...register("birthday", { required: true})}
                     />
                     {errors.birthday && 
-                        <span className={classes.error}>Cần nhập ngày sinh</span>}
+                        <span className="role__form__error">Cần nhập ngày sinh</span>}
                 </div>
-                <div className={classes.formField}>
+                <div className="role__form__field">
                     <label>Ảnh đại diện</label>
                     <input type="file" name="avatar" {...register("avatar")}/>
                 </div>
-                <div className={classes.formField}>
+                <div className="role__form__field">
                     <label>Địa chỉ</label>
                     <Location onChange={handleGetLocation} />
                 </div>
-                <div className={classes.formField}>
+                <div className="role__form__field">
                     <label>Chi tiết địa chỉ</label>
                     <input 
                         name="detailLocation" 
@@ -136,7 +134,7 @@ function RegisterParent(props) {
                         {...register("detailLocation")}
                     />
                 </div>
-                <div className={classes.formField}>
+                <div className="role__form__field">
                     <label>Số CMND/CCCD (không bắt buộc)</label>
                     <input 
                         name="identitycard" 
@@ -144,7 +142,7 @@ function RegisterParent(props) {
                         {...register("identitycard")}
                     />
                 </div>
-                <div className={classes.formField}>
+                <div className="role__form__field">
                     <label>Link Facebook (nếu có)</label>
                     <input  
                         type="text" 
@@ -152,7 +150,7 @@ function RegisterParent(props) {
                         {...register("facebook")}
                     />
                 </div>
-                <div className={classes.formField}>
+                <div className="role__form__field">
                     <label>Link Instagram (nếu có)</label>
                     <input  
                         type="text" 
@@ -160,7 +158,7 @@ function RegisterParent(props) {
                         {...register("instagram")}
                     />
                 </div>
-                <div className={classes.formField}>
+                <div className="role__form__field">
                     <label>Link Linkedln (nếu có)</label>
                     <input  
                         type="text" 
@@ -168,99 +166,16 @@ function RegisterParent(props) {
                         {...register("linkedln")}
                     />
                 </div>
-                <div className={classes.formField}> 
-                    <button className={classes.submit} variant="contained" color="primary" type="submit">Đăng kí</button>
+                <div className="role__form__field"> 
+                    <button className="role__form__submit" variant="contained" color="primary" type="submit">Đăng kí</button>
                 </div>
             </form>
-            <div ref={loadingRef} className={classes.loading}> 
-                <CircularProgress />
-             </div>
+            {loading && <Loading />}
             {showSuccessModal && <Modal typeIcon="check" text="Đăng kí làm gia sư thành công" onAgree={() => history.push("/") }/>}
             {showFailedModal && <Modal typeIcon="fail" text="Đăng kí làm gia sư không thành công" onAgree={() => setShowFailedModal(false)} />}
         </div>
     );
 }
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 0,
-        marginTop: '56px',
-        marginBottom: 56,
-    },
-    form: {
-        [theme.breakpoints.down('sm')]: {
-            backgroundColor: 'transparent',
-            padding: '0',
-            width: '80%',
-        },
-        [theme.breakpoints.up('md')]: {
-            // backgroundColor: 'white',
-            // padding: '80px',
-            width: '500px',
-        },
-        borderRadius: '8px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        '& > p': {
-            fontSize: '18px',
-        }
-    },
-    formField: {
-        width: '100%',
-        marginBottom: '8px',
-        display: 'flex',
-        flexDirection: 'column',
-        '& input': {
-            padding: '8px 16px',
-            borderRadius: '8px',
-            border: '0.5px solid #ccc',
-            backgroundColor: 'white',
-        },
-        '& button': {
-            width: '100%',
-        },
-        '& label': {
-            fontSize: '12px',
-            fontWeight: 500,
-        }
-    },
-    error: {
-        fontSize: '12px',
-        color: 'red',
-    },
-    submit: {
-        backgroundColor: '#5037EC',
-        color: 'white',
-        border: 'none',
-        borderRadius: '8px',
-        padding: '10px 0px',
-        opacity: 0.8, 
-        "&:hover": {
-            cursor: "pointer",
-            opacity: 1,
-        }
-    },
-    loading: {
-        display: 'none',
-        position: 'fixed',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        height: '100%',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0,0,0,0.5)', /* Black background with opacity */
-        'z-index': 2,
-    }
-}));
 
 export default RegisterParent;
