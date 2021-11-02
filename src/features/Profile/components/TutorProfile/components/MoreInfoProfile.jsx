@@ -24,7 +24,6 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         // backgroundColor: '#E9E8EB',
         // border: '0.5px solid rgba(0, 0, 0, 0.1)',
-        margin: '12px 0px',
         borderRadius: '12px',
         "& h4": {
             color: '#3b6997',
@@ -76,20 +75,20 @@ function MoreInfoProfile({tutorInfo}) {
     // }
 
     return (
-        <div className={classes.root}>
-            <div className={classes.field}>
+        <div className={`${classes.root} py-2`}>
+            <div className={`${classes.field} p-4`}>
                 <h4> <IoMdSchool /></h4>
                 <p><span>Học tại </span>{tutorInfo.university}</p>
             </div>
-            <div className={classes.field}>
+            <div className={`${classes.field} p-4`}>
                 <h4><RiMedalFill /></h4>
                 <p>{tutorInfo.achievement}</p>
             </div>
-            <div className={classes.field}>
+            <div className={`${classes.field} p-4`}>
                 <h4><AiFillExperiment /></h4>
                 <p>{tutorInfo.experience}</p>
             </div>
-            <div className={classes.field}>
+            <div className={`${classes.field} p-4`}>
                 <h4><IoLocation /></h4>
                 <p> <span>Dạy học tại</span> {tutorInfo.khu_vuc_day}</p>
             </div>

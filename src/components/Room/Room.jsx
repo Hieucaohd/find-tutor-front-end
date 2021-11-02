@@ -45,13 +45,13 @@ function Room( {room, onDelete, onCheck, onWait, onHome=false, typeTutor=false, 
             <Box mb={4} display="flex" justifyContent="center" alignItems="center">
             
             <div className="item__room">
-                <div className="item__room__avatar">
+                <div className="item__room__avatar text-gray-600">
                     {/* <Avatar 
                         src = {room?.parent?.user?.imageprivateusermodel?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_3I4Y2ydmFBosgWcdoqVBBCsYZksWAhHtjg&usqp=CAU"}
                     /> */}
                 ID{getStringId(room.roomId)} · {room?.parent?.user?.username}
                 </div>
-                <span className="item__room__clock"><AiOutlineClockCircle/>{handleTime(room?.create_at)}</span>
+                <span className="item__room__clock text-gray-600"><AiOutlineClockCircle/>{handleTime(room?.create_at)}</span>
                 <div className="item__room__thumbnail">
                     {/* <img src={subject[room.subject.trim()] || subject["Mặc Định"]} alt="mon hoc"/> */}
                     <img src={smallerSubject[room.subject.trim()].default || smallerSubject["Mặc Định"].default} alt={room.subject}/>
