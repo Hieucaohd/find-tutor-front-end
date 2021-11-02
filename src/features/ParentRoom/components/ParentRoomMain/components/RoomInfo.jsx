@@ -67,8 +67,8 @@ function RoomInfo( {room, applyList, userId, addToApplyList, typeParent, teachin
             <div className={classes.header}>
                 <img src={largerSubject[room.subject.trim()].default || largerSubject["Mặc Định"].default} alt="mon hoc"/>
                 <div className={classes.info}>
-                    <h3>{room?.subject} {room?.lop}</h3>
-                    <h4>{`${wardName ? `${wardName},` : ""} ${districtName ? `${catchDistrictName(districtName)},` : ""} ${ provinceName ? `${catchProvinceName(provinceName)}` : "" }`}</h4>
+                    <h3 className="font-bold">{room?.subject} {room?.lop}</h3>
+                    <h4 className="font-semibold">{`${wardName ? `${wardName},` : ""} ${districtName ? `${catchDistrictName(districtName)},` : ""} ${ provinceName ? `${catchProvinceName(provinceName)}` : "" }`}</h4>
                     <div className={classes.infoField}>
                         <MdAttachMoney />
                         <span>{formatPriceString(room?.pricemodel_set)} đ/buổi</span>
@@ -98,18 +98,18 @@ function RoomInfo( {room, applyList, userId, addToApplyList, typeParent, teachin
                 </div>
             </div>
             <div>
-                <h4>Yêu cầu khác</h4>
+                <h4 className="font-semibold">Yêu cầu khác</h4>
                 <p>{room?.other_require === "" ? "Không" : room?.other_require }</p>
             </div>
             </div>
             <div className={classes.parentInfo}>
                 <div className={classes.parent}>
-                    <h4>Chủ phòng</h4>
+                    <h4 className="font-bold">Chủ phòng</h4>
                     <div className={classes.parentHeader}>
                         <Avatar src={room?.parent?.avatar || null}/>
                         <div>
-                            <h5>{room?.parent?.first_name} {room?.parent?.last_name}</h5>
-                            <span>{room?.parent?.username}</span>
+                            <h5 className="font-semibold">{room?.parent?.first_name} {room?.parent?.last_name}</h5>
+                            <span className="font-medium">{room?.parent?.username}</span>
                         </div>
                     </div>
                     
@@ -188,12 +188,10 @@ const useStyles = makeStyles(theme => ({
         "& h3": {
             margin: 0,
             fontSize: 28,
-            fontWeight: 500,
             marginLeft: 4,
         },
         "& h4": {
             margin: 0,
-            fontWeight: 400,
             marginLeft: 4,
             marginBottom: 16,
         }
@@ -278,7 +276,6 @@ const useStyles = makeStyles(theme => ({
             "& h5": {
                 margin: 0,
                 fontSize: 16,
-                fontWeight: 500,
                 marginBottom: 4,
             },
             "& span": {

@@ -58,15 +58,15 @@ function GeneralProfile({tutorInfo, isUser = false, type}) {
                 </div>
                 <div className={classes.generalInfo}>
                     <div className={classes.birth}>
-                        <h4>{formatBirthDay(tutorInfo.birthday)}</h4>
+                        <h4 className="font-semibold">{formatBirthDay(tutorInfo.birthday)}</h4>
                         <span>NGÀY SINH</span>
                     </div>
                     <div className={classes.address}>
-                        <h4>{tutorInfo.address}</h4>
+                        <h4 className="font-semibold">{tutorInfo.address}</h4>
                         <span>ĐỊA CHỈ</span>
                     </div>
                 </div>
-                <div className={classes.social}>
+                <div className={`${classes.social} flex`}>
                     {tutorInfo?.linkmodel_set?.find(item => item?.name === 'facebook')?.url && <a href={tutorInfo?.linkmodel_set?.find(item => item?.name === 'facebook')?.url}><AiOutlineFacebook/></a>}
                     {tutorInfo?.linkmodel_set?.find(item => item?.name === 'instagram')?.url && <a href={tutorInfo?.linkmodel_set?.find(item => item?.name === 'instagram')?.url}><AiOutlineInstagram/></a>}
                     {tutorInfo?.linkmodel_set?.find(item => item?.name === 'linkedln')?.url && <a href={tutorInfo?.linkmodel_set?.find(item => item?.name === 'linkedln')?.url}><AiOutlineLinkedin /></a>}

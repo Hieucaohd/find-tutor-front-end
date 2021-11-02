@@ -41,7 +41,7 @@ function ParentRoomMain( {roomDetail = {}, typeParent, applyList, teaching, addT
         
         <div className={classes.bottom}>
           <div className={classes.tutor}>
-           <h5 className={classes.title}>Danh sách ứng tuyển</h5> 
+           <h5 className={`${classes.title} font-semibold mb-4`}>Danh sách ứng tuyển</h5> 
            {applyList.length === 0 && <p style={{fontStyle: 'italic', fontSize: 14, textAlign: 'center'}}>(Chưa có gia sư nào ứng tuyển)</p>} 
         {applyList?.map((item) => (
           <TutorItem key={item?.id} tutorInfo={item} isOwner={isOwner} onAdd={handleAddToTeaching} isTeaching={false} onDelete={handleDeleteFromApplyList} userId={userId}/>
