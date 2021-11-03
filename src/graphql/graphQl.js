@@ -1,4 +1,4 @@
-import { endpoint } from "namespace";
+import { endpoint, token_prefix } from "namespace";
 
 export const fetchGraphQl = async (name, queryName, query) => {
     try {
@@ -6,6 +6,7 @@ export const fetchGraphQl = async (name, queryName, query) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `${token_prefix} ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify({query: query})
         });

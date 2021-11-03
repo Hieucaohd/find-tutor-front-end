@@ -1,8 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Loading from "components/Loading/Loading";
 import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName, getWardName } from "components/location/getLocation";
-import { selectType_parent } from "features/auth/authSlice";
-import { isSignedIn } from "features/auth/cookies";
+import { selectIsSignedIn, selectType_parent } from "features/auth/authSlice";
 import { addToApplyList, addToTeachingList } from "graphql/mutationGraphQl";
 import { GetParentRoomDetail } from "graphql/RoomQueries";
 import { room_socket } from "namespace";
@@ -39,11 +38,8 @@ function ParentRoom (props) {
   const typeParent = useSelector(selectType_parent);
   const [isLoading, setIsLoading] = useState(false);
   const [isFirstLoading, setIsFirstLoading] = useState(true);
+  const isSigned = useSelector(selectIsSignedIn);
 
-  // window.scrollTo({
-  //   top: 100,
-  //   behavior: 'smooth'
-  // });
   useEffect(() => {
     // if(token.length !== 0) {
       let ws = new WebSocket(`${room_socket}${roomId}/`)
@@ -136,34 +132,10 @@ function ParentRoom (props) {
         }
       })
     }
-
-    // if(window.sessionStorage.getItem(`room${roomId}`)) {
-    //   const {roomDetail, applyList, teaching} = JSON.parse(window.sessionStorage.getItem(`room${roomId}`));
-    //   setRoomDetail(JSON.parse(roomDetail));
-    //   setApplyList(JSON.parse(applyList));
-    //   setTeaching(JSON.parse(teaching));
-    //   setIsFirstLoading(false);
-    //   isSetDetail = false;
-    // } 
       
     getRoomDetail();
    
   }, [roomId]);
-
-
-  //set data to session storage
-  // useEffect(() => {
-  //   if(roomDetail !== undefined && applyList !== undefined && teaching !== undefined) {
-  //     window.sessionStorage.removeItem(`room${roomId}`);
-  //     const newData = {
-  //       roomDetail: JSON.stringify(roomDetail),
-  //       applyList: JSON.stringify(applyList),
-  //       teaching: JSON.stringify(teaching),
-  //     }
-  //     window.sessionStorage.setItem(`room${roomId}`, JSON.stringify(newData))
-  //   }
-    
-  // }, [roomDetail, applyList, teaching, roomId])
 
   const handleAddToTeachingList = async (waitingId) => {
     setIsLoading(true);
@@ -204,7 +176,7 @@ function ParentRoom (props) {
 
   const handleAddToApplyList = async () => {
 
-    if(!isSignedIn()) history.push("/signin");
+    if(!isSigned) history.push("/signin");
     try {
       setIsLoading(true);
       const response = await addToApplyList({parentRoomId: roomId});

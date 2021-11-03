@@ -1,4 +1,4 @@
-import { server_name } from "../../namespace";
+import { server_name, token_prefix } from "../../namespace";
 
 export const deleteRoom = async ({roomId}) => {
     try {
@@ -6,6 +6,7 @@ export const deleteRoom = async ({roomId}) => {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `${token_prefix} ${localStorage.getItem('token')}`,
             },
         });
         const responseJSON = await response.json();

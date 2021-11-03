@@ -3,13 +3,12 @@ import Pagination from '@material-ui/lab/Pagination';
 import Modal from "components/Modal/Modal";
 import Room from "components/Room/Room";
 import SkeletonPage from "components/Skeleton/SkeletonPage";
-import { isSignedIn } from "features/auth/cookies";
 import { GetFilterRoom } from "graphql/RoomQueries";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { addToApplyList } from "../../graphql/mutationGraphQl";
-import { selectType_parent, selectType_tutor } from "../auth/authSlice";
+import { selectIsSignedIn, selectType_parent, selectType_tutor } from "../auth/authSlice";
 import HomeBar from "./components/HomeBar/HomeBar";
 import "./styles.scss";
 
@@ -17,7 +16,7 @@ function Home() {
   const history = useHistory();
   const type_parent = useSelector(selectType_parent); // lấy type_parent từ authSlice.js
   const type_tutor = useSelector(selectType_tutor);
-  const isSigned = isSignedIn();
+  const isSigned = useSelector(selectIsSignedIn);
   const location = useLocation();
   const [roomList, setRoomList] = useState([]);
   const [loading, setLoading] = useState(true);

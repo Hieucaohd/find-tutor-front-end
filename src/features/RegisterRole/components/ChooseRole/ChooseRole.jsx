@@ -1,12 +1,13 @@
-import { isSignedIn } from 'features/auth/cookies';
+import { selectIsSignedIn } from 'features/auth/authSlice';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-
 
 function RegisterRole(props) {
     const history = useHistory();
-    
-    if(!isSignedIn()) {
+    const isSigned = useSelector(selectIsSignedIn);
+
+    if(!isSigned) {
         history.push("/signin");
     }
 
