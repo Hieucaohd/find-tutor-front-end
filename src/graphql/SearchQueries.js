@@ -1,6 +1,6 @@
 import { fetchGraphQl } from "./graphQl"
 
-export const SearchTutor = async (search, token) => {
+export const SearchTutor = async (search) => {
     const query = `
     {
         search_tutor(search_infor: "${search}") {
@@ -20,12 +20,12 @@ export const SearchTutor = async (search, token) => {
         }
     }`
 
-    const searchModel =  await fetchGraphQl("search tutor", "search_tutor", query, token);
+    const searchModel =  await fetchGraphQl("search tutor", "search_tutor", query);
     const tutorList = await searchModel?.result;
     return tutorList;
 } 
 
-export const SearchParent = async (search, token) => {
+export const SearchParent = async (search) => {
     const query = `
     {
         search_parent(search_infor: "${search}") {
@@ -44,7 +44,7 @@ export const SearchParent = async (search, token) => {
         }
     }`
 
-    const searchModel = await fetchGraphQl("search parent", "search_parent", query, token);
+    const searchModel = await fetchGraphQl("search parent", "search_parent", query);
     const searchList = await searchModel?.result;
     return searchList;
 }

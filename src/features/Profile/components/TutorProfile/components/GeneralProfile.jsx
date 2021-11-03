@@ -2,12 +2,10 @@ import { Avatar, makeStyles } from '@material-ui/core';
 import Loading from "components/Loading/Loading";
 import Modal from "components/Modal/Modal";
 import UploadImage from 'components/UploadImage/UploadImage';
-import { selectToken } from 'features/auth/authSlice';
 import { formatBirthDay, updateAvatar } from 'features/Profile/profile';
 import FormData from 'form-data';
 import React, { useState } from 'react';
 import { AiFillCamera, AiOutlineFacebook, AiOutlineInstagram, AiOutlineLinkedin, AiTwotoneEdit } from 'react-icons/ai';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const getJobName = (str) => {
@@ -20,7 +18,6 @@ const getJobName = (str) => {
 function GeneralProfile({tutorInfo, isUser = false, type}) {
     const classes = useStyles();
     const [showChangeAvatar, setShowChangeAvatar] = useState(false);
-    const token = useSelector(selectToken);
     const [showFailedModal, setShowFailedModal] = useState(false);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [showLoading, setShowLoading] = useState(false);
@@ -30,7 +27,6 @@ function GeneralProfile({tutorInfo, isUser = false, type}) {
         file.append('avatar', image);
         const response = await updateAvatar({
             // typeCurrent: tutorInfo.imageprivateusermodel?.avatar ? true : false,
-            token: token,
             file: file})
     
         if(response) {

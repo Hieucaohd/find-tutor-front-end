@@ -1,8 +1,7 @@
 import Loading from 'components/Loading/Loading';
 import Modal from 'components/Modal/Modal';
-import { selectEmail, selectToken, selectUsername } from 'features/auth/authSlice';
-import React from 'react';
-import { useState } from 'react';
+import { selectEmail, selectUsername } from 'features/auth/authSlice';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { changePassword } from '../settings';
 import ChangePassword from './ChangePassword';
@@ -12,14 +11,12 @@ function SettingsAccount(props) {
     const email = useSelector(selectEmail);
     const [showChangePassword, setShowChangePassword] = useState(false);
     const [showLoading, setShowLoading] = useState(false);
-    const token = useSelector(selectToken);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [showFailedModal, setShowFailedModal] = useState(false);
 
     const handleChangePassword = async ({oldPassword, newPassword}) => {
         setShowLoading(true);
         const response = await changePassword({
-            token: token,
             oldPassword: oldPassword,
             newPassword: newPassword,
         })

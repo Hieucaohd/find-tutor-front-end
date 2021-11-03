@@ -1,12 +1,11 @@
-const { server_name, token_prefix } = require("namespace");
+const { server_name} = require("namespace");
 
-export const updateTutorProfile = async ({newTutorInfo, token, id}) => {
+export const updateTutorProfile = async ({newTutorInfo, id}) => {
     try {
         await fetch(`${server_name}/findTutor/tutorDetail/${id}`, {
             method: "PUT",
             headers: {
-              "Content-Type": "application/json",
-              Authorization: `${token_prefix} ${token}`,
+                "Content-Type": "application/json",
             },
             body: JSON.stringify(newTutorInfo),
         })
@@ -17,13 +16,12 @@ export const updateTutorProfile = async ({newTutorInfo, token, id}) => {
     }
 }
 
-export const updateParentProfile = async ({newTutorInfo, token, id}) => {
+export const updateParentProfile = async ({newTutorInfo, id}) => {
     try {
         await fetch(`${server_name}/findTutor/parentDetail/${id}`, {
             method: "PUT",
             headers: {
-              "Content-Type": "application/json",
-              Authorization: `${token_prefix} ${token}`,
+                "Content-Type": "application/json",
             },
             body: JSON.stringify(newTutorInfo),
         })
@@ -39,8 +37,7 @@ export const updateLink = async ({ token, newLink}) => {
         await fetch(`${server_name}/auth/updateMultipleLink/`, {
             method: "PUT",
             headers: {
-              "Content-Type": "application/json",
-              Authorization: `${token_prefix} ${token}`,
+                "Content-Type": "application/json",
             },
             body: JSON.stringify(newLink),
         })
@@ -64,8 +61,7 @@ export const changePassword = async ({token, oldPassword, newPassword}) => {
         await fetch(`${server_name}/auth/changePassword/`, {
             method: "PUT",
             headers: {
-              "Content-Type": "application/json",
-              Authorization: `${token_prefix} ${token}`,
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 "old_password": oldPassword,

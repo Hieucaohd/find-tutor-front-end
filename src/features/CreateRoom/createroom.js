@@ -1,13 +1,12 @@
-const { server_name, token_prefix } = require("namespace");
+const { server_name} = require("namespace");
 
 
-export const addParentRoom = async ({token, roomInfor, price}) => {
+export const addParentRoom = async ({roomInfor, price}) => {
     try {
         const response = await fetch(`${server_name}/findTutor/roomList/`, {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
-              Authorization: `${token_prefix} ${token}`,
+                "Content-Type": "application/json",
             },
             body: JSON.stringify(roomInfor),
         })
@@ -15,8 +14,7 @@ export const addParentRoom = async ({token, roomInfor, price}) => {
         await fetch(`${server_name}/findTutor/priceList/?pk_room=${responseJSON.id}`, {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
-              Authorization: `${token_prefix} ${token}`,
+                "Content-Type": "application/json",
             },
             body: JSON.stringify(price),
         })

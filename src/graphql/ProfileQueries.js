@@ -1,6 +1,6 @@
 import { fetchGraphQl } from "./graphQl"
 
-export const GetTutorProfile = async (id, token) => {
+export const GetTutorProfile = async (id) => {
     const query = `{
         user_by_id(id: ${id}) {
             username
@@ -29,7 +29,7 @@ export const GetTutorProfile = async (id, token) => {
             }
   	    }    
     }`
-    const tutorprofile = await fetchGraphQl("tutor profile", "user_by_id", query, token);
+    const tutorprofile = await fetchGraphQl("tutor profile", "user_by_id", query);
     return { 
         ...tutorprofile?.tutormodel,
         username: tutorprofile?.username,
@@ -38,7 +38,7 @@ export const GetTutorProfile = async (id, token) => {
     };
 }
 
-export const GetParentProfile = async (id, token) => {
+export const GetParentProfile = async (id) => {
     const query = `
     {
 		user_by_id(id: ${id}) {
@@ -63,7 +63,7 @@ export const GetParentProfile = async (id, token) => {
   	    }
     }
     `
-    const parentprofile = await fetchGraphQl("parent profile", "user_by_id", query, token);
+    const parentprofile = await fetchGraphQl("parent profile", "user_by_id", query);
     return {
         ...parentprofile?.parentmodel,
         username: parentprofile?.username,
@@ -103,10 +103,10 @@ export const getTutorInfoForRoom = (id) => {
 }
 
 
-export const getNotification = async ({token, num, page}) => {
+export const getNotification = async ({num, page}) => {
     const query = `
     {
-        all_room_notification(num_in_page: ${num}, page: ${page}, token:"${token}") {
+        all_room_notification(num_in_page: ${num}, page: ${page}) {
             _id
             room {
                 id 

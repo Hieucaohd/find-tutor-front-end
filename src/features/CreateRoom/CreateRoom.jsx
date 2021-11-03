@@ -1,19 +1,18 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Loading from "components/Loading/Loading";
 import Location from "components/location/Location";
+import Modal from "components/Modal/Modal";
 import { CreateParentRoom } from "graphql/mutationGraphQl";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { selectId_of_user, selectToken } from "../auth/authSlice";
-import Modal from "components/Modal/Modal";
+import { selectId_of_user } from "../auth/authSlice";
 
 function CreateRoom(props) {
   const classes = useStyles();
   const days = [2, 3, 4, 5, 6, 7, 8];
   const history = useHistory();
-  const token = useSelector(selectToken);
   const { register, formState: { errors }, handleSubmit } = useForm();
   const [showFailModal, setShowFailModal] = useState(false);
   const [showCheckModal, setShowCheckModal] = useState(false);
@@ -72,7 +71,7 @@ function CreateRoom(props) {
     };
 
     loadingRef.current.style.display = "flex";
-    const response = await CreateParentRoom({token: token, roomInfo: roomInfor});
+    const response = await CreateParentRoom({roomInfo: roomInfor});
     if(response) {
       setShowCheckModal(true);
     } else {

@@ -1,7 +1,7 @@
 import Loading from 'components/Loading/Loading';
 import SettingsLocation from 'components/location/SettingsLocation';
 import Modal from 'components/Modal/Modal';
-import { selectId_of_user, selectToken } from 'features/auth/authSlice';
+import { selectId_of_user} from 'features/auth/authSlice';
 import { GetTutorProfile } from 'graphql/ProfileQueries';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -12,7 +12,6 @@ import LoadingField from './LoadingField';
 
 function SettingsTutor(props) {
     const [tutorData, setTutorData] = useState(null);
-    const token = useSelector(selectToken);
     const userId = useSelector(selectId_of_user);
     const {register, formState: { errors }, handleSubmit} = useForm();
     const [onShowSave, setOnShowSave] = useState(false);
@@ -23,11 +22,11 @@ function SettingsTutor(props) {
     
     useEffect(()=> {
         const getData = async () => {
-            const data = await GetTutorProfile(userId, token);
+            const data = await GetTutorProfile(userId);
             setTutorData(data);
         }
         getData();
-    }, [token, userId])
+    }, [userId])
 
     const renderType = (type) => {
         if(type === "gv") {
@@ -117,13 +116,12 @@ function SettingsTutor(props) {
         setShowLoading(true);
         let response = await updateTutorProfile({
             newTutorInfo: newTutorProfile,
-            token: token,
             id: userId,
         });
         
         const newLink = await handleChangeLink(data);
         if(newLink.length!==0) {
-            response = await updateLink({newLink: newLink, token: token});
+            response = await updateLink({newLink: newLink});
         }
 
         setShowLoading(false);

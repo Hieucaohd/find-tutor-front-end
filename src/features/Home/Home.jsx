@@ -1,5 +1,7 @@
 import { Grid } from "@material-ui/core";
 import Pagination from '@material-ui/lab/Pagination';
+import Modal from "components/Modal/Modal";
+import Room from "components/Room/Room";
 import SkeletonPage from "components/Skeleton/SkeletonPage";
 import { isSignedIn } from "features/auth/cookies";
 import { GetFilterRoom } from "graphql/RoomQueries";
@@ -7,24 +9,18 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { addToApplyList } from "../../graphql/mutationGraphQl";
-import {
-  selectToken, selectType_parent, selectType_tutor
-} from "../auth/authSlice";
-import "./styles.scss";
-import Room from "components/Room/Room";
+import { selectType_parent, selectType_tutor } from "../auth/authSlice";
 import HomeBar from "./components/HomeBar/HomeBar";
-import Modal from "components/Modal/Modal";
+import "./styles.scss";
 
 function Home() {
   const history = useHistory();
-  const type_tutor = useSelector(selectType_tutor); // lấy type_tutor từ authSlice.js
   const type_parent = useSelector(selectType_parent); // lấy type_parent từ authSlice.js
-  
+  const type_tutor = useSelector(selectType_tutor);
   const isSigned = isSignedIn();
   const location = useLocation();
   const [roomList, setRoomList] = useState([]);
   const [loading, setLoading] = useState(true);
-  const token = useSelector(selectToken);
   const [showFailModal, setShowFailModal] = useState(false);
   const [showCheckModal, setShowCheckModal] = useState(false);
   const [maxPagination, setMaxPagination] = useState(1);
@@ -41,7 +37,7 @@ function Home() {
     const getFilterRoomList = async () => { 
       setLoading(true);
       const filter = await queryString.parse(location.search);
-      const filterRoomList = await GetFilterRoom({filterRoom: {...filter}, token: token});
+      const filterRoomList = await GetFilterRoom({filterRoom: {...filter}});
       setMaxPagination(filterRoomList?.num_pages);
       setRoomList(filterRoomList?.result);
       setLoading(false);
@@ -49,12 +45,12 @@ function Home() {
 
     getFilterRoomList();
     
-  }, [location, token, queryString]);
+  }, [location, queryString]);
 
 
   const handleAddRoom = async (id) => {
     if(isSigned){
-      const response = await addToApplyList({token: token, parentRoomId: id});
+      const response = await addToApplyList({parentRoomId: id});
       !response ? setShowFailModal(true) : setShowCheckModal(true);
     } else {
       history.push("/signin");

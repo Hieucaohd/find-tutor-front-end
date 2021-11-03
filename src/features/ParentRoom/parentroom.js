@@ -1,4 +1,4 @@
-import { server_name, token_prefix } from "namespace";
+import { server_name } from "namespace";
 
 export const deleteFromWaitingList = async ({waitingId, token}) => {
     try {
@@ -8,7 +8,6 @@ export const deleteFromWaitingList = async ({waitingId, token}) => {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `${token_prefix} ${token}`,
               },
             }
         );
@@ -26,7 +25,6 @@ export const deleteTutorFromTeachingList = async ({teachingId, token}) => {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `${token_prefix} ${token}`,
               },
             }
         );

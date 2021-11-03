@@ -1,7 +1,6 @@
 import { fetchGraphQl } from "./graphQl"
 
-export const GetAllRoom = (pages, token) => {
-
+export const GetAllRoom = (pages) => {
     const query = `{
         all_room(page: ${pages}, num_in_page: 12){
             result {
@@ -32,10 +31,10 @@ export const GetAllRoom = (pages, token) => {
             num_pages
         }
     }`
-    return fetchGraphQl("room list", "all_room", query, token);
+    return fetchGraphQl("room list", "all_room", query);
 }
 
-export const GetFilterRoom = ({filterRoom, token}) => {
+export const GetFilterRoom = ({filterRoom}) => {
     const {lop, province_code, district_code, ward_code, subject, sex, job, price, sort="create_at", pages = 1 } = filterRoom;
     const queryString = `${lop ? `lop: [${lop}],` : ``}
         ${province_code ? `province_code: ${province_code},` : ``}
@@ -76,7 +75,7 @@ export const GetFilterRoom = ({filterRoom, token}) => {
             num_pages
         }
     }`
-    return fetchGraphQl("filter room list", "search_room", query, token);
+    return fetchGraphQl("filter room list", "search_room", query);
 }
 
 export const GetUserParentRoom = async (id) => {
@@ -100,7 +99,7 @@ export const GetUserParentRoom = async (id) => {
     return parentModel.parentmodel.parentroommodel_set;
 }
 
-export const GetParentRoomDetail = async(id, token) => {
+export const GetParentRoomDetail = async(id) => {
     const query = `
     {
         room_by_id(id: ${id}) {
@@ -181,7 +180,7 @@ export const GetParentRoomDetail = async(id, token) => {
             }
         }
     }`;
-    const roomModel = await fetchGraphQl("parent room detail", "room_by_id", query, token);
+    const roomModel = await fetchGraphQl("parent room detail", "room_by_id", query);
     return roomModel;
 }
 

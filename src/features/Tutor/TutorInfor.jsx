@@ -4,10 +4,9 @@ import { deleteFromWaitingList, deleteTutorFromTeachingList } from "features/Par
 import { getTutorRoomList } from "graphql/TutorRoomQueries";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectId_of_user, selectToken } from "../auth/authSlice";
+import { selectId_of_user } from "../auth/authSlice";
 
 function TutorInfor() {
-  const token = useSelector(selectToken);
   const classes = useStyles();
   const userId = useSelector(selectId_of_user);
   const [applyList, setApplyList] = useState([]);
@@ -19,16 +18,12 @@ function TutorInfor() {
       await setApplyList(listRoom.waitingtutormodel_set);
       await setTeachingList(listRoom.tutorteachingmodel_set);
   }
-  
-    if (token) {
-      // dispatch something here.
-      fetchRoomList();
-    }
-  }, [token, userId]);
+    fetchRoomList();
+  }, [userId]);
 
   const handleDeleteFromApplyList = async (waitingId) => {
     try {
-      await deleteFromWaitingList({token: token, waitingId: waitingId});
+      await deleteFromWaitingList({waitingId: waitingId});
       const newList = [];
       await applyList.forEach((item) => {
         if(Number(item.id) !== Number(waitingId)) {
@@ -43,7 +38,7 @@ function TutorInfor() {
 
   const handleDeleteFromTeachingList = async (teachingId) => {
     try {
-      await deleteTutorFromTeachingList({token: token, teachingId: teachingId});
+      await deleteTutorFromTeachingList({teachingId: teachingId});
       const newList = [];
       await teachingList.forEach((item) => {
         if(Number(item.id) !== Number(teachingId)) {

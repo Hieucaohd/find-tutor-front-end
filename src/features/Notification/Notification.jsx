@@ -1,31 +1,30 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { selectToken } from 'features/auth/authSlice';
+import notificationMP3 from "assets/sounds/notification.mp3";
+import { selectIsSignedIn } from 'features/auth/authSlice';
 import React, { useEffect, useState } from 'react';
 import { IoNotifications } from "react-icons/io5";
 import { useSelector } from 'react-redux';
 import { notification_socket } from "../../namespace";
 import NotificationList from './components/NotificationList';
 import "./styles.scss";
-import notificationMP3 from "assets/sounds/notification.mp3";
 
 function Notification(props) {
     const classes = useStyles();
-    const token = useSelector(selectToken);
     const [count, setCount] = useState(0);
     const handleIncrement = () => {
         setCount(count => count + 1);
     };
-
+    const isSigned = useSelector(selectIsSignedIn);
     const playNotificationSound = () => {
         let notificationSound = new Audio (notificationMP3);
         notificationSound.play();
     }
-
+    
     useEffect(() => {
-        if(!token) return;
+        if(!isSigned) return;
         
-        let ws = new WebSocket(notification_socket, ["Token", token]);
-        
+        // let ws = new WebSocket(notification_socket, ["Token", token]);
+        let ws = new WebSocket(notification_socket);
         ws.onopen = () => console.log('Notification Websocket opened');
         ws.onclose = () => console.log('Notification Websocket closed');
         
@@ -41,7 +40,7 @@ function Notification(props) {
             ws.close();
         }
         
-    }, [token])
+    }, [isSigned])
 
     useEffect(() => {
         if(count > 0) {
