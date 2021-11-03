@@ -104,7 +104,7 @@ function RoomInfo( {room, applyList, userId, addToApplyList, typeParent, teachin
             </div>
             <div className={classes.parentInfo}>
                 <div className={classes.parent}>
-                    <h4 className="font-bold">Chủ phòng</h4>
+                    <h4 className="font-bold">NGƯỜI TẠO PHÒNG</h4>
                     <div className={classes.parentHeader}>
                         <Avatar src={room?.parent?.avatar || null}/>
                         <div>
@@ -115,18 +115,18 @@ function RoomInfo( {room, applyList, userId, addToApplyList, typeParent, teachin
                     
                     <div className={classes.infoField}>
                         <MdLocationOn />
-                        <span>{room?.parent?.address}</span>
+                        <span className="text-sm">{room?.parent?.address}</span>
                     </div>
                     <div className={classes.infoField}>
                         <FaCalendarDay />
-                        <span>{room?.parent?.birthday.slice(0,4)}</span>
+                        <span className="text-sm">{room?.parent?.birthday.slice(0,4)}</span>
                     </div>
                     <div className={classes.infoField}>
                         <FaBorderAll />
-                        <span>Đã tạo 3 phòng</span>
+                        <span className="text-sm">Đã tạo 3 phòng</span>
                     </div>
-                    <h5 className={classes.parentTime}>Tham gia 3 tháng trước</h5>
-                    <button onClick={() => handleShowParentProfile(room.parent.id)}>Xem chi tiết</button>
+                    <h5 className={`${classes.parentTime} text-sm`}>Tham gia 3 tháng trước</h5>
+                    <button className="text-sm" onClick={() => handleShowParentProfile(room.parent.id)}>Xem chi tiết</button>
                 </div>
             </div>
             
@@ -235,26 +235,26 @@ const useStyles = makeStyles(theme => ({
         }
     },
     parent: {
-        width: 270,
-        height: 331,
+        width: 266,
+        height: 300,
         padding: "6px 20px 56px 20px",
         flex: 2,
-        boxShadow: '0 1px 4px 0 #ccc',
+        // boxShadow: '0 1px 4px 0 #ccc',
+        border: "1px solid #ccc",
         borderRadius: 4,
         backgroundColor: 'white',
         "& h4": {
-            textAlign: 'center',
-            margin: 16,
+            // textAlign: 'center',
+            margin: "16px 0px",
             fontSize: 16,
-            borderBottom: '1px solid #ccc',
+            // borderBottom: '1px solid #ccc',
         },
         "& button": {
             border: 'none',
             backgroundColor: '#d7d5d5',
             borderRadius: 4,
             width: "100%", 
-            padding: 8,
-            fontSize: 16,
+            padding: 6,
             fontWeight: 600,
             opacity: 0.8,
             "&:hover": {

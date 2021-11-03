@@ -57,6 +57,7 @@ function SignUpForm() {
                         <input
                             name="username" 
                             type="text"
+                            className="text-sm"
                             {...register("username", { required: true, minLength: 6})}
                         />
                         {errors.username && errors.username.type === "required" && 
@@ -69,6 +70,7 @@ function SignUpForm() {
                         <input 
                             name="email" 
                             type="email"
+                            className="text-sm"
                             {...register('email', {
                                 required: true,
                                 pattern: {
@@ -83,6 +85,7 @@ function SignUpForm() {
                         <input 
                             name="password" 
                             type="password"
+                            className="text-sm"
                             {...register("password", { required: true, minLength: 6})}
                         />
                         {errors.password && errors.password.type === "required" && 
@@ -95,6 +98,7 @@ function SignUpForm() {
                         <input 
                             name="repassword" 
                             type="password"
+                            className="text-sm"
                             {...register("repassword", {
                                 validate: value =>
                                 value === password.current || "The passwords do not match"
@@ -104,7 +108,7 @@ function SignUpForm() {
                             <span className ={classes.error}>Mật khẩu không trùng khớp</span>}
                     </div>
                     <div className ={classes.formField}> 
-                        <button className ={classes.submit} type="submit" >Đăng kí tài khoản</button>
+                        <button className ={`${classes.submit} text-sm`} type="submit" >Đăng kí tài khoản</button>
                     </div>
             </form>
             <div ref={loadingRef}  className ={classes.loading}> 

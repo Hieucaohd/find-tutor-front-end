@@ -66,6 +66,7 @@ function Login({onShow}) {
               <label className={classes.label}>Email*</label>
               <input 
                 name="email" 
+                className="text-sm"
                 type="email" placeholder="mail@website.com" 
                 {...register("email", { required: true }
                 )}/>
@@ -74,17 +75,19 @@ function Login({onShow}) {
             
             <div className={classes.formField}>
               <label className={classes.label}>Mật khẩu*</label>
-              <input name="password" 
-              type="password" 
-              placeholder="Tối thiểu 6 kí tự" 
-              {...register("password", { required: true })}/>
+              <input 
+                name="password" 
+                type="password" 
+                className="text-sm"
+                placeholder="Tối thiểu 6 kí tự" 
+                {...register("password", { required: true })}/>
               <span className={classes.error}>{errors.username && "Cần nhập mật khẩu"}</span>
             </div>
             <div className={classes.forget}>
               <a href="/forget">Quên mật khẩu?</a>
             </div>
             <div className={classes.formField}>
-              <button type="submit" className={classes.submit}>Sign in</button>
+              <button type="submit" className={`${classes.submit} text-sm`}>Đăng nhập</button>
             </div>
             <div style={{marginTop: "-12px"}}>
               <span className={classes.registerspan}>Chưa có tài khoản?</span>
@@ -178,9 +181,9 @@ const useStyles = makeStyles(theme => ({
     borderRadius: '8px',
     padding: '8px 0px',
     opacity: 0.8,
-      "&:hover": {
-        opacity: 1,
-        cursor: 'pointer'
+    "&:hover": {
+      opacity: 1,
+      cursor: 'pointer'
     }
     // width: '50%!important',
   },

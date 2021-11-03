@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState } from 'react';
 import { RiFilter3Fill } from 'react-icons/ri';
 import { useHistory, useLocation } from 'react-router';
@@ -5,7 +6,6 @@ import Select from 'react-select';
 import Categories from './components/Catergories/Categories';
 import FilterBar from './components/FilterBar/FilterBar';
 import "./styles.scss";
-import { motion, AnimatePresence } from "framer-motion"
 
 
 const options = [
@@ -53,26 +53,9 @@ function HomeBar(props) {
                     Lọc
                 </button>
             </div>
-            {/* {isShowFilter && <div className="homebar__filterbar">
-                <FilterBar currentFilter={currentFilter}/>
-            </div>} */}
-            <AnimatePresence initial={false}>
-                {isShowFilter && (
-                <motion.section
-                    key="content"
-                    initial="collapsed"
-                    animate="open"
-                    exit="collapsed"
-                    variants={{
-                      open: { opacity: 1, height: "auto" },
-                      collapsed: { opacity: 0, height: 0 }
-                    }}
-                    transition={{ duration: 0.2, ease: [0.04, 0.62, 0.23, 0.98] }}
-                     >
-                    <FilterBar currentFilter={currentFilter}/>
-                </motion.section>
-                )}
-            </AnimatePresence>
+            
+            {isShowFilter && (<FilterBar currentFilter={currentFilter}/>)}
+
       </div>
     );
 }
