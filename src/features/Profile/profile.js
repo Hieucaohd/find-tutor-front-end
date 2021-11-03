@@ -1,5 +1,5 @@
 import axios from "axios";
-import { server_name, token_prefix } from "../../namespace";
+import { server_name } from "../../namespace";
 
 export const getParentProfile = async ({id}) => {
     try {
@@ -37,7 +37,7 @@ export const formatBirthDay = (birthday) => {
   return newBirthDay;
 }
 
-export const updateAvatar = async ({typeCurrent, token, file}) => {
+export const updateAvatar = async ({typeCurrent, file}) => {
     const data = file
     try {
       await axios({
@@ -45,7 +45,6 @@ export const updateAvatar = async ({typeCurrent, token, file}) => {
         url: `${server_name}/findTutor/imagePrivateUserDetail/`,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `${token_prefix} ${token}`
         },
         data
       })

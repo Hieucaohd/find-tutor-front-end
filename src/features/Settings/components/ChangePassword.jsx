@@ -4,9 +4,6 @@ import { useForm } from 'react-hook-form';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { RiLockPasswordFill } from 'react-icons/ri';
 
-ChangePassword.propTypes = {
-    
-};
 
 function ChangePassword({onClose, onSubmit}) {
     const {register, formState: { errors }, handleSubmit, watch} = useForm();

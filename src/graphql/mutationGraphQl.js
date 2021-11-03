@@ -1,6 +1,6 @@
-import { endpoint, token_prefix } from "namespace";
+import { endpoint } from "namespace";
 
-export const CreateParentRoom = async ({token, roomInfo}) => {
+export const CreateParentRoom = async ({roomInfo}) => {
     const {day_can_teach, subject, lop, other_require, province_code, district_code, ward_code, detail_location, time_in_one_day, money_per_day, type_teacher, sex_of_teacher} = roomInfo;
     const mutation = `
     mutation {
@@ -46,8 +46,7 @@ export const CreateParentRoom = async ({token, roomInfo}) => {
         await fetch(endpoint, {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
-              Authorization: `${token_prefix} ${token}`,
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({query: mutation})
         });
@@ -58,7 +57,7 @@ export const CreateParentRoom = async ({token, roomInfo}) => {
     }
 }
 
-export const addToApplyList = async ({token, parentRoomId}) => {
+export const addToApplyList = async ({parentRoomId}) => {
     const mutation = `
     mutation {
         create_waiting_tutor(input_fields: {
@@ -94,8 +93,7 @@ export const addToApplyList = async ({token, parentRoomId}) => {
         const response = await fetch(endpoint, {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
-              Authorization: `${token_prefix} ${token}`,
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({query: mutation})
         });
@@ -106,7 +104,7 @@ export const addToApplyList = async ({token, parentRoomId}) => {
     }
 }
 
-export const addToTeachingList = async ({id, token}) => {
+export const addToTeachingList = async ({id}) => {
     const mutation = `
     mutation {
         create_tutor_teaching(input_fields: {
@@ -142,8 +140,7 @@ export const addToTeachingList = async ({id, token}) => {
         const response = await fetch(endpoint, {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
-              Authorization: `${token_prefix} ${token}`,
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({query: mutation})
         });

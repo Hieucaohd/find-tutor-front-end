@@ -3,9 +3,8 @@ import Location from "components/location/Location.jsx";
 import Modal from 'components/Modal/Modal';
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { selectToken } from '../../../auth/authSlice';
 import { registerImage, registerParentInfor } from '../../registerAccount';
 
 function RegisterParent(props) {
@@ -14,7 +13,6 @@ function RegisterParent(props) {
     const password = useRef({});
     password.current = watch("password", "");
     const dispatch = useDispatch();
-    const token = useSelector(selectToken);
     const history = useHistory();
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [showFailedModal, setShowFailedModal] = useState(false);
@@ -68,13 +66,12 @@ function RegisterParent(props) {
         }
         
         const registerReponse = await registerParentInfor({
-            token: token,
             parentInfor: parentInfor,
             dispatch: dispatch,
         });
         const file = new FormData()
         file.append('avatar', data.avatar[0]);
-        const imageResponse = registerReponse ? await registerImage({token, file}) : false ;
+        const imageResponse = registerReponse ? await registerImage({file}) : false ;
         setLoading(false);
         if(imageResponse){
             setShowSuccessModal(true);

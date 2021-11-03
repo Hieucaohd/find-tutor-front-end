@@ -1,7 +1,7 @@
 import Loading from 'components/Loading/Loading';
 import SettingsLocation from 'components/location/SettingsLocation';
 import Modal from 'components/Modal/Modal';
-import { selectId_of_user, selectToken } from 'features/auth/authSlice';
+import { selectId_of_user } from 'features/auth/authSlice';
 import { GetParentProfile } from 'graphql/ProfileQueries';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -9,14 +9,9 @@ import { useSelector } from 'react-redux';
 import { getName, updateLink, updateParentProfile } from '../settings';
 import LoadingField from './LoadingField';
 
-SettingsParent.propTypes = {
-    
-};
-
 function SettingsParent(props) {
 
     const [parentData, setParentData] = useState(null);
-    const token = useSelector(selectToken);
     const userId = useSelector(selectId_of_user);
     const [onShowSave, setOnShowSave] = useState(false);
     const [newParentProfile, setNewParentProfile] = useState({});
@@ -27,11 +22,11 @@ function SettingsParent(props) {
     
     useEffect(()=> {
         const getData = async () => {
-            const data = await GetParentProfile(userId, token);
+            const data = await GetParentProfile(userId);
             setParentData(data);
         }
         getData();
-    }, [token, userId])
+    }, [userId])
     
     const handleChangeLink = (data) => {
         let linkArr = [];
@@ -93,13 +88,12 @@ function SettingsParent(props) {
         setShowLoading(true);
         let response = await updateParentProfile({
             newTutorInfo: newParentProfile,
-            token: token,
             id: userId,
         });
 
         const newLink = await handleChangeLink(data);
         if(newLink.length!==0) {
-            response = await updateLink({newLink: newLink, token: token});
+            response = await updateLink({newLink: newLink});
         }
 
         setShowLoading(false);

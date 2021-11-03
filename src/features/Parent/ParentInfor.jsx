@@ -6,12 +6,11 @@ import React, { useEffect, useState } from 'react';
 import { FcAddDatabase } from 'react-icons/fc';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { selectId_of_user, selectToken, selectType_parent } from '../auth/authSlice';
+import { selectId_of_user, selectType_parent } from '../auth/authSlice';
 import { deleteRoom } from './parent';
 
 function ParentInfor() {
     const classes = useStyles();
-    const token = useSelector(selectToken);
     const parentId = useSelector(selectId_of_user);
     const typeParent = useSelector(selectType_parent);
     const history = useHistory();
@@ -21,7 +20,7 @@ function ParentInfor() {
         let newParentRoomList = [...parentRoomList];
         newParentRoomList = await newParentRoomList.filter( (room) => Number(room.id) !== Number(id));
         setParentRoomList(newParentRoomList);
-        await deleteRoom({ roomId: id, token: token });
+        await deleteRoom({ roomId: id});
     }
     
     useEffect ( ()=> {

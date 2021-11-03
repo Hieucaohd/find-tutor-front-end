@@ -1,19 +1,15 @@
-import { selectToken } from 'features/auth/authSlice';
 import { getNotification } from 'graphql/ProfileQueries';
 import React, { useEffect, useState } from 'react';
 import Loader from "react-loader-spinner";
-import { useSelector } from 'react-redux';
 import RoomNotification from './RoomNotification';
 
 function NotificationList({onClose}) {
     const [notiList, setNotiList] = useState([]);
-    const token = useSelector(selectToken);
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
     useEffect(() => {
         const getNotiList = async () => {
             const list = await getNotification({
-                token: token,
                 num: 6,
                 page: 1,
             });
@@ -21,7 +17,7 @@ function NotificationList({onClose}) {
             setNotiList(list);
         }
         getNotiList();
-    }, [token]) 
+    }, []) 
 
     
 

@@ -4,7 +4,7 @@ import { RiMessage3Fill } from 'react-icons/ri';
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import {
-  logout, selectId_of_user, selectIsSignedIn, selectRefreshToken, selectToken, selectType_parent, selectType_tutor
+  logout, selectId_of_user, selectIsSignedIn, selectType_parent, selectType_tutor
 } from "../auth/authSlice";
 import Notification from '../Notification/Notification';
 import Search from './components/Search/Search';
@@ -15,11 +15,8 @@ import "./styles.scss";
 const MobileNavBar = loadable(() => import('./components/MobileNavBar/MobileNavBar'))
 const WebBanner = loadable(() => import('./components/WebBanner'))
 
-
 function MainNavigation() {
   const dispatch = useDispatch();
-  const token = useSelector(selectToken);
-  const refresh_token = useSelector(selectRefreshToken);
   const type_tutor = useSelector(selectType_tutor);
   const type_parent = useSelector(selectType_parent);
   const userId = useSelector(selectId_of_user);
@@ -30,10 +27,7 @@ function MainNavigation() {
   const navigationRef = useRef(null);
 
   const handleLogOut = async() => {
-    dispatch(logout({
-      token: token,
-      refresh_token: refresh_token,
-    }));  
+    dispatch(logout());  
     history.push("/signin");
   }
   const onShowSearchForm = () => {
@@ -65,8 +59,7 @@ function MainNavigation() {
           </Link>
           
           <div className="navigation__section">
-            {type_tutor && <Link to={`/tutorInfo/${userId}`}>
-              
+            {type_tutor && <Link to={`/tutorInfo/${userId}`}>           
               <h4>Phòng của bạn</h4>
               </Link>}
             {type_parent && <Link to={`/parentInfo/${userId}`}>

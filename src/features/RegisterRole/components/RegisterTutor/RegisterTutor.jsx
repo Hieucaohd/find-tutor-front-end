@@ -4,13 +4,11 @@ import Modal from 'components/Modal/Modal';
 import FormData from 'form-data';
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { selectToken } from '../../../auth/authSlice';
 import { registerImage, registerTutorInfor } from '../../registerAccount';
 
 function RegisterTutor(props) {
-    const token = useSelector(selectToken);
     const history = useHistory();
     const {register, formState: { errors }, handleSubmit, watch} = useForm();
     const password = useRef({});
@@ -90,7 +88,6 @@ function RegisterTutor(props) {
         }
 
         const resgisterTutor = await registerTutorInfor({
-            token: token,
             tutorInfor: tutorInfor,
             dispatch: dispatch,
         });
@@ -98,7 +95,7 @@ function RegisterTutor(props) {
         file.append('avatar', data.avatar[0]);
         file.append('identity_card', data.cccd[0]);
         file.append('student_card', data.thesv[0]);
-        const imageReponse = resgisterTutor ? await registerImage({token: token, file: file}) : false;
+        const imageReponse = resgisterTutor ? await registerImage({file: file}) : false;
         setLoading(false);
         if(imageReponse){
             setShowSuccessModal(true);

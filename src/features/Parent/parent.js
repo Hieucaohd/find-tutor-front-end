@@ -1,12 +1,11 @@
-import { server_name, token_prefix } from "../../namespace";
+import { server_name } from "../../namespace";
 
-export const deleteRoom = async ({token, roomId}) => {
+export const deleteRoom = async ({roomId}) => {
     try {
         const response = await fetch(`${server_name}/findTutor/roomDetail/${roomId}`, {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `${token_prefix} ${token}`,
             },
         });
         const responseJSON = await response.json();

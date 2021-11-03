@@ -1,15 +1,13 @@
 import axios from "axios";
 import { setParentTrue, setTutorTrue } from "features/auth/authSlice";
-import { server_name, token_prefix } from "../../namespace";
+import { server_name } from "../../namespace";
 
-
-export const registerTutorInfor = async ({ token, tutorInfor, dispatch }) => {
+export const registerTutorInfor = async ({ tutorInfor, dispatch }) => {
   try {
     await fetch(`${server_name}/findTutor/tutorList/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${token_prefix} ${token}`,
       },
       body: JSON.stringify(tutorInfor),
     })
@@ -22,13 +20,12 @@ export const registerTutorInfor = async ({ token, tutorInfor, dispatch }) => {
   }
 };
 
-export const registerParentInfor = async ({ token, parentInfor, dispatch }) => {
+export const registerParentInfor = async ({parentInfor, dispatch }) => {
   try {
     await fetch(`${server_name}/findTutor/parentList/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${token_prefix} ${token}`,
       },
       body: JSON.stringify(parentInfor),
     })
@@ -45,11 +42,10 @@ export const registerImage = async ({token, file}) => {
     const data = file;
     axios({
       method: "POST",
-      url: `${server_name}/findTutor/imagePrivateUserList/`,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${token_prefix} ${token}`
       },
+      url: `${server_name}/findTutor/imagePrivateUserList/`,
       data
     })
     return true;

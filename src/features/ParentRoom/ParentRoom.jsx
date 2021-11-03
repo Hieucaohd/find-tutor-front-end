@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Loading from "components/Loading/Loading";
 import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName, getWardName } from "components/location/getLocation";
-import { selectToken, selectType_parent } from "features/auth/authSlice";
+import { selectType_parent } from "features/auth/authSlice";
 import { isSignedIn } from "features/auth/cookies";
 import { addToApplyList, addToTeachingList } from "graphql/mutationGraphQl";
 import { GetParentRoomDetail } from "graphql/RoomQueries";
@@ -27,7 +27,6 @@ const useStyles = makeStyles(theme=>({
 
 function ParentRoom (props) {
   const classes = useStyles();
-  const token = useSelector(selectToken);
   const history = useHistory();
   const {
     params: {roomId}
@@ -82,7 +81,7 @@ function ParentRoom (props) {
 
   useEffect(()=> {
     const getRoomDetail = async () => {
-      const newRoomDetail = await GetParentRoomDetail(roomId, token);
+      const newRoomDetail = await GetParentRoomDetail(roomId);
 
       setApplyList(newRoomDetail?.waitingtutormodel_set || []);
       setTeaching(newRoomDetail?.tutorteachingmodel);
@@ -149,7 +148,7 @@ function ParentRoom (props) {
       
     getRoomDetail();
    
-  }, [roomId, token]);
+  }, [roomId]);
 
 
   //set data to session storage
@@ -168,7 +167,7 @@ function ParentRoom (props) {
 
   const handleAddToTeachingList = async (waitingId) => {
     setIsLoading(true);
-    const response = await addToTeachingList({id: waitingId, token:token});
+    const response = await addToTeachingList({id: waitingId});
     
     const newList = await applyList.filter((item) => Number(item.id) !== Number(waitingId));
     await setApplyList(newList);
@@ -179,7 +178,7 @@ function ParentRoom (props) {
   const handleDelFromApplyList = async (waitingId) => {
     try {
       setIsLoading(true);
-      const response = await deleteFromWaitingList({waitingId: waitingId, token: token});
+      const response = await deleteFromWaitingList({waitingId: waitingId});
       if(response) {
         const newList = await applyList.filter((item) => Number(item.id) !== Number(waitingId));
         await setApplyList(newList);
@@ -193,7 +192,7 @@ function ParentRoom (props) {
   const handleDelFromTeachingList = async (teachingId) => {
     setIsLoading(true);
     try {
-      const response = await deleteTutorFromTeachingList({teachingId: teachingId, token: token});
+      const response = await deleteTutorFromTeachingList({teachingId: teachingId});
       if(response) {
         await setTeaching(null);
       }
@@ -208,7 +207,7 @@ function ParentRoom (props) {
     if(!isSignedIn()) history.push("/signin");
     try {
       setIsLoading(true);
-      const response = await addToApplyList({token: token, parentRoomId: roomId});
+      const response = await addToApplyList({parentRoomId: roomId});
       setApplyList([
         ...applyList,
         response,
