@@ -12,7 +12,7 @@ function HomeButton({onCheck, roomAddress, typeParent}) {
     }
     return (
         <div className="button">
-            {!typeParent && <button ref={checkRef} className="button__apply" onClick={handleCheck}>Ứng tuyển</button>}
+            {!typeParent && <button ref={checkRef} className="button__apply text-sm" onClick={handleCheck}>Ứng tuyển</button>}
             
             <Link to={roomAddress} className="button__detail" >Xem chi tiết</Link>
             

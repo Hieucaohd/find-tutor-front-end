@@ -49,15 +49,15 @@ function TutorItem( {tutorInfo = {}, isOwner = false, onAdd = null, userId = 0, 
             <div className={classes.info}>
                 <div className={classes.user}>
                     <Avatar className={classes.avatar} src={tutor?.user.imageprivateusermodel?.avatar || require("../../../../../assets/image/user.webp").default } />
-                    <button className={`${classes.detail} text-sm`} onClick={handleShowTutorInfo}>Chi tiết</button>
+                    <button className={`${classes.detail} text-xs`} onClick={handleShowTutorInfo}>Chi tiết</button>
                 </div>
                 
                 <div>
                     <h4 className="text-base font-semibold">{tutor?.first_name} {tutor?.last_name} <span></span></h4>
-                    <h5 className="text-sm">{tutor?.profession === "gv" && "Giáo Viên"}</h5>
-                    <h5 className="text-sm">{tutor?.profession === "sv" && "Sinh Viên"}</h5>
-                    <h5 className="text-sm"><span>Sinh năm</span> {tutor?.birthday.slice(0,4)}</h5>
-                    <h5 className="text-sm"><span>Đã dạy</span> {tutor?.number_teaching} lớp</h5>
+                    <h5 className="text-xs sm:text-sm">{tutor?.profession === "gv" && "Giáo Viên"}</h5>
+                    <h5 className="text-xs sm:text-sm">{tutor?.profession === "sv" && "Sinh Viên"}</h5>
+                    <h5 className="text-xs sm:text-sm"><span>Sinh năm</span> {tutor?.birthday.slice(0,4)}</h5>
+                    <h5 className="text-xs sm:text-sm"><span>Đã dạy</span> {tutor?.number_teaching} lớp</h5>
                     {/* <h5> {tutor?.university}</h5> */}
                 </div>
             </div>
@@ -132,8 +132,15 @@ const useStyles = makeStyles(theme => ({
         }
     },
     avatar: {
-        width: 72,
-        height: 72,
+        
+        [theme.breakpoints.down('xs')]: {
+            width: 52,
+            height: 52,
+        },
+        [theme.breakpoints.up('sm')]: {
+            width: 72,
+            height: 72,
+        },
         marginBottom: 4,
     },
     button: {
