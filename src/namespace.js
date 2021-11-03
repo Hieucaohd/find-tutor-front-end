@@ -1,6 +1,6 @@
 
 // Django
-const server_django_http = "https://www.findtutorapp.website";
+const server_django_http = "https://timgiasu.findtutorapp.website/api";
 
 export const server_name = server_django_http;
 export const endpoint = `${server_django_http}/graphql/`;
