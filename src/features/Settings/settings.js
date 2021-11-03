@@ -1,4 +1,4 @@
-const { server_name} = require("namespace");
+const { server_name, token_prefix} = require("namespace");
 
 export const updateTutorProfile = async ({newTutorInfo, id}) => {
     try {
@@ -6,6 +6,7 @@ export const updateTutorProfile = async ({newTutorInfo, id}) => {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `${token_prefix} ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify(newTutorInfo),
         })
@@ -22,6 +23,7 @@ export const updateParentProfile = async ({newTutorInfo, id}) => {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `${token_prefix} ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify(newTutorInfo),
         })
@@ -38,6 +40,7 @@ export const updateLink = async ({ token, newLink}) => {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `${token_prefix} ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify(newLink),
         })
@@ -62,6 +65,7 @@ export const changePassword = async ({token, oldPassword, newPassword}) => {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `${token_prefix} ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify({
                 "old_password": oldPassword,

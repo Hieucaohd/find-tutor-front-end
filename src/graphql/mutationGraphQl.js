@@ -1,4 +1,4 @@
-import { endpoint } from "namespace";
+import { endpoint, token_prefix } from "namespace";
 
 export const CreateParentRoom = async ({roomInfo}) => {
     const {day_can_teach, subject, lop, other_require, province_code, district_code, ward_code, detail_location, time_in_one_day, money_per_day, type_teacher, sex_of_teacher} = roomInfo;
@@ -47,6 +47,7 @@ export const CreateParentRoom = async ({roomInfo}) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `${token_prefix} ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify({query: mutation})
         });
@@ -94,6 +95,7 @@ export const addToApplyList = async ({parentRoomId}) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `${token_prefix} ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify({query: mutation})
         });
@@ -141,6 +143,7 @@ export const addToTeachingList = async ({id}) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `${token_prefix} ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify({query: mutation})
         });

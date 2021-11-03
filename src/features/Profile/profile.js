@@ -1,5 +1,5 @@
 import axios from "axios";
-import { server_name } from "../../namespace";
+import { server_name, token_prefix } from "../../namespace";
 
 export const getParentProfile = async ({id}) => {
     try {
@@ -7,6 +7,7 @@ export const getParentProfile = async ({id}) => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${token_prefix} ${localStorage.getItem('token')}`,
           },
         });
         const responseJSON = await response.json();
@@ -22,6 +23,7 @@ export const getTutorProfile = async ({id}) => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `${token_prefix} ${localStorage.getItem('token')}`,
           },
         });
         const responseJSON = await response.json();
@@ -45,6 +47,7 @@ export const updateAvatar = async ({typeCurrent, file}) => {
         url: `${server_name}/findTutor/imagePrivateUserDetail/`,
         headers: {
           "Content-Type": "application/json",
+          Authorization: `${token_prefix} ${localStorage.getItem('token')}`,
         },
         data
       })

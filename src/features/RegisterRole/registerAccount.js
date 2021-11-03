@@ -1,6 +1,6 @@
 import axios from "axios";
 import { setParentTrue, setTutorTrue } from "features/auth/authSlice";
-import { server_name } from "../../namespace";
+import { server_name, token_prefix } from "../../namespace";
 
 export const registerTutorInfor = async ({ tutorInfor, dispatch }) => {
   try {
@@ -8,6 +8,7 @@ export const registerTutorInfor = async ({ tutorInfor, dispatch }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `${token_prefix} ${localStorage.getItem('token')}`,
       },
       body: JSON.stringify(tutorInfor),
     })
@@ -26,6 +27,7 @@ export const registerParentInfor = async ({parentInfor, dispatch }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `${token_prefix} ${localStorage.getItem('token')}`,
       },
       body: JSON.stringify(parentInfor),
     })
@@ -44,6 +46,7 @@ export const registerImage = async ({token, file}) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `${token_prefix} ${localStorage.getItem('token')}`,
       },
       url: `${server_name}/findTutor/imagePrivateUserList/`,
       data

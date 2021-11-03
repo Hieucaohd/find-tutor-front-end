@@ -1,18 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import Cookies from 'universal-cookie';
 import { server_name } from "../../namespace";
-import { getDataFromCookies, removeUserCookies, setParentCookieTrue, setTutorCookieTrue, setUserInfoCookies } from "./cookies";
+import { removeUserInfoLocalStorage, setParentTrueLocalStorage, setTutorTrueLocalStorage, setUserInfoToLocalStorage } from "./localStorage";
  
-const cookies = new Cookies();
 
-const initialState = cookies.get('userToken') ? {
+const initialState = localStorage.getItem('isSignedIn') ? {
   status: "idle",
-  id: cookies.get('userId'),
-  type_tutor: cookies.get('userTypeTutor') === "false" ? false : true,
-  type_parent: cookies.get('userTypeParent') === "false" ? false : true,
-  isSignedIn: cookies.get('isSignedIn') === 'true' ? true : false,
-  email: cookies.get('userEmail'),
-  userName: cookies.get('userName'),
+  id: localStorage.getItem('userId'),
+  type_tutor: localStorage.getItem('userTypeTutor') === "false" ? false : true,
+  type_parent: localStorage.getItem('userTypeParent') === "false" ? false : true,
+  isSignedIn: localStorage.getItem('isSignedIn') === 'true' ? true : false,
+  email: localStorage.getItem('userEmail'),
+  userName: localStorage.getItem('userName'),
 } : {
   status: "idle",
   token: "",
@@ -111,18 +109,18 @@ const authSlice = createSlice({
   reducers: {
     setTutorTrue(state, action) {
       state.type_tutor = true;
-      setTutorCookieTrue();
+      setTutorTrueLocalStorage();
     },
     setParentTrue(state, action) {
       state.type_parent = true;
-      setParentCookieTrue();
+      setParentTrueLocalStorage();
     },
-    setStateFromCookies(state) {
-      const {id, typeParent, typeTutor} = getDataFromCookies();
-      state.id = id;
-      state.type_tutor = typeTutor;
-      state.type_parent = typeParent;
-    }
+    // setStateFromCookies(state) {
+    //   const {id, typeParent, typeTutor} = getDataFromCookies();
+    //   state.id = id;
+    //   state.type_tutor = typeTutor;
+    //   state.type_parent = typeParent;
+    // }
   },
   extraReducers: (builder) => {
     builder
@@ -142,7 +140,7 @@ const authSlice = createSlice({
           state.isSignedIn = true;
           state.email = email;
           state.userName = username;
-          setUserInfoCookies(action.payload);
+          setUserInfoToLocalStorage(action.payload);
         }
       })
       .addCase(loginWithGoogle.pending, (state, action) => {
@@ -158,7 +156,7 @@ const authSlice = createSlice({
           state.isSignedIn = true;
           state.email = email;
           state.userName = username;
-          setUserInfoCookies(action.payload);
+          setUserInfoToLocalStorage(action.payload);
         }
       })
       .addCase(loginWithFacebook.pending, (state, action) => {
@@ -174,6 +172,7 @@ const authSlice = createSlice({
           state.isSignedIn = true;
           state.email = email;
           state.userName = username;
+          setUserInfoToLocalStorage(action.payload);
           // setUserInfoCookies(action.payload);
         }
       })
@@ -184,7 +183,7 @@ const authSlice = createSlice({
         state.type_parent = "";
         state.isSignedIn = false;
         state.email = "";
-        removeUserCookies();
+        removeUserInfoLocalStorage();
       })
       .addCase(logout.fulfilled, (state) => {
         state.status =  "idle";
