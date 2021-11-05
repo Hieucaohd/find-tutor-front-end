@@ -6,7 +6,7 @@ import { GetAllParentRoom } from 'graphql/RoomQueries';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router-dom';
-import GeneralProfile from '../TutorProfile/components/GeneralProfile';
+import GeneralProfile from './components/GeneralProfile';
 import ParentRoomProfile from './components/ParentRoomProfile';
 
 const useStyles = makeStyles(theme => ({

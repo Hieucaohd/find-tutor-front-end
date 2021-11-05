@@ -1,14 +1,11 @@
 import { makeStyles } from '@material-ui/core';
-import PropTypes from 'prop-types';
+import { formatBirthDay } from 'features/Profile/profile';
 import React from 'react';
 import { AiFillExperiment } from 'react-icons/ai';
 import { IoMdSchool } from 'react-icons/io';
 import { IoLocation } from 'react-icons/io5';
-import { RiMedalFill } from 'react-icons/ri';
-
-MoreInfoProfile.propTypes = {
-    TutorInfo: PropTypes.object,
-};
+import { MdToday } from 'react-icons/md';
+import { RiFileInfoFill, RiMedalFill } from 'react-icons/ri';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -77,9 +74,18 @@ function MoreInfoProfile({tutorInfo}) {
     return (
         <div className={`${classes.root} py-2`}>
             <div className={`${classes.field} p-4`}>
+                <h4> <MdToday /></h4>
+                <p> <span>Sinh ngày</span> {formatBirthDay(tutorInfo.birthday)}</p>
+            </div>
+            <div className={`${classes.field} p-4`}>
+                <h4> <IoLocation /></h4>
+                <p> <span>Sống tại</span> {tutorInfo.address}</p>
+            </div>
+            <div className={`${classes.field} p-4`}>
                 <h4> <IoMdSchool /></h4>
                 <p><span>Học tại </span>{tutorInfo.university}</p>
             </div>
+            
             <div className={`${classes.field} p-4`}>
                 <h4><RiMedalFill /></h4>
                 <p>{tutorInfo.achievement}</p>
@@ -89,9 +95,13 @@ function MoreInfoProfile({tutorInfo}) {
                 <p>{tutorInfo.experience}</p>
             </div>
             <div className={`${classes.field} p-4`}>
+                <h4><RiFileInfoFill /></h4>
+                <p>Từng dạy học 12 lớp</p>
+            </div>
+            {/* <div className={`${classes.field} p-4`}>
                 <h4><IoLocation /></h4>
                 <p> <span>Dạy học tại</span> {tutorInfo.khu_vuc_day}</p>
-            </div>
+            </div> */}
             {/* <div className={classes.field}>
                 <h4><GiBookCover /></h4>
                 <p><span>Dạy môn </span>Toán, Hóa</p>

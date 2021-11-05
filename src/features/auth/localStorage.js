@@ -20,12 +20,12 @@ export const setTutorTrueLocalStorage = () => {
 }
 
 export const removeUserInfoLocalStorage = () => {
-    localStorage.remove('userToken');
-    localStorage.remove('userRefreshToken');
-    localStorage.remove('userId');
-    localStorage.remove('userTypeParent');
-    localStorage.remove('userTypeTutor');
-    localStorage.remove('isSignedIn');
-    localStorage.remove('userEmail');
-    localStorage.remove('userName')
+    localStorage.removeItem('userRefreshToken');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userTypeParent');
+    localStorage.removeItem('userTypeTutor');
+    localStorage.removeItem('isSignedIn');
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('token')
 }

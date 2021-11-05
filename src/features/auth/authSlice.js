@@ -183,6 +183,7 @@ const authSlice = createSlice({
         state.type_parent = "";
         state.isSignedIn = false;
         state.email = "";
+        console.log('dang log out')
         removeUserInfoLocalStorage();
       })
       .addCase(logout.fulfilled, (state) => {
