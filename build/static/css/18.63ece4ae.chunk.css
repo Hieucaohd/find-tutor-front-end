@@ -1,0 +1,2 @@
+.slideshow{overflow:hidden;max-width:500px}.slideshowSlider{white-space:nowrap;transition:1s ease}.slide{display:inline-block;width:100%;border-radius:40px}.slideshowDots{text-align:center}.slideshowDot{display:inline-block;height:20px;width:20px;border-radius:50%;cursor:pointer;margin:15px 7px 0;background-color:#c4c4c4}.slideshowDot.active{background-color:#0095ff}@media (min-width:770px){.slideshow{width:40%;margin-right:24px}}@media (max-width:769px){.slideshow{width:316px}}
+/*# sourceMappingURL=18.63ece4ae.chunk.css.map */
