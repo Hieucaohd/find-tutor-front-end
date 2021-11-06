@@ -1,8 +1,7 @@
 import { Avatar, makeStyles } from '@material-ui/core';
 import { catchDistrictName, catchProvinceName } from 'components/location/getLocation';
-import { largerSubject } from 'containers/picture';
 import { handleTime } from 'containers/date';
-import { isOnList } from 'features/ParentRoom/parentroom';
+import { largerSubject } from 'containers/picture';
 import React from 'react';
 import { FaBorderAll, FaCalendarDay, FaRegClock, FaTransgender } from "react-icons/fa";
 import { MdAccessTime, MdAttachMoney, MdLocationOn, MdPerson, MdToday } from "react-icons/md";
@@ -20,6 +19,20 @@ function RoomInfo( {room, applyList, userId, addToApplyList, typeParent, teachin
         }
         return days
     }
+
+    const isOnList = (userId, waitingList) => {
+        if(!waitingList) return false;
+        if(waitingList?.length === 0) {
+          return false;
+        }
+        for(let i = 0; i<waitingList?.length; i++) {
+          if(Number(waitingList[i]?.tutor?.user?.id) === Number(userId)) {
+            return true;
+          }
+        }
+        return false;
+    }
+
     const formatPriceString = (price) => {
         if(!price) return;
         const priceString = price.toString();

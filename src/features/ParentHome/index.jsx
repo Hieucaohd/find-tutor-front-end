@@ -1,4 +1,5 @@
 import { Grid, makeStyles } from '@material-ui/core';
+import { deleteRoom } from 'axios/room';
 import Room from 'components/Room/Room';
 import { GetAllParentRoom } from 'graphql/RoomQueries';
 import React, { useEffect, useState } from 'react';
@@ -6,9 +7,8 @@ import { FcAddDatabase } from 'react-icons/fc';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { selectId_of_user, selectIsSignedIn, selectType_parent } from '../auth/authSlice';
-import { deleteRoom } from './parent';
 
-function ParentInfor() {
+function ParentHome() {
     const classes = useStyles();
     const parentId = useSelector(selectId_of_user);
     const typeParent = useSelector(selectType_parent);
@@ -71,4 +71,4 @@ const useStyles = makeStyles({
     }
 })
 
-export default ParentInfor
+export default ParentHome;

@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core';
-import { formatBirthDay } from 'features/Profile/profile';
 import React from 'react';
 import { AiFillExperiment } from 'react-icons/ai';
 import { IoMdSchool } from 'react-icons/io';
@@ -58,6 +57,8 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+
+
 function MoreInfoProfile({tutorInfo}) {
     const classes = useStyles();
 
@@ -70,6 +71,12 @@ function MoreInfoProfile({tutorInfo}) {
     //     })
     //     return ans.join(', ')
     // }
+    
+    const formatBirthDay = (birthday) => {
+        if(!birthday || birthday.length === 0) return "";
+        const newBirthDay = `${birthday.slice(-2)}-${birthday.slice(5,7)}-${birthday.slice(0,4)}`
+        return newBirthDay;
+    }
 
     return (
         <div className={`${classes.root} py-2`}>

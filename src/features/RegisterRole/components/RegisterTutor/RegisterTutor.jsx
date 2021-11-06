@@ -1,3 +1,4 @@
+import { registerImage, registerTutorInfor } from 'axios/profile';
 import Loading from 'components/Loading/Loading';
 import Location from "components/location/Location";
 import Modal from 'components/Modal/Modal';
@@ -6,7 +7,6 @@ import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { registerImage, registerTutorInfor } from '../../registerAccount';
 
 function RegisterTutor(props) {
     const history = useHistory();

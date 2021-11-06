@@ -1,12 +1,12 @@
 import { Grid, makeStyles } from "@material-ui/core";
+import { deleteFromWaitingList, deleteTutorFromTeachingList } from "axios/room";
 import Room from "components/Room/Room";
-import { deleteFromWaitingList, deleteTutorFromTeachingList } from "features/ParentRoom/parentroom";
 import { getTutorRoomList } from "graphql/TutorRoomQueries";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectId_of_user } from "../auth/authSlice";
 
-function TutorInfor() {
+function TutorHome() {
   const classes = useStyles();
   const userId = useSelector(selectId_of_user);
   const [applyList, setApplyList] = useState([]);
@@ -130,4 +130,4 @@ const useStyles = makeStyles( theme => ({
   }
 }))
 
-export default TutorInfor;
+export default TutorHome;

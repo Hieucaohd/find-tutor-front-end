@@ -1,3 +1,4 @@
+import { updateLink, updateParentProfile } from 'axios/profile';
 import Loading from 'components/Loading/Loading';
 import SettingsLocation from 'components/location/SettingsLocation';
 import Modal from 'components/Modal/Modal';
@@ -6,8 +7,8 @@ import { GetParentProfile } from 'graphql/ProfileQueries';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { getName, updateLink, updateParentProfile } from '../settings';
 import LoadingField from './LoadingField';
+import { getName } from './SettingsTutor';
 
 function SettingsParent(props) {
 
@@ -57,6 +58,7 @@ function SettingsParent(props) {
     }
 
     const handleOnChangeProfile = (e, type) => {
+        console.log('kkk');
         setOnShowSave(true);
         const target = e.target.value;
         if(type==="name") {
@@ -87,7 +89,10 @@ function SettingsParent(props) {
     const onSubmit = async (data) => {
         setShowLoading(true);
         let response = await updateParentProfile({
-            newTutorInfo: newParentProfile,
+            newParentInfo: {
+                birthday: data.birthday,
+                ...newParentProfile,
+            },
             id: userId,
         });
 
@@ -131,6 +136,7 @@ function SettingsParent(props) {
                 <label>Ngày sinh</label>
                 <input type="date" 
                     defaultValue={parentData?.birthday}
+                    {...register("birthday")}
                     onChange={ e => handleOnChangeProfile(e, "birthday")}
                 />
             </div>

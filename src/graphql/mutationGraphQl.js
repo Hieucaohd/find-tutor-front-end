@@ -1,3 +1,4 @@
+import axios from "axios";
 import { endpoint, token_prefix } from "namespace";
 
 export const CreateParentRoom = async ({roomInfo}) => {
@@ -42,20 +43,22 @@ export const CreateParentRoom = async ({roomInfo}) => {
             }
     }
     `
-    try {
-        await fetch(endpoint, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `${token_prefix} ${localStorage.getItem('token')}`,
-            },
-            body: JSON.stringify({query: mutation})
-        });
-        return true;
-    } catch(error) {
-        console.log("Failed to create parent room: ",error);
-        return false;
-    }
+    return axios({
+        method: 'post',
+        url: endpoint,
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token_prefix} ${localStorage.getItem('token')}`,
+        },
+        data: {
+            query: mutation,
+        }
+    }).then(response => {
+            if(response) return true;
+        }).catch(error => {
+            console.log("Failed to create parent room: " + error);
+            return false;
+        })
 }
 
 export const addToApplyList = async ({parentRoomId}) => {
@@ -90,20 +93,21 @@ export const addToApplyList = async ({parentRoomId}) => {
         }
       }
     `
-    try {
-        const response = await fetch(endpoint, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `${token_prefix} ${localStorage.getItem('token')}`,
-            },
-            body: JSON.stringify({query: mutation})
-        });
-        const responseJSON = await response.json();
-        return responseJSON.data.create_waiting_tutor.waiting_tutor;
-    } catch(error) {
-        console.log("Failed to apply parent room", error);
-    }
+    return axios({
+        method: 'post',
+        url: endpoint,
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token_prefix} ${localStorage.getItem('token')}`,
+        },
+        data: {
+            query: mutation,
+        }
+    }).then(response => {
+            return response.data.data.create_waiting_tutor.waiting_tutor;
+        }).catch(error => {
+            console.log("Failed to apply parent room " + error)
+        })
 }
 
 export const addToTeachingList = async ({id}) => {
@@ -138,19 +142,20 @@ export const addToTeachingList = async ({id}) => {
         }
       }
     `
-    try {
-        const response = await fetch(endpoint, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `${token_prefix} ${localStorage.getItem('token')}`,
-            },
-            body: JSON.stringify({query: mutation})
-        });
-        const responseJSON = await response.json();
-        return responseJSON.data.create_tutor_teaching.tutor_teaching;
-    } catch(error) {
-        console.log("Failed to apply teaching list", error);
-        return false;
-    }
+    return axios({
+        method: 'post',
+        url: endpoint,
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token_prefix} ${localStorage.getItem('token')}`,
+        },
+        data: {
+            query: mutation,
+        }
+    }).then(response => {
+            return response.data.data.create_tutor_teaching.tutor_teaching;
+        }).catch(error => {
+            console.log("Failed to apply teaching list: " + error);
+            return false;
+        })
 }

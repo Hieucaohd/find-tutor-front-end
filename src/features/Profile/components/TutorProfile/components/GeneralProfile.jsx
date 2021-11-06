@@ -1,12 +1,11 @@
 import { Avatar, makeStyles } from '@material-ui/core';
+import { updateAvatar } from 'axios/profile';
 import Loading from "components/Loading/Loading";
 import Modal from "components/Modal/Modal";
 import UploadImage from 'components/UploadImage/UploadImage';
-import { formatBirthDay, updateAvatar } from 'features/Profile/profile';
 import FormData from 'form-data';
 import React, { useState } from 'react';
 import { AiFillCamera, AiOutlineFacebook, AiOutlineInstagram, AiOutlineLinkedin, AiTwotoneEdit } from 'react-icons/ai';
-import { BsChatSquareDots } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 
 const getJobName = (str) => {

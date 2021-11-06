@@ -37,6 +37,7 @@ function Home() {
       setLoading(true);
       const filter = await queryString.parse(location.search);
       const filterRoomList = await GetFilterRoom({filterRoom: {...filter}});
+      console.log('home room', filterRoomList)
       setMaxPagination(filterRoomList?.num_pages);
       setRoomList(filterRoomList?.result);
       setLoading(false);

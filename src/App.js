@@ -8,7 +8,7 @@ const Home = loadable(() => import('./features/Home/Home'), {
   fallback: <Loading whiteBkg={true} />
 });
 
-const TutorInfor = loadable(() => import('./features/Tutor/TutorInfor'), {
+const TutorHome = loadable(() => import('./features/TutorHome'), {
   fallback: <Loading whiteBkg={true} />
 });
 const ParentRoom = loadable(() => import('features/ParentRoom/ParentRoom'), {
@@ -17,7 +17,7 @@ const ParentRoom = loadable(() => import('features/ParentRoom/ParentRoom'), {
 const RegisterRole = loadable(() => import('./features/RegisterRole/RegisterRole'), {
   fallback: <Loading whiteBkg={true} />
 });
-const ParentInfor = loadable(() => import('./features/Parent/ParentInfor'), {
+const ParentHome = loadable(() => import('./features/ParentHome'), {
   fallback: <Loading whiteBkg={true} />
 });
 const CreateRoom = loadable(() => import('./features/CreateRoom/CreateRoom'));
@@ -48,8 +48,8 @@ function App() {
             <Route path="/signin" component={Auth} />
             <Route exact path="/" component={Home} />
             <Route exact path="/signup" component={SignUp} />
-            <Route exact path="/tutorInfo/:tutorId" component={TutorInfor} />
-            <Route exact path="/parentInfo/:parentId" component={ParentInfor} />
+            <Route exact path="/tutorInfo/:tutorId" component={TutorHome} />
+            <Route exact path="/parentInfo/:parentId" component={ParentHome} />
             <Route exact path="/room/:roomId" component={ParentRoom}/>
             <Route exact path="/createroom" component={CreateRoom}/>
             <Route path="/role" component={RegisterRole} />
