@@ -1,3 +1,4 @@
+import { registerImage, registerParentInfor } from 'axios/profile';
 import Loading from 'components/Loading/Loading';
 import Location from "components/location/Location.jsx";
 import Modal from 'components/Modal/Modal';
@@ -5,7 +6,6 @@ import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { registerImage, registerParentInfor } from '../../registerAccount';
 
 function RegisterParent(props) {
     const [loading, setLoading] = useState(false);

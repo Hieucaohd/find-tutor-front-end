@@ -1,3 +1,4 @@
+import { updateLink, updateTutorProfile } from 'axios/profile';
 import Loading from 'components/Loading/Loading';
 import SettingsLocation from 'components/location/SettingsLocation';
 import Modal from 'components/Modal/Modal';
@@ -6,9 +7,14 @@ import { GetTutorProfile } from 'graphql/ProfileQueries';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { getName, updateLink, updateTutorProfile } from '../settings';
 import LoadingField from './LoadingField';
 
+export const getName = (name) => {
+    return {
+      first_name: name.slice(0, name.indexOf(' ')),
+      last_name: name.slice(name.indexOf(' ') + 1)
+    }
+}
 
 function SettingsTutor(props) {
     const [tutorData, setTutorData] = useState(null);
@@ -60,14 +66,14 @@ function SettingsTutor(props) {
                 "first_name": first_name,
                 "last_name": last_name,
                 "cap_day": tutorData.cap_day || [],
-                "lop_day": tutorData.lop_day || [],
+                "lop_day": [],
             })   
         } else {
             setNewTutorProfile({
                 ...newTutorProfile,
                 [type]: target,
                 "cap_day": tutorData.cap_day || [],
-                "lop_day": tutorData.lop_day || [],
+                "lop_day": [],
             })
         }
     }

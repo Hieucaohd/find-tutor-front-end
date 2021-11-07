@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { loginWithGoogleAccount, loginWithMail, logOut } from "axios/auth";
 import { server_name } from "../../namespace";
 import { removeUserInfoLocalStorage, setParentTrueLocalStorage, setTutorTrueLocalStorage, setUserInfoToLocalStorage } from "./localStorage";
  
@@ -26,36 +27,11 @@ const initialState = localStorage.getItem('isSignedIn') ? {
 
 // Lấy: id, token, type_tutor, type_parent từ server.
 export const login = createAsyncThunk("auth/authLogin", async (args) => {
-  return await fetch(`${server_name}/auth/login/`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(args),
-  })
-  .then((response) => {
-    if (response.ok) {
-      return response.json();
-    } else {
-      // alert("Ten dang nhat hoac mat khau khong dung.");
-    }
-  });
+  return await loginWithMail(args);
 });
 
 export const loginWithGoogle = createAsyncThunk("/social-auth/google-auth/", async (args) => {
-  try {
-    const response = await fetch(`${server_name}/social-auth/google-auth/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(args),
-    });
-    const responseJSON = await response.json();
-    return responseJSON;
-  } catch (error) {
-    console.log('Failed to login with google: ',error);
-  }
+  return await loginWithGoogleAccount(args);
 });
 
 export const loginWithFacebook = createAsyncThunk("/social-auth/facebook-auth/", async (args) => {
@@ -74,33 +50,8 @@ export const loginWithFacebook = createAsyncThunk("/social-auth/facebook-auth/",
   }
 })
 
-export const logout = createAsyncThunk("/auth/logout/", async (args) => {
-  try {
-    await fetch(`${server_name}/auth/logout/`, {
-      method: "POST", 
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-  } catch (error) {
-    console.log("Failed to log out : ", error)
-  }
-});
-
-export const getNewToken = createAsyncThunk("/auth/token/refresh/", async (args) => {
-  try {
-    const response = await fetch(`${server_name}/auth/token/refresh/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(args),
-    });
-    const responseJSON = await response.json();
-    return responseJSON.access;
-  } catch (error) {
-    console.log("Failed to get new token: ", error)
-  }
+export const logout = createAsyncThunk("/auth/logout/", async () => {
+  return await logOut();
 });
 
 const authSlice = createSlice({
@@ -183,6 +134,7 @@ const authSlice = createSlice({
         state.type_parent = "";
         state.isSignedIn = false;
         state.email = "";
+        console.log('dang log out')
         removeUserInfoLocalStorage();
       })
       .addCase(logout.fulfilled, (state) => {

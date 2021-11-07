@@ -1,8 +1,7 @@
 import { CircularProgress, makeStyles } from '@material-ui/core';
+import { registerAccount } from 'axios/auth';
 import Modal from 'components/Modal/Modal';
-import { server_name } from 'namespace';
-import React, { useRef } from 'react';
-import { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -18,33 +17,25 @@ function SignUpForm() {
     const loadingRef = useRef(null);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [showFailedModal, setShowFailedModal] = useState(false);
-    const registerAccount = async (args) => {
-        return await fetch(`${server_name}/auth/register/`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(args),
-        })
-      };
-    const onSubmit = (data) => {
+
+    const onSubmit = async (data) => {
         loadingRef.current.style.display = "flex";
-        registerAccount({
+        const response = await registerAccount({
             email: data.email,
             username: data.username,
             password: data.password,
-        }).then((response) => {
-            if(response.ok) {
-                dispatch(login({
-                    email: data.email,
-                    password: data.password,
-                }));
-                setShowSuccessModal(true);
-            } else {
-                setShowFailedModal(true);
-                loadingRef.current.style.display = "none";
-            }
-        })
+        });
+
+        if(response) {
+            dispatch(login({
+                email: data.email,
+                password: data.password,
+            }));
+            setShowSuccessModal(true);
+        } else {
+            setShowFailedModal(true);
+            loadingRef.current.style.display = "none";
+        }
     }
 
     return (

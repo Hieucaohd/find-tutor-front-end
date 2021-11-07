@@ -1,8 +1,8 @@
 import { Avatar, makeStyles } from '@material-ui/core';
+import { updateAvatar } from 'axios/profile';
 import Loading from "components/Loading/Loading";
 import Modal from "components/Modal/Modal";
 import UploadImage from 'components/UploadImage/UploadImage';
-import { formatBirthDay, updateAvatar } from 'features/Profile/profile';
 import FormData from 'form-data';
 import React, { useState } from 'react';
 import { AiFillCamera, AiOutlineFacebook, AiOutlineInstagram, AiOutlineLinkedin, AiTwotoneEdit } from 'react-icons/ai';
@@ -40,8 +40,8 @@ function GeneralProfile({tutorInfo, isUser = false, type}) {
 
     return (
         <div className={classes.wallpaper}>
-            {isUser && <Link to={`/settings/profile/${type}`}><AiTwotoneEdit  className={classes.fix}/> </Link>}
-            <div className={classes.avatarContainer}>
+            {isUser && <Link to={`/settings/profile/${type}`}><AiTwotoneEdit className={`${classes.fix}`}/> </Link>}
+            <div className={`${classes.avatarContainer}`}>
             {isUser && <button className={classes.camera} onClick={() => setShowChangeAvatar(true)}><AiFillCamera /></button>}
                 <Avatar alt="gia sư" variant="square" 
                     className={classes.avatar} 
@@ -53,14 +53,14 @@ function GeneralProfile({tutorInfo, isUser = false, type}) {
                     <h5>{getJobName(tutorInfo.profession)}</h5>
                 </div>
                 <div className={classes.generalInfo}>
-                    <div className={classes.birth}>
+                    {/* <div className={classes.birth}>
                         <h4 className="font-semibold">{formatBirthDay(tutorInfo.birthday)}</h4>
                         <span>NGÀY SINH</span>
                     </div>
                     <div className={classes.address}>
                         <h4 className="font-semibold">{tutorInfo.address}</h4>
                         <span>ĐỊA CHỈ</span>
-                    </div>
+                    </div> */}
                 </div>
                 <div className={`${classes.social} flex`}>
                     {tutorInfo?.linkmodel_set?.find(item => item?.name === 'facebook')?.url && <a href={tutorInfo?.linkmodel_set?.find(item => item?.name === 'facebook')?.url}><AiOutlineFacebook/></a>}
@@ -116,6 +116,7 @@ const useStyles = makeStyles(theme => ({
         top: 8,
         right: 8,
         padding: 8,
+        fontSize: 32,
         "&:hover" : {
             cursor: 'pointer',
             backgroundColor: '#5472EA',

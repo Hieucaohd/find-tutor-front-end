@@ -1,9 +1,9 @@
+import { changePassword } from 'axios/profile';
 import Loading from 'components/Loading/Loading';
 import Modal from 'components/Modal/Modal';
 import { selectEmail, selectUsername } from 'features/auth/authSlice';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { changePassword } from '../settings';
 import ChangePassword from './ChangePassword';
 
 function SettingsAccount(props) {

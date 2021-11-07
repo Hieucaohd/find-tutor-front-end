@@ -2,10 +2,6 @@ import { Grid, makeStyles } from '@material-ui/core';
 import Room from 'components/Room/Room';
 import React from 'react';
 
-ParentRoomProfile.propTypes = {
-    
-};
-
 const useStyles = makeStyles({
     root: {
         marginTop: 20,

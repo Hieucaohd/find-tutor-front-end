@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { deleteFromWaitingList, deleteTutorFromTeachingList } from "axios/room";
 import Loading from "components/Loading/Loading";
 import { catchDistrictName, catchProvinceName, getDistrictName, getProvinceName, getWardName } from "components/location/getLocation";
 import { selectIsSignedIn, selectType_parent } from "features/auth/authSlice";
@@ -10,8 +11,6 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { useRouteMatch } from "react-router-dom";
 import ParentRoomMain from "./components/ParentRoomMain/ParentRoomMain";
-import { deleteFromWaitingList, deleteTutorFromTeachingList } from "./parentroom";
-
 
 const useStyles = makeStyles(theme=>({
     root: {
