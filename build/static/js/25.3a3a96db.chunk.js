@@ -1,2 +1,0 @@
-(this.webpackJsonpbaseapp=this.webpackJsonpbaseapp||[]).push([[25],{206:function(t,s,e){},212:function(t,s,e){"use strict";e.r(s);e(1);var a=e(7),c=(e(206),e(2));s.default=function(t){var s=t.roomAddress;return Object(c.jsx)("div",{className:"button",children:Object(c.jsx)(a.b,{to:s,className:"button__detail",children:"Xem chi ti\u1ebft"})})}}}]);
-//# sourceMappingURL=25.3a3a96db.chunk.js.map

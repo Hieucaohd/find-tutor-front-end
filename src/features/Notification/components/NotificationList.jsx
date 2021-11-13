@@ -23,7 +23,7 @@ function NotificationList({onClose}) {
 
     return (
         <div className="noti__list">
-            <h5 > Thông báo </h5>
+            <h5 className="font-semibold"> Thông báo </h5>
             {loading ? <Loader className="noti__list__spinner" type="ThreeDots" color="#00BFFF" height={40} width={80} />
                 : <ul >
                     {notiList?.map(item => (

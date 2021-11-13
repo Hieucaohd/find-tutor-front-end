@@ -2,38 +2,38 @@ import loadable from '@loadable/component';
 import Loading from "components/Loading/Loading";
 import Message from 'features/Message';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import MainNavigation from "./features/Header/MainNavigation";
+import MainNavigation from "./features/Header";
 
-const Home = loadable(() => import('./features/Home/Home'), {
+const Home = loadable(() => import('./features/Home'), {
   fallback: <Loading whiteBkg={true} />
 });
 
-const TutorHome = loadable(() => import('./features/TutorHome'), {
+const TutorHome = loadable(() => import('./features/TutorRoom'), {
   fallback: <Loading whiteBkg={true} />
 });
-const ParentRoom = loadable(() => import('features/ParentRoom/ParentRoom'), {
+const ParentRoom = loadable(() => import('features/TeachingRoom'), {
   fallback: <Loading whiteBkg={true} />
 });
-const RegisterRole = loadable(() => import('./features/RegisterRole/RegisterRole'), {
+const RegisterRole = loadable(() => import('./features/RegisterRole'), {
   fallback: <Loading whiteBkg={true} />
 });
-const ParentHome = loadable(() => import('./features/ParentHome'), {
+const ParentHome = loadable(() => import('./features/ParentRoom'), {
   fallback: <Loading whiteBkg={true} />
 });
-const CreateRoom = loadable(() => import('./features/CreateRoom/CreateRoom'));
-const SignUp = loadable(() => import('./features/SignUp/SignUp'), {
+const CreateRoom = loadable(() => import('./features/CreateRoom'));
+const SignUp = loadable(() => import('./features/SignUp'), {
   fallback: <Loading whiteBkg={true} />
 });
-const NotFound = loadable(() => import('features/404NotFound/NotFound'), {
+const NotFound = loadable(() => import('features/404NotFound'), {
   fallback: <Loading whiteBkg={true} />
 });
-const Auth = loadable(() => import('features/auth/Auth'), {
+const Auth = loadable(() => import('features/auth'), {
   fallback: <Loading whiteBkg={true} />
 });
-const Profile = loadable(() => import('features/Profile/Profile'), {
+const Profile = loadable(() => import('features/Profile'), {
   fallback: <Loading whiteBkg={true} />
 });
-const Settings = loadable(() => import('features/Settings/Settings'), {
+const Settings = loadable(() => import('features/Settings'), {
   fallback: <Loading whiteBkg={true} />
 });
 

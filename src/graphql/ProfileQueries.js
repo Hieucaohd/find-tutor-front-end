@@ -72,11 +72,10 @@ export const GetParentProfile = async (id) => {
     };
 }
 
-export const getUserNameAndAvatar = (id) => {
+export const getAvatar = (id) => {
     const query = `
     {
         user_by_id (id: ${id}) {
-            username
             imageprivateusermodel {
                 avatar
             }
