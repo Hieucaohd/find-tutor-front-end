@@ -50,11 +50,11 @@
         └─ RegisterRole: đăng kí vai trò tài khoản là gia sư hay phụ huynh
         └─ Home: phần trang chủ của app, hiển thị list các phòng học,...
         └─ Profile: thông tin cá nhân của gia sư và phụ huynh
-        └─ Tutor: phòng cá nhân của gia sư, chứa các phòng mà gia sư đang ứng tuyển và phòng gia sư đang dạy học
-        └─ Parent: phòng cá nhân của phụ huynh, chứa các phòng mà phụ huynh đã tạo
+        └─ TutorRoom: phòng cá nhân của gia sư, chứa các phòng mà gia sư đang ứng tuyển và phòng gia sư đang dạy học
+        └─ ParentRoom: phòng cá nhân của phụ huynh, chứa các phòng mà phụ huynh đã tạo
         └─ Notification: phần thông báo
         └─ Header: navigation, banner quảng cáo
-        └─ ParentRoom: phòng học
+        └─ TeachingRoom: phòng học
         └─ Settings: cài đặt tài khoản, đổi mật khẩu, thông tin
         └─ 404NotFound
         └─ Message: tính năng nhắn tin

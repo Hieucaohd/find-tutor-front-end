@@ -71,7 +71,7 @@ export const updateAvatar = ({file}) => {
         },
         data: file
       }).then(response => {
-        if(response.data) return true;
+        if(response.data) return response.data;
       }).catch(error => {
           console.log("Failed to update avatar: ", error);
           return false;

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { loginWithGoogleAccount, loginWithMail, logOut } from "axios/auth";
 import { server_name } from "../../namespace";
-import { removeUserInfoLocalStorage, setParentTrueLocalStorage, setTutorTrueLocalStorage, setUserInfoToLocalStorage } from "./localStorage";
+import { removeUserInfoLocalStorage, setAvatarLocalStorage, setParentTrueLocalStorage, setTutorTrueLocalStorage, setUserInfoToLocalStorage } from "./localStorage";
  
 
 const initialState = localStorage.getItem('isSignedIn') ? {
@@ -12,6 +12,7 @@ const initialState = localStorage.getItem('isSignedIn') ? {
   isSignedIn: localStorage.getItem('isSignedIn') === 'true' ? true : false,
   email: localStorage.getItem('userEmail'),
   userName: localStorage.getItem('userName'),
+  avatar: localStorage.getItem('userAvatar'),
 } : {
   status: "idle",
   token: "",
@@ -22,6 +23,7 @@ const initialState = localStorage.getItem('isSignedIn') ? {
   isSignedIn: false,
   email: '',
   userName: '',
+  avatar: "",
 };
 
 
@@ -66,12 +68,10 @@ const authSlice = createSlice({
       state.type_parent = true;
       setParentTrueLocalStorage();
     },
-    // setStateFromCookies(state) {
-    //   const {id, typeParent, typeTutor} = getDataFromCookies();
-    //   state.id = id;
-    //   state.type_tutor = typeTutor;
-    //   state.type_parent = typeParent;
-    // }
+    setAvatar(state, action) {
+      state.avatar = action.payload;
+      setAvatarLocalStorage(action.payload);
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -149,7 +149,7 @@ const authSlice = createSlice({
 
 export default authSlice.reducer;
 
-export const { setTutorTrue, setParentTrue, setStateFromCookies } = authSlice.actions;
+export const { setTutorTrue, setParentTrue, setStateFromCookies, setAvatar } = authSlice.actions;
 
 // Lấy: id, token, type_tutor, type_parent cho component
 export const selectStateStatus = (state) => state.status;
@@ -159,3 +159,4 @@ export const selectType_parent = (state) => state.auth.type_parent;
 export const selectIsSignedIn = (state) => state.auth.isSignedIn;
 export const selectEmail = (state) => state.auth.email;
 export const selectUsername = (state) => state.auth.userName
+export const selectAvatar = state => state.auth.avatar;

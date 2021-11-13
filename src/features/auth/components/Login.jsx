@@ -15,21 +15,14 @@ function Login({onShow}) {
   const { register, formState: { errors }, handleSubmit } = useForm();
   const loadingRef = useRef(null);
   const [showFailedModal, setShowFailedModal] = useState(false);
-  // //token đã tồn tại chuyển sang trang home
-  // // useEffect(() => {
-  // //   if (token) {
-  // //     history.push("/");
-  // //   }
-  // // }, [token]);
-  // if (token) {
-  //   //     history.push("/");
-  //   //   }
+ 
   const onSubmit = async (data) => {
     const args = {
       email: data.email,
       password: data.password,
     };
     loadingRef.current.style.display = "flex";
+    
     const loginDispatch = await dispatch(login(args));
     if(!loginDispatch.payload) {
       loadingRef.current.style.display = "none";

@@ -9,6 +9,10 @@ export const setUserInfoToLocalStorage = (info) => {
     localStorage.setItem('token', token);
 }
 
+export const setAvatarLocalStorage = (url) => {
+    localStorage.setItem('userAvatar', url)
+}
+
 export const setParentTrueLocalStorage = () => {
     localStorage.removeItem('userTypeParent');
     localStorage.setItem('userTypeParent', true);
@@ -27,5 +31,6 @@ export const removeUserInfoLocalStorage = () => {
     localStorage.removeItem('isSignedIn');
     localStorage.removeItem('userEmail');
     localStorage.removeItem('userName');
-    localStorage.removeItem('token')
+    localStorage.removeItem('token');
+    localStorage.removeItem("userAvatar");
 }

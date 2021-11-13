@@ -3,9 +3,11 @@ import { updateAvatar } from 'axios/profile';
 import Loading from "components/Loading/Loading";
 import Modal from "components/Modal/Modal";
 import UploadImage from 'components/UploadImage/UploadImage';
+import { selectAvatar, setAvatar } from 'features/auth/authSlice';
 import FormData from 'form-data';
 import React, { useState } from 'react';
 import { AiFillCamera, AiOutlineFacebook, AiOutlineInstagram, AiOutlineLinkedin, AiTwotoneEdit } from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const getJobName = (str) => {
@@ -21,21 +23,28 @@ function GeneralProfile({tutorInfo, isUser = false, type}) {
     const [showFailedModal, setShowFailedModal] = useState(false);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [showLoading, setShowLoading] = useState(false);
+    const avatar = useSelector(selectAvatar);
+    const dispatch = useDispatch();
     const handleChangeAvatar = async (image) => {
         setShowLoading(true);
         const file = new FormData();
         file.append('avatar', image);
         const response = await updateAvatar({
-            // typeCurrent: tutorInfo.imageprivateusermodel?.avatar ? true : false,
             file: file})
-    
+            
         if(response) {
+            dispatch(setAvatar(response?.avatar));
             setShowLoading(false);
             setShowSuccessModal(true);
         } else {
             setShowFailedModal(true);
             setShowLoading(false);
         }
+    }
+    const formatBirthDay = (birthday) => {
+        if(!birthday || birthday.length === 0) return "";
+        const newBirthDay = `${birthday.slice(-2)}-${birthday.slice(5,7)}-${birthday.slice(0,4)}`
+        return newBirthDay;
     }
 
     return (
@@ -45,23 +54,23 @@ function GeneralProfile({tutorInfo, isUser = false, type}) {
             {isUser && <button className={classes.camera} onClick={() => setShowChangeAvatar(true)}><AiFillCamera /></button>}
                 <Avatar alt="gia sư" variant="square" 
                     className={classes.avatar} 
-                    src={tutorInfo.imageprivateusermodel?.avatar || require("../../../../../assets/image/user.webp").default} />
+                    src={avatar || require("../../../../../assets/image/user.webp").default} />
             </div>
             <div className={classes.info}>
                 <div className={classes.name}>
                     <h3 className={classes.name}>{tutorInfo.first_name?.toUpperCase()} {tutorInfo.last_name?.toUpperCase()}</h3>
                     <h5>{getJobName(tutorInfo.profession)}</h5>
                 </div>
-                <div className={classes.generalInfo}>
-                    {/* <div className={classes.birth}>
+                {type === "parent" && <div className={classes.generalInfo}>
+                    <div className={classes.birth}>
                         <h4 className="font-semibold">{formatBirthDay(tutorInfo.birthday)}</h4>
                         <span>NGÀY SINH</span>
                     </div>
                     <div className={classes.address}>
                         <h4 className="font-semibold">{tutorInfo.address}</h4>
                         <span>ĐỊA CHỈ</span>
-                    </div> */}
-                </div>
+                    </div>
+                </div>}
                 <div className={`${classes.social} flex`}>
                     {tutorInfo?.linkmodel_set?.find(item => item?.name === 'facebook')?.url && <a href={tutorInfo?.linkmodel_set?.find(item => item?.name === 'facebook')?.url}><AiOutlineFacebook/></a>}
                     {tutorInfo?.linkmodel_set?.find(item => item?.name === 'instagram')?.url && <a href={tutorInfo?.linkmodel_set?.find(item => item?.name === 'instagram')?.url}><AiOutlineInstagram/></a>}
@@ -70,7 +79,7 @@ function GeneralProfile({tutorInfo, isUser = false, type}) {
             </div>
             {showChangeAvatar && <UploadImage onClose={() => setShowChangeAvatar(false)} onSubmit={handleChangeAvatar}/>}
             {showFailedModal && <Modal typeIcon="fail" text="Thay Avatar không thành công" onAgree={() => setShowFailedModal(false)} />}
-            {showSuccessModal && <Modal typeIcon="check" text="Thay Avatar thành công" onAgree={() => window.location.reload()} />}
+            {showSuccessModal && <Modal typeIcon="check" text="Thay Avatar thành công" onAgree={() => {setShowSuccessModal(false); setShowChangeAvatar(false)}} />}
             {showLoading && <Loading />}
         </div>
     );
